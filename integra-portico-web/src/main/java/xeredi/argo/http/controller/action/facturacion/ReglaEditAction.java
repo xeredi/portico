@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.google.common.base.Preconditions;
 
-import lombok.Data;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -17,8 +17,8 @@ import xeredi.argo.model.facturacion.bo.ReglaBO;
 import xeredi.argo.model.facturacion.vo.CargoVO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
-import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
 import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
+import xeredi.argo.model.metamodelo.service.TipoServicioService;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioCriterioVO;
@@ -27,20 +27,25 @@ import xeredi.argo.model.metamodelo.vo.TipoSubservicioCriterioVO;
 /**
  * The Class ReglaEditAction.
  */
-@Data
 public final class ReglaEditAction extends CrudEditAction<ReglaVO> {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -7473288340314527092L;
 
     /** The i18n map. */
+    @Getter
     private Map<String, I18nVO> i18nMap;
 
     /** The enti facturable list. */
+    @Getter
     private List<LabelValueVO> entiFacturableList;
 
     /** The tipos. */
+    @Getter
     private ReglaTipo[] tipos;
 
+    private TipoServicioService tpsrService;
+    
+    
     /**
      * {@inheritDoc}
      */
@@ -73,7 +78,6 @@ public final class ReglaEditAction extends CrudEditAction<ReglaVO> {
         if (accion == AccionCodigo.create) {
             tipos = ReglaTipo.values();
 
-            final TipoServicioBO tpsrBO = new TipoServicioBO();
             final CargoBO crgoBO = new CargoBO();
 
             final CargoVO crgo = crgoBO.select(model.getCrgo().getId(), model.getFref(), getIdioma());
@@ -83,7 +87,7 @@ public final class ReglaEditAction extends CrudEditAction<ReglaVO> {
             tpsrCriterioVO.setFacturable(Boolean.TRUE);
             tpsrCriterioVO.setIdioma(getIdioma());
 
-            entiFacturableList = tpsrBO.selectLabelValues(tpsrCriterioVO);
+            entiFacturableList = tpsrService.selectLabelValues(tpsrCriterioVO);
 
             final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
             final TipoSubservicioCriterioVO tpssCriterioVO = new TipoSubservicioCriterioVO();

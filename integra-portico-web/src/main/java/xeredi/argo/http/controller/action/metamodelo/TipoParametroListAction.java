@@ -1,10 +1,10 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.google.inject.Inject;
+
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.metamodelo.bo.TipoParametroBO;
+import xeredi.argo.model.metamodelo.service.TipoParametroService;
 import xeredi.argo.model.metamodelo.vo.TipoParametroCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoParametroVO;
 
@@ -12,20 +12,20 @@ import xeredi.argo.model.metamodelo.vo.TipoParametroVO;
 /**
  * The Class TipoParametroListAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class TipoParametroListAction extends GridListAction<TipoParametroCriterioVO, TipoParametroVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -417082160677321691L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -417082160677321691L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doList() throws ApplicationException {
-        final TipoParametroBO entiBO = new TipoParametroBO();
+	/** The tppr service. */
+	@Inject
+	private TipoParametroService tpprService;
 
-        resultList = entiBO.selectList(model, getOffset(), limit);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doList() throws ApplicationException {
+		resultList = tpprService.selectList(model, getOffset(), limit);
+	}
 }

@@ -1,10 +1,8 @@
 package xeredi.argo.model.metamodelo.bo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.ExecutorType;
-import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import com.google.common.base.Preconditions;
@@ -20,7 +18,6 @@ import xeredi.argo.model.metamodelo.vo.AccionEntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
 import xeredi.argo.model.seguridad.dao.FuncionalidadGrupoDAO;
 import xeredi.argo.model.seguridad.vo.FuncionalidadGrupoCriterioVO;
-import xeredi.argo.model.util.PaginatedList;
 import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
@@ -28,162 +25,139 @@ import xeredi.argo.model.util.SqlMapperLocator;
  * The Class AccionEntidadBO.
  */
 public final class AccionEntidadBO {
-    /**
-     * Insert.
-     *
-     * @param acen
-     *            the acen
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
-     */
-    public void insert(@NonNull final AccionEntidadVO acen) throws DuplicateInstanceException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
-            final FuncionalidadDAO fncdDAO = session.getMapper(FuncionalidadDAO.class);
+	/**
+	 * Insert.
+	 *
+	 * @param acen
+	 *            the acen
+	 * @throws DuplicateInstanceException
+	 *             the duplicate instance exception
+	 */
+	public void insert(@NonNull final AccionEntidadVO acen) throws DuplicateInstanceException {
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
+			final FuncionalidadDAO fncdDAO = session.getMapper(FuncionalidadDAO.class);
 
-            if (acenDAO.exists(acen)) {
-                throw new DuplicateInstanceException(MessageI18nKey.acen, acen);
-            }
+			if (acenDAO.exists(acen)) {
+				throw new DuplicateInstanceException(MessageI18nKey.acen, acen);
+			}
 
-            IgUtilBO.assignNextVal(acen);
-            fncdDAO.insert(acen);
-            acenDAO.insert(acen);
+			IgUtilBO.assignNextVal(acen);
+			fncdDAO.insert(acen);
+			acenDAO.insert(acen);
 
-            session.commit();
-        }
-    }
+			session.commit();
+		}
+	}
 
-    /**
-     * Update.
-     *
-     * @param acen
-     *            the acen
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    public void update(@NonNull final AccionEntidadVO acen) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(acen.getId());
+	/**
+	 * Update.
+	 *
+	 * @param acen
+	 *            the acen
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	public void update(@NonNull final AccionEntidadVO acen) throws InstanceNotFoundException {
+		Preconditions.checkNotNull(acen.getId());
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
 
-            if (acenDAO.update(acen) == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.acen, acen);
-            }
+			if (acenDAO.update(acen) == 0) {
+				throw new InstanceNotFoundException(MessageI18nKey.acen, acen);
+			}
 
-            session.commit();
-        }
-    }
+			session.commit();
+		}
+	}
 
-    /**
-     * Delete.
-     *
-     * @param acen
-     *            the acen
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    public void delete(@NonNull final AccionEntidadVO acen) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(acen.getId());
+	/**
+	 * Delete.
+	 *
+	 * @param acen
+	 *            the acen
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	public void delete(@NonNull final AccionEntidadVO acen) throws InstanceNotFoundException {
+		Preconditions.checkNotNull(acen.getId());
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
-            final FuncionalidadDAO fncdDAO = session.getMapper(FuncionalidadDAO.class);
-            final FuncionalidadGrupoDAO fngrDAO = session.getMapper(FuncionalidadGrupoDAO.class);
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
+			final FuncionalidadDAO fncdDAO = session.getMapper(FuncionalidadDAO.class);
+			final FuncionalidadGrupoDAO fngrDAO = session.getMapper(FuncionalidadGrupoDAO.class);
 
-            final FuncionalidadGrupoCriterioVO fngrCriterio = new FuncionalidadGrupoCriterioVO();
+			final FuncionalidadGrupoCriterioVO fngrCriterio = new FuncionalidadGrupoCriterioVO();
 
-            fngrCriterio.setFncdId(acen.getId());
+			fngrCriterio.setFncdId(acen.getId());
 
-            if (acenDAO.delete(acen) == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.acen, acen);
-            }
+			if (acenDAO.delete(acen) == 0) {
+				throw new InstanceNotFoundException(MessageI18nKey.acen, acen);
+			}
 
-            fngrDAO.deleteList(fngrCriterio);
-            fncdDAO.delete(acen);
+			fngrDAO.deleteList(fngrCriterio);
+			fncdDAO.delete(acen);
 
-            session.commit();
-        }
-    }
+			session.commit();
+		}
+	}
 
-    /**
-     * Select list.
-     *
-     * @param acenCriterio
-     *            the acen criterio
-     * @param offset
-     *            the offset
-     * @param limit
-     *            the limit
-     * @return the paginated list
-     */
-    public PaginatedList<AccionEntidadVO> selectList(@NonNull final AccionEntidadCriterioVO acenCriterio,
-            final int offset, final int limit) {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
-            final int count = acenDAO.count(acenCriterio);
+	/**
+	 * Select list.
+	 *
+	 * @param acenCriterio
+	 *            the acen criterio
+	 * @return the list
+	 */
+	public List<AccionEntidadVO> selectList(@NonNull final AccionEntidadCriterioVO acenCriterio) {
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
 
-            return new PaginatedList<AccionEntidadVO>(
-                    count > offset ? acenDAO.selectList(acenCriterio, new RowBounds(offset, limit)) : new ArrayList<>(),
-                    offset, limit, count);
-        }
-    }
+			return acenDAO.selectList(acenCriterio);
+		}
+	}
 
-    /**
-     * Select list.
-     *
-     * @param acenCriterio
-     *            the acen criterio
-     * @return the list
-     */
-    public List<AccionEntidadVO> selectList(@NonNull final AccionEntidadCriterioVO acenCriterio) {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
+	/**
+	 * Select.
+	 *
+	 * @param id
+	 *            the id
+	 * @param idioma
+	 *            the idioma
+	 * @return the accion entidad VO
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	public AccionEntidadVO select(@NonNull final Long id, final String idioma) throws InstanceNotFoundException {
+		final AccionEntidadCriterioVO acenCriterio = new AccionEntidadCriterioVO();
 
-            return acenDAO.selectList(acenCriterio);
-        }
-    }
+		acenCriterio.setId(id);
+		acenCriterio.setIdioma(idioma);
 
-    /**
-     * Select.
-     *
-     * @param id
-     *            the id
-     * @param idioma
-     *            the idioma
-     * @return the accion entidad VO
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    public AccionEntidadVO select(@NonNull final Long id, final String idioma) throws InstanceNotFoundException {
-        final AccionEntidadCriterioVO acenCriterio = new AccionEntidadCriterioVO();
+		return selectObject(acenCriterio);
+	}
 
-        acenCriterio.setId(id);
-        acenCriterio.setIdioma(idioma);
+	/**
+	 * Select object.
+	 *
+	 * @param acenCriterio
+	 *            the acen criterio
+	 * @return the accion entidad vo
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	public AccionEntidadVO selectObject(@NonNull final AccionEntidadCriterioVO acenCriterio)
+			throws InstanceNotFoundException {
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
+			final AccionEntidadVO acen = acenDAO.selectObject(acenCriterio);
 
-        return selectObject(acenCriterio);
-    }
+			if (acen == null) {
+				throw new InstanceNotFoundException(MessageI18nKey.acen, acenCriterio);
+			}
 
-    /**
-     * Select object.
-     *
-     * @param acenCriterio
-     *            the acen criterio
-     * @return the accion entidad vo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    public AccionEntidadVO selectObject(@NonNull final AccionEntidadCriterioVO acenCriterio)
-            throws InstanceNotFoundException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final AccionEntidadDAO acenDAO = session.getMapper(AccionEntidadDAO.class);
-            final AccionEntidadVO acen = acenDAO.selectObject(acenCriterio);
-
-            if (acen == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.acen, acenCriterio);
-            }
-
-            return acen;
-        }
-    }
+			return acen;
+		}
+	}
 }

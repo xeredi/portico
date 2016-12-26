@@ -3,11 +3,12 @@ package xeredi.argo.http.controller.action.metamodelo;
 import java.util.List;
 import java.util.Map;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.google.inject.Inject;
+
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
-import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
 import xeredi.argo.model.metamodelo.bo.AccionEspecialBO;
@@ -30,73 +31,79 @@ import xeredi.argo.model.metamodelo.vo.EntidadVO;
  * @param <T>
  *            the generic type
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public abstract class EntidadDetailAction<T extends EntidadVO> extends CrudDetailAction<T> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -2541307413836565323L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -2541307413836565323L;
 
-    /** The i18n map. */
-    protected Map<String, I18nVO> i18nMap;
+	/** The i18n map. */
+	@Getter
+	protected Map<String, I18nVO> i18nMap;
 
-    /** The entd list. */
-    protected List<EntidadTipoDatoVO> entdList;
+	/** The entd list. */
+	@Getter
+	protected List<EntidadTipoDatoVO> entdList;
 
-    /** The engd list. */
-    protected List<EntidadGrupoDatoVO> engdList;
+	/** The engd list. */
+	@Getter
+	protected List<EntidadGrupoDatoVO> engdList;
 
-    /** The enac list. */
-    protected List<AccionEspecialVO> acesList;
+	/** The enac list. */
+	@Getter
+	protected List<AccionEspecialVO> acesList;
 
-    /** The acen list. */
-    protected List<AccionEntidadVO> acenList;
+	/** The acen list. */
+	@Getter
+	protected List<AccionEntidadVO> acenList;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void doDetail() throws ApplicationException {
-        doSpecificDetail();
+	@Inject
+	private I18nService i18nService;
 
-        i18nMap = I18nUtilBO.selectMap(model);
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final void doDetail() throws ApplicationException {
+		doSpecificDetail();
 
-        final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
-        final EntidadTipoDatoCriterioVO entdCriterio = new EntidadTipoDatoCriterioVO();
+		i18nMap = i18nService.selectMap(model);
 
-        entdCriterio.setEntiId(model.getId());
-        entdCriterio.setIdioma(getIdioma());
+		final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
+		final EntidadTipoDatoCriterioVO entdCriterio = new EntidadTipoDatoCriterioVO();
 
-        entdList = entdBO.selectList(entdCriterio);
+		entdCriterio.setEntiId(model.getId());
+		entdCriterio.setIdioma(getIdioma());
 
-        final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
-        final EntidadGrupoDatoCriterioVO engdCriterio = new EntidadGrupoDatoCriterioVO();
+		entdList = entdBO.selectList(entdCriterio);
 
-        engdCriterio.setEntiId(model.getId());
-        engdCriterio.setIdioma(getIdioma());
+		final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
+		final EntidadGrupoDatoCriterioVO engdCriterio = new EntidadGrupoDatoCriterioVO();
 
-        engdList = engdBO.selectList(engdCriterio);
+		engdCriterio.setEntiId(model.getId());
+		engdCriterio.setIdioma(getIdioma());
 
-        final AccionEspecialCriterioVO acesCriterio = new AccionEspecialCriterioVO();
+		engdList = engdBO.selectList(engdCriterio);
 
-        acesCriterio.setEntiId(model.getId());
-        acesCriterio.setIdioma(getIdioma());
+		final AccionEspecialCriterioVO acesCriterio = new AccionEspecialCriterioVO();
 
-        acesList = new AccionEspecialBO().selectList(acesCriterio);
+		acesCriterio.setEntiId(model.getId());
+		acesCriterio.setIdioma(getIdioma());
 
-        final AccionEntidadBO acenBO = new AccionEntidadBO();
-        final AccionEntidadCriterioVO acenCriterio = new AccionEntidadCriterioVO();
+		acesList = new AccionEspecialBO().selectList(acesCriterio);
 
-        acenCriterio.setEntiId(model.getId());
+		final AccionEntidadBO acenBO = new AccionEntidadBO();
+		final AccionEntidadCriterioVO acenCriterio = new AccionEntidadCriterioVO();
 
-        acenList = acenBO.selectList(acenCriterio);
-    }
+		acenCriterio.setEntiId(model.getId());
 
-    /**
-     * Do specific detail.
-     *
-     * @throws ApplicationException
-     *             the application exception
-     */
-    public abstract void doSpecificDetail() throws ApplicationException;
+		acenList = acenBO.selectList(acenCriterio);
+	}
+
+	/**
+	 * Do specific detail.
+	 *
+	 * @throws ApplicationException
+	 *             the application exception
+	 */
+	public abstract void doSpecificDetail() throws ApplicationException;
 }

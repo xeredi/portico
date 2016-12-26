@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.ExecutorType;
-import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import com.google.common.base.Preconditions;
@@ -25,7 +24,6 @@ import xeredi.argo.model.metamodelo.vo.EntidadEntidadVO;
 import xeredi.argo.model.metamodelo.vo.TipoEntidad;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroVO;
-import xeredi.argo.model.util.PaginatedList;
 import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
@@ -33,191 +31,168 @@ import xeredi.argo.model.util.SqlMapperLocator;
  * The Class TipoSubparametroBO.
  */
 public final class TipoSubparametroBO {
-    /**
-     * Select label values.
-     *
-     * @return the list
-     */
-    public List<LabelValueVO> selectLabelValues() {
-        final List<LabelValueVO> list = new ArrayList<>();
+	/**
+	 * Select label values.
+	 *
+	 * @return the list
+	 */
+	public List<LabelValueVO> selectLabelValues() {
+		final List<LabelValueVO> list = new ArrayList<>();
 
-        for (final TipoSubparametroVO tpsp : selectList(new TipoSubparametroCriterioVO())) {
-            list.add(new LabelValueVO(tpsp.getNombre(), tpsp.getId()));
-        }
+		for (final TipoSubparametroVO tpsp : selectList(new TipoSubparametroCriterioVO())) {
+			list.add(new LabelValueVO(tpsp.getNombre(), tpsp.getId()));
+		}
 
-        return list;
-    }
+		return list;
+	}
 
-    /**
-     * Select list.
-     *
-     * @param tpspCriterioVO
-     *            the tpsp criterio vo
-     * @return the list
-     */
-    public List<TipoSubparametroVO> selectList(@NonNull final TipoSubparametroCriterioVO tpspCriterioVO) {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final TipoSubparametroDAO tpspDAO = session.getMapper(TipoSubparametroDAO.class);
+	/**
+	 * Select list.
+	 *
+	 * @param tpspCriterioVO
+	 *            the tpsp criterio vo
+	 * @return the list
+	 */
+	public List<TipoSubparametroVO> selectList(@NonNull final TipoSubparametroCriterioVO tpspCriterioVO) {
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final TipoSubparametroDAO tpspDAO = session.getMapper(TipoSubparametroDAO.class);
 
-            return tpspDAO.selectList(tpspCriterioVO);
-        }
-    }
+			return tpspDAO.selectList(tpspCriterioVO);
+		}
+	}
 
-    /**
-     * Select list.
-     *
-     * @param tpspCriterio
-     *            the tpsp criterio
-     * @param offset
-     *            the offset
-     * @param limit
-     *            the limit
-     * @return the paginated list
-     */
-    public PaginatedList<TipoSubparametroVO> selectList(@NonNull final TipoSubparametroCriterioVO tpspCriterio,
-            final int offset, final int limit) {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final TipoSubparametroDAO tpspDAO = session.getMapper(TipoSubparametroDAO.class);
-            final int count = tpspDAO.count(tpspCriterio);
+	/**
+	 * Select.
+	 *
+	 * @param id
+	 *            the id
+	 * @param idioma
+	 *            the idioma
+	 * @return the tipo subparametro vo
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	public TipoSubparametroVO select(@NonNull final Long id, final String idioma) throws InstanceNotFoundException {
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final TipoSubparametroDAO tpspDAO = session.getMapper(TipoSubparametroDAO.class);
+			final TipoSubparametroCriterioVO entiCriterio = new TipoSubparametroCriterioVO();
 
-            return new PaginatedList<>(
-                    count > offset ? tpspDAO.selectList(tpspCriterio, new RowBounds(offset, limit)) : new ArrayList<>(),
-                    offset, limit, count);
-        }
-    }
+			entiCriterio.setId(id);
+			entiCriterio.setIdioma(idioma);
 
-    /**
-     * Select.
-     *
-     * @param id
-     *            the id
-     * @param idioma
-     *            the idioma
-     * @return the tipo subparametro vo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    public TipoSubparametroVO select(@NonNull final Long id, final String idioma) throws InstanceNotFoundException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final TipoSubparametroDAO tpspDAO = session.getMapper(TipoSubparametroDAO.class);
-            final TipoSubparametroCriterioVO entiCriterio = new TipoSubparametroCriterioVO();
+			final TipoSubparametroVO enti = tpspDAO.selectObject(entiCriterio);
 
-            entiCriterio.setId(id);
-            entiCriterio.setIdioma(idioma);
+			if (enti == null) {
+				throw new InstanceNotFoundException(MessageI18nKey.tpsp, id);
+			}
 
-            final TipoSubparametroVO enti = tpspDAO.selectObject(entiCriterio);
+			return enti;
+		}
+	}
 
-            if (enti == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.tpsp, id);
-            }
+	/**
+	 * Insert.
+	 *
+	 * @param enti
+	 *            the enti
+	 * @param i18nMap
+	 *            the i18n map
+	 * @throws DuplicateInstanceException
+	 *             the duplicate instance exception
+	 */
+	public void insert(@NonNull final TipoSubparametroVO enti, @NonNull final Map<String, I18nVO> i18nMap)
+			throws DuplicateInstanceException {
+		Preconditions.checkNotNull(enti.getTpprId());
 
-            return enti;
-        }
-    }
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
+			final TipoSubparametroDAO tpspDAO = session.getMapper(TipoSubparametroDAO.class);
 
-    /**
-     * Insert.
-     *
-     * @param enti
-     *            the enti
-     * @param i18nMap
-     *            the i18n map
-     * @throws DuplicateInstanceException
-     *             the duplicate instance exception
-     */
-    public void insert(@NonNull final TipoSubparametroVO enti, @NonNull final Map<String, I18nVO> i18nMap)
-            throws DuplicateInstanceException {
-        Preconditions.checkNotNull(enti.getTpprId());
+			if (entiDAO.exists(enti)) {
+				throw new DuplicateInstanceException(MessageI18nKey.tpsp, enti);
+			}
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
-            final TipoSubparametroDAO tpspDAO = session.getMapper(TipoSubparametroDAO.class);
+			IgUtilBO.assignNextVal(enti);
+			enti.setTipo(TipoEntidad.B);
 
-            if (entiDAO.exists(enti)) {
-                throw new DuplicateInstanceException(MessageI18nKey.tpsp, enti);
-            }
+			entiDAO.insert(enti);
+			tpspDAO.insert(enti);
 
-            IgUtilBO.assignNextVal(enti);
-            enti.setTipo(TipoEntidad.B);
+			final EntidadEntidadDAO enenDAO = session.getMapper(EntidadEntidadDAO.class);
+			final EntidadEntidadVO enen = new EntidadEntidadVO();
 
-            entiDAO.insert(enti);
-            tpspDAO.insert(enti);
+			enen.setEntiPadreId(enti.getTpprId());
+			enen.setEntiHija(enti);
+			enen.setOrden(0); // FIXME Corregir
 
-            final EntidadEntidadDAO enenDAO = session.getMapper(EntidadEntidadDAO.class);
-            final EntidadEntidadVO enen = new EntidadEntidadVO();
+			enenDAO.insert(enen);
 
-            enen.setEntiPadreId(enti.getTpprId());
-            enen.setEntiHija(enti);
-            enen.setOrden(0); // FIXME Corregir
+			I18nUtilBO.insertMap(session, enti, i18nMap);
 
-            enenDAO.insert(enen);
+			session.commit();
+		}
+	}
 
-            I18nUtilBO.insertMap(session, enti, i18nMap);
+	/**
+	 * Update.
+	 *
+	 * @param tpsp
+	 *            the tpsp
+	 * @param i18nMap
+	 *            the i18n map
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	public void update(@NonNull final TipoSubparametroVO tpsp, @NonNull final Map<String, I18nVO> i18nMap)
+			throws InstanceNotFoundException {
+		Preconditions.checkNotNull(tpsp.getId());
 
-            session.commit();
-        }
-    }
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final TipoSubparametroDAO tpspDAO = session.getMapper(TipoSubparametroDAO.class);
+			final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
 
-    /**
-     * Update.
-     *
-     * @param tpsp
-     *            the tpsp
-     * @param i18nMap
-     *            the i18n map
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    public void update(@NonNull final TipoSubparametroVO tpsp, @NonNull final Map<String, I18nVO> i18nMap)
-            throws InstanceNotFoundException {
-        Preconditions.checkNotNull(tpsp.getId());
+			if (tpspDAO.update(tpsp) == 0) {
+				throw new InstanceNotFoundException(MessageI18nKey.tpsp, tpsp);
+			}
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final TipoSubparametroDAO tpspDAO = session.getMapper(TipoSubparametroDAO.class);
-            final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
+			entiDAO.update(tpsp);
+			I18nUtilBO.updateMap(session, tpsp, i18nMap);
 
-            if (tpspDAO.update(tpsp) == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.tpsp, tpsp);
-            }
+			session.commit();
+		}
+	}
 
-            entiDAO.update(tpsp);
-            I18nUtilBO.updateMap(session, tpsp, i18nMap);
+	/**
+	 * Delete.
+	 *
+	 * @param enti
+	 *            the enti
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	public void delete(@NonNull final TipoSubparametroVO enti) throws InstanceNotFoundException {
+		Preconditions.checkNotNull(enti.getId());
+		Preconditions.checkNotNull(enti.getTpprId());
 
-            session.commit();
-        }
-    }
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final TipoSubparametroDAO tpspDAO = session.getMapper(TipoSubparametroDAO.class);
+			final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
+			final EntidadEntidadDAO enenDAO = session.getMapper(EntidadEntidadDAO.class);
 
-    /**
-     * Delete.
-     *
-     * @param enti
-     *            the enti
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    public void delete(@NonNull final TipoSubparametroVO enti) throws InstanceNotFoundException {
-        Preconditions.checkNotNull(enti.getId());
-        Preconditions.checkNotNull(enti.getTpprId());
+			if (tpspDAO.delete(enti) == 0) {
+				throw new InstanceNotFoundException(MessageI18nKey.tpsp, enti);
+			}
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final TipoSubparametroDAO tpspDAO = session.getMapper(TipoSubparametroDAO.class);
-            final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
-            final EntidadEntidadDAO enenDAO = session.getMapper(EntidadEntidadDAO.class);
+			final EntidadEntidadVO enen = new EntidadEntidadVO();
 
-            if (tpspDAO.delete(enti) == 0) {
-                throw new InstanceNotFoundException(MessageI18nKey.tpsp, enti);
-            }
+			enen.setEntiPadreId(enti.getTpprId());
+			enen.setEntiHija(enti);
 
-            final EntidadEntidadVO enen = new EntidadEntidadVO();
+			enenDAO.delete(enen);
+			entiDAO.delete(enti);
+			I18nUtilBO.deleteMap(session, enti);
 
-            enen.setEntiPadreId(enti.getTpprId());
-            enen.setEntiHija(enti);
-
-            enenDAO.delete(enen);
-            entiDAO.delete(enti);
-            I18nUtilBO.deleteMap(session, enti);
-
-            session.commit();
-        }
-    }
+			session.commit();
+		}
+	}
 }

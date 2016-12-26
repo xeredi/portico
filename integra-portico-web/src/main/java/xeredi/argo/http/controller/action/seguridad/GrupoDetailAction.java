@@ -14,9 +14,9 @@ import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.AccionBaseBO;
 import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
 import xeredi.argo.model.metamodelo.bo.AccionEspecialBO;
-import xeredi.argo.model.metamodelo.bo.EntidadBO;
-import xeredi.argo.model.metamodelo.bo.ModuloBO;
 import xeredi.argo.model.metamodelo.bo.TramiteBO;
+import xeredi.argo.model.metamodelo.service.EntidadService;
+import xeredi.argo.model.metamodelo.service.ModuloService;
 import xeredi.argo.model.metamodelo.vo.AccionBaseCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionBaseVO;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadCriterioVO;
@@ -38,134 +38,137 @@ import xeredi.argo.model.seguridad.vo.GrupoVO;
  */
 public final class GrupoDetailAction extends CrudDetailAction<GrupoVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -1779406545837488228L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -1779406545837488228L;
 
-    /** The mdlo list. */
-    @Getter
-    private List<ModuloVO> mdloList;
+	/** The mdlo list. */
+	@Getter
+	private List<ModuloVO> mdloList;
 
-    /** The prefix list. */
-    @Getter
-    private List<ClassPrefix> prefixList;
+	/** The prefix list. */
+	@Getter
+	private List<ClassPrefix> prefixList;
 
-    /** The accn map. */
-    @Getter
-    private Map<ClassPrefix, List<AccionBaseVO>> acbsMap;
+	/** The accn map. */
+	@Getter
+	private Map<ClassPrefix, List<AccionBaseVO>> acbsMap;
 
-    /** The enti list. */
-    @Getter
-    private List<Long> entiList;
+	/** The enti list. */
+	@Getter
+	private List<Long> entiList;
 
-    /** The acen map. */
-    @Getter
-    private Map<Long, List<AccionEntidadVO>> acenMap;
+	/** The acen map. */
+	@Getter
+	private Map<Long, List<AccionEntidadVO>> acenMap;
 
-    /** The aces map. */
-    @Getter
-    private Map<Long, List<AccionEspecialVO>> acesMap;
+	/** The aces map. */
+	@Getter
+	private Map<Long, List<AccionEspecialVO>> acesMap;
 
-    /** The trmt map. */
-    @Getter
-    private Map<Long, List<TramiteVO>> trmtMap;
+	/** The trmt map. */
+	@Getter
+	private Map<Long, List<TramiteVO>> trmtMap;
 
-    @Inject
+	@Inject
 	private GrupoService grpoService;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doDetail() throws ApplicationException {
-        model = grpoService.select(model.getId());
+	@Inject
+	private EntidadService entiService;
 
-        // Modulos
-        final ModuloBO mdloBO = new ModuloBO();
-        final ModuloCriterioVO mdloCriterio = new ModuloCriterioVO();
+	@Inject
+	private ModuloService mdloService;
 
-        mdloCriterio.setGrpoId(model.getId());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doDetail() throws ApplicationException {
+		model = grpoService.select(model.getId());
 
-        mdloList = mdloBO.selectList(mdloCriterio);
+		// Modulos
+		final ModuloCriterioVO mdloCriterio = new ModuloCriterioVO();
 
-        // Acciones Base
-        final AccionBaseBO acbsBO = new AccionBaseBO();
-        final AccionBaseCriterioVO acbsCriterio = new AccionBaseCriterioVO();
+		mdloCriterio.setGrpoId(model.getId());
 
-        acbsCriterio.setGrpoId(model.getId());
+		mdloList = mdloService.selectList(mdloCriterio);
 
-        final List<AccionBaseVO> acbsList = acbsBO.selectList(acbsCriterio);
+		// Acciones Base
+		final AccionBaseBO acbsBO = new AccionBaseBO();
+		final AccionBaseCriterioVO acbsCriterio = new AccionBaseCriterioVO();
 
-        prefixList = new ArrayList<>();
-        acbsMap = new HashMap<>();
+		acbsCriterio.setGrpoId(model.getId());
 
-        for (final AccionBaseVO acbs : acbsList) {
-            if (!acbsMap.containsKey(acbs.getPrefix())) {
-                prefixList.add(acbs.getPrefix());
-                acbsMap.put(acbs.getPrefix(), new ArrayList<AccionBaseVO>());
-            }
+		final List<AccionBaseVO> acbsList = acbsBO.selectList(acbsCriterio);
 
-            acbsMap.get(acbs.getPrefix()).add(acbs);
-        }
+		prefixList = new ArrayList<>();
+		acbsMap = new HashMap<>();
 
-        // Entidades
-        final EntidadBO entiBO = new EntidadBO();
+		for (final AccionBaseVO acbs : acbsList) {
+			if (!acbsMap.containsKey(acbs.getPrefix())) {
+				prefixList.add(acbs.getPrefix());
+				acbsMap.put(acbs.getPrefix(), new ArrayList<AccionBaseVO>());
+			}
 
-        entiList = new ArrayList<>();
+			acbsMap.get(acbs.getPrefix()).add(acbs);
+		}
 
-        for (final EntidadVO enti : entiBO.selectList(new EntidadCriterioVO())) {
-            entiList.add(enti.getId());
-        }
+		// Entidades
+		entiList = new ArrayList<>();
 
-        // Acciones asociadas a entidad
-        final AccionEntidadBO acenBO = new AccionEntidadBO();
-        final AccionEntidadCriterioVO acenCriterio = new AccionEntidadCriterioVO();
+		for (final EntidadVO enti : entiService.selectList(new EntidadCriterioVO())) {
+			entiList.add(enti.getId());
+		}
 
-        acenCriterio.setGrpoId(model.getId());
-        acenCriterio.setIdioma(getIdioma());
+		// Acciones asociadas a entidad
+		final AccionEntidadBO acenBO = new AccionEntidadBO();
+		final AccionEntidadCriterioVO acenCriterio = new AccionEntidadCriterioVO();
 
-        acenMap = new HashMap<>();
+		acenCriterio.setGrpoId(model.getId());
+		acenCriterio.setIdioma(getIdioma());
 
-        for (final AccionEntidadVO acen : acenBO.selectList(acenCriterio)) {
-            if (!acenMap.containsKey(acen.getEntiId())) {
-                acenMap.put(acen.getEntiId(), new ArrayList<AccionEntidadVO>());
-            }
+		acenMap = new HashMap<>();
 
-            acenMap.get(acen.getEntiId()).add(acen);
-        }
+		for (final AccionEntidadVO acen : acenBO.selectList(acenCriterio)) {
+			if (!acenMap.containsKey(acen.getEntiId())) {
+				acenMap.put(acen.getEntiId(), new ArrayList<AccionEntidadVO>());
+			}
 
-        // Acciones especiales
-        final AccionEspecialBO acesBO = new AccionEspecialBO();
-        final AccionEspecialCriterioVO acesCriterio = new AccionEspecialCriterioVO();
+			acenMap.get(acen.getEntiId()).add(acen);
+		}
 
-        acesCriterio.setGrpoId(model.getId());
-        acesCriterio.setIdioma(getIdioma());
+		// Acciones especiales
+		final AccionEspecialBO acesBO = new AccionEspecialBO();
+		final AccionEspecialCriterioVO acesCriterio = new AccionEspecialCriterioVO();
 
-        acesMap = new HashMap<>();
+		acesCriterio.setGrpoId(model.getId());
+		acesCriterio.setIdioma(getIdioma());
 
-        for (final AccionEspecialVO aces : acesBO.selectList(acesCriterio)) {
-            if (!acesMap.containsKey(aces.getEntiId())) {
-                acesMap.put(aces.getEntiId(), new ArrayList<AccionEspecialVO>());
-            }
+		acesMap = new HashMap<>();
 
-            acesMap.get(aces.getEntiId()).add(aces);
-        }
+		for (final AccionEspecialVO aces : acesBO.selectList(acesCriterio)) {
+			if (!acesMap.containsKey(aces.getEntiId())) {
+				acesMap.put(aces.getEntiId(), new ArrayList<AccionEspecialVO>());
+			}
 
-        // Tramites
-        final TramiteBO trmtBO = new TramiteBO();
-        final TramiteCriterioVO trmtCriterio = new TramiteCriterioVO();
+			acesMap.get(aces.getEntiId()).add(aces);
+		}
 
-        trmtCriterio.setGrpoId(model.getId());
-        trmtCriterio.setIdioma(getIdioma());
+		// Tramites
+		final TramiteBO trmtBO = new TramiteBO();
+		final TramiteCriterioVO trmtCriterio = new TramiteCriterioVO();
 
-        trmtMap = new HashMap<>();
+		trmtCriterio.setGrpoId(model.getId());
+		trmtCriterio.setIdioma(getIdioma());
 
-        for (final TramiteVO trmt : trmtBO.selectList(trmtCriterio)) {
-            if (!trmtMap.containsKey(trmt.getEntiId())) {
-                trmtMap.put(trmt.getEntiId(), new ArrayList<TramiteVO>());
-            }
+		trmtMap = new HashMap<>();
 
-            trmtMap.get(trmt.getEntiId()).add(trmt);
-        }
+		for (final TramiteVO trmt : trmtBO.selectList(trmtCriterio)) {
+			if (!trmtMap.containsKey(trmt.getEntiId())) {
+				trmtMap.put(trmt.getEntiId(), new ArrayList<TramiteVO>());
+			}
 
-    }
+			trmtMap.get(trmt.getEntiId()).add(trmt);
+		}
+
+	}
 }

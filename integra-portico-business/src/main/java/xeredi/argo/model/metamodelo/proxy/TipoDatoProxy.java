@@ -42,15 +42,6 @@ public final class TipoDatoProxy {
     }
 
     /**
-     * Select map.
-     *
-     * @return the map
-     */
-    public static Map<Long, TipoDatoVO> selectMap() {
-        return TIPO_DATO_MAP;
-    }
-
-    /**
      * Select label values.
      *
      * @return the list

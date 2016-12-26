@@ -1,6 +1,5 @@
 package xeredi.argo.model.metamodelo.service;
 
-import java.util.List;
 import java.util.Map;
 
 import lombok.NonNull;
@@ -58,15 +57,4 @@ public interface CodigoReferenciaService {
 	 *             the instance not found exception
 	 */
 	public CodigoReferenciaVO select(@NonNull final Long cdrfId, final String idioma) throws InstanceNotFoundException;
-
-	/**
-	 * Select list.
-	 *
-	 * @param tpdtId
-	 *            the tpdt id
-	 * @param idioma
-	 *            the idioma
-	 * @return the list
-	 */
-	List<CodigoReferenciaVO> selectList(@NonNull final Long tpdtId, final String idioma);
 }

@@ -42,147 +42,129 @@ import xeredi.argo.model.metamodelo.vo.TramiteVO;
  */
 public final class EntidadProxy {
 
-    /** The Constant LOG. */
-    private static final Log LOG = LogFactory.getLog(EntidadProxy.class);
+	/** The Constant LOG. */
+	private static final Log LOG = LogFactory.getLog(EntidadProxy.class);
 
-    /** The Constant LABEL_VALUE_LIST. */
-    private static final List<LabelValueVO> LABEL_VALUE_LIST = new ArrayList<>();
+	/** The Constant LABEL_VALUE_LIST. */
+	private static final List<LabelValueVO> LABEL_VALUE_LIST = new ArrayList<>();
 
-    /** The Constant ENTIDAD_MAP. */
-    private static final Map<Long, AbstractEntidadDetailVO> ENTIDAD_MAP = new HashMap<>();
+	/** The Constant ENTIDAD_MAP. */
+	private static final Map<Long, AbstractEntidadDetailVO> ENTIDAD_MAP = new HashMap<>();
 
-    static {
-        load();
-    }
+	static {
+		load();
+	}
 
-    /**
-     * Select label values.
-     *
-     * @return the list
-     */
-    public static List<LabelValueVO> selectLabelValues() {
-        return LABEL_VALUE_LIST;
-    }
+	/**
+	 * Select.
+	 *
+	 * @param id
+	 *            the id
+	 * @return the entidad vo
+	 */
+	public static AbstractEntidadDetailVO select(@NonNull final Long id) {
+		if (!ENTIDAD_MAP.containsKey(id)) {
+			throw new Error(new InstanceNotFoundException(MessageI18nKey.enti, id));
+		}
 
-    /**
-     * Select map.
-     *
-     * @return the map
-     */
-    public static Map<Long, AbstractEntidadDetailVO> selectMap() {
-        return ENTIDAD_MAP;
-    }
+		return ENTIDAD_MAP.get(id);
+	}
 
-    /**
-     * Select.
-     *
-     * @param id
-     *            the id
-     * @return the entidad vo
-     */
-    public static AbstractEntidadDetailVO select(@NonNull final Long id) {
-        if (!ENTIDAD_MAP.containsKey(id)) {
-            throw new Error(new InstanceNotFoundException(MessageI18nKey.enti, id));
-        }
+	/**
+	 * Load.
+	 */
+	static void load() {
+		LOG.info("Carga de Entidades");
 
-        return ENTIDAD_MAP.get(id);
-    }
+		final EntidadBO entiBO = new EntidadBO();
 
-    /**
-     * Load.
-     */
-    static void load() {
-        LOG.info("Carga de Entidades");
+		for (final EntidadVO enti : entiBO.selectList(new EntidadCriterioVO())) {
+			final EntidadDetailVO entiDetail = new EntidadDetailVO();
 
-        final EntidadBO entiBO = new EntidadBO();
+			entiDetail.setEnti(enti);
 
-        for (final EntidadVO enti : entiBO.selectList(new EntidadCriterioVO())) {
-            final EntidadDetailVO entiDetail = new EntidadDetailVO();
+			ENTIDAD_MAP.put(entiDetail.getEnti().getId(), entiDetail);
+		}
 
-            entiDetail.setEnti(enti);
+		LABEL_VALUE_LIST.addAll(entiBO.selectLabelValues(new EntidadCriterioVO()));
 
-            ENTIDAD_MAP.put(entiDetail.getEnti().getId(), entiDetail);
-        }
+		for (final EntidadGrupoDatoVO engd : new EntidadGrupoDatoBO().selectList(new EntidadGrupoDatoCriterioVO())) {
+			final AbstractEntidadDetailVO entidadDetail = ENTIDAD_MAP.get(engd.getEntiId());
 
-        LABEL_VALUE_LIST.addAll(entiBO.selectLabelValues(new EntidadCriterioVO()));
+			entidadDetail.getEngdList().add(engd);
+			engd.setEntiId(null);
+		}
 
-        for (final EntidadGrupoDatoVO engd : new EntidadGrupoDatoBO().selectList(new EntidadGrupoDatoCriterioVO())) {
-            final AbstractEntidadDetailVO entidadDetail = ENTIDAD_MAP.get(engd.getEntiId());
+		for (final EntidadTipoDatoVO entd : new EntidadTipoDatoBO().selectList(new EntidadTipoDatoCriterioVO())) {
+			final AbstractEntidadDetailVO entiDetail = ENTIDAD_MAP.get(entd.getEntiId());
 
-            entidadDetail.getEngdList().add(engd);
-            engd.setEntiId(null);
-        }
+			if (entd.getTpdt() != null) {
+				entd.setTpdt(TipoDatoProxy.select(entd.getTpdt().getId()));
 
-        for (final EntidadTipoDatoVO entd : new EntidadTipoDatoBO().selectList(new EntidadTipoDatoCriterioVO())) {
-            final AbstractEntidadDetailVO entiDetail = ENTIDAD_MAP.get(entd.getEntiId());
+				if (entd.getValidacion() != null) {
+					entd.setVldn(ValidacionProxy.generate(entd.getTpdt().getTipoElemento(), entd.getValidacion()));
+				}
+			}
 
-            if (entd.getTpdt() != null) {
-                entd.setTpdt(TipoDatoProxy.select(entd.getTpdt().getId()));
+			if (entd.getGridable()) {
+				entiDetail.getEntdGridList().add(entd.getTpdt().getId());
+			}
 
-                if (entd.getValidacion() != null) {
-                    entd.setVldn(ValidacionProxy.generate(entd.getTpdt().getTipoElemento(), entd.getValidacion()));
-                }
-            }
+			entiDetail.getEntdList().add(entd.getTpdt().getId());
+			entiDetail.getEntdMap().put(entd.getTpdt().getId(), entd);
+		}
 
-            if (entd.getGridable()) {
-                entiDetail.getEntdGridList().add(entd.getTpdt().getId());
-            }
+		for (final EntidadEntidadVO enen : new EntidadEntidadBO().selectList(new EntidadEntidadCriterioVO())) {
+			final AbstractEntidadDetailVO entiDetailPadre = ENTIDAD_MAP.get(enen.getEntiPadreId());
+			final AbstractEntidadDetailVO entiDetailHija = ENTIDAD_MAP.get(enen.getEntiHija().getId());
 
-            entiDetail.getEntdList().add(entd.getTpdt().getId());
-            entiDetail.getEntdMap().put(entd.getTpdt().getId(), entd);
-        }
+			entiDetailPadre.getEntiHijasList().add(entiDetailHija.getEnti().getId());
+			entiDetailHija.getEntiPadresList().add(entiDetailPadre.getEnti().getId());
+		}
 
-        for (final EntidadEntidadVO enen : new EntidadEntidadBO().selectList(new EntidadEntidadCriterioVO())) {
-            final AbstractEntidadDetailVO entiDetailPadre = ENTIDAD_MAP.get(enen.getEntiPadreId());
-            final AbstractEntidadDetailVO entiDetailHija = ENTIDAD_MAP.get(enen.getEntiHija().getId());
+		for (final AccionEntidadVO acen : new AccionEntidadBO().selectList(new AccionEntidadCriterioVO())) {
+			final AbstractEntidadDetailVO entiDetail = ENTIDAD_MAP.get(acen.getEntiId());
 
-            entiDetailPadre.getEntiHijasList().add(entiDetailHija.getEnti().getId());
-            entiDetailHija.getEntiPadresList().add(entiDetailPadre.getEnti().getId());
-        }
+			entiDetail.getAcenMap().put(acen.getAebs().getCodigo(), acen);
+			acen.setEntiId(null);
+		}
 
-        for (final AccionEntidadVO acen : new AccionEntidadBO().selectList(new AccionEntidadCriterioVO())) {
-            final AbstractEntidadDetailVO entiDetail = ENTIDAD_MAP.get(acen.getEntiId());
+		for (final AccionEspecialVO aces : new AccionEspecialBO().selectList(new AccionEspecialCriterioVO())) {
+			final AbstractEntidadDetailVO entiDetail = ENTIDAD_MAP.get(aces.getEntiId());
 
-            entiDetail.getAcenMap().put(acen.getAebs().getCodigo(), acen);
-            acen.setEntiId(null);
-        }
+			entiDetail.getAcesList().add(aces);
+			aces.setEntiId(null);
+		}
 
-        for (final AccionEspecialVO aces : new AccionEspecialBO().selectList(new AccionEspecialCriterioVO())) {
-            final AbstractEntidadDetailVO entiDetail = ENTIDAD_MAP.get(aces.getEntiId());
+		for (final TramiteVO trmt : new TramiteBO().selectList(new TramiteCriterioVO())) {
+			final AbstractEntidadDetailVO entiDetail = ENTIDAD_MAP.get(trmt.getEntiId());
 
-            entiDetail.getAcesList().add(aces);
-            aces.setEntiId(null);
-        }
+			entiDetail.getTrmtList().add(trmt);
+			trmt.setEntiId(null);
+		}
 
-        for (final TramiteVO trmt : new TramiteBO().selectList(new TramiteCriterioVO())) {
-            final AbstractEntidadDetailVO entiDetail = ENTIDAD_MAP.get(trmt.getEntiId());
+		LOG.info("Carga de entidades OK");
+	}
 
-            entiDetail.getTrmtList().add(trmt);
-            trmt.setEntiId(null);
-        }
-
-        LOG.info("Carga de entidades OK");
-    }
-
-    /**
-     * Load dependencies.
-     *
-     * @param entiMap
-     *            the enti map
-     */
-    static void loadDependencies(final Map<Long, ? extends AbstractEntidadDetailVO> entiMap) {
-        for (final AbstractEntidadDetailVO entiDetail : entiMap.values()) {
-            if (ENTIDAD_MAP.containsKey(entiDetail.getEnti().getId())) {
-                entiDetail.setEntdList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getEntdList());
-                entiDetail.setEntdGridList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getEntdGridList());
-                entiDetail.setEntdMap(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getEntdMap());
-                entiDetail.setEntiHijasList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getEntiHijasList());
-                entiDetail.setEntiPadresList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getEntiPadresList());
-                entiDetail.setAcenMap(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getAcenMap());
-                entiDetail.setAcesList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getAcesList());
-                entiDetail.setEngdList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getEngdList());
-                entiDetail.setTrmtList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getTrmtList());
-            }
-        }
-    }
+	/**
+	 * Load dependencies.
+	 *
+	 * @param entiMap
+	 *            the enti map
+	 */
+	static void loadDependencies(final Map<Long, ? extends AbstractEntidadDetailVO> entiMap) {
+		for (final AbstractEntidadDetailVO entiDetail : entiMap.values()) {
+			if (ENTIDAD_MAP.containsKey(entiDetail.getEnti().getId())) {
+				entiDetail.setEntdList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getEntdList());
+				entiDetail.setEntdGridList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getEntdGridList());
+				entiDetail.setEntdMap(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getEntdMap());
+				entiDetail.setEntiHijasList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getEntiHijasList());
+				entiDetail.setEntiPadresList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getEntiPadresList());
+				entiDetail.setAcenMap(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getAcenMap());
+				entiDetail.setAcesList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getAcesList());
+				entiDetail.setEngdList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getEngdList());
+				entiDetail.setTrmtList(ENTIDAD_MAP.get(entiDetail.getEnti().getId()).getTrmtList());
+			}
+		}
+	}
 }

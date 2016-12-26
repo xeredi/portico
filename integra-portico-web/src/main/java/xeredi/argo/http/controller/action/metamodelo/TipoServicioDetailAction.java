@@ -2,13 +2,14 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.List;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.google.inject.Inject;
+
+import lombok.Getter;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.metamodelo.bo.EntidadBO;
-import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
 import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.argo.model.metamodelo.bo.TramiteBO;
+import xeredi.argo.model.metamodelo.service.EntidadService;
+import xeredi.argo.model.metamodelo.service.TipoServicioService;
 import xeredi.argo.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
@@ -21,30 +22,35 @@ import xeredi.argo.model.metamodelo.vo.TramiteVO;
 /**
  * The Class TipoServicioDetailAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class TipoServicioDetailAction extends EntidadDetailAction<TipoServicioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 3574420037025529065L;
 
     /** The tpss list. */
+    @Getter
     private List<TipoSubservicioVO> subentiList;
 
     /** The enti hijas list. */
+    @Getter
     private List<EntidadVO> entiHijasList;
 
     /** The trmt list. */
+    @Getter
     private List<TramiteVO> trmtList;
+
+	@Inject
+	private TipoServicioService tpsrService;
+
+    @Inject
+	private EntidadService entiService;
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void doSpecificDetail() throws ApplicationException {
-        final TipoServicioBO tpsrBO = new TipoServicioBO();
-
-        model = tpsrBO.select(model.getId(), getIdioma());
+        model = tpsrService.select(model.getId(), getIdioma());
 
         final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
         final TipoSubservicioCriterioVO tpssCriterio = new TipoSubservicioCriterioVO();
@@ -55,13 +61,12 @@ public final class TipoServicioDetailAction extends EntidadDetailAction<TipoServ
         subentiList = tpssBO.selectList(tpssCriterio);
 
         if (subentiList != null && !subentiList.isEmpty()) {
-            final EntidadBO entiBO = new EntidadBO();
             final EntidadCriterioVO entiCriterio = new EntidadCriterioVO();
 
             entiCriterio.setEntiPadreId(model.getId());
             entiCriterio.setIdioma(getIdioma());
 
-            entiHijasList = entiBO.selectList(entiCriterio);
+            entiHijasList = entiService.selectList(entiCriterio);
         }
 
         final TramiteBO trmtBO = new TramiteBO();

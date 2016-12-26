@@ -7,11 +7,10 @@ import com.google.inject.Inject;
 
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
-import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
-import xeredi.argo.model.metamodelo.bo.ModuloBO;
-import xeredi.argo.model.metamodelo.vo.ModuloCriterioVO;
+import xeredi.argo.model.metamodelo.service.ModuloService;
 import xeredi.argo.model.metamodelo.vo.ModuloVO;
 import xeredi.argo.model.seguridad.service.GrupoService;
 import xeredi.argo.model.seguridad.vo.GrupoCriterioVO;
@@ -23,38 +22,39 @@ import xeredi.argo.model.seguridad.vo.GrupoVO;
  */
 public final class ModuloDetailAction extends CrudDetailAction<ModuloVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 696320810765547190L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 696320810765547190L;
 
-    /** The i18n map. */
-    @Getter
-    private Map<String, I18nVO> i18nMap;
+	/** The i18n map. */
+	@Getter
+	private Map<String, I18nVO> i18nMap;
 
-    /** The grpo list. */
-    @Getter
-    private List<GrupoVO> grpoList;
+	/** The grpo list. */
+	@Getter
+	private List<GrupoVO> grpoList;
 
-    @Inject
+	@Inject
+	private ModuloService mdloService;
+
+	@Inject
 	private GrupoService grpoService;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doDetail() throws ApplicationException {
-        final ModuloBO mdloBO = new ModuloBO();
-        final ModuloCriterioVO mdloCriterio = new ModuloCriterioVO();
+	@Inject
+	private I18nService i18nService;
 
-        mdloCriterio.setId(model.getId());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doDetail() throws ApplicationException {
+		model = mdloService.select(model.getId(), getIdioma());
+		i18nMap = i18nService.selectMap(model);
 
-        model = mdloBO.selectObject(mdloCriterio);
-        i18nMap = I18nUtilBO.selectMap(model);
+		final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();
 
-        final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();
+		grpoCriterio.setFncdId(model.getId());
+		grpoCriterio.setIdioma(getIdioma());
 
-        grpoCriterio.setFncdId(model.getId());
-        grpoCriterio.setIdioma(getIdioma());
-
-        grpoList = grpoService.selectList(grpoCriterio);
-    }
+		grpoList = grpoService.selectList(grpoCriterio);
+	}
 }

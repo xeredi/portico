@@ -12,9 +12,9 @@ import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
-import xeredi.argo.model.metamodelo.bo.TipoParametroBO;
-import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
 import xeredi.argo.model.metamodelo.service.TipoDatoService;
+import xeredi.argo.model.metamodelo.service.TipoParametroService;
+import xeredi.argo.model.metamodelo.service.TipoServicioService;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoElemento;
@@ -57,8 +57,16 @@ public final class TipoDatoEditAction extends CrudEditAction<TipoDatoVO> {
 	@Inject
 	private TipoDatoService tpdtService;
 
+	/** The i 18 n service. */
 	@Inject
 	private I18nService i18nService;
+
+	/** The tppr service. */
+	@Inject
+	private TipoParametroService tpprService;
+
+	@Inject
+	private TipoServicioService tpsrService;
 
 	/**
 	 * {@inheritDoc}
@@ -84,18 +92,16 @@ public final class TipoDatoEditAction extends CrudEditAction<TipoDatoVO> {
 		tpelList = TipoElemento.values();
 		tphtList = TipoHtml.values();
 
-		final TipoParametroBO tpprBO = new TipoParametroBO();
 		final TipoParametroCriterioVO tpprCriterio = new TipoParametroCriterioVO();
 
 		tpprCriterio.setIdioma(getIdioma());
 
-		tpprList = tpprBO.selectList(tpprCriterio);
+		tpprList = tpprService.selectList(tpprCriterio);
 
-		final TipoServicioBO tpsrBO = new TipoServicioBO();
 		final TipoServicioCriterioVO tpsrCriterio = new TipoServicioCriterioVO();
 
 		tpsrCriterio.setIdioma(getIdioma());
 
-		tpsrList = tpsrBO.selectList(tpsrCriterio);
+		tpsrList = tpsrService.selectList(tpsrCriterio);
 	}
 }

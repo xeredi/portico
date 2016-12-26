@@ -2,14 +2,15 @@ package xeredi.argo.http.controller.action.servicio;
 
 import java.util.List;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.google.inject.Inject;
+
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
-import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.PuertoService;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
-import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
+import xeredi.argo.model.metamodelo.service.TipoServicioService;
 import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
 import xeredi.argo.model.servicio.vo.ServicioSecuenciaCriterioVO;
@@ -18,45 +19,49 @@ import xeredi.argo.model.servicio.vo.ServicioSecuenciaCriterioVO;
 /**
  * The Class ServicioSecuenciaFilterAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class ServicioSecuenciaFilterAction extends GridFilterAction<ServicioSecuenciaCriterioVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 6314175196167234783L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 6314175196167234783L;
 
-    /** The tpsr list. */
-    private List<TipoServicioVO> tpsrList;
+	/** The tpsr list. */
+	@Getter
+	private List<TipoServicioVO> tpsrList;
 
-    /** The prto list. */
-    private List<PuertoVO> prtoList;
+	/** The prto list. */
+	@Getter
+	private List<PuertoVO> prtoList;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doPrepareFilter() throws ApplicationException {
-        // noop
-    }
+	@Inject
+	private TipoServicioService tpsrService;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doLoadDependencies() throws ApplicationException {
-        final PuertoBO prtoBO = new PuertoBO();
-        final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+	@Inject
+	private PuertoService prtoService;
 
-        prtoCriterio.setIdioma(getIdioma());
-        prtoCriterio.setSprtId(getSprtId());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doPrepareFilter() throws ApplicationException {
+		// noop
+	}
 
-        prtoList = prtoBO.selectList(prtoCriterio);
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doLoadDependencies() throws ApplicationException {
+		final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
-        final TipoServicioBO tpsrBO = new TipoServicioBO();
-        final TipoServicioCriterioVO tpsrCriterio = new TipoServicioCriterioVO();
+		prtoCriterio.setIdioma(getIdioma());
+		prtoCriterio.setSprtId(getSprtId());
 
-        tpsrCriterio.setIdioma(getIdioma());
+		prtoList = prtoService.selectList(prtoCriterio);
 
-        tpsrList = tpsrBO.selectList(tpsrCriterio);
-    }
+		final TipoServicioCriterioVO tpsrCriterio = new TipoServicioCriterioVO();
+
+		tpsrCriterio.setIdioma(getIdioma());
+
+		tpsrList = tpsrService.selectList(tpsrCriterio);
+	}
 }

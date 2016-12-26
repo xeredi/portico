@@ -19,56 +19,35 @@ import xeredi.argo.model.util.SqlMapperLocator;
  */
 public final class EntidadBO {
 
-    /**
-     * Select.
-     *
-     * @param entiId
-     *            the enti id
-     * @param idioma
-     *            the idioma
-     * @return the entidad vo
-     */
-    public EntidadVO select(@NonNull final Long entiId, final String idioma) {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
-            final EntidadCriterioVO entiCriterio = new EntidadCriterioVO();
+	/**
+	 * Select list.
+	 *
+	 * @param entiCriterio
+	 *            the enti criterio vo
+	 * @return the list
+	 */
+	public List<EntidadVO> selectList(@NonNull final EntidadCriterioVO entiCriterio) {
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
 
-            entiCriterio.setId(entiId);
-            entiCriterio.setIdioma(idioma);
+			return entiDAO.selectList(entiCriterio);
+		}
+	}
 
-            return entiDAO.selectObject(entiCriterio);
-        }
-    }
+	/**
+	 * Select label values.
+	 *
+	 * @param entiCriterio
+	 *            the enti criterio vo
+	 * @return the list
+	 */
+	public List<LabelValueVO> selectLabelValues(@NonNull final EntidadCriterioVO entiCriterio) {
+		final List<LabelValueVO> list = new ArrayList<>();
 
-    /**
-     * Select list.
-     *
-     * @param entiCriterio
-     *            the enti criterio vo
-     * @return the list
-     */
-    public List<EntidadVO> selectList(@NonNull final EntidadCriterioVO entiCriterio) {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final EntidadDAO entiDAO = session.getMapper(EntidadDAO.class);
+		for (final EntidadVO enti : selectList(entiCriterio)) {
+			list.add(new LabelValueVO(enti.getNombre(), enti.getId()));
+		}
 
-            return entiDAO.selectList(entiCriterio);
-        }
-    }
-
-    /**
-     * Select label values.
-     *
-     * @param entiCriterio
-     *            the enti criterio vo
-     * @return the list
-     */
-    public List<LabelValueVO> selectLabelValues(@NonNull final EntidadCriterioVO entiCriterio) {
-        final List<LabelValueVO> list = new ArrayList<>();
-
-        for (final EntidadVO enti : selectList(entiCriterio)) {
-            list.add(new LabelValueVO(enti.getNombre(), enti.getId()));
-        }
-
-        return list;
-    }
+		return list;
+	}
 }

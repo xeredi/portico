@@ -1,6 +1,5 @@
 package xeredi.argo.model.metamodelo.service;
 
-import java.util.List;
 import java.util.Map;
 
 import org.mybatis.guice.transactional.Transactional;
@@ -100,18 +99,5 @@ public class CodigoReferenciaServiceImpl implements CodigoReferenciaService {
 		}
 
 		return cdrf;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<CodigoReferenciaVO> selectList(@NonNull final Long tpdtId, final String idioma) {
-		final CodigoReferenciaCriterioVO cdrfCriterioVO = new CodigoReferenciaCriterioVO();
-
-		cdrfCriterioVO.setTpdtId(tpdtId);
-		cdrfCriterioVO.setIdioma(idioma);
-
-		return cdrfDAO.selectList(cdrfCriterioVO);
 	}
 }

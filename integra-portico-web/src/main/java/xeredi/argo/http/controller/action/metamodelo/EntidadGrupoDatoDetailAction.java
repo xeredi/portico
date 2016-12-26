@@ -2,11 +2,12 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.Map;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.google.inject.Inject;
+
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
-import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.argo.model.metamodelo.vo.EntidadGrupoDatoVO;
@@ -15,24 +16,26 @@ import xeredi.argo.model.metamodelo.vo.EntidadGrupoDatoVO;
 /**
  * The Class EntidadGrupoDatoDetailAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class EntidadGrupoDatoDetailAction extends CrudDetailAction<EntidadGrupoDatoVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 5264232903029377024L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 5264232903029377024L;
 
-    /** The i18n map. */
-    private Map<String, I18nVO> i18nMap;
+	/** The i18n map. */
+	@Getter
+	private Map<String, I18nVO> i18nMap;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doDetail() throws ApplicationException {
-        final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
+	@Inject
+	private I18nService i18nService;
 
-        model = engdBO.select(model.getId(), getIdioma());
-        i18nMap = I18nUtilBO.selectMap(model);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doDetail() throws ApplicationException {
+		final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
+
+		model = engdBO.select(model.getId(), getIdioma());
+		i18nMap = i18nService.selectMap(model);
+	}
 }

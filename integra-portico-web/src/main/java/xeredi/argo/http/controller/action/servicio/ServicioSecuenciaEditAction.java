@@ -3,15 +3,15 @@ package xeredi.argo.http.controller.action.servicio;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
-import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.PuertoService;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
-import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
+import xeredi.argo.model.metamodelo.service.TipoServicioService;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
@@ -23,61 +23,65 @@ import xeredi.argo.model.servicio.vo.ServicioSecuenciaVO;
 /**
  * The Class ServicioSecuenciaEditAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class ServicioSecuenciaEditAction extends CrudEditAction<ServicioSecuenciaVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 7265649887754786022L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 7265649887754786022L;
 
-    /** The prto list. */
-    private List<PuertoVO> prtoList;
+	/** The prto list. */
+	@Getter
+	private List<PuertoVO> prtoList;
 
-    /** The tpsr list. */
-    private List<TipoServicioVO> tpsrList;
+	/** The tpsr list. */
+	@Getter
+	private List<TipoServicioVO> tpsrList;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doEdit() throws ApplicationException {
-        if (accion == AccionCodigo.edit) {
-            Preconditions.checkNotNull(model.getPrto());
-            Preconditions.checkNotNull(model.getPrto().getId());
-            Preconditions.checkNotNull(model.getTpsr());
-            Preconditions.checkNotNull(model.getTpsr().getId());
-            Preconditions.checkNotNull(model.getAnno());
+	@Inject
+	private TipoServicioService tpsrService;
 
-            final ServicioSecuenciaBO srscBO = new ServicioSecuenciaBO();
-            final ServicioSecuenciaCriterioVO srscCriterio = new ServicioSecuenciaCriterioVO();
+	@Inject
+	private PuertoService prtoService;
 
-            srscCriterio.setPrtoId(model.getPrto().getId());
-            srscCriterio.setTpsrId(model.getTpsr().getId());
-            srscCriterio.setAnno(model.getAnno());
-            srscCriterio.setIdioma(getIdioma());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doEdit() throws ApplicationException {
+		if (accion == AccionCodigo.edit) {
+			Preconditions.checkNotNull(model.getPrto());
+			Preconditions.checkNotNull(model.getPrto().getId());
+			Preconditions.checkNotNull(model.getTpsr());
+			Preconditions.checkNotNull(model.getTpsr().getId());
+			Preconditions.checkNotNull(model.getAnno());
 
-            model = srscBO.select(srscCriterio);
-        }
-    }
+			final ServicioSecuenciaBO srscBO = new ServicioSecuenciaBO();
+			final ServicioSecuenciaCriterioVO srscCriterio = new ServicioSecuenciaCriterioVO();
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doLoadDependencies() throws ApplicationException {
-        final PuertoBO prtoBO = new PuertoBO();
-        final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+			srscCriterio.setPrtoId(model.getPrto().getId());
+			srscCriterio.setTpsrId(model.getTpsr().getId());
+			srscCriterio.setAnno(model.getAnno());
+			srscCriterio.setIdioma(getIdioma());
 
-        prtoCriterio.setIdioma(getIdioma());
-        prtoCriterio.setSprtId(getSprtId());
+			model = srscBO.select(srscCriterio);
+		}
+	}
 
-        prtoList = prtoBO.selectList(prtoCriterio);
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doLoadDependencies() throws ApplicationException {
+		final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
-        final TipoServicioBO tpsrBO = new TipoServicioBO();
-        final TipoServicioCriterioVO tpsrCriterio = new TipoServicioCriterioVO();
+		prtoCriterio.setIdioma(getIdioma());
+		prtoCriterio.setSprtId(getSprtId());
 
-        tpsrCriterio.setIdioma(getIdioma());
+		prtoList = prtoService.selectList(prtoCriterio);
 
-        tpsrList = tpsrBO.selectList(tpsrCriterio);
-    }
+		final TipoServicioCriterioVO tpsrCriterio = new TipoServicioCriterioVO();
+
+		tpsrCriterio.setIdioma(getIdioma());
+
+		tpsrList = tpsrService.selectList(tpsrCriterio);
+	}
 }

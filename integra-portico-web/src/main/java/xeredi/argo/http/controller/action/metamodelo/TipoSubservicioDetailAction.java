@@ -2,12 +2,13 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.List;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.google.inject.Inject;
+
+import lombok.Getter;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.metamodelo.bo.EntidadBO;
 import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.argo.model.metamodelo.bo.TramiteBO;
+import xeredi.argo.model.metamodelo.service.EntidadService;
 import xeredi.argo.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioVO;
@@ -18,57 +19,59 @@ import xeredi.argo.model.metamodelo.vo.TramiteVO;
 /**
  * The Class TipoSubservicioDetailAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class TipoSubservicioDetailAction extends EntidadDetailAction<TipoSubservicioVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -2106629104252322129L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -2106629104252322129L;
 
-    /** The enti hijas list. */
-    private List<EntidadVO> entiHijasList;
+	/** The enti hijas list. */
+	@Getter
+	private List<EntidadVO> entiHijasList;
 
-    /** The enti padres list. */
-    private List<EntidadVO> entiPadresList;
+	/** The enti padres list. */
+	@Getter
+	private List<EntidadVO> entiPadresList;
 
-    /** The trmt list. */
-    private List<TramiteVO> trmtList;
+	/** The trmt list. */
+	@Getter
+	private List<TramiteVO> trmtList;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSpecificDetail() throws ApplicationException {
-        final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
+	@Inject
+	private EntidadService entiService;
 
-        model = tpssBO.select(model.getId(), getIdioma());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSpecificDetail() throws ApplicationException {
+		final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
 
-        final EntidadBO entiBO = new EntidadBO();
+		model = tpssBO.select(model.getId(), getIdioma());
 
-        {
-            final EntidadCriterioVO entiCriterio = new EntidadCriterioVO();
+		{
+			final EntidadCriterioVO entiCriterio = new EntidadCriterioVO();
 
-            entiCriterio.setEntiPadreId(model.getId());
-            entiCriterio.setIdioma(getIdioma());
+			entiCriterio.setEntiPadreId(model.getId());
+			entiCriterio.setIdioma(getIdioma());
 
-            entiHijasList = entiBO.selectList(entiCriterio);
-        }
+			entiHijasList = entiService.selectList(entiCriterio);
+		}
 
-        {
-            final EntidadCriterioVO entiCriterio = new EntidadCriterioVO();
+		{
+			final EntidadCriterioVO entiCriterio = new EntidadCriterioVO();
 
-            entiCriterio.setEntiHijaId(model.getId());
-            entiCriterio.setIdioma(getIdioma());
+			entiCriterio.setEntiHijaId(model.getId());
+			entiCriterio.setIdioma(getIdioma());
 
-            entiPadresList = entiBO.selectList(entiCriterio);
-        }
+			entiPadresList = entiService.selectList(entiCriterio);
+		}
 
-        final TramiteBO trmtBO = new TramiteBO();
-        final TramiteCriterioVO trmtCriterio = new TramiteCriterioVO();
+		final TramiteBO trmtBO = new TramiteBO();
+		final TramiteCriterioVO trmtCriterio = new TramiteCriterioVO();
 
-        trmtCriterio.setEntiId(model.getId());
-        trmtCriterio.setIdioma(getIdioma());
+		trmtCriterio.setEntiId(model.getId());
+		trmtCriterio.setIdioma(getIdioma());
 
-        trmtList = trmtBO.selectList(trmtCriterio);
-    }
+		trmtList = trmtBO.selectList(trmtCriterio);
+	}
 }

@@ -97,13 +97,4 @@ public interface TipoDatoService {
 	 * @return the list
 	 */
 	List<LabelValueVO> selectLabelValues(@NonNull final TipoDatoCriterioVO tpdtCriterio);
-
-	/**
-	 * Select map.
-	 *
-	 * @param tpdtCriterio
-	 *            the tpdt criterio
-	 * @return the map
-	 */
-	Map<Long, TipoDatoVO> selectMap(@NonNull final TipoDatoCriterioVO tpdtCriterio);
 }

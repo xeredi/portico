@@ -24,92 +24,83 @@ import xeredi.argo.model.metamodelo.vo.TipoEstadisticaVO;
  * The Class TipoEstadisticaProxy.
  */
 public final class TipoEstadisticaProxy {
-    /** The Constant LOG. */
-    private static final Log LOG = LogFactory.getLog(TipoEstadisticaProxy.class);
+	/** The Constant LOG. */
+	private static final Log LOG = LogFactory.getLog(TipoEstadisticaProxy.class);
 
-    /** The Constant LABEL_VALUE_LIST. */
-    private static final List<LabelValueVO> LABEL_VALUE_LIST = new ArrayList<>();
+	/** The Constant LABEL_VALUE_LIST. */
+	private static final List<LabelValueVO> LABEL_VALUE_LIST = new ArrayList<>();
 
-    /** The Constant TIPO_ESTADISTICA_MAP. */
-    private static final Map<Long, TipoEstadisticaDetailVO> TIPO_ESTADISTICA_MAP = new HashMap<>();
+	/** The Constant TIPO_ESTADISTICA_MAP. */
+	private static final Map<Long, TipoEstadisticaDetailVO> TIPO_ESTADISTICA_MAP = new HashMap<>();
 
-    static {
-        load();
-    }
+	static {
+		load();
+	}
 
-    /**
-     * Instantiates a new tipo estadistica proxy.
-     */
-    private TipoEstadisticaProxy() {
-        super();
-    }
+	/**
+	 * Instantiates a new tipo estadistica proxy.
+	 */
+	private TipoEstadisticaProxy() {
+		super();
+	}
 
-    /**
-     * Select label values.
-     *
-     * @return the list
-     */
-    public static List<LabelValueVO> selectLabelValues() {
-        return LABEL_VALUE_LIST;
-    }
+	/**
+	 * Select label values.
+	 *
+	 * @return the list
+	 */
+	public static List<LabelValueVO> selectLabelValues() {
+		return LABEL_VALUE_LIST;
+	}
 
-    /**
-     * Select map.
-     *
-     * @return the map
-     */
-    public static Map<Long, TipoEstadisticaDetailVO> selectMap() {
-        return TIPO_ESTADISTICA_MAP;
-    }
+	/**
+	 * Select.
+	 *
+	 * @param id
+	 *            the id
+	 * @return the tipo parametro vo
+	 */
+	public static TipoEstadisticaDetailVO select(final long id) {
+		if (!TIPO_ESTADISTICA_MAP.containsKey(id)) {
+			throw new Error(new InstanceNotFoundException(MessageI18nKey.tpes, id));
+		}
 
-    /**
-     * Select.
-     *
-     * @param id
-     *            the id
-     * @return the tipo parametro vo
-     */
-    public static TipoEstadisticaDetailVO select(final long id) {
-        if (!TIPO_ESTADISTICA_MAP.containsKey(id)) {
-            throw new Error(new InstanceNotFoundException(MessageI18nKey.tpes, id));
-        }
+		return TIPO_ESTADISTICA_MAP.get(id);
+	}
 
-        return TIPO_ESTADISTICA_MAP.get(id);
-    }
+	/**
+	 * Load.
+	 */
+	static synchronized void load() {
+		LOG.info("Carga de tipos de estadistica");
 
-    /**
-     * Load.
-     */
-    static synchronized void load() {
-        LOG.info("Carga de tipos de estadistica");
+		final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
 
-        final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
+		for (final TipoEstadisticaVO tpes : tpesBO.selectList(new TipoEstadisticaCriterioVO())) {
+			final TipoEstadisticaDetailVO tpesDetail = new TipoEstadisticaDetailVO();
 
-        for (final TipoEstadisticaVO tpes : tpesBO.selectList(new TipoEstadisticaCriterioVO())) {
-            final TipoEstadisticaDetailVO tpesDetail = new TipoEstadisticaDetailVO();
+			tpesDetail.setEnti(tpes);
 
-            tpesDetail.setEnti(tpes);
+			TIPO_ESTADISTICA_MAP.put(tpesDetail.getEnti().getId(), tpesDetail);
+		}
 
-            TIPO_ESTADISTICA_MAP.put(tpesDetail.getEnti().getId(), tpesDetail);
-        }
+		final CampoAgregacionBO cmagBO = new CampoAgregacionBO();
 
-        final CampoAgregacionBO cmagBO = new CampoAgregacionBO();
+		for (final CampoAgregacionVO cmag : cmagBO.selectList(new CampoAgregacionCriterioVO())) {
+			final TipoEstadisticaDetailVO tpesDetail = TIPO_ESTADISTICA_MAP.get(cmag.getTpesId());
 
-        for (final CampoAgregacionVO cmag : cmagBO.selectList(new CampoAgregacionCriterioVO())) {
-            final TipoEstadisticaDetailVO tpesDetail = TIPO_ESTADISTICA_MAP.get(cmag.getTpesId());
+			if (tpesDetail.getCmagList() == null) {
+				tpesDetail.setCmagList(new ArrayList<CampoAgregacionVO>());
+			}
 
-            if (tpesDetail.getCmagList() == null) {
-                tpesDetail.setCmagList(new ArrayList<CampoAgregacionVO>());
-            }
+			tpesDetail.getCmagList().add(cmag);
+		}
 
-            tpesDetail.getCmagList().add(cmag);
-        }
+		EntidadProxy.loadDependencies(TIPO_ESTADISTICA_MAP);
 
-        EntidadProxy.loadDependencies(TIPO_ESTADISTICA_MAP);
+		LABEL_VALUE_LIST.addAll(tpesBO.selectLabelValues());
 
-        LABEL_VALUE_LIST.addAll(tpesBO.selectLabelValues());
-
-        LOG.info("Carga de tipos de estadistica OK");
-    }
+		LOG.info("Carga de tipos de estadistica OK");
+	}
 
 }

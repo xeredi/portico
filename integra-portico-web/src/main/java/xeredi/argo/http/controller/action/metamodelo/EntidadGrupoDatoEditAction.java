@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
-import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.metamodelo.bo.EntidadGrupoDatoBO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
@@ -19,40 +19,42 @@ import xeredi.argo.model.metamodelo.vo.EntidadGrupoDatoVO;
 /**
  * The Class EntidadGrupoDatoEditAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class EntidadGrupoDatoEditAction extends CrudEditAction<EntidadGrupoDatoVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -1801325748314233476L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -1801325748314233476L;
 
-    /** The i18n map. */
-    private Map<String, I18nVO> i18nMap;
+	/** The i18n map. */
+	@Getter
+	private Map<String, I18nVO> i18nMap;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doEdit() throws ApplicationException {
-        Preconditions.checkNotNull(model.getEntiId());
+	@Inject
+	private I18nService i18nService;
 
-        if (accion == AccionCodigo.create) {
-            i18nMap = new HashMap<>();
-        } else {
-            Preconditions.checkNotNull(model.getId());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doEdit() throws ApplicationException {
+		Preconditions.checkNotNull(model.getEntiId());
 
-            final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
+		if (accion == AccionCodigo.create) {
+			i18nMap = new HashMap<>();
+		} else {
+			Preconditions.checkNotNull(model.getId());
 
-            model = engdBO.select(model.getId(), getIdioma());
-            i18nMap = I18nUtilBO.selectMap(model);
-        }
-    }
+			final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doLoadDependencies() throws ApplicationException {
-        // noop
-    }
+			model = engdBO.select(model.getId(), getIdioma());
+			i18nMap = i18nService.selectMap(model);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doLoadDependencies() throws ApplicationException {
+		// noop
+	}
 }

@@ -1,7 +1,5 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
@@ -10,8 +8,6 @@ import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
 /**
  * The Class TipoServicioFilterAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class TipoServicioFilterAction extends GridFilterAction<TipoServicioCriterioVO> {
 
     /** The Constant serialVersionUID. */

@@ -1,23 +1,24 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.google.inject.Inject;
+
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.argo.model.metamodelo.bo.TipoServicioBO;
+import xeredi.argo.model.metamodelo.service.TipoServicioService;
 import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoServicioSaveAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class TipoServicioSaveAction extends EntidadSaveAction<TipoServicioVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 6958390432394107987L;
+
+	@Inject
+	private TipoServicioService tpsrService;
 
     /**
      * {@inheritDoc}
@@ -34,15 +35,13 @@ public final class TipoServicioSaveAction extends EntidadSaveAction<TipoServicio
      */
     @Override
     public void doSave() throws ApplicationException {
-        final TipoServicioBO tpsrBO = new TipoServicioBO();
-
         switch (accion) {
         case create:
-            tpsrBO.insert(model, i18nMap);
+            tpsrService.insert(model, i18nMap);
 
             break;
         case edit:
-            tpsrBO.update(model, i18nMap);
+            tpsrService.update(model, i18nMap);
 
             break;
         default:
