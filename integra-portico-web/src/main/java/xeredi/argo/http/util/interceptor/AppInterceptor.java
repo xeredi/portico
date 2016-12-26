@@ -3,6 +3,7 @@ package xeredi.argo.http.util.interceptor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.google.inject.Inject;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
@@ -17,6 +18,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
+import xeredi.argo.model.seguridad.service.UsuarioPermisoService;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -24,73 +26,77 @@ import xeredi.argo.model.metamodelo.vo.AccionCodigo;
  */
 public final class AppInterceptor extends AbstractInterceptor {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -2275010347766981914L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -2275010347766981914L;
 
-    /** The log. */
-    private static Log LOG = LogFactory.getLog(AppInterceptor.class);
+	/** The log. */
+	private static Log LOG = LogFactory.getLog(AppInterceptor.class);
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String intercept(final ActionInvocation invocation) throws Exception {
-        final BaseAction action = (BaseAction) invocation.getAction();
+	@Inject
+	private UsuarioPermisoService usprService;
 
-        String result = Action.SUCCESS;
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String intercept(final ActionInvocation invocation) throws Exception {
+		final BaseAction action = (BaseAction) invocation.getAction();
 
-        try {
-            if (action instanceof UsuarioAccesoAction) {
-                result = invocation.invoke();
-            } else {
-                if (SessionManager.isAuthenticated(action)) {
-                    if (action instanceof ProtectedAction) {
-                        final ClassPrefix prefix = action.getPrefix();
-                        final AccionCodigo codigo = ((ProtectedAction) action).getAccion();
+		String result = Action.SUCCESS;
 
-                        if (action instanceof ProtectedItemAction) {
-                            final Long entiId = ((ProtectedItemAction) action).getEntiId();
+		try {
+			if (action instanceof UsuarioAccesoAction) {
+				result = invocation.invoke();
+			} else {
+				if (SessionManager.isAuthenticated(action)) {
+					if (action instanceof ProtectedAction) {
+						final ClassPrefix prefix = action.getPrefix();
+						final AccionCodigo codigo = ((ProtectedAction) action).getAccion();
 
-                            if (!SessionManager.hasPermission(prefix, codigo, entiId)) {
-                                action.addActionError(MessageI18nKey.E00015, prefix.name(), codigo);
-                            }
-                        } else {
-                            if (!SessionManager.hasPermission(prefix, codigo)) {
-                                action.addActionError(MessageI18nKey.E00015, prefix.name(), codigo);
-                            }
-                        }
-                    }
+						if (action instanceof ProtectedItemAction) {
+							final Long entiId = ((ProtectedItemAction) action).getEntiId();
 
-                    if (action instanceof FuncionalidadAction) {
-                        final Long fncdId = ((FuncionalidadAction) action).getFncdId();
+							if (!usprService.hasAcen(SessionManager.getUsroId(), prefix.name(), codigo.name(),
+									entiId)) {
+								action.addActionError(MessageI18nKey.E00015, prefix.name(), codigo);
+							}
+						} else {
+							if (!usprService.hasAcbs(SessionManager.getUsroId(), prefix.name(), codigo.name())) {
+								action.addActionError(MessageI18nKey.E00015, prefix.name(), codigo);
+							}
+						}
+					}
 
-                        if (!SessionManager.hasPermission(fncdId)) {
-                            action.addActionError(MessageI18nKey.E00015, fncdId);
-                        }
-                    }
+					if (action instanceof FuncionalidadAction) {
+						final Long fncdId = ((FuncionalidadAction) action).getFncdId();
 
-                    if (!action.hasErrors()) {
-                        result = invocation.invoke();
-                    }
-                } else {
-                    result = Action.LOGIN;
-                }
-            }
-        } catch (final ApplicationException ex) {
-            action.addActionError(ex.getMessage(action.getLocale()));
+						if (!usprService.hasFncd(SessionManager.getUsroId(), fncdId)) {
+							action.addActionError(MessageI18nKey.E00015, fncdId);
+						}
+					}
 
-            if (LOG.isDebugEnabled()) {
-                LOG.debug(ex, ex);
-            }
-        } catch (final Throwable ex) {
-            action.addActionError(MessageI18nKey.E00000, ex.getMessage());
+					if (!action.hasErrors()) {
+						result = invocation.invoke();
+					}
+				} else {
+					result = Action.LOGIN;
+				}
+			}
+		} catch (final ApplicationException ex) {
+			action.addActionError(ex.getMessage(action.getLocale()));
 
-            LOG.fatal(ex, ex);
-        }
+			if (LOG.isDebugEnabled()) {
+				LOG.debug(ex, ex);
+			}
+		} catch (final Throwable ex) {
+			action.addActionError(MessageI18nKey.E00000, ex.getMessage());
 
-        action.setResponseCode(action.hasErrors() ? Action.ERROR : result);
+			LOG.fatal(ex, ex);
+		}
 
-        return Action.SUCCESS;
-    }
+		action.setResponseCode(action.hasErrors() ? Action.ERROR : result);
+
+		return Action.SUCCESS;
+	}
 
 }

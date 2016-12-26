@@ -15,9 +15,9 @@ import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.AccionBaseBO;
 import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
 import xeredi.argo.model.metamodelo.bo.AccionEspecialBO;
-import xeredi.argo.model.metamodelo.bo.TramiteBO;
 import xeredi.argo.model.metamodelo.service.EntidadService;
 import xeredi.argo.model.metamodelo.service.ModuloService;
+import xeredi.argo.model.metamodelo.service.TramiteService;
 import xeredi.argo.model.metamodelo.vo.AccionBaseCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionBaseVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
@@ -83,6 +83,9 @@ public final class GrupoEditAction extends CrudEditAction<GrupoVO> {
 
 	@Inject
 	private ModuloService mdloService;
+
+	@Inject
+	private TramiteService trmtService;
 
 	/**
 	 * {@inheritDoc}
@@ -171,7 +174,7 @@ public final class GrupoEditAction extends CrudEditAction<GrupoVO> {
 
 		trmtCriterio.setIdioma(getIdioma());
 
-		for (final TramiteVO trmt : new TramiteBO().selectList(trmtCriterio)) {
+		for (final TramiteVO trmt : trmtService.selectList(trmtCriterio)) {
 			if (!trmtMap.containsKey(trmt.getEntiId())) {
 				trmtMap.put(trmt.getEntiId(), new ArrayList<TramiteVO>());
 			}

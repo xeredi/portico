@@ -14,9 +14,9 @@ import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.metamodelo.bo.AccionBaseBO;
 import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
 import xeredi.argo.model.metamodelo.bo.AccionEspecialBO;
-import xeredi.argo.model.metamodelo.bo.TramiteBO;
 import xeredi.argo.model.metamodelo.service.EntidadService;
 import xeredi.argo.model.metamodelo.service.ModuloService;
+import xeredi.argo.model.metamodelo.service.TramiteService;
 import xeredi.argo.model.metamodelo.vo.AccionBaseCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionBaseVO;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadCriterioVO;
@@ -77,6 +77,9 @@ public final class GrupoDetailAction extends CrudDetailAction<GrupoVO> {
 
 	@Inject
 	private ModuloService mdloService;
+
+	@Inject
+	private TramiteService trmtService;
 
 	/**
 	 * {@inheritDoc}
@@ -154,7 +157,6 @@ public final class GrupoDetailAction extends CrudDetailAction<GrupoVO> {
 		}
 
 		// Tramites
-		final TramiteBO trmtBO = new TramiteBO();
 		final TramiteCriterioVO trmtCriterio = new TramiteCriterioVO();
 
 		trmtCriterio.setGrpoId(model.getId());
@@ -162,7 +164,7 @@ public final class GrupoDetailAction extends CrudDetailAction<GrupoVO> {
 
 		trmtMap = new HashMap<>();
 
-		for (final TramiteVO trmt : trmtBO.selectList(trmtCriterio)) {
+		for (final TramiteVO trmt : trmtService.selectList(trmtCriterio)) {
 			if (!trmtMap.containsKey(trmt.getEntiId())) {
 				trmtMap.put(trmt.getEntiId(), new ArrayList<TramiteVO>());
 			}

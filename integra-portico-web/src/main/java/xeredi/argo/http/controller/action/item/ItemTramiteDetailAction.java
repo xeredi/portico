@@ -1,9 +1,10 @@
 package xeredi.argo.http.controller.action.item;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 import com.opensymphony.xwork2.ModelDriven;
 
-import lombok.Data;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.item.bo.ItemTramiteBO;
@@ -12,7 +13,7 @@ import xeredi.argo.model.item.vo.ItemVO;
 import xeredi.argo.model.metamodelo.proxy.EntidadProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
-import xeredi.argo.model.metamodelo.proxy.TramiteProxy;
+import xeredi.argo.model.metamodelo.service.TramiteProxyService;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.TipoEntidad;
@@ -34,78 +35,85 @@ import xeredi.argo.model.servicio.vo.SubservicioVO;
 /**
  * Instantiates a new item tramite detail action.
  */
-@Data
 public final class ItemTramiteDetailAction extends BaseAction
-        implements ModelDriven<ItemTramiteVO>, ProtectedItemAction {
+		implements ModelDriven<ItemTramiteVO>, ProtectedItemAction {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -2680320980030804227L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -2680320980030804227L;
 
-    /** The accion. */
-    protected final AccionCodigo accion = AccionCodigo.ittrDetail;
+	/** The accion. */
+	@Getter
+	protected final AccionCodigo accion = AccionCodigo.ittrDetail;
 
-    /** The model. */
-    protected ItemTramiteVO model;
+	/** The model. */
+	@Getter
+	protected ItemTramiteVO model;
 
-    /** The trmt. */
-    protected TramiteDetailVO trmt;
+	/** The trmt. */
+	@Getter
+	protected TramiteDetailVO trmt;
 
-    /** The enti. */
-    protected AbstractEntidadDetailVO enti;
+	/** The enti. */
+	@Getter
+	protected AbstractEntidadDetailVO enti;
 
-    /** The item. */
-    protected ItemVO item;
+	/** The item. */
+	@Getter
+	protected ItemVO item;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doExecute() throws ApplicationException {
-        Preconditions.checkNotNull(model);
-        Preconditions.checkNotNull(model.getId());
+	@Inject
+	private TramiteProxyService trmtProxy;
 
-        final ItemTramiteBO ittrBO = new ItemTramiteBO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doExecute() throws ApplicationException {
+		Preconditions.checkNotNull(model);
+		Preconditions.checkNotNull(model.getId());
 
-        model = ittrBO.select(model.getId(), getIdioma());
-        trmt = TramiteProxy.select(model.getTrmt().getId());
+		final ItemTramiteBO ittrBO = new ItemTramiteBO();
 
-        final TipoEntidad tipoEntidad = EntidadProxy.select(model.getTrmt().getEntiId()).getEnti().getTipo();
+		model = ittrBO.select(model.getId(), getIdioma());
+		trmt = trmtProxy.select(model.getTrmt().getId());
 
-        switch (tipoEntidad) {
-        case T:
-            final TipoServicioDetailVO tpsr = TipoServicioProxy.select(model.getTrmt().getEntiId());
-            final ServicioBO srvcBO = ServicioBOFactory.newInstance(tpsr.getEnti().getId(), usroId);
-            final ServicioVO srvc = srvcBO.select(model.getItemId(), getIdioma());
+		final TipoEntidad tipoEntidad = EntidadProxy.select(model.getTrmt().getEntiId()).getEnti().getTipo();
 
-            item = srvc;
-            enti = tpsr;
+		switch (tipoEntidad) {
+		case T:
+			final TipoServicioDetailVO tpsr = TipoServicioProxy.select(model.getTrmt().getEntiId());
+			final ServicioBO srvcBO = ServicioBOFactory.newInstance(tpsr.getEnti().getId(), usroId);
+			final ServicioVO srvc = srvcBO.select(model.getItemId(), getIdioma());
 
-            break;
-        case S:
-            final TipoSubservicioDetailVO tpss = TipoSubservicioProxy.select(model.getTrmt().getEntiId());
-            final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getTrmt().getEntiId(), usroId);
-            final SubservicioVO ssrv = ssrvBO.select(model.getItemId(), getIdioma());
+			item = srvc;
+			enti = tpsr;
 
-            item = ssrv;
-            enti = tpss;
+			break;
+		case S:
+			final TipoSubservicioDetailVO tpss = TipoSubservicioProxy.select(model.getTrmt().getEntiId());
+			final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getTrmt().getEntiId(), usroId);
+			final SubservicioVO ssrv = ssrvBO.select(model.getItemId(), getIdioma());
 
-            break;
-        case P:
-            throw new Error("No implementado!!");
-        default:
-            throw new Error("Invalid entity type: " + tipoEntidad);
-        }
-    }
+			item = ssrv;
+			enti = tpss;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final Long getEntiId() {
-        Preconditions.checkNotNull(model);
-        Preconditions.checkNotNull(model.getTrmt());
-        Preconditions.checkNotNull(model.getTrmt().getEntiId());
+			break;
+		case P:
+			throw new Error("No implementado!!");
+		default:
+			throw new Error("Invalid entity type: " + tipoEntidad);
+		}
+	}
 
-        return model.getTrmt().getEntiId();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final Long getEntiId() {
+		Preconditions.checkNotNull(model);
+		Preconditions.checkNotNull(model.getTrmt());
+		Preconditions.checkNotNull(model.getTrmt().getEntiId());
+
+		return model.getTrmt().getEntiId();
+	}
 }

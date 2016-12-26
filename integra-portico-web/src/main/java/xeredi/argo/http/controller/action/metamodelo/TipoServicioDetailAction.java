@@ -7,9 +7,9 @@ import com.google.inject.Inject;
 import lombok.Getter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
-import xeredi.argo.model.metamodelo.bo.TramiteBO;
 import xeredi.argo.model.metamodelo.service.EntidadService;
 import xeredi.argo.model.metamodelo.service.TipoServicioService;
+import xeredi.argo.model.metamodelo.service.TramiteService;
 import xeredi.argo.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
@@ -45,6 +45,9 @@ public final class TipoServicioDetailAction extends EntidadDetailAction<TipoServ
     @Inject
 	private EntidadService entiService;
 
+	@Inject
+	private TramiteService trmtService;
+
     /**
      * {@inheritDoc}
      */
@@ -69,12 +72,11 @@ public final class TipoServicioDetailAction extends EntidadDetailAction<TipoServ
             entiHijasList = entiService.selectList(entiCriterio);
         }
 
-        final TramiteBO trmtBO = new TramiteBO();
         final TramiteCriterioVO trmtCriterio = new TramiteCriterioVO();
 
         trmtCriterio.setEntiId(model.getId());
         trmtCriterio.setIdioma(getIdioma());
 
-        trmtList = trmtBO.selectList(trmtCriterio);
+        trmtList = trmtService.selectList(trmtCriterio);
     }
 }

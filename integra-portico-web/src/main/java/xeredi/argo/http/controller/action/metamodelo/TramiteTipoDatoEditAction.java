@@ -3,14 +3,14 @@ package xeredi.argo.http.controller.action.metamodelo;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.EntidadTipoDatoBO;
-import xeredi.argo.model.metamodelo.bo.TramiteBO;
 import xeredi.argo.model.metamodelo.bo.TramiteTipoDatoBO;
+import xeredi.argo.model.metamodelo.service.TramiteService;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
@@ -21,56 +21,56 @@ import xeredi.argo.model.metamodelo.vo.TramiteVO;
 /**
  * The Class TramiteTipoDatoEditAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class TramiteTipoDatoEditAction extends CrudEditAction<TramiteTipoDatoVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -7651037788650883305L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -7651037788650883305L;
 
-    /** The entd list. */
-    private List<EntidadTipoDatoVO> entdList;
+	/** The entd list. */
+	@Getter
+	private List<EntidadTipoDatoVO> entdList;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doEdit() throws ApplicationException {
-        Preconditions.checkNotNull(model.getTrmtId());
+	@Inject
+	private TramiteService trmtService;
 
-        switch (accion) {
-        case edit:
-            Preconditions.checkNotNull(model.getEntd().getTpdt().getId());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doEdit() throws ApplicationException {
+		Preconditions.checkNotNull(model.getTrmtId());
 
-            final TramiteTipoDatoBO trtdBO = new TramiteTipoDatoBO();
+		switch (accion) {
+		case edit:
+			Preconditions.checkNotNull(model.getEntd().getTpdt().getId());
 
-            model = trtdBO.select(model.getTrmtId(), model.getEntd().getTpdt().getId(), getIdioma());
+			final TramiteTipoDatoBO trtdBO = new TramiteTipoDatoBO();
 
-            break;
-        default:
-            break;
-        }
-    }
+			model = trtdBO.select(model.getTrmtId(), model.getEntd().getTpdt().getId(), getIdioma());
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doLoadDependencies() throws ApplicationException {
-        Preconditions.checkNotNull(model.getTrmtId());
+			break;
+		default:
+			break;
+		}
+	}
 
-        if (accion == AccionCodigo.create) {
-            final TramiteBO trmtBO = new TramiteBO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doLoadDependencies() throws ApplicationException {
+		Preconditions.checkNotNull(model.getTrmtId());
 
-            final TramiteVO trmt = trmtBO.select(model.getTrmtId(), getIdioma());
+		if (accion == AccionCodigo.create) {
+			final TramiteVO trmt = trmtService.select(model.getTrmtId(), getIdioma());
 
-            final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
-            final EntidadTipoDatoCriterioVO entdCriterio = new EntidadTipoDatoCriterioVO();
+			final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
+			final EntidadTipoDatoCriterioVO entdCriterio = new EntidadTipoDatoCriterioVO();
 
-            entdCriterio.setEntiId(trmt.getEntiId());
-            entdCriterio.setIdioma(getIdioma());
+			entdCriterio.setEntiId(trmt.getEntiId());
+			entdCriterio.setIdioma(getIdioma());
 
-            entdList = entdBO.selectList(entdCriterio);
-        }
-    }
+			entdList = entdBO.selectList(entdCriterio);
+		}
+	}
 }

@@ -6,9 +6,10 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 import com.opensymphony.xwork2.ModelDriven;
 
-import lombok.Data;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.LabelValueVO;
@@ -21,7 +22,7 @@ import xeredi.argo.model.maestro.bo.ParametroBOFactory;
 import xeredi.argo.model.metamodelo.proxy.EntidadProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
-import xeredi.argo.model.metamodelo.proxy.TramiteProxy;
+import xeredi.argo.model.metamodelo.service.TramiteProxyService;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoEntidad;
 import xeredi.argo.model.metamodelo.vo.TipoHtml;
@@ -40,145 +41,153 @@ import xeredi.argo.model.servicio.vo.SubservicioVO;
 /**
  * The Class ItemTramiteEditAction.
  */
-@Data
 public final class ItemTramiteEditAction extends BaseAction implements ModelDriven<ItemTramiteVO>, FuncionalidadAction {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 7371401403513787913L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 7371401403513787913L;
 
-    /** The model. */
-    protected ItemTramiteVO model;
+	/** The model. */
+	@Getter
+	protected ItemTramiteVO model;
 
-    /** The trmt. */
-    protected TramiteDetailVO trmt;
+	/** The trmt. */
+	@Getter
+	protected TramiteDetailVO trmt;
 
-    /** The item. */
-    private ItemVO item;
+	/** The item. */
+	@Getter
+	private ItemVO item;
 
-    /** The enti. */
-    private AbstractEntidadDetailVO enti;
+	/** The enti. */
+	@Getter
+	private AbstractEntidadDetailVO enti;
 
-    /** The label values map. */
-    private HashMap<Long, List<LabelValueVO>> labelValuesMap;
+	/** The label values map. */
+	@Getter
+	private HashMap<Long, List<LabelValueVO>> labelValuesMap;
 
-    /** The prto id. */
-    private Long prtoId;
+	/** The prto id. */
+	@Getter
+	private Long prtoId;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void doExecute() throws ApplicationException {
-        Preconditions.checkNotNull(model.getItemId());
-        Preconditions.checkNotNull(model.getTrmt().getId());
+	@Inject
+	private TramiteProxyService trmtProxy;
 
-        trmt = TramiteProxy.select(model.getTrmt().getId());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final void doExecute() throws ApplicationException {
+		Preconditions.checkNotNull(model.getItemId());
+		Preconditions.checkNotNull(model.getTrmt().getId());
 
-        model.setTrmt(trmt.getTrmt());
+		trmt = trmtProxy.select(model.getTrmt().getId());
 
-        final TipoEntidad tipoEntidad = EntidadProxy.select(model.getTrmt().getEntiId()).getEnti().getTipo();
+		model.setTrmt(trmt.getTrmt());
 
-        switch (tipoEntidad) {
-        case T:
-            final TipoServicioDetailVO tpsr = TipoServicioProxy.select(model.getTrmt().getEntiId());
-            final ServicioBO srvcBO = ServicioBOFactory.newInstance(tpsr.getEnti().getId(), usroId);
-            final ServicioVO srvc = srvcBO.select(model.getItemId(), getIdioma());
+		final TipoEntidad tipoEntidad = EntidadProxy.select(model.getTrmt().getEntiId()).getEnti().getTipo();
 
-            prtoId = srvc.getPrto().getId();
+		switch (tipoEntidad) {
+		case T:
+			final TipoServicioDetailVO tpsr = TipoServicioProxy.select(model.getTrmt().getEntiId());
+			final ServicioBO srvcBO = ServicioBOFactory.newInstance(tpsr.getEnti().getId(), usroId);
+			final ServicioVO srvc = srvcBO.select(model.getItemId(), getIdioma());
 
-            item = srvc;
-            enti = tpsr;
+			prtoId = srvc.getPrto().getId();
 
-            break;
-        case S:
-            final TipoSubservicioDetailVO tpss = TipoSubservicioProxy.select(model.getTrmt().getEntiId());
-            final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getTrmt().getEntiId(), usroId);
-            final SubservicioVO ssrv = ssrvBO.select(model.getItemId(), getIdioma());
+			item = srvc;
+			enti = tpsr;
 
-            prtoId = ssrv.getSrvc().getPrto().getId();
+			break;
+		case S:
+			final TipoSubservicioDetailVO tpss = TipoSubservicioProxy.select(model.getTrmt().getEntiId());
+			final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getTrmt().getEntiId(), usroId);
+			final SubservicioVO ssrv = ssrvBO.select(model.getItemId(), getIdioma());
 
-            model.setOitemFini(ssrv.getFini());
-            model.setOitemFfin(ssrv.getFfin());
-            model.setDitemFini(ssrv.getFini());
-            model.setDitemFfin(ssrv.getFfin());
+			prtoId = ssrv.getSrvc().getPrto().getId();
 
-            item = ssrv;
-            enti = tpss;
+			model.setOitemFini(ssrv.getFini());
+			model.setOitemFfin(ssrv.getFfin());
+			model.setDitemFini(ssrv.getFini());
+			model.setDitemFfin(ssrv.getFfin());
 
-            break;
-        case P:
-            throw new Error("No implementado!!");
-        default:
-            throw new Error("Invalid entity type: " + tipoEntidad);
-        }
+			item = ssrv;
+			enti = tpss;
 
-        if (!trmt.getTpdtList().isEmpty()) {
-            for (final Long tpdtId : trmt.getTpdtList()) {
-                final ItemTramiteDatoVO ittd = new ItemTramiteDatoVO();
+			break;
+		case P:
+			throw new Error("No implementado!!");
+		default:
+			throw new Error("Invalid entity type: " + tipoEntidad);
+		}
 
-                ittd.setTpdtId(tpdtId);
+		if (!trmt.getTpdtList().isEmpty()) {
+			for (final Long tpdtId : trmt.getTpdtList()) {
+				final ItemTramiteDatoVO ittd = new ItemTramiteDatoVO();
 
-                if (item.getItdtMap().containsKey(tpdtId)) {
-                    final ItemDatoVO itdt = item.getItdtMap().get(tpdtId);
+				ittd.setTpdtId(tpdtId);
 
-                    ittd.setOcadena(itdt.getCadena());
-                    ittd.setOnentero(itdt.getCantidadEntera());
-                    ittd.setOndecimal(itdt.getCantidadDecimal());
-                    ittd.setOfecha(itdt.getFecha());
-                    ittd.setOprmt(itdt.getPrmt());
-                    ittd.setOsrvc(itdt.getSrvc());
+				if (item.getItdtMap().containsKey(tpdtId)) {
+					final ItemDatoVO itdt = item.getItdtMap().get(tpdtId);
 
-                    ittd.setDcadena(itdt.getCadena());
-                    ittd.setDnentero(itdt.getCantidadEntera());
-                    ittd.setDndecimal(itdt.getCantidadDecimal());
-                    ittd.setDfecha(itdt.getFecha());
-                    ittd.setDprmt(itdt.getPrmt());
-                    ittd.setDsrvc(itdt.getSrvc());
-                }
+					ittd.setOcadena(itdt.getCadena());
+					ittd.setOnentero(itdt.getCantidadEntera());
+					ittd.setOndecimal(itdt.getCantidadDecimal());
+					ittd.setOfecha(itdt.getFecha());
+					ittd.setOprmt(itdt.getPrmt());
+					ittd.setOsrvc(itdt.getSrvc());
 
-                model.getIttdMap().put(tpdtId, ittd);
-            }
-        }
+					ittd.setDcadena(itdt.getCadena());
+					ittd.setDnentero(itdt.getCantidadEntera());
+					ittd.setDndecimal(itdt.getCantidadDecimal());
+					ittd.setDfecha(itdt.getFecha());
+					ittd.setDprmt(itdt.getPrmt());
+					ittd.setDsrvc(itdt.getSrvc());
+				}
 
-        doLoadDependencies();
-    }
+				model.getIttdMap().put(tpdtId, ittd);
+			}
+		}
 
-    /**
-     * Do load dependencies.
-     *
-     * @throws ApplicationException
-     *             the application exception
-     */
-    public final void doLoadDependencies() throws ApplicationException {
-        Preconditions.checkNotNull(model.getTrmt().getEntiId());
+		doLoadDependencies();
+	}
 
-        labelValuesMap = new HashMap<Long, List<LabelValueVO>>();
+	/**
+	 * Do load dependencies.
+	 *
+	 * @throws ApplicationException
+	 *             the application exception
+	 */
+	public final void doLoadDependencies() throws ApplicationException {
+		Preconditions.checkNotNull(model.getTrmt().getEntiId());
 
-        final Set<Long> tpprIds = new HashSet<>();
+		labelValuesMap = new HashMap<Long, List<LabelValueVO>>();
 
-        for (final TramiteTipoDatoVO trtd : trmt.getTrtdMap().values()) {
-            if (trtd.getEntd().getTpdt().getTpht() != TipoHtml.F && trtd.getEntd().getTpdt().getEnti() != null
-                    && trtd.getEntd().getTpdt().getEnti().getId() != null) {
-                tpprIds.add(trtd.getEntd().getTpdt().getEnti().getId());
-            }
-        }
+		final Set<Long> tpprIds = new HashSet<>();
 
-        if (!tpprIds.isEmpty()) {
-            final ParametroBO prmtBO = ParametroBOFactory.newDefaultInstance();
+		for (final TramiteTipoDatoVO trtd : trmt.getTrtdMap().values()) {
+			if (trtd.getEntd().getTpdt().getTpht() != TipoHtml.F && trtd.getEntd().getTpdt().getEnti() != null
+					&& trtd.getEntd().getTpdt().getEnti().getId() != null) {
+				tpprIds.add(trtd.getEntd().getTpdt().getEnti().getId());
+			}
+		}
 
-            labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, model.getFref(), getIdioma()));
-        }
-    }
+		if (!tpprIds.isEmpty()) {
+			final ParametroBO prmtBO = ParametroBOFactory.newDefaultInstance();
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Long getFncdId() {
-        Preconditions.checkNotNull(model);
-        Preconditions.checkNotNull(model.getTrmt());
-        Preconditions.checkNotNull(model.getTrmt().getId());
+			labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, model.getFref(), getIdioma()));
+		}
+	}
 
-        return model.getTrmt().getId();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Long getFncdId() {
+		Preconditions.checkNotNull(model);
+		Preconditions.checkNotNull(model.getTrmt());
+		Preconditions.checkNotNull(model.getTrmt().getId());
+
+		return model.getTrmt().getId();
+	}
 }

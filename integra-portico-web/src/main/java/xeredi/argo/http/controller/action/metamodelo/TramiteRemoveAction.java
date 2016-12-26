@@ -1,34 +1,32 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.metamodelo.bo.TramiteBO;
+import xeredi.argo.model.metamodelo.service.TramiteService;
 import xeredi.argo.model.metamodelo.vo.TramiteVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TramiteRmoveAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class TramiteRemoveAction extends CrudRemoveAction<TramiteVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -8053448630800994429L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -8053448630800994429L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doRemove() throws ApplicationException {
-        Preconditions.checkNotNull(model.getId());
+	@Inject
+	private TramiteService trmtService;
 
-        final TramiteBO trmtBO = new TramiteBO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doRemove() throws ApplicationException {
+		Preconditions.checkNotNull(model.getId());
 
-        trmtBO.delete(model);
-    }
+		trmtService.delete(model);
+	}
 }
