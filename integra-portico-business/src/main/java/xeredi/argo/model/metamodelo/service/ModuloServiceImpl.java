@@ -55,19 +55,6 @@ public class ModuloServiceImpl implements ModuloService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean isUserAllowed(@NonNull final Long mdloId, @NonNull final Long usroId) {
-		final ModuloCriterioVO mdloCriterio = new ModuloCriterioVO();
-
-		mdloCriterio.setId(mdloId);
-		mdloCriterio.setUsroId(usroId);
-
-		return mdloDAO.count(mdloCriterio) > 0;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public void insert(@NonNull final ModuloVO mdlo, @NonNull final Map<String, I18nVO> i18nMap)
 			throws DuplicateInstanceException {
 		if (mdloDAO.exists(mdlo)) {

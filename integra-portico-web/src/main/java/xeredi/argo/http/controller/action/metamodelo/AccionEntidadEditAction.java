@@ -3,13 +3,13 @@ package xeredi.argo.http.controller.action.metamodelo;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
-import xeredi.argo.model.metamodelo.bo.AccionEntidadBaseBO;
+import xeredi.argo.model.metamodelo.service.AccionEntidadBaseService;
+import xeredi.argo.model.metamodelo.service.AccionEntidadService;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadBaseCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadBaseVO;
@@ -20,43 +20,46 @@ import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
 /**
  * The Class AccionEntidadEditAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class AccionEntidadEditAction extends CrudEditAction<AccionEntidadVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -6298953902914627135L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -6298953902914627135L;
 
-    /** The accn list. */
-    private List<AccionEntidadBaseVO> aebsList;
+	/** The accn list. */
+	@Getter
+	private List<AccionEntidadBaseVO> aebsList;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doEdit() throws ApplicationException {
-        if (accion == AccionCodigo.create) {
-            Preconditions.checkNotNull(model.getEntiId());
-        } else {
-            Preconditions.checkNotNull(model.getId());
+	@Inject
+	private AccionEntidadService acenService;
 
-            final AccionEntidadBO acenBO = new AccionEntidadBO();
-            final AccionEntidadCriterioVO acenCriterio = new AccionEntidadCriterioVO();
+	@Inject
+	private AccionEntidadBaseService aebsService;
 
-            acenCriterio.setId(model.getId());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doEdit() throws ApplicationException {
+		if (accion == AccionCodigo.create) {
+			Preconditions.checkNotNull(model.getEntiId());
+		} else {
+			Preconditions.checkNotNull(model.getId());
 
-            model = acenBO.selectObject(acenCriterio);
-        }
-    }
+			final AccionEntidadCriterioVO acenCriterio = new AccionEntidadCriterioVO();
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doLoadDependencies() throws ApplicationException {
-        final AccionEntidadBaseBO aebsBO = new AccionEntidadBaseBO();
-        final AccionEntidadBaseCriterioVO aebsCriterio = new AccionEntidadBaseCriterioVO();
+			acenCriterio.setId(model.getId());
 
-        aebsList = aebsBO.selectList(aebsCriterio);
-    }
+			model = acenService.selectObject(acenCriterio);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doLoadDependencies() throws ApplicationException {
+		final AccionEntidadBaseCriterioVO aebsCriterio = new AccionEntidadBaseCriterioVO();
+
+		aebsList = aebsService.selectList(aebsCriterio);
+	}
 }

@@ -1,28 +1,29 @@
 package xeredi.argo.http.controller.action.facturacion;
 
-import lombok.Data;
+import com.google.inject.Inject;
+
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.CargoBO;
+import xeredi.argo.model.facturacion.service.CargoService;
 import xeredi.argo.model.facturacion.vo.CargoVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class CargoRemoveAction.
  */
-@Data
 public final class CargoRemoveAction extends CrudRemoveAction<CargoVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -6268936117161838481L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -6268936117161838481L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doRemove() throws ApplicationException {
-        final CargoBO crgoBO = new CargoBO();
+	@Inject
+	private CargoService crgoService;
 
-        crgoBO.delete(model);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doRemove() throws ApplicationException {
+		crgoService.delete(model);
+	}
 }

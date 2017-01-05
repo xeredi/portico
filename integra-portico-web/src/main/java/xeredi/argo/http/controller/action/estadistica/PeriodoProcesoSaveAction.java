@@ -5,15 +5,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import lombok.Data;
+import com.google.inject.Inject;
+
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.controller.session.SessionManager;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.http.view.estadistica.ProcesoEstadisticaVO;
-import xeredi.argo.model.comun.bo.ArchivoBO;
-import xeredi.argo.model.comun.bo.SuperpuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.proxy.ConfigurationProxy;
+import xeredi.argo.model.comun.service.ArchivoService;
+import xeredi.argo.model.comun.service.SuperpuertoService;
 import xeredi.argo.model.comun.vo.ArchivoSentido;
 import xeredi.argo.model.comun.vo.ArchivoVO;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
@@ -28,64 +29,67 @@ import xeredi.argo.model.proceso.vo.ProcesoTipo;
 /**
  * The Class PeriodoProcesoSaveAction.
  */
-@Data
 public final class PeriodoProcesoSaveAction extends CrudSaveAction<ProcesoEstadisticaVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 230657854894847117L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 230657854894847117L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSave() throws ApplicationException {
-        final SuperpuertoBO sprtBO = new SuperpuertoBO();
-        final SuperpuertoVO sprt = sprtBO.select(model.getPepr().getSprt().getId(), getIdioma());
+	@Inject
+	private SuperpuertoService sprtService;
 
-        final ProcesoBO prbtBO = new ProcesoBO();
-        final Map<String, String> parametroMap = new HashMap<>();
+	@Inject
+	private ArchivoService archService;
 
-        parametroMap.put(ProcesoCargaOppe.params.autp.name(), sprt.getCodigo());
-        parametroMap.put(ProcesoCargaOppe.params.anio.name(), model.getPepr().getAnio().toString());
-        parametroMap.put(ProcesoCargaOppe.params.mes.name(), model.getPepr().getMes().toString());
-        parametroMap.put(ProcesoCargaOppe.params.sobreescribir.name(), model.getSobreescribir().toString());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSave() throws ApplicationException {
+		final SuperpuertoVO sprt = sprtService.select(model.getPepr().getSprt().getId(), getIdioma());
 
-        switch (accion) {
-        case load:
-            final String foldername = ConfigurationProxy
-                    .getString(ConfigurationKey.estadistica_files_oppe_entrada_home);
-            final String filepath = foldername + "/" + model.getPepr().getFilename() + ".zip";
-            final File file = new File(filepath);
-            final ArchivoBO archBO = new ArchivoBO();
+		final ProcesoBO prbtBO = new ProcesoBO();
+		final Map<String, String> parametroMap = new HashMap<>();
 
-            final ArchivoVO arch = archBO.create(file, ArchivoSentido.E);
+		parametroMap.put(ProcesoCargaOppe.params.autp.name(), sprt.getCodigo());
+		parametroMap.put(ProcesoCargaOppe.params.anio.name(), model.getPepr().getAnio().toString());
+		parametroMap.put(ProcesoCargaOppe.params.mes.name(), model.getPepr().getMes().toString());
+		parametroMap.put(ProcesoCargaOppe.params.sobreescribir.name(), model.getSobreescribir().toString());
 
-            prbtBO.crear(SessionManager.getUsroId(), ProcesoTipo.EST_CARGA, parametroMap, ItemTipo.arch,
-                    Arrays.asList(arch.getArin().getId()));
+		switch (accion) {
+		case load:
+			final String foldername = ConfigurationProxy
+					.getString(ConfigurationKey.estadistica_files_oppe_entrada_home);
+			final String filepath = foldername + "/" + model.getPepr().getFilename() + ".zip";
+			final File file = new File(filepath);
 
-            break;
-        case create:
-            prbtBO.crear(SessionManager.getUsroId(), ProcesoTipo.EST_CREACION, parametroMap, null, null);
+			final ArchivoVO arch = archService.create(file, ArchivoSentido.E);
 
-            break;
-        default:
-            throw new Error("Accion no valida: " + accion);
-        }
-    }
+			prbtBO.crear(SessionManager.getUsroId(), ProcesoTipo.EST_CARGA, parametroMap, ItemTipo.arch,
+					Arrays.asList(arch.getArin().getId()));
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doValidate() throws ApplicationException {
-        FieldValidator.validateRequired(this, MessageI18nKey.sprt, model.getPepr().getSprt());
+			break;
+		case create:
+			prbtBO.crear(SessionManager.getUsroId(), ProcesoTipo.EST_CREACION, parametroMap, null, null);
 
-        if (!hasErrors()) {
-            FieldValidator.validateRequired(this, MessageI18nKey.sprt, model.getPepr().getSprt().getId());
-        }
+			break;
+		default:
+			throw new Error("Accion no valida: " + accion);
+		}
+	}
 
-        FieldValidator.validateRequired(this, MessageI18nKey.pepr_anio, model.getPepr().getAnio());
-        FieldValidator.validateRequired(this, MessageI18nKey.pepr_mes, model.getPepr().getMes());
-        FieldValidator.validateRequired(this, MessageI18nKey.pepr_sobreescribir, model.getSobreescribir());
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doValidate() throws ApplicationException {
+		FieldValidator.validateRequired(this, MessageI18nKey.sprt, model.getPepr().getSprt());
+
+		if (!hasErrors()) {
+			FieldValidator.validateRequired(this, MessageI18nKey.sprt, model.getPepr().getSprt().getId());
+		}
+
+		FieldValidator.validateRequired(this, MessageI18nKey.pepr_anio, model.getPepr().getAnio());
+		FieldValidator.validateRequired(this, MessageI18nKey.pepr_mes, model.getPepr().getMes());
+		FieldValidator.validateRequired(this, MessageI18nKey.pepr_sobreescribir, model.getSobreescribir());
+	}
 }

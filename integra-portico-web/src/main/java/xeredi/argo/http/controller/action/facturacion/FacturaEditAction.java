@@ -1,12 +1,13 @@
 package xeredi.argo.http.controller.action.facturacion;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.bo.FacturaBO;
+import xeredi.argo.model.facturacion.service.AspectoService;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.FacturaVO;
 
@@ -14,34 +15,36 @@ import xeredi.argo.model.facturacion.vo.FacturaVO;
 /**
  * The Class FacturaEditAction.
  */
-@Data
 public final class FacturaEditAction extends CrudEditAction<FacturaVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -1122946174457133287L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -1122946174457133287L;
 
-    /** The aspc. */
-    private AspectoVO aspc;
+	/** The aspc. */
+	@Getter
+	private AspectoVO aspc;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doEdit() throws ApplicationException {
-        Preconditions.checkNotNull(model.getId());
+	@Inject
+	private AspectoService aspcService;
 
-        final FacturaBO fctrBO = new FacturaBO();
-        final AspectoBO aspcBO = new AspectoBO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doEdit() throws ApplicationException {
+		Preconditions.checkNotNull(model.getId());
 
-        model = fctrBO.select(model.getId(), getIdioma());
-        aspc = aspcBO.select(model.getAspc().getId(), model.getFref(), getIdioma());
-    }
+		final FacturaBO fctrBO = new FacturaBO();
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doLoadDependencies() throws ApplicationException {
-        // noop
-    }
+		model = fctrBO.select(model.getId(), getIdioma());
+		aspc = aspcService.select(model.getAspc().getId(), model.getFref(), getIdioma());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doLoadDependencies() throws ApplicationException {
+		// noop
+	}
 }

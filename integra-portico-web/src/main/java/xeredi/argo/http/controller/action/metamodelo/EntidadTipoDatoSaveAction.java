@@ -3,15 +3,15 @@ package xeredi.argo.http.controller.action.metamodelo;
 import java.util.Map;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Setter;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.argo.model.metamodelo.bo.EntidadTipoDatoBO;
+import xeredi.argo.model.metamodelo.service.EntidadTipoDatoService;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 
@@ -19,62 +19,62 @@ import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 /**
  * The Class EntidadTipoDatoSaveAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class EntidadTipoDatoSaveAction extends CrudSaveAction<EntidadTipoDatoVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -6877738229315027201L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -6877738229315027201L;
 
-    /** The i18n map. */
-    private Map<String, I18nVO> i18nMap;
+	/** The i18n map. */
+	@Setter
+	private Map<String, I18nVO> i18nMap;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSave() throws ApplicationException {
-        final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
+	@Inject
+	private EntidadTipoDatoService entdService;
 
-        switch (accion) {
-        case create:
-            entdBO.insert(model, i18nMap);
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSave() throws ApplicationException {
+		switch (accion) {
+		case create:
+			entdService.insert(model, i18nMap);
 
-            break;
-        case edit:
-            entdBO.update(model, i18nMap);
+			break;
+		case edit:
+			entdService.update(model, i18nMap);
 
-            break;
-        default:
-            throw new Error("Accion no contemplada: " + accion);
-        }
-    }
+			break;
+		default:
+			throw new Error("Accion no contemplada: " + accion);
+		}
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doValidate() throws ApplicationException {
-        Preconditions.checkNotNull(model.getEntiId());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doValidate() throws ApplicationException {
+		Preconditions.checkNotNull(model.getEntiId());
 
-        if (accion == AccionCodigo.create) {
-            FieldValidator.validateRequired(this, MessageI18nKey.tpdt, model.getTpdt());
-        } else {
-            Preconditions.checkNotNull(model.getTpdt());
-            Preconditions.checkNotNull(model.getTpdt().getId());
-        }
+		if (accion == AccionCodigo.create) {
+			FieldValidator.validateRequired(this, MessageI18nKey.tpdt, model.getTpdt());
+		} else {
+			Preconditions.checkNotNull(model.getTpdt());
+			Preconditions.checkNotNull(model.getTpdt().getId());
+		}
 
-        FieldValidator.validateI18n(this, i18nMap);
+		FieldValidator.validateI18n(this, i18nMap);
 
-        FieldValidator.validateRequired(this, MessageI18nKey.entd_grupo, model.getGrupo());
-        FieldValidator.validateRequired(this, MessageI18nKey.entd_fila, model.getFila());
-        FieldValidator.validateRequired(this, MessageI18nKey.entd_orden, model.getOrden());
-        FieldValidator.validateRequired(this, MessageI18nKey.entd_span, model.getSpan());
-        FieldValidator.validateRequired(this, MessageI18nKey.entd_spanLg, model.getSpanLg());
-        FieldValidator.validateRequired(this, MessageI18nKey.entd_obligatorio, model.getObligatorio());
-        FieldValidator.validateRequired(this, MessageI18nKey.entd_gridable, model.getGridable());
-        FieldValidator.validateRequired(this, MessageI18nKey.entd_filtrable, model.getFiltrable());
+		FieldValidator.validateRequired(this, MessageI18nKey.entd_grupo, model.getGrupo());
+		FieldValidator.validateRequired(this, MessageI18nKey.entd_fila, model.getFila());
+		FieldValidator.validateRequired(this, MessageI18nKey.entd_orden, model.getOrden());
+		FieldValidator.validateRequired(this, MessageI18nKey.entd_span, model.getSpan());
+		FieldValidator.validateRequired(this, MessageI18nKey.entd_spanLg, model.getSpanLg());
+		FieldValidator.validateRequired(this, MessageI18nKey.entd_obligatorio, model.getObligatorio());
+		FieldValidator.validateRequired(this, MessageI18nKey.entd_gridable, model.getGridable());
+		FieldValidator.validateRequired(this, MessageI18nKey.entd_filtrable, model.getFiltrable());
 
-        FieldValidator.validateValidacion(this, MessageI18nKey.entd_validacion, model.getValidacion());
-    }
+		FieldValidator.validateValidacion(this, MessageI18nKey.entd_validacion, model.getValidacion());
+	}
 }

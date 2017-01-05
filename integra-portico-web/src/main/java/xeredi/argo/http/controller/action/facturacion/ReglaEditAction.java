@@ -5,15 +5,16 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
-import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.LabelValueVO;
-import xeredi.argo.model.facturacion.bo.CargoBO;
-import xeredi.argo.model.facturacion.bo.ReglaBO;
+import xeredi.argo.model.facturacion.service.CargoService;
+import xeredi.argo.model.facturacion.service.ReglaService;
 import xeredi.argo.model.facturacion.vo.CargoVO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
@@ -28,75 +29,79 @@ import xeredi.argo.model.metamodelo.vo.TipoSubservicioCriterioVO;
  * The Class ReglaEditAction.
  */
 public final class ReglaEditAction extends CrudEditAction<ReglaVO> {
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -7473288340314527092L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -7473288340314527092L;
 
-    /** The i18n map. */
-    @Getter
-    private Map<String, I18nVO> i18nMap;
+	/** The i18n map. */
+	@Getter
+	private Map<String, I18nVO> i18nMap;
 
-    /** The enti facturable list. */
-    @Getter
-    private List<LabelValueVO> entiFacturableList;
+	/** The enti facturable list. */
+	@Getter
+	private List<LabelValueVO> entiFacturableList;
 
-    /** The tipos. */
-    @Getter
-    private ReglaTipo[] tipos;
+	/** The tipos. */
+	@Getter
+	private ReglaTipo[] tipos;
 
-    private TipoServicioService tpsrService;
-    
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doEdit() throws ApplicationException {
-        if (accion == AccionCodigo.create) {
-            Preconditions.checkNotNull(model.getCrgo());
-            Preconditions.checkNotNull(model.getCrgo().getId());
+	@Inject
+	private TipoServicioService tpsrService;
 
-            final CargoBO crgoBO = new CargoBO();
-            final CargoVO crgo = crgoBO.select(model.getCrgo().getId(), model.getFref(), getIdioma());
+	@Inject
+	private CargoService crgoService;
 
-            model.setCrgo(crgo);
-            model.getVersion().setFini(Calendar.getInstance().getTime());
-        } else {
-            Preconditions.checkNotNull(model.getId());
+	@Inject
+	private ReglaService rglaService;
 
-            final ReglaBO rglaBO = new ReglaBO();
+	@Inject
+	private I18nService i18nService;
 
-            model = rglaBO.select(model.getId(), model.getFref(), getIdioma());
-            i18nMap = I18nUtilBO.selectMap(model);
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doEdit() throws ApplicationException {
+		if (accion == AccionCodigo.create) {
+			Preconditions.checkNotNull(model.getCrgo());
+			Preconditions.checkNotNull(model.getCrgo().getId());
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doLoadDependencies() throws ApplicationException {
-        if (accion == AccionCodigo.create) {
-            tipos = ReglaTipo.values();
+			final CargoVO crgo = crgoService.select(model.getCrgo().getId(), model.getFref(), getIdioma());
 
-            final CargoBO crgoBO = new CargoBO();
+			model.setCrgo(crgo);
+			model.getVersion().setFini(Calendar.getInstance().getTime());
+		} else {
+			Preconditions.checkNotNull(model.getId());
 
-            final CargoVO crgo = crgoBO.select(model.getCrgo().getId(), model.getFref(), getIdioma());
-            final TipoServicioCriterioVO tpsrCriterioVO = new TipoServicioCriterioVO();
+			model = rglaService.select(model.getId(), model.getFref(), getIdioma());
+			i18nMap = i18nService.selectMap(model);
+		}
+	}
 
-            tpsrCriterioVO.setId(crgo.getTpsr().getId());
-            tpsrCriterioVO.setFacturable(Boolean.TRUE);
-            tpsrCriterioVO.setIdioma(getIdioma());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doLoadDependencies() throws ApplicationException {
+		if (accion == AccionCodigo.create) {
+			tipos = ReglaTipo.values();
 
-            entiFacturableList = tpsrService.selectLabelValues(tpsrCriterioVO);
+			final CargoVO crgo = crgoService.select(model.getCrgo().getId(), model.getFref(), getIdioma());
+			final TipoServicioCriterioVO tpsrCriterioVO = new TipoServicioCriterioVO();
 
-            final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
-            final TipoSubservicioCriterioVO tpssCriterioVO = new TipoSubservicioCriterioVO();
+			tpsrCriterioVO.setId(crgo.getTpsr().getId());
+			tpsrCriterioVO.setFacturable(Boolean.TRUE);
+			tpsrCriterioVO.setIdioma(getIdioma());
 
-            tpssCriterioVO.setTpsrId(crgo.getTpsr().getId());
-            tpssCriterioVO.setFacturable(Boolean.TRUE);
-            tpssCriterioVO.setIdioma(getIdioma());
+			entiFacturableList = tpsrService.selectLabelValues(tpsrCriterioVO);
 
-            entiFacturableList.addAll(tpssBO.selectLabelValues(tpssCriterioVO));
-        }
-    }
+			final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
+			final TipoSubservicioCriterioVO tpssCriterioVO = new TipoSubservicioCriterioVO();
+
+			tpssCriterioVO.setTpsrId(crgo.getTpsr().getId());
+			tpssCriterioVO.setFacturable(Boolean.TRUE);
+			tpssCriterioVO.setIdioma(getIdioma());
+
+			entiFacturableList.addAll(tpssBO.selectLabelValues(tpssCriterioVO));
+		}
+	}
 }

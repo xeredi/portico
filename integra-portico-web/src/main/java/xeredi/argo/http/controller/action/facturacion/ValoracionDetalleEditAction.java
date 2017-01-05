@@ -1,13 +1,14 @@
 package xeredi.argo.http.controller.action.facturacion;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.bo.ValoracionDetalleBO;
 import xeredi.argo.model.facturacion.bo.ValoracionLineaBO;
+import xeredi.argo.model.facturacion.service.AspectoService;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionDetalleVO;
@@ -19,70 +20,74 @@ import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 /**
  * The Class ValoracionDetalleEditAction.
  */
-@Data
 public final class ValoracionDetalleEditAction extends CrudEditAction<ValoracionDetalleVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 2216528521567482950L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 2216528521567482950L;
 
-    /** The vlrl. */
-    private ValoracionLineaVO vlrl;
+	/** The vlrl. */
+	@Getter
+	private ValoracionLineaVO vlrl;
 
-    /** The vlrl padre. */
-    private ValoracionLineaVO vlrlPadre;
+	/** The vlrl padre. */
+	@Getter
+	private ValoracionLineaVO vlrlPadre;
 
-    /** The aspc. */
-    private AspectoVO aspc;
+	/** The aspc. */
+	@Getter
+	private AspectoVO aspc;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doEdit() throws ApplicationException {
-        Preconditions.checkNotNull(model.getVlrcId());
-        Preconditions.checkNotNull(model.getVlrlId());
+	@Inject
+	private AspectoService aspcService;
 
-        if (accion == AccionCodigo.edit) {
-            Preconditions.checkNotNull(model.getId());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doEdit() throws ApplicationException {
+		Preconditions.checkNotNull(model.getVlrcId());
+		Preconditions.checkNotNull(model.getVlrlId());
 
-            final ValoracionDetalleBO vlrdBO = new ValoracionDetalleBO();
+		if (accion == AccionCodigo.edit) {
+			Preconditions.checkNotNull(model.getId());
 
-            model = vlrdBO.select(model.getId(), getIdioma());
-        }
+			final ValoracionDetalleBO vlrdBO = new ValoracionDetalleBO();
 
-        final ValoracionLineaBO vlrlBO = new ValoracionLineaBO();
-        final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
+			model = vlrdBO.select(model.getId(), getIdioma());
+		}
 
-        vlrlCriterio.setId(model.getVlrlId());
-        vlrlCriterio.setIdioma(getIdioma());
+		final ValoracionLineaBO vlrlBO = new ValoracionLineaBO();
+		final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
 
-        vlrl = vlrlBO.selectObject(vlrlCriterio);
+		vlrlCriterio.setId(model.getVlrlId());
+		vlrlCriterio.setIdioma(getIdioma());
 
-        if (vlrl.getId() == vlrl.getPadreId()) {
-            vlrlPadre = vlrl;
-        } else {
-            final ValoracionLineaCriterioVO vlrlPadreCriterio = new ValoracionLineaCriterioVO();
+		vlrl = vlrlBO.selectObject(vlrlCriterio);
 
-            vlrlPadreCriterio.setId(vlrl.getPadreId());
-            vlrlPadreCriterio.setIdioma(getIdioma());
+		if (vlrl.getId() == vlrl.getPadreId()) {
+			vlrlPadre = vlrl;
+		} else {
+			final ValoracionLineaCriterioVO vlrlPadreCriterio = new ValoracionLineaCriterioVO();
 
-            vlrlPadre = vlrlBO.selectObject(vlrlPadreCriterio);
-        }
+			vlrlPadreCriterio.setId(vlrl.getPadreId());
+			vlrlPadreCriterio.setIdioma(getIdioma());
 
-        final AspectoBO aspcBO = new AspectoBO();
-        final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
+			vlrlPadre = vlrlBO.selectObject(vlrlPadreCriterio);
+		}
 
-        aspcCriterio.setVlrcId(model.getVlrcId());
-        aspcCriterio.setIdioma(getIdioma());
+		final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
 
-        aspc = aspcBO.selectObject(aspcCriterio);
-    }
+		aspcCriterio.setVlrcId(model.getVlrcId());
+		aspcCriterio.setIdioma(getIdioma());
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doLoadDependencies() throws ApplicationException {
-        // noop
-    }
+		aspc = aspcService.selectObject(aspcCriterio);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doLoadDependencies() throws ApplicationException {
+		// noop
+	}
 }

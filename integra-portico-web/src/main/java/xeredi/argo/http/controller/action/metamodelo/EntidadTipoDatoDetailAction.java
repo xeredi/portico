@@ -9,7 +9,7 @@ import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
-import xeredi.argo.model.metamodelo.bo.EntidadTipoDatoBO;
+import xeredi.argo.model.metamodelo.service.EntidadTipoDatoService;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 
 // TODO: Auto-generated Javadoc
@@ -28,14 +28,15 @@ public final class EntidadTipoDatoDetailAction extends CrudDetailAction<EntidadT
 	@Inject
 	private I18nService i18nService;
 
+	@Inject
+	private EntidadTipoDatoService entdService;
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void doDetail() throws ApplicationException {
-		final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
-
-		model = entdBO.select(model.getId(), getIdioma());
+		model = entdService.select(model.getId(), getIdioma());
 		i18nMap = i18nService.selectMap(model);
 	}
 }

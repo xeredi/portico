@@ -1,10 +1,10 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.google.inject.Inject;
+
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.metamodelo.bo.TipoEstadisticaBO;
+import xeredi.argo.model.metamodelo.service.TipoEstadisticaService;
 import xeredi.argo.model.metamodelo.vo.TipoEstadisticaCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoEstadisticaVO;
 
@@ -12,20 +12,19 @@ import xeredi.argo.model.metamodelo.vo.TipoEstadisticaVO;
 /**
  * The Class TipoEstadisticaListAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class TipoEstadisticaListAction extends GridListAction<TipoEstadisticaCriterioVO, TipoEstadisticaVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -3250106088197977726L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -3250106088197977726L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doList() throws ApplicationException {
-        final TipoEstadisticaBO entiBO = new TipoEstadisticaBO();
+	@Inject
+	private TipoEstadisticaService tpesService;
 
-        resultList = entiBO.selectList(model, getOffset(), limit);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doList() throws ApplicationException {
+		resultList = tpesService.selectList(model, getOffset(), limit);
+	}
 }

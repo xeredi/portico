@@ -16,17 +16,6 @@ import xeredi.argo.model.metamodelo.vo.TramiteVO;
  */
 public interface TramiteService {
 	/**
-	 * Checks if is user allowed.
-	 *
-	 * @param trmtId
-	 *            the trmt id
-	 * @param usroId
-	 *            the usro id
-	 * @return true, if is user allowed
-	 */
-	public boolean isUserAllowed(@NonNull final Long trmtId, @NonNull final Long usroId);
-
-	/**
 	 * Select list.
 	 *
 	 * @param criterio

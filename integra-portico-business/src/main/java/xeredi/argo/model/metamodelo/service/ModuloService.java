@@ -17,17 +17,6 @@ import xeredi.argo.model.util.PaginatedList;
  */
 public interface ModuloService {
 	/**
-	 * Checks if is user allowed.
-	 *
-	 * @param mdloId
-	 *            the mdlo id
-	 * @param usroId
-	 *            the usro id
-	 * @return true, if is user allowed
-	 */
-	public boolean isUserAllowed(@NonNull final Long mdloId, @NonNull final Long usroId);
-
-	/**
 	 * Insert.
 	 *
 	 * @param mdlo

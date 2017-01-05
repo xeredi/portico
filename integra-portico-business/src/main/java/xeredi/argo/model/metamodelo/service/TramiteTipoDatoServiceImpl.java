@@ -22,7 +22,7 @@ import xeredi.argo.model.metamodelo.vo.TramiteTipoDatoVO;
  */
 @Singleton
 @Transactional
-public final class TramiteTipoDatoServiceImpl implements TramiteTipoDatoService {
+public class TramiteTipoDatoServiceImpl implements TramiteTipoDatoService {
 
 	/** The trtd DAO. */
 	@Inject

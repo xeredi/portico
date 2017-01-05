@@ -11,9 +11,9 @@ import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
-import xeredi.argo.model.metamodelo.bo.TramiteTipoDatoBO;
 import xeredi.argo.model.metamodelo.service.EntidadService;
 import xeredi.argo.model.metamodelo.service.TramiteService;
+import xeredi.argo.model.metamodelo.service.TramiteTipoDatoService;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
 import xeredi.argo.model.metamodelo.vo.TramiteTipoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TramiteTipoDatoVO;
@@ -49,6 +49,9 @@ public final class TramiteDetailAction extends CrudDetailAction<TramiteVO> {
 	@Inject
 	private I18nService i18nService;
 
+	@Inject
+	private TramiteTipoDatoService trtdService;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -60,12 +63,11 @@ public final class TramiteDetailAction extends CrudDetailAction<TramiteVO> {
 		i18nMap = i18nService.selectMap(model);
 		enti = entiService.select(model.getEntiId(), getIdioma());
 
-		final TramiteTipoDatoBO trtdBO = new TramiteTipoDatoBO();
 		final TramiteTipoDatoCriterioVO trtdCriterio = new TramiteTipoDatoCriterioVO();
 
 		trtdCriterio.setTrmtId(model.getId());
 		trtdCriterio.setIdioma(getIdioma());
 
-		trtdList = trtdBO.selectList(trtdCriterio);
+		trtdList = trtdService.selectList(trtdCriterio);
 	}
 }

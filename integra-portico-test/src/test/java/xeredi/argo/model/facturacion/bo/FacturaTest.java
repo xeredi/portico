@@ -14,6 +14,7 @@ import xeredi.argo.model.facturacion.vo.FacturaCargoVO;
 import xeredi.argo.model.facturacion.vo.FacturaCriterioVO;
 import xeredi.argo.model.facturacion.vo.FacturaDetalleVO;
 import xeredi.argo.model.facturacion.vo.FacturaEstado;
+import xeredi.argo.model.facturacion.vo.FacturaImpresionVO;
 import xeredi.argo.model.facturacion.vo.FacturaImpuestoVO;
 import xeredi.argo.model.facturacion.vo.FacturaLineaVO;
 import xeredi.argo.model.facturacion.vo.FacturaServicioVO;

@@ -1,9 +1,10 @@
 package xeredi.argo.http.controller.action.maestro;
 
+import com.google.inject.Inject;
+
 import xeredi.argo.http.controller.action.item.ItemRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.maestro.bo.ParametroBO;
-import xeredi.argo.model.maestro.bo.ParametroBOFactory;
+import xeredi.argo.model.maestro.service.ParametroService;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 
 // TODO: Auto-generated Javadoc
@@ -12,16 +13,17 @@ import xeredi.argo.model.maestro.vo.ParametroVO;
  */
 public final class ParametroRemoveAction extends ItemRemoveAction<ParametroVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 8920405603047117674L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 8920405603047117674L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSpecificRemove() throws ApplicationException {
-        final ParametroBO itemBO = ParametroBOFactory.newInstance(model.getEntiId());
+	@Inject
+	private ParametroService prmtService;
 
-        itemBO.delete(model);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSpecificRemove() throws ApplicationException {
+		prmtService.delete(model);
+	}
 }

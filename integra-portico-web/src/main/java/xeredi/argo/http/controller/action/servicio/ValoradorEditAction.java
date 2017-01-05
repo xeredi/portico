@@ -4,12 +4,12 @@ import java.util.Calendar;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.CargoBO;
+import xeredi.argo.model.facturacion.service.CargoService;
 import xeredi.argo.model.facturacion.vo.CargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.CargoVO;
 import xeredi.argo.model.servicio.vo.ValoradorVO;
@@ -18,42 +18,43 @@ import xeredi.argo.model.servicio.vo.ValoradorVO;
 /**
  * The Class ValoradorEditAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class ValoradorEditAction extends CrudEditAction<ValoradorVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 7029860077578860054L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 7029860077578860054L;
 
-    /** The crgo list. */
-    private List<CargoVO> crgoList;
+	/** The crgo list. */
+	@Getter
+	private List<CargoVO> crgoList;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doEdit() throws ApplicationException {
-        Preconditions.checkNotNull(model.getSrvc());
-        Preconditions.checkNotNull(model.getSrvc().getId());
-        Preconditions.checkNotNull(model.getSrvc().getEntiId());
+	@Inject
+	private CargoService crgoService;
 
-        model.setFliq(Calendar.getInstance().getTime());
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doEdit() throws ApplicationException {
+		Preconditions.checkNotNull(model.getSrvc());
+		Preconditions.checkNotNull(model.getSrvc().getId());
+		Preconditions.checkNotNull(model.getSrvc().getEntiId());
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doLoadDependencies() throws ApplicationException {
-        Preconditions.checkNotNull(model.getSrvc().getEntiId());
-        Preconditions.checkNotNull(model.getFliq());
+		model.setFliq(Calendar.getInstance().getTime());
+	}
 
-        final CargoBO crgoBO = new CargoBO();
-        final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doLoadDependencies() throws ApplicationException {
+		Preconditions.checkNotNull(model.getSrvc().getEntiId());
+		Preconditions.checkNotNull(model.getFliq());
 
-        crgoCriterio.setTpsrId(model.getSrvc().getEntiId());
-        crgoCriterio.setFechaVigencia(model.getFliq());
+		final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 
-        crgoList = crgoBO.selectList(crgoCriterio);
-    }
+		crgoCriterio.setTpsrId(model.getSrvc().getEntiId());
+		crgoCriterio.setFechaVigencia(model.getFliq());
+
+		crgoList = crgoService.selectList(crgoCriterio);
+	}
 }

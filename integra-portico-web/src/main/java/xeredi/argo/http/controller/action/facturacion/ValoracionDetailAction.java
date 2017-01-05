@@ -3,14 +3,15 @@ package xeredi.argo.http.controller.action.facturacion;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.bo.ValoracionBO;
 import xeredi.argo.model.facturacion.bo.ValoracionCargoBO;
 import xeredi.argo.model.facturacion.bo.ValoracionImpuestoBO;
+import xeredi.argo.model.facturacion.service.AspectoService;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionCargoVO;
@@ -25,57 +26,62 @@ import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
 /**
  * The Class ValoracionDetailAction.
  */
-@Data
 public final class ValoracionDetailAction extends CrudDetailAction<ValoracionVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 8955027989386166332L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 8955027989386166332L;
 
-    /** The aspc. */
-    private AspectoVO aspc;
+	/** The aspc. */
+	@Getter
+	private AspectoVO aspc;
 
-    /** The vlrg list. */
-    private List<ValoracionCargoVO> vlrgList;
+	/** The vlrg list. */
+	@Getter
+	private List<ValoracionCargoVO> vlrgList;
 
-    /** The vlri list. */
-    private List<ValoracionImpuestoVO> vlriList;
+	/** The vlri list. */
+	@Getter
+	private List<ValoracionImpuestoVO> vlriList;
 
-    /** The tpdt cod exencion. */
-    private TipoDatoVO tpdtCodExencion;
+	/** The tpdt cod exencion. */
+	@Getter
+	private TipoDatoVO tpdtCodExencion;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doDetail() throws ApplicationException {
-        Preconditions.checkNotNull(model.getId());
+	@Inject
+	private AspectoService aspcService;
 
-        final ValoracionBO vlrcBO = new ValoracionBO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doDetail() throws ApplicationException {
+		Preconditions.checkNotNull(model.getId());
 
-        model = vlrcBO.select(model.getId(), getIdioma());
+		final ValoracionBO vlrcBO = new ValoracionBO();
 
-        final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
+		model = vlrcBO.select(model.getId(), getIdioma());
 
-        vlrcCriterio.setId(model.getId());
-        vlrcCriterio.setIdioma(getIdioma());
+		final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
 
-        final ValoracionImpuestoBO vlriBO = new ValoracionImpuestoBO();
+		vlrcCriterio.setId(model.getId());
+		vlrcCriterio.setIdioma(getIdioma());
 
-        vlriList = vlriBO.selectList(vlrcCriterio);
+		final ValoracionImpuestoBO vlriBO = new ValoracionImpuestoBO();
 
-        final ValoracionCargoBO vlrgBO = new ValoracionCargoBO();
+		vlriList = vlriBO.selectList(vlrcCriterio);
 
-        vlrgList = vlrgBO.selectList(vlrcCriterio);
+		final ValoracionCargoBO vlrgBO = new ValoracionCargoBO();
 
-        tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
+		vlrgList = vlrgBO.selectList(vlrcCriterio);
 
-        final AspectoBO aspcBO = new AspectoBO();
-        final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
+		tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
 
-        aspcCriterio.setId(model.getAspc().getId());
-        aspcCriterio.setFechaVigencia(model.getFref());
-        aspcCriterio.setIdioma(getIdioma());
+		final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
 
-        aspc = aspcBO.selectObject(aspcCriterio);
-    }
+		aspcCriterio.setId(model.getAspc().getId());
+		aspcCriterio.setFechaVigencia(model.getFref());
+		aspcCriterio.setIdioma(getIdioma());
+
+		aspc = aspcService.selectObject(aspcCriterio);
+	}
 }

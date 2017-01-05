@@ -12,9 +12,9 @@ import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.ClassPrefix;
-import xeredi.argo.model.metamodelo.bo.AccionBaseBO;
-import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
-import xeredi.argo.model.metamodelo.bo.AccionEspecialBO;
+import xeredi.argo.model.metamodelo.service.AccionBaseService;
+import xeredi.argo.model.metamodelo.service.AccionEntidadService;
+import xeredi.argo.model.metamodelo.service.AccionEspecialService;
 import xeredi.argo.model.metamodelo.service.EntidadService;
 import xeredi.argo.model.metamodelo.service.ModuloService;
 import xeredi.argo.model.metamodelo.service.TramiteService;
@@ -87,6 +87,15 @@ public final class GrupoEditAction extends CrudEditAction<GrupoVO> {
 	@Inject
 	private TramiteService trmtService;
 
+	@Inject
+	private AccionEspecialService acesService;
+
+	@Inject
+	private AccionEntidadService acenService;
+
+	@Inject
+	private AccionBaseService acbsService;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -128,7 +137,7 @@ public final class GrupoEditAction extends CrudEditAction<GrupoVO> {
 
 		acbsCriterio.setIdioma(getIdioma());
 
-		for (final AccionBaseVO acbs : new AccionBaseBO().selectList(acbsCriterio)) {
+		for (final AccionBaseVO acbs : acbsService.selectList(acbsCriterio)) {
 			if (!acbsMap.containsKey(acbs.getPrefix())) {
 				prefixList.add(acbs.getPrefix());
 				acbsMap.put(acbs.getPrefix(), new ArrayList<AccionBaseVO>());
@@ -144,7 +153,7 @@ public final class GrupoEditAction extends CrudEditAction<GrupoVO> {
 
 		acenCriterio.setIdioma(getIdioma());
 
-		for (final AccionEntidadVO acen : new AccionEntidadBO().selectList(acenCriterio)) {
+		for (final AccionEntidadVO acen : acenService.selectList(acenCriterio)) {
 			if (!acenMap.containsKey(acen.getEntiId())) {
 				acenMap.put(acen.getEntiId(), new ArrayList<AccionEntidadVO>());
 			}
@@ -159,7 +168,7 @@ public final class GrupoEditAction extends CrudEditAction<GrupoVO> {
 
 		acesCriterio.setIdioma(getIdioma());
 
-		for (final AccionEspecialVO aces : new AccionEspecialBO().selectList(acesCriterio)) {
+		for (final AccionEspecialVO aces : acesService.selectList(acesCriterio)) {
 			if (!acesMap.containsKey(aces.getEntiId())) {
 				acesMap.put(aces.getEntiId(), new ArrayList<AccionEspecialVO>());
 			}

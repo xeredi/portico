@@ -7,14 +7,14 @@ import java.util.Map;
 import java.util.Set;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.item.vo.ItemVO;
-import xeredi.argo.model.maestro.bo.ParametroBO;
-import xeredi.argo.model.maestro.bo.ParametroBOFactory;
+import xeredi.argo.model.maestro.service.ParametroService;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
@@ -29,86 +29,88 @@ import xeredi.argo.model.metamodelo.vo.TipoHtml;
  * @param <E>
  *            the element type
  */
-@Data
 public abstract class ItemEditAction<I extends ItemVO, E extends AbstractEntidadDetailVO> extends CrudEditAction<I>
-        implements ProtectedItemAction {
+		implements ProtectedItemAction {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -4070230048819938799L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -4070230048819938799L;
 
-    /** The enti. */
-    protected E enti;
+	/** The enti. */
+	@Getter
+	protected E enti;
 
-    /** The label values map. */
-    protected Map<Long, List<LabelValueVO>> labelValuesMap;
+	/** The label values map. */
+	@Getter
+	protected Map<Long, List<LabelValueVO>> labelValuesMap;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void doEdit() throws ApplicationException {
-        Preconditions.checkNotNull(model);
-        Preconditions.checkNotNull(model.getEntiId());
+	@Inject
+	private ParametroService prmtService;
 
-        if (accion != AccionCodigo.create) {
-            Preconditions.checkNotNull(model.getId());
-        }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final void doEdit() throws ApplicationException {
+		Preconditions.checkNotNull(model);
+		Preconditions.checkNotNull(model.getEntiId());
 
-        doSpecificEdit();
-    }
+		if (accion != AccionCodigo.create) {
+			Preconditions.checkNotNull(model.getId());
+		}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void doLoadDependencies() throws ApplicationException {
-        Preconditions.checkNotNull(enti);
+		doSpecificEdit();
+	}
 
-        labelValuesMap = new HashMap<Long, List<LabelValueVO>>();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final void doLoadDependencies() throws ApplicationException {
+		Preconditions.checkNotNull(enti);
 
-        if (enti.getEntdList() != null) {
-            final Set<Long> tpprIds = new HashSet<>();
+		labelValuesMap = new HashMap<Long, List<LabelValueVO>>();
 
-            for (final Long tpdtId : enti.getEntdList()) {
-                final EntidadTipoDatoVO entd = enti.getEntdMap().get(tpdtId);
+		if (enti.getEntdList() != null) {
+			final Set<Long> tpprIds = new HashSet<>();
 
-                if (entd.getTpdt().getTpht() != TipoHtml.F && entd.getTpdt().getEnti() != null
-                        && entd.getTpdt().getEnti().getId() != null) {
-                    tpprIds.add(entd.getTpdt().getEnti().getId());
-                }
-            }
+			for (final Long tpdtId : enti.getEntdList()) {
+				final EntidadTipoDatoVO entd = enti.getEntdMap().get(tpdtId);
 
-            if (!tpprIds.isEmpty()) {
-                final ParametroBO prmtBO = ParametroBOFactory.newDefaultInstance();
+				if (entd.getTpdt().getTpht() != TipoHtml.F && entd.getTpdt().getEnti() != null
+						&& entd.getTpdt().getEnti().getId() != null) {
+					tpprIds.add(entd.getTpdt().getEnti().getId());
+				}
+			}
 
-                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, model.getFref(), getIdioma()));
-            }
-        }
+			if (!tpprIds.isEmpty()) {
+				labelValuesMap.putAll(prmtService.selectLabelValues(tpprIds, model.getFref(), getIdioma()));
+			}
+		}
 
-        doLoadSpecificDependencies();
-    }
+		doLoadSpecificDependencies();
+	}
 
-    /**
-     * Do specific edit.
-     *
-     * @throws ApplicationException
-     *             the application exception
-     */
-    public abstract void doSpecificEdit() throws ApplicationException;
+	/**
+	 * Do specific edit.
+	 *
+	 * @throws ApplicationException
+	 *             the application exception
+	 */
+	public abstract void doSpecificEdit() throws ApplicationException;
 
-    /**
-     * Do load specific dependencies.
-     *
-     * @throws ApplicationException
-     *             the application exception
-     */
-    public abstract void doLoadSpecificDependencies() throws ApplicationException;
+	/**
+	 * Do load specific dependencies.
+	 *
+	 * @throws ApplicationException
+	 *             the application exception
+	 */
+	public abstract void doLoadSpecificDependencies() throws ApplicationException;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final Long getEntiId() {
-        return model.getEntiId();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final Long getEntiId() {
+		return model.getEntiId();
+	}
 }

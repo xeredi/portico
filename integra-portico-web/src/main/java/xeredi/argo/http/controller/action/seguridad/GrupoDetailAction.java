@@ -11,9 +11,9 @@ import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.ClassPrefix;
-import xeredi.argo.model.metamodelo.bo.AccionBaseBO;
-import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
-import xeredi.argo.model.metamodelo.bo.AccionEspecialBO;
+import xeredi.argo.model.metamodelo.service.AccionBaseService;
+import xeredi.argo.model.metamodelo.service.AccionEntidadService;
+import xeredi.argo.model.metamodelo.service.AccionEspecialService;
 import xeredi.argo.model.metamodelo.service.EntidadService;
 import xeredi.argo.model.metamodelo.service.ModuloService;
 import xeredi.argo.model.metamodelo.service.TramiteService;
@@ -81,6 +81,15 @@ public final class GrupoDetailAction extends CrudDetailAction<GrupoVO> {
 	@Inject
 	private TramiteService trmtService;
 
+	@Inject
+	private AccionEspecialService acesService;
+
+	@Inject
+	private AccionEntidadService acenService;
+
+	@Inject
+	private AccionBaseService acbsService;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -96,12 +105,11 @@ public final class GrupoDetailAction extends CrudDetailAction<GrupoVO> {
 		mdloList = mdloService.selectList(mdloCriterio);
 
 		// Acciones Base
-		final AccionBaseBO acbsBO = new AccionBaseBO();
 		final AccionBaseCriterioVO acbsCriterio = new AccionBaseCriterioVO();
 
 		acbsCriterio.setGrpoId(model.getId());
 
-		final List<AccionBaseVO> acbsList = acbsBO.selectList(acbsCriterio);
+		final List<AccionBaseVO> acbsList = acbsService.selectList(acbsCriterio);
 
 		prefixList = new ArrayList<>();
 		acbsMap = new HashMap<>();
@@ -123,7 +131,6 @@ public final class GrupoDetailAction extends CrudDetailAction<GrupoVO> {
 		}
 
 		// Acciones asociadas a entidad
-		final AccionEntidadBO acenBO = new AccionEntidadBO();
 		final AccionEntidadCriterioVO acenCriterio = new AccionEntidadCriterioVO();
 
 		acenCriterio.setGrpoId(model.getId());
@@ -131,7 +138,7 @@ public final class GrupoDetailAction extends CrudDetailAction<GrupoVO> {
 
 		acenMap = new HashMap<>();
 
-		for (final AccionEntidadVO acen : acenBO.selectList(acenCriterio)) {
+		for (final AccionEntidadVO acen : acenService.selectList(acenCriterio)) {
 			if (!acenMap.containsKey(acen.getEntiId())) {
 				acenMap.put(acen.getEntiId(), new ArrayList<AccionEntidadVO>());
 			}
@@ -140,7 +147,6 @@ public final class GrupoDetailAction extends CrudDetailAction<GrupoVO> {
 		}
 
 		// Acciones especiales
-		final AccionEspecialBO acesBO = new AccionEspecialBO();
 		final AccionEspecialCriterioVO acesCriterio = new AccionEspecialCriterioVO();
 
 		acesCriterio.setGrpoId(model.getId());
@@ -148,7 +154,7 @@ public final class GrupoDetailAction extends CrudDetailAction<GrupoVO> {
 
 		acesMap = new HashMap<>();
 
-		for (final AccionEspecialVO aces : acesBO.selectList(acesCriterio)) {
+		for (final AccionEspecialVO aces : acesService.selectList(acesCriterio)) {
 			if (!acesMap.containsKey(aces.getEntiId())) {
 				acesMap.put(aces.getEntiId(), new ArrayList<AccionEspecialVO>());
 			}

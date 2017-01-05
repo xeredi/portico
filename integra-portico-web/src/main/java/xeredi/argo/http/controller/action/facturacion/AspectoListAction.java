@@ -2,10 +2,11 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import java.util.Calendar;
 
-import lombok.Data;
+import com.google.inject.Inject;
+
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.AspectoBO;
+import xeredi.argo.model.facturacion.service.AspectoService;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 
@@ -13,23 +14,23 @@ import xeredi.argo.model.facturacion.vo.AspectoVO;
 /**
  * The Class AspectoListAction.
  */
-@Data
 public final class AspectoListAction extends GridListAction<AspectoCriterioVO, AspectoVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 6610833697858691088L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 6610833697858691088L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doList() throws ApplicationException {
-        if (model.getFechaVigencia() == null) {
-            model.setFechaVigencia(Calendar.getInstance().getTime());
-        }
+	@Inject
+	private AspectoService aspcService;
 
-        final AspectoBO aspcBO = new AspectoBO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doList() throws ApplicationException {
+		if (model.getFechaVigencia() == null) {
+			model.setFechaVigencia(Calendar.getInstance().getTime());
+		}
 
-        resultList = aspcBO.selectList(model, getOffset(), limit);
-    }
+		resultList = aspcService.selectList(model, getOffset(), limit);
+	}
 }

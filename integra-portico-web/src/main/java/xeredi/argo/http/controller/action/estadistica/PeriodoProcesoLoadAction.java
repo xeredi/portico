@@ -5,20 +5,21 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
+
 import xeredi.argo.http.controller.action.comun.CrudLoadAction;
 import xeredi.argo.http.controller.session.SessionManager;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.http.view.estadistica.ProcesoEstadisticaVO;
-import xeredi.argo.model.comun.bo.ArchivoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.ArchivoService;
 import xeredi.argo.model.comun.vo.ArchivoInfoVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.proceso.batch.estadistica.ProcesoCargaOppe;
 import xeredi.argo.model.proceso.bo.ProcesoBO;
 import xeredi.argo.model.proceso.vo.ItemTipo;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -28,6 +29,9 @@ public final class PeriodoProcesoLoadAction extends CrudLoadAction<ProcesoEstadi
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 5966692618549116508L;
+
+	@Inject
+	private ArchivoService archService;
 
     /**
      * {@inheritDoc}
@@ -40,9 +44,7 @@ public final class PeriodoProcesoLoadAction extends CrudLoadAction<ProcesoEstadi
         FieldValidator.validateRequired(this, MessageI18nKey.pepr_file, model.getArchId());
 
         if (!hasErrors()) {
-            final ArchivoBO archBO = new ArchivoBO();
-
-            final ArchivoInfoVO arin = archBO.select(model.getArchId());
+            final ArchivoInfoVO arin = archService.select(model.getArchId());
 
             final ProcesoBO prbtBO = new ProcesoBO();
             final Map<String, String> parametroMap = new HashMap<>();

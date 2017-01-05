@@ -4,12 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
-import java.util.List;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
-
-import com.google.common.base.Preconditions;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.dao.ArchivoDAO;
@@ -31,126 +28,92 @@ import xeredi.argo.model.util.SqlMapperLocator;
  */
 public final class ArchivoBO {
 
-    /**
-     * Creates the.
-     *
-     * @param file
-     *            the file
-     * @param sentido
-     *            the sentido
-     * @return the archivo vo
-     * @throws ApplicationException
-     *             the application exception
-     */
-    public ArchivoVO create(@NonNull final File file, @NonNull final ArchivoSentido sentido)
-            throws ApplicationException {
-        final ArchivoVO arch = new ArchivoVO();
+	/**
+	 * Creates the.
+	 *
+	 * @param file
+	 *            the file
+	 * @param sentido
+	 *            the sentido
+	 * @return the archivo vo
+	 * @throws ApplicationException
+	 *             the application exception
+	 */
+	public ArchivoVO create(@NonNull final File file, @NonNull final ArchivoSentido sentido)
+			throws ApplicationException {
+		final ArchivoVO arch = new ArchivoVO();
 
-        try {
-            arch.setArchivo(GzipUtil.compress(file));
-            arch.getArin().setFalta(Calendar.getInstance().getTime());
-            arch.getArin().setNombre(file.getName());
-            arch.getArin().setTamanio(file.length());
-            arch.getArin().setSentido(sentido);
-        } catch (final IOException ex) {
-            throw new InternalErrorException(ex);
-        }
+		try {
+			arch.setArchivo(GzipUtil.compress(file));
+			arch.getArin().setFalta(Calendar.getInstance().getTime());
+			arch.getArin().setNombre(file.getName());
+			arch.getArin().setTamanio(file.length());
+			arch.getArin().setSentido(sentido);
+		} catch (final IOException ex) {
+			throw new InternalErrorException(ex);
+		}
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final ArchivoDAO archDAO = session.getMapper(ArchivoDAO.class);
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final ArchivoDAO archDAO = session.getMapper(ArchivoDAO.class);
 
-            IgUtilBO.assignNextVal(arch.getArin());
-            archDAO.insert(arch);
+			IgUtilBO.assignNextVal(arch.getArin());
+			archDAO.insert(arch);
 
-            session.commit();
-        }
+			session.commit();
+		}
 
-        return arch;
-    }
+		return arch;
+	}
 
-    /**
-     * Insert.
-     *
-     * @param arch
-     *            the arch
-     */
-    public void insert(@NonNull final ArchivoVO arch) {
-        Preconditions.checkNotNull(arch.getArin());
+	/**
+	 * Select.
+	 *
+	 * @param archId
+	 *            the arch id
+	 * @return the input stream
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	public InputStream selectStream(@NonNull final Long archId) throws InstanceNotFoundException {
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final ArchivoDAO archDAO = session.getMapper(ArchivoDAO.class);
+			final ArchivoCriterioVO archCriterio = new ArchivoCriterioVO();
 
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final ArchivoDAO archDAO = session.getMapper(ArchivoDAO.class);
+			archCriterio.setId(archId);
 
-            IgUtilBO.assignNextVal(arch.getArin());
-            archDAO.insert(arch);
+			final ArchivoVO arch = archDAO.selectObject(archCriterio);
 
-            session.commit();
-        }
-    }
+			if (arch == null) {
+				throw new InstanceNotFoundException(MessageI18nKey.arch, archId);
+			}
 
-    /**
-     * Select.
-     *
-     * @param archId
-     *            the arch id
-     * @return the input stream
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    public InputStream selectStream(@NonNull final Long archId) throws InstanceNotFoundException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final ArchivoDAO archDAO = session.getMapper(ArchivoDAO.class);
-            final ArchivoCriterioVO archCriterio = new ArchivoCriterioVO();
+			return GzipUtil.decompress(arch.getArchivo());
+		}
+	}
 
-            archCriterio.setId(archId);
+	/**
+	 * Select.
+	 *
+	 * @param archId
+	 *            the arch id
+	 * @return the archivo info vo
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
+	 */
+	public ArchivoInfoVO select(@NonNull final Long archId) throws InstanceNotFoundException {
+		try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
+			final ArchivoInfoDAO arinDAO = session.getMapper(ArchivoInfoDAO.class);
+			final ArchivoCriterioVO arinCriterio = new ArchivoCriterioVO();
 
-            final ArchivoVO arch = archDAO.selectObject(archCriterio);
+			arinCriterio.setId(archId);
 
-            if (arch == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.arch, archId);
-            }
+			final ArchivoInfoVO arin = arinDAO.selectObject(arinCriterio);
 
-            return GzipUtil.decompress(arch.getArchivo());
-        }
-    }
+			if (arin == null) {
+				throw new InstanceNotFoundException(MessageI18nKey.arch, archId);
+			}
 
-    /**
-     * Select.
-     *
-     * @param archId
-     *            the arch id
-     * @return the archivo info vo
-     * @throws InstanceNotFoundException
-     *             the instance not found exception
-     */
-    public ArchivoInfoVO select(@NonNull final Long archId) throws InstanceNotFoundException {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final ArchivoInfoDAO arinDAO = session.getMapper(ArchivoInfoDAO.class);
-            final ArchivoCriterioVO arinCriterio = new ArchivoCriterioVO();
-
-            arinCriterio.setId(archId);
-
-            final ArchivoInfoVO arin = arinDAO.selectObject(arinCriterio);
-
-            if (arin == null) {
-                throw new InstanceNotFoundException(MessageI18nKey.arch, archId);
-            }
-
-            return arin;
-        }
-    }
-
-    /**
-     * Select info list.
-     *
-     * @param archCriterio
-     *            the arch criterio
-     * @return the list
-     */
-    public List<ArchivoInfoVO> selectList(@NonNull final ArchivoCriterioVO archCriterio) {
-        try (final SqlSession session = SqlMapperLocator.getSqlSessionFactory().openSession(ExecutorType.REUSE)) {
-            final ArchivoInfoDAO arinDAO = session.getMapper(ArchivoInfoDAO.class);
-
-            return arinDAO.selectList(archCriterio);
-        }
-    }
+			return arin;
+		}
+	}
 }

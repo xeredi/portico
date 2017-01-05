@@ -17,8 +17,7 @@ import xeredi.argo.model.item.vo.ItemDatoVO;
 import xeredi.argo.model.item.vo.ItemTramiteDatoVO;
 import xeredi.argo.model.item.vo.ItemTramiteVO;
 import xeredi.argo.model.item.vo.ItemVO;
-import xeredi.argo.model.maestro.bo.ParametroBO;
-import xeredi.argo.model.maestro.bo.ParametroBOFactory;
+import xeredi.argo.model.maestro.service.ParametroService;
 import xeredi.argo.model.metamodelo.proxy.EntidadProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
@@ -72,6 +71,9 @@ public final class ItemTramiteEditAction extends BaseAction implements ModelDriv
 
 	@Inject
 	private TramiteProxyService trmtProxy;
+
+	@Inject
+	private ParametroService prmtService;
 
 	/**
 	 * {@inheritDoc}
@@ -173,9 +175,7 @@ public final class ItemTramiteEditAction extends BaseAction implements ModelDriv
 		}
 
 		if (!tpprIds.isEmpty()) {
-			final ParametroBO prmtBO = ParametroBOFactory.newDefaultInstance();
-
-			labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, model.getFref(), getIdioma()));
+			labelValuesMap.putAll(prmtService.selectLabelValues(tpprIds, model.getFref(), getIdioma()));
 		}
 	}
 

@@ -3,13 +3,13 @@ package xeredi.argo.http.controller.action.metamodelo;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.metamodelo.bo.EntidadEntidadBO;
 import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
+import xeredi.argo.model.metamodelo.service.EntidadEntidadService;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.EntidadEntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadEntidadVO;
@@ -20,49 +20,50 @@ import xeredi.argo.model.metamodelo.vo.TipoSubservicioVO;
 /**
  * The Class EntidadEntidadEditAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class EntidadEntidadEditAction extends CrudEditAction<EntidadEntidadVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 9070801193229242374L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 9070801193229242374L;
 
-    /** The tppr list. */
-    private List<TipoSubservicioVO> tpssList;
+	/** The tppr list. */
+	@Getter
+	private List<TipoSubservicioVO> tpssList;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doEdit() throws ApplicationException {
-        Preconditions.checkNotNull(model.getEntiPadreId());
+	@Inject
+	private EntidadEntidadService enenService;
 
-        if (accion == AccionCodigo.edit) {
-            Preconditions.checkNotNull(model.getEntiHija());
-            Preconditions.checkNotNull(model.getEntiHija().getId());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doEdit() throws ApplicationException {
+		Preconditions.checkNotNull(model.getEntiPadreId());
 
-            final EntidadEntidadBO enenBO = new EntidadEntidadBO();
-            final EntidadEntidadCriterioVO enenCriterioVO = new EntidadEntidadCriterioVO();
+		if (accion == AccionCodigo.edit) {
+			Preconditions.checkNotNull(model.getEntiHija());
+			Preconditions.checkNotNull(model.getEntiHija().getId());
 
-            enenCriterioVO.setEntiPadreId(model.getEntiPadreId());
-            enenCriterioVO.setEntiHijaId(model.getEntiHija().getId());
+			final EntidadEntidadCriterioVO enenCriterioVO = new EntidadEntidadCriterioVO();
 
-            model = enenBO.selectObject(enenCriterioVO);
-        }
-    }
+			enenCriterioVO.setEntiPadreId(model.getEntiPadreId());
+			enenCriterioVO.setEntiHijaId(model.getEntiHija().getId());
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doLoadDependencies() throws ApplicationException {
-        final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
-        final TipoSubservicioCriterioVO tpssCriterio = new TipoSubservicioCriterioVO();
+			model = enenService.selectObject(enenCriterioVO);
+		}
+	}
 
-        // FIXME Hay que buscar por el tipo de servicio, no por la entidad padre
-        tpssCriterio.setIdioma(getIdioma());
-        tpssCriterio.setTpsrId(model.getEntiPadreId());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doLoadDependencies() throws ApplicationException {
+		final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
+		final TipoSubservicioCriterioVO tpssCriterio = new TipoSubservicioCriterioVO();
 
-        tpssList = tpssBO.selectList(tpssCriterio);
-    }
+		// FIXME Hay que buscar por el tipo de servicio, no por la entidad padre
+		tpssCriterio.setIdioma(getIdioma());
+		tpssCriterio.setTpsrId(model.getEntiPadreId());
+
+		tpssList = tpssBO.selectList(tpssCriterio);
+	}
 }

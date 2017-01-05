@@ -2,11 +2,12 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.List;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.google.inject.Inject;
+
+import lombok.Getter;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.metamodelo.bo.CampoAgregacionBO;
-import xeredi.argo.model.metamodelo.bo.TipoEstadisticaBO;
+import xeredi.argo.model.metamodelo.service.CampoAgregacionService;
+import xeredi.argo.model.metamodelo.service.TipoEstadisticaService;
 import xeredi.argo.model.metamodelo.vo.CampoAgregacionCriterioVO;
 import xeredi.argo.model.metamodelo.vo.CampoAgregacionVO;
 import xeredi.argo.model.metamodelo.vo.TipoEstadisticaVO;
@@ -15,31 +16,33 @@ import xeredi.argo.model.metamodelo.vo.TipoEstadisticaVO;
 /**
  * The Class TipoEstadisticaDetailAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class TipoEstadisticaDetailAction extends EntidadDetailAction<TipoEstadisticaVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 8074035967447249323L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 8074035967447249323L;
 
-    /** The cmag list. */
-    private List<CampoAgregacionVO> cmagList;
+	/** The cmag list. */
+	@Getter
+	private List<CampoAgregacionVO> cmagList;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSpecificDetail() throws ApplicationException {
-        final TipoEstadisticaBO tpesBO = new TipoEstadisticaBO();
+	@Inject
+	private CampoAgregacionService cmagService;
 
-        model = tpesBO.select(model.getId(), getIdioma());
+	@Inject
+	private TipoEstadisticaService tpesService;
 
-        final CampoAgregacionBO cmagBO = new CampoAgregacionBO();
-        final CampoAgregacionCriterioVO cmagCriterio = new CampoAgregacionCriterioVO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSpecificDetail() throws ApplicationException {
+		model = tpesService.select(model.getId(), getIdioma());
 
-        cmagCriterio.setTpesId(model.getId());
-        cmagCriterio.setIdioma(getIdioma());
+		final CampoAgregacionCriterioVO cmagCriterio = new CampoAgregacionCriterioVO();
 
-        cmagList = cmagBO.selectList(cmagCriterio);
-    }
+		cmagCriterio.setTpesId(model.getId());
+		cmagCriterio.setIdioma(getIdioma());
+
+		cmagList = cmagService.selectList(cmagCriterio);
+	}
 }

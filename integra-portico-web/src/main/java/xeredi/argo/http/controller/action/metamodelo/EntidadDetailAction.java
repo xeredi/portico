@@ -10,10 +10,10 @@ import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
-import xeredi.argo.model.metamodelo.bo.AccionEntidadBO;
-import xeredi.argo.model.metamodelo.bo.AccionEspecialBO;
-import xeredi.argo.model.metamodelo.bo.EntidadGrupoDatoBO;
-import xeredi.argo.model.metamodelo.bo.EntidadTipoDatoBO;
+import xeredi.argo.model.metamodelo.service.AccionEntidadService;
+import xeredi.argo.model.metamodelo.service.AccionEspecialService;
+import xeredi.argo.model.metamodelo.service.EntidadGrupoDatoService;
+import xeredi.argo.model.metamodelo.service.EntidadTipoDatoService;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
 import xeredi.argo.model.metamodelo.vo.AccionEspecialCriterioVO;
@@ -59,6 +59,18 @@ public abstract class EntidadDetailAction<T extends EntidadVO> extends CrudDetai
 	@Inject
 	private I18nService i18nService;
 
+	@Inject
+	private AccionEspecialService acesService;
+
+	@Inject
+	private AccionEntidadService acenService;
+
+	@Inject
+	private EntidadTipoDatoService entdService;
+
+	@Inject
+	private EntidadGrupoDatoService engdService;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -68,35 +80,32 @@ public abstract class EntidadDetailAction<T extends EntidadVO> extends CrudDetai
 
 		i18nMap = i18nService.selectMap(model);
 
-		final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 		final EntidadTipoDatoCriterioVO entdCriterio = new EntidadTipoDatoCriterioVO();
 
 		entdCriterio.setEntiId(model.getId());
 		entdCriterio.setIdioma(getIdioma());
 
-		entdList = entdBO.selectList(entdCriterio);
+		entdList = entdService.selectList(entdCriterio);
 
-		final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
 		final EntidadGrupoDatoCriterioVO engdCriterio = new EntidadGrupoDatoCriterioVO();
 
 		engdCriterio.setEntiId(model.getId());
 		engdCriterio.setIdioma(getIdioma());
 
-		engdList = engdBO.selectList(engdCriterio);
+		engdList = engdService.selectList(engdCriterio);
 
 		final AccionEspecialCriterioVO acesCriterio = new AccionEspecialCriterioVO();
 
 		acesCriterio.setEntiId(model.getId());
 		acesCriterio.setIdioma(getIdioma());
 
-		acesList = new AccionEspecialBO().selectList(acesCriterio);
+		acesList = acesService.selectList(acesCriterio);
 
-		final AccionEntidadBO acenBO = new AccionEntidadBO();
 		final AccionEntidadCriterioVO acenCriterio = new AccionEntidadCriterioVO();
 
 		acenCriterio.setEntiId(model.getId());
 
-		acenList = acenBO.selectList(acenCriterio);
+		acenList = acenService.selectList(acenCriterio);
 	}
 
 	/**

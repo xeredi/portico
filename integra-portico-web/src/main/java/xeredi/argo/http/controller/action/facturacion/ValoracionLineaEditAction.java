@@ -3,20 +3,20 @@ package xeredi.argo.http.controller.action.facturacion;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.bo.ValoracionBO;
 import xeredi.argo.model.facturacion.bo.ValoracionLineaBO;
+import xeredi.argo.model.facturacion.service.AspectoService;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
-import xeredi.argo.model.maestro.bo.ParametroBO;
-import xeredi.argo.model.maestro.bo.ParametroBOFactory;
+import xeredi.argo.model.maestro.service.ParametroService;
 import xeredi.argo.model.maestro.vo.ParametroCriterioVO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.metamodelo.vo.Entidad;
@@ -25,90 +25,95 @@ import xeredi.argo.model.metamodelo.vo.Entidad;
 /**
  * The Class ValoracionLineaEditAction.
  */
-@Data
 public final class ValoracionLineaEditAction extends CrudEditAction<ValoracionLineaVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -1498921008270553150L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -1498921008270553150L;
 
-    /** The vlrl padre. */
-    private ValoracionLineaVO vlrlPadre;
+	/** The vlrl padre. */
+	@Getter
+	private ValoracionLineaVO vlrlPadre;
 
-    /** The aspc. */
-    private AspectoVO aspc;
+	/** The aspc. */
+	@Getter
+	private AspectoVO aspc;
 
-    /** The impuesto list. */
-    private List<ParametroVO> impuestoList;
+	/** The impuesto list. */
+	@Getter
+	private List<ParametroVO> impuestoList;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doEdit() throws ApplicationException {
-        Preconditions.checkNotNull(model.getVlrcId());
+	@Inject
+	private ParametroService prmtService;
 
-        switch (accion) {
-        case create:
-            final ValoracionBO vlrcBO = new ValoracionBO();
-            final ValoracionVO vlrc = vlrcBO.select(model.getVlrcId(), getIdioma());
+	@Inject
+	private AspectoService aspcService;
 
-            model.setFref(vlrc.getFref());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doEdit() throws ApplicationException {
+		Preconditions.checkNotNull(model.getVlrcId());
 
-            break;
-        case edit:
-            Preconditions.checkNotNull(model.getId());
+		switch (accion) {
+		case create:
+			final ValoracionBO vlrcBO = new ValoracionBO();
+			final ValoracionVO vlrc = vlrcBO.select(model.getVlrcId(), getIdioma());
 
-            final ValoracionLineaBO vlrlBO = new ValoracionLineaBO();
+			model.setFref(vlrc.getFref());
 
-            {
-                final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
+			break;
+		case edit:
+			Preconditions.checkNotNull(model.getId());
 
-                vlrlCriterio.setId(model.getId());
-                vlrlCriterio.setIdioma(getIdioma());
+			final ValoracionLineaBO vlrlBO = new ValoracionLineaBO();
 
-                model = vlrlBO.selectObject(vlrlCriterio);
-            }
+		{
+			final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
 
-            if (model.getId() == model.getPadreId()) {
-                vlrlPadre = model;
-            } else {
-                final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
+			vlrlCriterio.setId(model.getId());
+			vlrlCriterio.setIdioma(getIdioma());
 
-                vlrlCriterio.setId(model.getPadreId());
-                vlrlCriterio.setIdioma(getIdioma());
+			model = vlrlBO.selectObject(vlrlCriterio);
+		}
 
-                vlrlPadre = vlrlBO.selectObject(vlrlCriterio);
-            }
+			if (model.getId() == model.getPadreId()) {
+				vlrlPadre = model;
+			} else {
+				final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
 
-            break;
-        default:
-            throw new Error("Accion no valida: " + accion);
-        }
+				vlrlCriterio.setId(model.getPadreId());
+				vlrlCriterio.setIdioma(getIdioma());
 
-        final AspectoBO aspcBO = new AspectoBO();
-        final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
+				vlrlPadre = vlrlBO.selectObject(vlrlCriterio);
+			}
 
-        aspcCriterio.setVlrcId(model.getVlrcId());
-        aspcCriterio.setIdioma(getIdioma());
+			break;
+		default:
+			throw new Error("Accion no valida: " + accion);
+		}
 
-        aspc = aspcBO.selectObject(aspcCriterio);
-    }
+		final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doLoadDependencies() throws ApplicationException {
-        Preconditions.checkNotNull(model.getFref());
+		aspcCriterio.setVlrcId(model.getVlrcId());
+		aspcCriterio.setIdioma(getIdioma());
 
-        final ParametroCriterioVO prmtCriterio = new ParametroCriterioVO();
+		aspc = aspcService.selectObject(aspcCriterio);
+	}
 
-        prmtCriterio.setEntiId(Entidad.TIPO_IVA.getId());
-        prmtCriterio.setFechaVigencia(model.getFref());
-        prmtCriterio.setIdioma(getIdioma());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doLoadDependencies() throws ApplicationException {
+		Preconditions.checkNotNull(model.getFref());
 
-        final ParametroBO prmtBO = ParametroBOFactory.newInstance(prmtCriterio.getEntiId());
+		final ParametroCriterioVO prmtCriterio = new ParametroCriterioVO();
 
-        impuestoList = prmtBO.selectList(prmtCriterio);
-    }
+		prmtCriterio.setEntiId(Entidad.TIPO_IVA.getId());
+		prmtCriterio.setFechaVigencia(model.getFref());
+		prmtCriterio.setIdioma(getIdioma());
+
+		impuestoList = prmtService.selectList(prmtCriterio);
+	}
 }

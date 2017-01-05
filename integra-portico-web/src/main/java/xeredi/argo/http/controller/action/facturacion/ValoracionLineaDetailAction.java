@@ -3,12 +3,13 @@ package xeredi.argo.http.controller.action.facturacion;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.bo.ValoracionLineaBO;
+import xeredi.argo.model.facturacion.service.AspectoService;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
@@ -19,68 +20,72 @@ import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
 /**
  * The Class ValoracionLineaDetailAction.
  */
-@Data
 public final class ValoracionLineaDetailAction extends CrudDetailAction<ValoracionLineaVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -157778002663429185L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -157778002663429185L;
 
-    /** The aspc. */
-    private AspectoVO aspc;
+	/** The aspc. */
+	@Getter
+	private AspectoVO aspc;
 
-    /** The vlrl padre. */
-    private ValoracionLineaVO vlrlPadre;
+	/** The vlrl padre. */
+	@Getter
+	private ValoracionLineaVO vlrlPadre;
 
-    /** The vlrl hijos list. */
-    private List<ValoracionLineaVO> vlrlHijosList;
+	/** The vlrl hijos list. */
+	@Getter
+	private List<ValoracionLineaVO> vlrlHijosList;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doDetail() throws ApplicationException {
-        Preconditions.checkNotNull(model.getId());
+	@Inject
+	private AspectoService aspcService;
 
-        final ValoracionLineaBO vlrlBO = new ValoracionLineaBO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doDetail() throws ApplicationException {
+		Preconditions.checkNotNull(model.getId());
 
-        {
-            final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
+		final ValoracionLineaBO vlrlBO = new ValoracionLineaBO();
 
-            vlrlCriterio.setId(model.getId());
-            vlrlCriterio.setIdioma(getIdioma());
+		{
+			final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
 
-            model = vlrlBO.selectObject(vlrlCriterio);
-        }
+			vlrlCriterio.setId(model.getId());
+			vlrlCriterio.setIdioma(getIdioma());
 
-        // Busqueda de la linea padre
-        if (model.getId() == model.getPadreId()) {
-            vlrlPadre = model;
-        } else {
-            final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
+			model = vlrlBO.selectObject(vlrlCriterio);
+		}
 
-            vlrlCriterio.setId(model.getPadreId());
-            vlrlCriterio.setIdioma(getIdioma());
+		// Busqueda de la linea padre
+		if (model.getId() == model.getPadreId()) {
+			vlrlPadre = model;
+		} else {
+			final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
 
-            vlrlPadre = vlrlBO.selectObject(vlrlCriterio);
-        }
+			vlrlCriterio.setId(model.getPadreId());
+			vlrlCriterio.setIdioma(getIdioma());
 
-        // Busqueda de las lineas hija (coef/bonif)
-        if (model.getRgla().getTipo() == ReglaTipo.T) {
-            final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
+			vlrlPadre = vlrlBO.selectObject(vlrlCriterio);
+		}
 
-            vlrlCriterio.setPadreId(model.getId());
-            vlrlCriterio.setSoloHijos(true);
-            vlrlCriterio.setIdioma(getIdioma());
+		// Busqueda de las lineas hija (coef/bonif)
+		if (model.getRgla().getTipo() == ReglaTipo.T) {
+			final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
 
-            vlrlHijosList = vlrlBO.selectList(vlrlCriterio);
-        }
+			vlrlCriterio.setPadreId(model.getId());
+			vlrlCriterio.setSoloHijos(true);
+			vlrlCriterio.setIdioma(getIdioma());
 
-        final AspectoBO aspcBO = new AspectoBO();
-        final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
+			vlrlHijosList = vlrlBO.selectList(vlrlCriterio);
+		}
 
-        aspcCriterio.setVlrcId(model.getVlrcId());
-        aspcCriterio.setIdioma(getIdioma());
+		final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
 
-        aspc = aspcBO.selectObject(aspcCriterio);
-    }
+		aspcCriterio.setVlrcId(model.getVlrcId());
+		aspcCriterio.setIdioma(getIdioma());
+
+		aspc = aspcService.selectObject(aspcCriterio);
+	}
 }

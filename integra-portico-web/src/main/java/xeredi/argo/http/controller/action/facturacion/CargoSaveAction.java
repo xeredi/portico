@@ -2,13 +2,15 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import java.util.Map;
 
-import lombok.Data;
+import com.google.inject.Inject;
+
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.argo.model.facturacion.bo.CargoBO;
+import xeredi.argo.model.facturacion.service.CargoService;
 import xeredi.argo.model.facturacion.vo.CargoVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 
@@ -16,49 +18,50 @@ import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 /**
  * The Class CargoSaveAction.
  */
-@Data
 public final class CargoSaveAction extends CrudSaveAction<CargoVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -4637124394309482562L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -4637124394309482562L;
 
-    /** The i18n map. */
-    private Map<String, I18nVO> i18nMap;
+	/** The i18n map. */
+	@Getter
+	private Map<String, I18nVO> i18nMap;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSave() throws ApplicationException {
-        final CargoBO crgoBO = new CargoBO();
+	@Inject
+	private CargoService crgoService;
 
-        switch (accion) {
-        case create:
-            crgoBO.insert(model, i18nMap);
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSave() throws ApplicationException {
+		switch (accion) {
+		case create:
+			crgoService.insert(model, i18nMap);
 
-            break;
-        case edit:
-            crgoBO.update(model, i18nMap);
+			break;
+		case edit:
+			crgoService.update(model, i18nMap);
 
-            break;
-        default:
-            throw new Error("Accion no valida: " + accion);
-        }
-    }
+			break;
+		default:
+			throw new Error("Accion no valida: " + accion);
+		}
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doValidate() throws ApplicationException {
-        if (AccionCodigo.create == accion) {
-            FieldValidator.validateRequired(this, MessageI18nKey.crgo_codigo, model.getCodigo());
-            FieldValidator.validateRequired(this, MessageI18nKey.tpsr, model.getTpsr());
-        }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doValidate() throws ApplicationException {
+		if (AccionCodigo.create == accion) {
+			FieldValidator.validateRequired(this, MessageI18nKey.crgo_codigo, model.getCodigo());
+			FieldValidator.validateRequired(this, MessageI18nKey.tpsr, model.getTpsr());
+		}
 
-        FieldValidator.validateI18n(this, i18nMap);
-        FieldValidator.validateRequired(this, MessageI18nKey.crgo_tipo, model.getVersion().getTipo());
-        FieldValidator.validateRequired(this, MessageI18nKey.crgo_temporal, model.getVersion().getTemporal());
-        FieldValidator.validateRequired(this, MessageI18nKey.crgo_principal, model.getVersion().getPrincipal());
-    }
+		FieldValidator.validateI18n(this, i18nMap);
+		FieldValidator.validateRequired(this, MessageI18nKey.crgo_tipo, model.getVersion().getTipo());
+		FieldValidator.validateRequired(this, MessageI18nKey.crgo_temporal, model.getVersion().getTemporal());
+		FieldValidator.validateRequired(this, MessageI18nKey.crgo_principal, model.getVersion().getPrincipal());
+	}
 }

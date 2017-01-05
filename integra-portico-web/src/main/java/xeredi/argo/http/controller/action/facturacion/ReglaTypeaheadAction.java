@@ -1,8 +1,10 @@
 package xeredi.argo.http.controller.action.facturacion;
 
+import com.google.inject.Inject;
+
 import xeredi.argo.http.controller.action.comun.TypeaheadAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.ReglaBO;
+import xeredi.argo.model.facturacion.service.ReglaService;
 import xeredi.argo.model.facturacion.vo.ReglaCriterioVO;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
 
@@ -12,16 +14,17 @@ import xeredi.argo.model.facturacion.vo.ReglaVO;
  */
 public final class ReglaTypeaheadAction extends TypeaheadAction<ReglaCriterioVO, ReglaVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -657608329114959872L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -657608329114959872L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doTypeahead() throws ApplicationException {
-        final ReglaBO rglaBO = new ReglaBO();
+	@Inject
+	private ReglaService rglaService;
 
-        resultList = rglaBO.selectTypeaheadList(model, limit);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doTypeahead() throws ApplicationException {
+		resultList = rglaService.selectTypeaheadList(model, limit);
+	}
 }

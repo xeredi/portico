@@ -19,7 +19,7 @@ import net.sf.dynamicreports.report.constant.PageType;
 import net.sf.dynamicreports.report.exception.DRException;
 import xeredi.argo.model.comun.exception.InternalErrorException;
 import xeredi.argo.model.comun.report.BasePdf;
-import xeredi.argo.model.facturacion.bo.FacturaImpresionVO;
+import xeredi.argo.model.facturacion.vo.FacturaImpresionVO;
 import xeredi.argo.model.facturacion.vo.FacturaVO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
 import xeredi.argo.model.facturacion.vo.ValoracionImpuestoVO;

@@ -9,7 +9,7 @@ import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
-import xeredi.argo.model.metamodelo.bo.AccionEspecialBO;
+import xeredi.argo.model.metamodelo.service.AccionEspecialService;
 import xeredi.argo.model.metamodelo.vo.AccionEspecialVO;
 
 // TODO: Auto-generated Javadoc
@@ -18,24 +18,25 @@ import xeredi.argo.model.metamodelo.vo.AccionEspecialVO;
  */
 public final class AccionEspecialDetailAction extends CrudDetailAction<AccionEspecialVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -1040277417429457339L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -1040277417429457339L;
 
-    /** The i18n map. */
-    @Getter
-    private Map<String, I18nVO> i18nMap;
+	/** The i18n map. */
+	@Getter
+	private Map<String, I18nVO> i18nMap;
 
 	@Inject
 	private I18nService i18nService;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doDetail() throws ApplicationException {
-        final AccionEspecialBO acesBO = new AccionEspecialBO();
+	@Inject
+	private AccionEspecialService acesService;
 
-        model = acesBO.select(model.getId(), getIdioma());
-        i18nMap = i18nService.selectMap(model);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doDetail() throws ApplicationException {
+		model = acesService.select(model.getId(), getIdioma());
+		i18nMap = i18nService.selectMap(model);
+	}
 }

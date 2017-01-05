@@ -3,14 +3,14 @@ package xeredi.argo.http.controller.action.facturacion;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.AspectoBO;
-import xeredi.argo.model.facturacion.bo.AspectoCargoBO;
-import xeredi.argo.model.facturacion.bo.CargoBO;
+import xeredi.argo.model.facturacion.service.AspectoCargoService;
+import xeredi.argo.model.facturacion.service.AspectoService;
+import xeredi.argo.model.facturacion.service.CargoService;
 import xeredi.argo.model.facturacion.vo.AspectoCargoVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.CargoCriterioVO;
@@ -21,51 +21,55 @@ import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 /**
  * The Class AspectoCargoEditAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class AspectoCargoEditAction extends CrudEditAction<AspectoCargoVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 1292421221150084862L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 1292421221150084862L;
 
-    /** The crgo list. */
-    private List<CargoVO> crgoList;
+	/** The crgo list. */
+	@Getter
+	private List<CargoVO> crgoList;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doEdit() throws ApplicationException {
-        if (accion == AccionCodigo.create) {
-            Preconditions.checkNotNull(model.getAspcId());
-        } else {
-            Preconditions.checkNotNull(model.getId());
+	@Inject
+	private AspectoService aspcService;
 
-            final AspectoCargoBO ascrBO = new AspectoCargoBO();
+	@Inject
+	private AspectoCargoService ascrService;
 
-            model = ascrBO.select(model.getId(), model.getFref(), getIdioma());
-        }
-    }
+	@Inject
+	private CargoService crgoService;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doLoadDependencies() throws ApplicationException {
-        if (accion == AccionCodigo.create) {
-            Preconditions.checkNotNull(model.getAspcId());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doEdit() throws ApplicationException {
+		if (accion == AccionCodigo.create) {
+			Preconditions.checkNotNull(model.getAspcId());
+		} else {
+			Preconditions.checkNotNull(model.getId());
 
-            final AspectoBO aspcBO = new AspectoBO();
-            final AspectoVO aspc = aspcBO.select(model.getAspcId(), model.getFref(), getIdioma());
+			model = ascrService.select(model.getId(), model.getFref(), getIdioma());
+		}
+	}
 
-            final CargoBO crgoBO = new CargoBO();
-            final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doLoadDependencies() throws ApplicationException {
+		if (accion == AccionCodigo.create) {
+			Preconditions.checkNotNull(model.getAspcId());
 
-            crgoCriterio.setTpsrId(aspc.getTpsr().getId());
-            crgoCriterio.setFechaVigencia(model.getFref());
-            crgoCriterio.setIdioma(getIdioma());
+			final AspectoVO aspc = aspcService.select(model.getAspcId(), model.getFref(), getIdioma());
 
-            crgoList = crgoBO.selectList(crgoCriterio);
-        }
-    }
+			final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
+
+			crgoCriterio.setTpsrId(aspc.getTpsr().getId());
+			crgoCriterio.setFechaVigencia(model.getFref());
+			crgoCriterio.setIdioma(getIdioma());
+
+			crgoList = crgoService.selectList(crgoCriterio);
+		}
+	}
 }

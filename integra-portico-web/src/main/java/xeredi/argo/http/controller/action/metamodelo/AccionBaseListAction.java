@@ -1,10 +1,10 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.google.inject.Inject;
+
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.metamodelo.bo.AccionBaseBO;
+import xeredi.argo.model.metamodelo.service.AccionBaseService;
 import xeredi.argo.model.metamodelo.vo.AccionBaseCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionBaseVO;
 
@@ -12,20 +12,19 @@ import xeredi.argo.model.metamodelo.vo.AccionBaseVO;
 /**
  * The Class AccionBaseListAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class AccionBaseListAction extends GridListAction<AccionBaseCriterioVO, AccionBaseVO> {
 
-    /** The Constant serialVersionUID. */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -8697939019605785607L;
 
-	/**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doList() throws ApplicationException {
-        final AccionBaseBO acbsBO = new AccionBaseBO();
+	@Inject
+	private AccionBaseService acbsService;
 
-        resultList = acbsBO.selectList(model, getOffset(), limit);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doList() throws ApplicationException {
+		resultList = acbsService.selectList(model, getOffset(), limit);
+	}
 }

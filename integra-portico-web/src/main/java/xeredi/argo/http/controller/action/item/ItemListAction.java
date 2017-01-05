@@ -2,7 +2,7 @@ package xeredi.argo.http.controller.action.item;
 
 import com.google.common.base.Preconditions;
 
-import lombok.Data;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.item.vo.ItemCriterioVO;
@@ -20,43 +20,43 @@ import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
  * @param <E>
  *            the element type
  */
-@Data
 public abstract class ItemListAction<C extends ItemCriterioVO, I extends ItemVO, E extends AbstractEntidadDetailVO>
-extends GridListAction<C, I> implements ProtectedItemAction {
+		extends GridListAction<C, I> implements ProtectedItemAction {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 1634381107882001806L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 1634381107882001806L;
 
-    /** The enti. */
-    protected E enti;
+	/** The enti. */
+	@Getter
+	protected E enti;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void doList() throws ApplicationException {
-        Preconditions.checkNotNull(model);
-        Preconditions.checkNotNull(model.getEntiId());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final void doList() throws ApplicationException {
+		Preconditions.checkNotNull(model);
+		Preconditions.checkNotNull(model.getEntiId());
 
-        model.setSoloDatosGrid(true);
-        model.setIdioma(getIdioma());
+		model.setSoloDatosGrid(true);
+		model.setIdioma(getIdioma());
 
-        doSpecificList();
-    }
+		doSpecificList();
+	}
 
-    /**
-     * Do specific list.
-     *
-     * @throws ApplicationException
-     *             the application exception
-     */
-    public abstract void doSpecificList() throws ApplicationException;
+	/**
+	 * Do specific list.
+	 *
+	 * @throws ApplicationException
+	 *             the application exception
+	 */
+	public abstract void doSpecificList() throws ApplicationException;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final Long getEntiId() {
-        return model.getEntiId();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final Long getEntiId() {
+		return model.getEntiId();
+	}
 }

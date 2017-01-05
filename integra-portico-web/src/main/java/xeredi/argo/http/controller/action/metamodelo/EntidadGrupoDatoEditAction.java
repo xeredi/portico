@@ -11,7 +11,7 @@ import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
-import xeredi.argo.model.metamodelo.bo.EntidadGrupoDatoBO;
+import xeredi.argo.model.metamodelo.service.EntidadGrupoDatoService;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.EntidadGrupoDatoVO;
 
@@ -31,6 +31,9 @@ public final class EntidadGrupoDatoEditAction extends CrudEditAction<EntidadGrup
 	@Inject
 	private I18nService i18nService;
 
+	@Inject
+	private EntidadGrupoDatoService engdService;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -43,9 +46,7 @@ public final class EntidadGrupoDatoEditAction extends CrudEditAction<EntidadGrup
 		} else {
 			Preconditions.checkNotNull(model.getId());
 
-			final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
-
-			model = engdBO.select(model.getId(), getIdioma());
+			model = engdService.select(model.getId(), getIdioma());
 			i18nMap = i18nService.selectMap(model);
 		}
 	}

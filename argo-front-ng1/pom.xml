@@ -9,7 +9,7 @@
         <version>0.0.1</version>
         <relativePath>../integra-portico-pom</relativePath>
     </parent>
-    <name>Fornt Angular1</name>
+    <name>Front Angular1</name>
 
     <properties>
         <war.warName>${project.artifactId}</war.warName>

@@ -5,6 +5,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
+
 import xeredi.argo.http.controller.action.comun.CrudFileExportAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
@@ -19,15 +22,11 @@ import xeredi.argo.model.facturacion.vo.ValoracionImpuestoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
-import xeredi.argo.model.maestro.bo.ParametroBO;
-import xeredi.argo.model.maestro.bo.ParametroBOFactory;
+import xeredi.argo.model.maestro.service.ParametroService;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
-import xeredi.argo.model.metamodelo.vo.Entidad;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -35,69 +34,70 @@ import com.google.common.base.Preconditions;
  */
 public final class ValoracionPdfExportAction extends CrudFileExportAction<ValoracionVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 5178479812829740439L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 5178479812829740439L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doExport() throws ApplicationException, IOException {
-        Preconditions.checkNotNull(model.getId());
+	@Inject
+	private ParametroService prmtService;
 
-        final ValoracionBO vlrcBO = new ValoracionBO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doExport() throws ApplicationException, IOException {
+		Preconditions.checkNotNull(model.getId());
 
-        model = vlrcBO.select(model.getId(), getIdioma());
+		final ValoracionBO vlrcBO = new ValoracionBO();
 
-        final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
+		model = vlrcBO.select(model.getId(), getIdioma());
 
-        vlrcCriterio.setId(model.getId());
-        vlrcCriterio.setIdioma(getIdioma());
+		final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
 
-        final ValoracionCargoBO vlrgBO = new ValoracionCargoBO();
-        final List<ValoracionCargoVO> vlrgList = vlrgBO.selectList(vlrcCriterio);
-        final ValoracionImpuestoBO vlriBO = new ValoracionImpuestoBO();
-        final List<ValoracionImpuestoVO> vlriList = vlriBO.selectList(vlrcCriterio);
+		vlrcCriterio.setId(model.getId());
+		vlrcCriterio.setIdioma(getIdioma());
 
-        final ValoracionLineaBO vlrlBO = new ValoracionLineaBO();
-        final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
+		final ValoracionCargoBO vlrgBO = new ValoracionCargoBO();
+		final List<ValoracionCargoVO> vlrgList = vlrgBO.selectList(vlrcCriterio);
+		final ValoracionImpuestoBO vlriBO = new ValoracionImpuestoBO();
+		final List<ValoracionImpuestoVO> vlriList = vlriBO.selectList(vlrcCriterio);
 
-        vlrlCriterio.setVlrcId(model.getId());
-        vlrlCriterio.setIdioma(getIdioma());
+		final ValoracionLineaBO vlrlBO = new ValoracionLineaBO();
+		final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
 
-        final List<ValoracionLineaVO> vlrlList = vlrlBO.selectList(vlrlCriterio);
+		vlrlCriterio.setVlrcId(model.getId());
+		vlrlCriterio.setIdioma(getIdioma());
 
-        final TipoDatoVO tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
+		final List<ValoracionLineaVO> vlrlList = vlrlBO.selectList(vlrlCriterio);
 
-        final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.ORGANIZACION.getId());
-        final ParametroVO pagador = prmtBO.select(model.getPagador().getId(), getIdioma(), model.getFref());
+		final TipoDatoVO tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
+		final ParametroVO pagador = prmtService.select(model.getPagador().getId(), getIdioma(), model.getFref());
 
-        if (LOG.isInfoEnabled()) {
-            LOG.info("Impresion Valoracion");
-        }
+		if (LOG.isInfoEnabled()) {
+			LOG.info("Impresion Valoracion");
+		}
 
-        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
-            final ValoracionPdf vlrcPdf = new ValoracionPdf(getLocale());
+		try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
+			final ValoracionPdf vlrcPdf = new ValoracionPdf(getLocale());
 
-            vlrcPdf.imprimir(model, pagador, tpdtCodExencion, vlrgList, vlriList, vlrlList, baos);
+			vlrcPdf.imprimir(model, pagador, tpdtCodExencion, vlrgList, vlriList, vlrlList, baos);
 
-            stream = new ByteArrayInputStream(baos.toByteArray());
-        }
-    }
+			stream = new ByteArrayInputStream(baos.toByteArray());
+		}
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getFilename() {
-        return MessageI18nKey.vlrc.name() + '_' + model.getId();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getFilename() {
+		return MessageI18nKey.vlrc.name() + '_' + model.getId();
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public CrudFileExportAction.ContentType getContentType() {
-        return ContentType.pdf;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public CrudFileExportAction.ContentType getContentType() {
+		return ContentType.pdf;
+	}
 }

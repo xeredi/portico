@@ -8,9 +8,9 @@ import com.google.inject.Inject;
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.metamodelo.bo.EntidadTipoDatoBO;
-import xeredi.argo.model.metamodelo.bo.TramiteTipoDatoBO;
+import xeredi.argo.model.metamodelo.service.EntidadTipoDatoService;
 import xeredi.argo.model.metamodelo.service.TramiteService;
+import xeredi.argo.model.metamodelo.service.TramiteTipoDatoService;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
@@ -33,6 +33,12 @@ public final class TramiteTipoDatoEditAction extends CrudEditAction<TramiteTipoD
 	@Inject
 	private TramiteService trmtService;
 
+	@Inject
+	private TramiteTipoDatoService trtdService;
+
+	@Inject
+	private EntidadTipoDatoService entdService;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -44,9 +50,7 @@ public final class TramiteTipoDatoEditAction extends CrudEditAction<TramiteTipoD
 		case edit:
 			Preconditions.checkNotNull(model.getEntd().getTpdt().getId());
 
-			final TramiteTipoDatoBO trtdBO = new TramiteTipoDatoBO();
-
-			model = trtdBO.select(model.getTrmtId(), model.getEntd().getTpdt().getId(), getIdioma());
+			model = trtdService.select(model.getTrmtId(), model.getEntd().getTpdt().getId(), getIdioma());
 
 			break;
 		default:
@@ -63,14 +67,12 @@ public final class TramiteTipoDatoEditAction extends CrudEditAction<TramiteTipoD
 
 		if (accion == AccionCodigo.create) {
 			final TramiteVO trmt = trmtService.select(model.getTrmtId(), getIdioma());
-
-			final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
 			final EntidadTipoDatoCriterioVO entdCriterio = new EntidadTipoDatoCriterioVO();
 
 			entdCriterio.setEntiId(trmt.getEntiId());
 			entdCriterio.setIdioma(getIdioma());
 
-			entdList = entdBO.selectList(entdCriterio);
+			entdList = entdService.selectList(entdCriterio);
 		}
 	}
 }

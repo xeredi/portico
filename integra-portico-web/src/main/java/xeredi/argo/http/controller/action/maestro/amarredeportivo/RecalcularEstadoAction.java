@@ -1,8 +1,10 @@
 package xeredi.argo.http.controller.action.maestro.amarredeportivo;
 
+import com.google.inject.Inject;
+
 import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.maestro.bo.embdeportivas.AmarreDeportivoBO;
+import xeredi.argo.model.maestro.service.embdeportivas.AmarreDeportivoService;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -10,16 +12,18 @@ import xeredi.argo.model.maestro.bo.embdeportivas.AmarreDeportivoBO;
  */
 public final class RecalcularEstadoAction extends BaseAction {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -1922904918711479468L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -1922904918711479468L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doExecute() throws ApplicationException {
-        final AmarreDeportivoBO amadBO = new AmarreDeportivoBO();
+	/** The amad service. */
+	@Inject
+	private AmarreDeportivoService amadService;
 
-        amadBO.updateRecalcularEstado();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doExecute() throws ApplicationException {
+		amadService.updateRecalcularEstado();
+	}
 }

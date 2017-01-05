@@ -15,7 +15,7 @@ import org.junit.Test;
 import xeredi.argo.model.comun.proxy.ConfigurationProxy;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.facturacion.bo.FacturaBO;
-import xeredi.argo.model.facturacion.bo.FacturaImpresionVO;
+import xeredi.argo.model.facturacion.vo.FacturaImpresionVO;
 
 // TODO: Auto-generated Javadoc
 /**

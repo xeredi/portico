@@ -2,11 +2,11 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import java.util.Calendar;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.google.inject.Inject;
+
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.CargoBO;
+import xeredi.argo.model.facturacion.service.CargoService;
 import xeredi.argo.model.facturacion.vo.CargoCriterioVO;
 import xeredi.argo.model.facturacion.vo.CargoVO;
 
@@ -14,24 +14,23 @@ import xeredi.argo.model.facturacion.vo.CargoVO;
 /**
  * The Class CargoListAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class CargoListAction extends GridListAction<CargoCriterioVO, CargoVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 6203976676780090103L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 6203976676780090103L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doList() throws ApplicationException {
-        if (model.getFechaVigencia() == null && !model.isMostrarHistorico()) {
-            model.setFechaVigencia(Calendar.getInstance().getTime());
-        }
+	@Inject
+	private CargoService crgoService;
 
-        final CargoBO crgoBO = new CargoBO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doList() throws ApplicationException {
+		if (model.getFechaVigencia() == null && !model.isMostrarHistorico()) {
+			model.setFechaVigencia(Calendar.getInstance().getTime());
+		}
 
-        resultList = crgoBO.selectList(model, getOffset(), limit);
-    }
+		resultList = crgoService.selectList(model, getOffset(), limit);
+	}
 }

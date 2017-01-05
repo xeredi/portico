@@ -22,6 +22,7 @@ import xeredi.argo.model.facturacion.dao.ValoracionDAO;
 import xeredi.argo.model.facturacion.dao.ValoracionImpuestoDAO;
 import xeredi.argo.model.facturacion.dao.ValoracionLineaDAO;
 import xeredi.argo.model.facturacion.vo.FacturaCriterioVO;
+import xeredi.argo.model.facturacion.vo.FacturaImpresionVO;
 import xeredi.argo.model.facturacion.vo.FacturaTypeaheadCriterioVO;
 import xeredi.argo.model.facturacion.vo.FacturaVO;
 import xeredi.argo.model.facturacion.vo.ValoracionCargoVO;

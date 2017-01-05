@@ -3,15 +3,16 @@ package xeredi.argo.http.controller.action.facturacion;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.bo.FacturaBO;
 import xeredi.argo.model.facturacion.bo.ValoracionBO;
 import xeredi.argo.model.facturacion.bo.ValoracionCargoBO;
 import xeredi.argo.model.facturacion.bo.ValoracionImpuestoBO;
+import xeredi.argo.model.facturacion.service.AspectoService;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.FacturaVO;
@@ -24,54 +25,59 @@ import xeredi.argo.model.facturacion.vo.ValoracionVO;
 /**
  * The Class FacturaDetailAction.
  */
-@Data
 public final class FacturaDetailAction extends CrudDetailAction<FacturaVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 5987039917634891480L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 5987039917634891480L;
 
-    /** The aspc. */
-    private AspectoVO aspc;
+	/** The aspc. */
+	@Getter
+	private AspectoVO aspc;
 
-    /** The fcts list. */
-    private List<ValoracionVO> vlrcList;
+	/** The fcts list. */
+	@Getter
+	private List<ValoracionVO> vlrcList;
 
-    /** The fcti list. */
-    private List<ValoracionImpuestoVO> fctiList;
+	/** The fcti list. */
+	@Getter
+	private List<ValoracionImpuestoVO> fctiList;
 
-    /** The fctg list. */
-    private List<ValoracionCargoVO> fctgList;
+	/** The fctg list. */
+	@Getter
+	private List<ValoracionCargoVO> fctgList;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doDetail() throws ApplicationException {
-        Preconditions.checkNotNull(model.getId());
+	@Inject
+	private AspectoService aspcService;
 
-        final FacturaBO fctrBO = new FacturaBO();
-        final ValoracionBO vlrcBO = new ValoracionBO();
-        final ValoracionCargoBO vlrgBO = new ValoracionCargoBO();
-        final ValoracionImpuestoBO vlriBO = new ValoracionImpuestoBO();
-        final AspectoBO aspcBO = new AspectoBO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doDetail() throws ApplicationException {
+		Preconditions.checkNotNull(model.getId());
 
-        model = fctrBO.select(model.getId(), getIdioma());
+		final FacturaBO fctrBO = new FacturaBO();
+		final ValoracionBO vlrcBO = new ValoracionBO();
+		final ValoracionCargoBO vlrgBO = new ValoracionCargoBO();
+		final ValoracionImpuestoBO vlriBO = new ValoracionImpuestoBO();
 
-        final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
+		model = fctrBO.select(model.getId(), getIdioma());
 
-        vlrcCriterio.setFctr(model);
-        vlrcCriterio.setIdioma(getIdioma());
+		final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
 
-        vlrcList = vlrcBO.selectList(vlrcCriterio);
-        fctgList = vlrgBO.selectList(vlrcCriterio);
-        fctiList = vlriBO.selectList(vlrcCriterio);
+		vlrcCriterio.setFctr(model);
+		vlrcCriterio.setIdioma(getIdioma());
 
-        final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
+		vlrcList = vlrcBO.selectList(vlrcCriterio);
+		fctgList = vlrgBO.selectList(vlrcCriterio);
+		fctiList = vlriBO.selectList(vlrcCriterio);
 
-        aspcCriterio.setId(model.getAspc().getId());
-        aspcCriterio.setFechaVigencia(model.getFref());
-        aspcCriterio.setIdioma(getIdioma());
+		final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
 
-        aspc = aspcBO.selectObject(aspcCriterio);
-    }
+		aspcCriterio.setId(model.getAspc().getId());
+		aspcCriterio.setFechaVigencia(model.getFref());
+		aspcCriterio.setIdioma(getIdioma());
+
+		aspc = aspcService.selectObject(aspcCriterio);
+	}
 }

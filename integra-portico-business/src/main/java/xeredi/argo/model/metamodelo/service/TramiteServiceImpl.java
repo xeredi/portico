@@ -52,19 +52,6 @@ public class TramiteServiceImpl implements TramiteService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean isUserAllowed(@NonNull final Long trmtId, @NonNull final Long usroId) {
-		final TramiteCriterioVO trmtCriterio = new TramiteCriterioVO();
-
-		trmtCriterio.setId(trmtId);
-		trmtCriterio.setUsroId(usroId);
-
-		return trmtDAO.count(trmtCriterio) > 0;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public List<TramiteVO> selectList(@NonNull final TramiteCriterioVO criterio) {
 		return trmtDAO.selectList(criterio);
 	}

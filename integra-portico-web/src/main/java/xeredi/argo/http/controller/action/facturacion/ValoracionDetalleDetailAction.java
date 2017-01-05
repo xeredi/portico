@@ -3,13 +3,14 @@ package xeredi.argo.http.controller.action.facturacion;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.AspectoBO;
 import xeredi.argo.model.facturacion.bo.ValoracionDetalleBO;
 import xeredi.argo.model.facturacion.bo.ValoracionLineaBO;
+import xeredi.argo.model.facturacion.service.AspectoService;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
@@ -22,71 +23,76 @@ import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
 /**
  * The Class ValoracionDetalleDetailAction.
  */
-@Data
 public final class ValoracionDetalleDetailAction extends CrudDetailAction<ValoracionDetalleVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 340743883680134402L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 340743883680134402L;
 
-    /** The vlrl. */
-    private ValoracionLineaVO vlrl;
+	/** The vlrl. */
+	@Getter
+	private ValoracionLineaVO vlrl;
 
-    /** The vlrl padre. */
-    private ValoracionLineaVO vlrlPadre;
+	/** The vlrl padre. */
+	@Getter
+	private ValoracionLineaVO vlrlPadre;
 
-    /** The vlrd hijos list. */
-    private List<ValoracionDetalleVO> vlrdHijosList;
+	/** The vlrd hijos list. */
+	@Getter
+	private List<ValoracionDetalleVO> vlrdHijosList;
 
-    /** The aspc. */
-    private AspectoVO aspc;
+	/** The aspc. */
+	@Getter
+	private AspectoVO aspc;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doDetail() throws ApplicationException {
-        Preconditions.checkNotNull(model.getId());
+	@Inject
+	private AspectoService aspcService;
 
-        final ValoracionDetalleBO vlrdBO = new ValoracionDetalleBO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doDetail() throws ApplicationException {
+		Preconditions.checkNotNull(model.getId());
 
-        model = vlrdBO.select(model.getId(), getIdioma());
+		final ValoracionDetalleBO vlrdBO = new ValoracionDetalleBO();
 
-        // Busqueda de lineas hijas (coef/bonif)
-        if (model.getRgla().getTipo() == ReglaTipo.T) {
-            final ValoracionDetalleCriterioVO vlrdCriterio = new ValoracionDetalleCriterioVO();
+		model = vlrdBO.select(model.getId(), getIdioma());
 
-            vlrdCriterio.setPadreId(model.getId());
-            vlrdCriterio.setIdioma(getIdioma());
-            vlrdCriterio.setSoloHijos(true);
+		// Busqueda de lineas hijas (coef/bonif)
+		if (model.getRgla().getTipo() == ReglaTipo.T) {
+			final ValoracionDetalleCriterioVO vlrdCriterio = new ValoracionDetalleCriterioVO();
 
-            vlrdHijosList = vlrdBO.selectList(vlrdCriterio);
-        }
+			vlrdCriterio.setPadreId(model.getId());
+			vlrdCriterio.setIdioma(getIdioma());
+			vlrdCriterio.setSoloHijos(true);
 
-        final ValoracionLineaBO vlrlBO = new ValoracionLineaBO();
-        final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
+			vlrdHijosList = vlrdBO.selectList(vlrdCriterio);
+		}
 
-        vlrlCriterio.setId(model.getVlrlId());
-        vlrlCriterio.setIdioma(getIdioma());
+		final ValoracionLineaBO vlrlBO = new ValoracionLineaBO();
+		final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
 
-        vlrl = vlrlBO.selectObject(vlrlCriterio);
+		vlrlCriterio.setId(model.getVlrlId());
+		vlrlCriterio.setIdioma(getIdioma());
 
-        if (vlrl.getId() == vlrl.getPadreId()) {
-            vlrlPadre = vlrl;
-        } else {
-            final ValoracionLineaCriterioVO vlrlPadreCriterio = new ValoracionLineaCriterioVO();
+		vlrl = vlrlBO.selectObject(vlrlCriterio);
 
-            vlrlPadreCriterio.setId(vlrl.getPadreId());
-            vlrlPadreCriterio.setIdioma(getIdioma());
+		if (vlrl.getId() == vlrl.getPadreId()) {
+			vlrlPadre = vlrl;
+		} else {
+			final ValoracionLineaCriterioVO vlrlPadreCriterio = new ValoracionLineaCriterioVO();
 
-            vlrlPadre = vlrlBO.selectObject(vlrlPadreCriterio);
-        }
+			vlrlPadreCriterio.setId(vlrl.getPadreId());
+			vlrlPadreCriterio.setIdioma(getIdioma());
 
-        final AspectoBO aspcBO = new AspectoBO();
-        final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
+			vlrlPadre = vlrlBO.selectObject(vlrlPadreCriterio);
+		}
 
-        aspcCriterio.setVlrcId(model.getVlrcId());
-        aspcCriterio.setIdioma(getIdioma());
+		final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
 
-        aspc = aspcBO.selectObject(aspcCriterio);
-    }
+		aspcCriterio.setVlrcId(model.getVlrcId());
+		aspcCriterio.setIdioma(getIdioma());
+
+		aspc = aspcService.selectObject(aspcCriterio);
+	}
 }

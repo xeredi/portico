@@ -2,13 +2,14 @@ package xeredi.argo.http.controller.action.maestro;
 
 import java.util.Map;
 
+import com.google.inject.Inject;
+
 import lombok.Getter;
 import xeredi.argo.http.controller.action.item.ItemDetailAction;
-import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
-import xeredi.argo.model.maestro.bo.ParametroBO;
-import xeredi.argo.model.maestro.bo.ParametroBOFactory;
+import xeredi.argo.model.maestro.service.ParametroService;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
@@ -19,26 +20,29 @@ import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
  */
 public final class ParametroDetailAction extends ItemDetailAction<ParametroVO, TipoParametroDetailVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 6639690925171727021L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 6639690925171727021L;
 
-    /** The i18n map. */
-    @Getter
-    private Map<String, I18nVO> i18nMap;
+	/** The i18n map. */
+	@Getter
+	private Map<String, I18nVO> i18nMap;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSpecificDetail() throws ApplicationException {
-        enti = TipoParametroProxy.select(model.getEntiId());
+	@Inject
+	private ParametroService prmtService;
 
-        final ParametroBO itemBO = ParametroBOFactory.newInstance(model.getEntiId());
+	@Inject
+	private I18nService i18nService;
 
-        model = itemBO.select(model.getId(), getIdioma(), model.getFref());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSpecificDetail() throws ApplicationException {
+		enti = TipoParametroProxy.select(model.getEntiId());
+		model = prmtService.select(model.getId(), getIdioma(), model.getFref());
 
-        if (enti.getEnti().isI18n()) {
-            i18nMap = I18nUtilBO.selectMap(model);
-        }
-    }
+		if (enti.getEnti().isI18n()) {
+			i18nMap = i18nService.selectMap(model);
+		}
+	}
 }

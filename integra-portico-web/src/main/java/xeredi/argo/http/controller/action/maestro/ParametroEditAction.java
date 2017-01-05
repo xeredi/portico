@@ -5,16 +5,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.inject.Inject;
+
 import lombok.Getter;
 import xeredi.argo.http.controller.action.item.ItemEditAction;
-import xeredi.argo.model.comun.bo.I18nUtilBO;
-import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.I18nService;
+import xeredi.argo.model.comun.service.PuertoService;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
-import xeredi.argo.model.maestro.bo.ParametroBO;
-import xeredi.argo.model.maestro.bo.ParametroBOFactory;
+import xeredi.argo.model.maestro.service.ParametroService;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
@@ -26,66 +27,72 @@ import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
  */
 public final class ParametroEditAction extends ItemEditAction<ParametroVO, TipoParametroDetailVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -8716069938226934369L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -8716069938226934369L;
 
-    /** The i18n map. */
-    @Getter
-    private Map<String, I18nVO> i18nMap;
+	/** The i18n map. */
+	@Getter
+	private Map<String, I18nVO> i18nMap;
 
-    /** The prto list. */
-    @Getter
-    private List<PuertoVO> prtoList;
+	/** The prto list. */
+	@Getter
+	private List<PuertoVO> prtoList;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSpecificEdit() throws ApplicationException {
-        enti = TipoParametroProxy.select(model.getEntiId());
+	@Inject
+	private ParametroService prmtService;
 
-        if (accion == AccionCodigo.create) {
-            i18nMap = new HashMap<String, I18nVO>();
-        } else {
-            final ParametroBO prmtBO = ParametroBOFactory.newInstance(model.getEntiId());
+	@Inject
+	private I18nService i18nService;
 
-            model = prmtBO.select(model.getId(), getIdioma(), model.getFref());
+	@Inject
+	private PuertoService prtoService;
 
-            if (accion == AccionCodigo.duplicate_version) {
-                if (model.getVersion().getFfin() != null) {
-                    model.getVersion().setFini(model.getVersion().getFfin());
-                    model.getVersion().setFfin(null);
-                } else {
-                    final Calendar ffin = Calendar.getInstance();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSpecificEdit() throws ApplicationException {
+		enti = TipoParametroProxy.select(model.getEntiId());
 
-                    ffin.set(Calendar.HOUR_OF_DAY, 0);
-                    ffin.set(Calendar.MINUTE, 0);
-                    ffin.set(Calendar.SECOND, 0);
-                    ffin.set(Calendar.MILLISECOND, 0);
+		if (accion == AccionCodigo.create) {
+			i18nMap = new HashMap<String, I18nVO>();
+		} else {
+			model = prmtService.select(model.getId(), getIdioma(), model.getFref());
 
-                    model.getVersion().setFini(ffin.getTime());
-                }
-            }
+			if (accion == AccionCodigo.duplicate_version) {
+				if (model.getVersion().getFfin() != null) {
+					model.getVersion().setFini(model.getVersion().getFfin());
+					model.getVersion().setFfin(null);
+				} else {
+					final Calendar ffin = Calendar.getInstance();
 
-            if (enti.getEnti().isI18n()) {
-                i18nMap = I18nUtilBO.selectMap(model);
-            }
-        }
-    }
+					ffin.set(Calendar.HOUR_OF_DAY, 0);
+					ffin.set(Calendar.MINUTE, 0);
+					ffin.set(Calendar.SECOND, 0);
+					ffin.set(Calendar.MILLISECOND, 0);
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doLoadSpecificDependencies() throws ApplicationException {
-        if (enti.getEnti().getPuerto()) {
-            final PuertoBO prtoBO = new PuertoBO();
-            final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+					model.getVersion().setFini(ffin.getTime());
+				}
+			}
 
-            prtoCriterio.setSprtId(getSprtId());
-            prtoCriterio.setIdioma(getIdioma());
+			if (enti.getEnti().isI18n()) {
+				i18nMap = i18nService.selectMap(model);
+			}
+		}
+	}
 
-            prtoList = prtoBO.selectList(prtoCriterio);
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doLoadSpecificDependencies() throws ApplicationException {
+		if (enti.getEnti().getPuerto()) {
+			final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+
+			prtoCriterio.setSprtId(getSprtId());
+			prtoCriterio.setIdioma(getIdioma());
+
+			prtoList = prtoService.selectList(prtoCriterio);
+		}
+	}
 }

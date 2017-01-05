@@ -1,14 +1,13 @@
 package xeredi.argo.http.controller.action.facturacion;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.argo.model.facturacion.bo.AspectoCargoBO;
+import xeredi.argo.model.facturacion.service.AspectoCargoService;
 import xeredi.argo.model.facturacion.vo.AspectoCargoVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 
@@ -16,49 +15,48 @@ import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 /**
  * The Class AspectoCargoSaveAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class AspectoCargoSaveAction extends CrudSaveAction<AspectoCargoVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -5838925962199897361L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -5838925962199897361L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSave() throws ApplicationException {
-        final AspectoCargoBO ascrBO = new AspectoCargoBO();
+	@Inject
+	private AspectoCargoService ascrService;
 
-        switch (accion) {
-        case create:
-            ascrBO.insert(model);
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSave() throws ApplicationException {
+		switch (accion) {
+		case create:
+			ascrService.insert(model);
 
-            break;
-        case edit:
-            ascrBO.update(model);
+			break;
+		case edit:
+			ascrService.update(model);
 
-            break;
-        default:
-            throw new Error("Accion no valida: " + accion);
-        }
-    }
+			break;
+		default:
+			throw new Error("Accion no valida: " + accion);
+		}
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doValidate() throws ApplicationException {
-        Preconditions.checkNotNull(model.getAspcId());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doValidate() throws ApplicationException {
+		Preconditions.checkNotNull(model.getAspcId());
 
-        if (accion == AccionCodigo.create) {
-            FieldValidator.validateRequired(this, MessageI18nKey.crgo, model.getCrgo());
-        } else {
-            Preconditions.checkNotNull(model.getId());
-            Preconditions.checkNotNull(model.getVersion());
-            Preconditions.checkNotNull(model.getVersion().getId());
-        }
+		if (accion == AccionCodigo.create) {
+			FieldValidator.validateRequired(this, MessageI18nKey.crgo, model.getCrgo());
+		} else {
+			Preconditions.checkNotNull(model.getId());
+			Preconditions.checkNotNull(model.getVersion());
+			Preconditions.checkNotNull(model.getVersion().getId());
+		}
 
-        FieldValidator.validateVersion(this, accion, model);
-    }
+		FieldValidator.validateVersion(this, accion, model);
+	}
 }

@@ -2,10 +2,12 @@ package xeredi.argo.http.controller.action.servicio;
 
 import java.util.List;
 
+import com.google.inject.Inject;
+
 import lombok.Getter;
 import xeredi.argo.http.controller.action.item.ItemDetailAction;
-import xeredi.argo.model.comun.bo.ArchivoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.ArchivoService;
 import xeredi.argo.model.comun.vo.ArchivoCriterioVO;
 import xeredi.argo.model.comun.vo.ArchivoInfoVO;
 import xeredi.argo.model.item.bo.ItemTramiteBO;
@@ -23,43 +25,45 @@ import xeredi.argo.model.servicio.vo.ServicioVO;
  */
 public final class ServicioDetailAction extends ItemDetailAction<ServicioVO, TipoServicioDetailVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -8504526234230863854L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -8504526234230863854L;
 
-    /** The arin list. */
-    @Getter
-    private List<ArchivoInfoVO> arinList;
+	/** The arin list. */
+	@Getter
+	private List<ArchivoInfoVO> arinList;
 
-    /** The srtr list. */
-    @Getter
-    private List<ItemTramiteVO> ittrList;
+	/** The srtr list. */
+	@Getter
+	private List<ItemTramiteVO> ittrList;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSpecificDetail() throws ApplicationException {
-        enti = TipoServicioProxy.select(model.getEntiId());
+	@Inject
+	private ArchivoService archService;
 
-        final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId(), usroId);
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSpecificDetail() throws ApplicationException {
+		enti = TipoServicioProxy.select(model.getEntiId());
 
-        model = srvcBO.select(model.getId(), getIdioma());
+		final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId(), usroId);
 
-        final ArchivoBO archBO = new ArchivoBO();
-        final ArchivoCriterioVO archCriterio = new ArchivoCriterioVO();
+		model = srvcBO.select(model.getId(), getIdioma());
 
-        archCriterio.setSrvcId(model.getId());
+		final ArchivoCriterioVO archCriterio = new ArchivoCriterioVO();
 
-        arinList = archBO.selectList(archCriterio);
+		archCriterio.setSrvcId(model.getId());
 
-        if (enti.getEnti().getTpdtEstado() != null) {
-            final ItemTramiteBO ittrBO = new ItemTramiteBO();
-            final ItemTramiteCriterioVO ittrCriterio = new ItemTramiteCriterioVO();
+		arinList = archService.selectList(archCriterio);
 
-            ittrCriterio.setItemId(model.getId());
-            ittrCriterio.setIdioma(getIdioma());
+		if (enti.getEnti().getTpdtEstado() != null) {
+			final ItemTramiteBO ittrBO = new ItemTramiteBO();
+			final ItemTramiteCriterioVO ittrCriterio = new ItemTramiteCriterioVO();
 
-            ittrList = ittrBO.selectList(ittrCriterio);
-        }
-    }
+			ittrCriterio.setItemId(model.getId());
+			ittrCriterio.setIdioma(getIdioma());
+
+			ittrList = ittrBO.selectList(ittrCriterio);
+		}
+	}
 }

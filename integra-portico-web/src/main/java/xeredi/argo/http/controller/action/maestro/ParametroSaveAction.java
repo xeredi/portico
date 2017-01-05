@@ -3,14 +3,15 @@ package xeredi.argo.http.controller.action.maestro;
 import java.util.Calendar;
 import java.util.Map;
 
+import com.google.inject.Inject;
+
 import lombok.Setter;
 import xeredi.argo.http.controller.action.item.ItemSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.argo.model.maestro.bo.ParametroBO;
-import xeredi.argo.model.maestro.bo.ParametroBOFactory;
+import xeredi.argo.model.maestro.service.ParametroService;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
@@ -22,78 +23,80 @@ import xeredi.argo.model.util.DateUtil;
  */
 public final class ParametroSaveAction extends ItemSaveAction<ParametroVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 8612808873765455744L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 8612808873765455744L;
 
-    /** The p18n map. */
-    @Setter
-    private Map<String, I18nVO> i18nMap;
+	/** The p18n map. */
+	@Setter
+	private Map<String, I18nVO> i18nMap;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSpecificValidate() throws ApplicationException {
-        final TipoParametroDetailVO enti = TipoParametroProxy.select(model.getEntiId());
+	@Inject
+	private ParametroService prmtService;
 
-        if (enti.getEnti().getPuerto()) {
-            FieldValidator.validateRequired(this, MessageI18nKey.prto, model.getPrto());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSpecificValidate() throws ApplicationException {
+		final TipoParametroDetailVO enti = TipoParametroProxy.select(model.getEntiId());
 
-            if (!hasErrors()) {
-                FieldValidator.validateRequired(this, MessageI18nKey.prto, model.getPrto().getId());
-            }
-        }
+		if (enti.getEnti().getPuerto()) {
+			FieldValidator.validateRequired(this, MessageI18nKey.prto, model.getPrto());
 
-        FieldValidator.validateRequired(this, MessageI18nKey.prmt_parametro, model.getParametro());
+			if (!hasErrors()) {
+				FieldValidator.validateRequired(this, MessageI18nKey.prto, model.getPrto().getId());
+			}
+		}
 
-        DateUtil.truncTime(model.getVersion().getFini(), Calendar.HOUR_OF_DAY);
-        DateUtil.truncTime(model.getVersion().getFfin(), Calendar.HOUR_OF_DAY);
+		FieldValidator.validateRequired(this, MessageI18nKey.prmt_parametro, model.getParametro());
 
-        FieldValidator.validateVersion(this, accion, model);
+		DateUtil.truncTime(model.getVersion().getFini(), Calendar.HOUR_OF_DAY);
+		DateUtil.truncTime(model.getVersion().getFfin(), Calendar.HOUR_OF_DAY);
 
-        if (!hasErrors()) {
-            FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getVersion().getFini());
-        }
+		FieldValidator.validateVersion(this, accion, model);
 
-        if (enti.getEnti().getGis()) {
-            FieldValidator.validateRequired(this, MessageI18nKey.prmt_lat, model.getVersion().getLat());
-            FieldValidator.validateRequired(this, MessageI18nKey.prmt_lon, model.getVersion().getLon());
-        }
+		if (!hasErrors()) {
+			FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getVersion().getFini());
+		}
 
-        if (enti.getEnti().isI18n()) {
-            FieldValidator.validateI18n(this, i18nMap);
-        }
+		if (enti.getEnti().getGis()) {
+			FieldValidator.validateRequired(this, MessageI18nKey.prmt_lat, model.getVersion().getLat());
+			FieldValidator.validateRequired(this, MessageI18nKey.prmt_lon, model.getVersion().getLon());
+		}
 
-        FieldValidator.validateItem(this, enti, model);
-    }
+		if (enti.getEnti().isI18n()) {
+			FieldValidator.validateI18n(this, i18nMap);
+		}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSave() throws ApplicationException {
-        final ParametroBO itemBO = ParametroBOFactory.newInstance(model.getEntiId());
-        final TipoParametroDetailVO enti = TipoParametroProxy.select(model.getEntiId());
+		FieldValidator.validateItem(this, enti, model);
+	}
 
-        switch (accion) {
-        case create:
-            itemBO.insert(model, enti, i18nMap);
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSave() throws ApplicationException {
+		final TipoParametroDetailVO enti = TipoParametroProxy.select(model.getEntiId());
 
-            break;
-        case edit:
-            itemBO.update(model, enti, i18nMap);
+		switch (accion) {
+		case create:
+			prmtService.insert(model, enti, i18nMap);
 
-            break;
-        case duplicate:
-            itemBO.duplicate(model, enti, i18nMap);
+			break;
+		case edit:
+			prmtService.update(model, enti, i18nMap);
 
-            break;
-        case duplicate_version:
-            itemBO.duplicateVersion(model, enti, i18nMap);
+			break;
+		case duplicate:
+			prmtService.duplicate(model, enti, i18nMap);
 
-            break;
-        default:
-            throw new Error("Accion no valida: " + accion);
-        }
-    }
+			break;
+		case duplicate_version:
+			prmtService.duplicateVersion(model, enti, i18nMap);
+
+			break;
+		default:
+			throw new Error("Accion no valida: " + accion);
+		}
+	}
 }

@@ -8,14 +8,14 @@ import java.util.Map;
 import java.util.Set;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.item.vo.ItemCriterioVO;
-import xeredi.argo.model.maestro.bo.ParametroBO;
-import xeredi.argo.model.maestro.bo.ParametroBOFactory;
+import xeredi.argo.model.maestro.service.ParametroService;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoHtml;
@@ -29,88 +29,90 @@ import xeredi.argo.model.metamodelo.vo.TipoHtml;
  * @param <E>
  *            the element type
  */
-@Data
-public abstract class ItemFilterAction<C extends ItemCriterioVO, E extends AbstractEntidadDetailVO> extends
-        GridFilterAction<C> implements ProtectedItemAction {
+public abstract class ItemFilterAction<C extends ItemCriterioVO, E extends AbstractEntidadDetailVO>
+		extends GridFilterAction<C> implements ProtectedItemAction {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 8917073535249583222L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 8917073535249583222L;
 
-    /** The enti. */
-    protected E enti;
+	/** The enti. */
+	@Getter
+	protected E enti;
 
-    /** The label values map. */
-    protected Map<Long, List<LabelValueVO>> labelValuesMap;
+	/** The label values map. */
+	@Getter
+	protected Map<Long, List<LabelValueVO>> labelValuesMap;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void doPrepareFilter() throws ApplicationException {
-        Preconditions.checkNotNull(model.getEntiId());
+	@Inject
+	private ParametroService prmtService;
 
-        doSpecificPrepareFilter();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final void doPrepareFilter() throws ApplicationException {
+		Preconditions.checkNotNull(model.getEntiId());
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void doLoadDependencies() throws ApplicationException {
-        Preconditions.checkNotNull(enti);
+		doSpecificPrepareFilter();
+	}
 
-        if (enti.getEntdList() != null) {
-            labelValuesMap = new HashMap<Long, List<LabelValueVO>>();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final void doLoadDependencies() throws ApplicationException {
+		Preconditions.checkNotNull(enti);
 
-            final Set<Long> tpprIds = new HashSet<>();
+		if (enti.getEntdList() != null) {
+			labelValuesMap = new HashMap<Long, List<LabelValueVO>>();
 
-            for (final Long tpdtId : enti.getEntdList()) {
-                final EntidadTipoDatoVO entd = enti.getEntdMap().get(tpdtId);
+			final Set<Long> tpprIds = new HashSet<>();
 
-                if (entd.getFiltrable() && entd.getTpdt().getTpht() != TipoHtml.F && entd.getTpdt().getEnti() != null
-                        && entd.getTpdt().getEnti().getId() != null) {
-                    tpprIds.add(entd.getTpdt().getEnti().getId());
-                }
-            }
+			for (final Long tpdtId : enti.getEntdList()) {
+				final EntidadTipoDatoVO entd = enti.getEntdMap().get(tpdtId);
 
-            if (!tpprIds.isEmpty()) {
-                final ParametroBO prmtBO = ParametroBOFactory.newDefaultInstance();
+				if (entd.getFiltrable() && entd.getTpdt().getTpht() != TipoHtml.F && entd.getTpdt().getEnti() != null
+						&& entd.getTpdt().getEnti().getId() != null) {
+					tpprIds.add(entd.getTpdt().getEnti().getId());
+				}
+			}
 
-                labelValuesMap.putAll(prmtBO.selectLabelValues(tpprIds, getFechaVigencia(), getIdioma()));
-            }
-        }
+			if (!tpprIds.isEmpty()) {
+				labelValuesMap.putAll(prmtService.selectLabelValues(tpprIds, getFechaVigencia(), getIdioma()));
+			}
+		}
 
-        doSpecificLoadDependencies();
-    }
+		doSpecificLoadDependencies();
+	}
 
-    /**
-     * Do specific prepare filter.
-     *
-     * @throws ApplicationException
-     *             the application exception
-     */
-    public abstract void doSpecificPrepareFilter() throws ApplicationException;
+	/**
+	 * Do specific prepare filter.
+	 *
+	 * @throws ApplicationException
+	 *             the application exception
+	 */
+	public abstract void doSpecificPrepareFilter() throws ApplicationException;
 
-    /**
-     * Do load dependencies.
-     *
-     * @throws ApplicationException
-     *             the application exception
-     */
-    public abstract void doSpecificLoadDependencies() throws ApplicationException;
+	/**
+	 * Do load dependencies.
+	 *
+	 * @throws ApplicationException
+	 *             the application exception
+	 */
+	public abstract void doSpecificLoadDependencies() throws ApplicationException;
 
-    /**
-     * Gets the fecha vigencia.
-     *
-     * @return the fecha vigencia
-     */
-    public abstract Date getFechaVigencia();
+	/**
+	 * Gets the fecha vigencia.
+	 *
+	 * @return the fecha vigencia
+	 */
+	public abstract Date getFechaVigencia();
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final Long getEntiId() {
-        return model.getEntiId();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final Long getEntiId() {
+		return model.getEntiId();
+	}
 }

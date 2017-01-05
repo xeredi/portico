@@ -2,13 +2,14 @@ package xeredi.argo.http.controller.action.estadistica;
 
 import java.io.IOException;
 
+import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
+
 import xeredi.argo.http.controller.action.comun.CrudFileExportAction;
-import xeredi.argo.model.comun.bo.ArchivoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.ArchivoService;
 import xeredi.argo.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.argo.model.estadistica.vo.PeriodoProcesoVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -19,6 +20,9 @@ public final class PeriodoProcesoFileExportAction extends CrudFileExportAction<P
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -139099742146825401L;
 
+	@Inject
+	private ArchivoService archService;
+
     /**
      * {@inheritDoc}
      */
@@ -27,10 +31,9 @@ public final class PeriodoProcesoFileExportAction extends CrudFileExportAction<P
         Preconditions.checkNotNull(model.getId());
 
         final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
-        final ArchivoBO archBO = new ArchivoBO();
 
         model = peprBO.select(model.getId(), getIdioma());
-        stream = archBO.selectStream(model.getArin().getId());
+        stream = archService.selectStream(model.getArin().getId());
     }
 
     /**

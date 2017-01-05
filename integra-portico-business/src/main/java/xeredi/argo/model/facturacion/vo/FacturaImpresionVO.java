@@ -1,4 +1,4 @@
-package xeredi.argo.model.facturacion.bo;
+package xeredi.argo.model.facturacion.vo;
 
 import java.util.List;
 import java.util.Map;

@@ -1,24 +1,25 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.bo.EntidadEntidadBO;
+import xeredi.argo.model.metamodelo.service.EntidadEntidadService;
 import xeredi.argo.model.metamodelo.vo.EntidadEntidadVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class EntidadEntidadDetailAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class EntidadEntidadDetailAction extends CrudDetailAction<EntidadEntidadVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 6250400972687447880L;
+
+    @Inject
+    private EntidadEntidadService enenService;
 
     /**
      * {@inheritDoc}
@@ -29,8 +30,6 @@ public final class EntidadEntidadDetailAction extends CrudDetailAction<EntidadEn
         Preconditions.checkNotNull(model.getEntiHija());
         Preconditions.checkNotNull(model.getEntiHija().getId());
 
-        final EntidadEntidadBO enenBO = new EntidadEntidadBO();
-
-        model = enenBO.select(model.getEntiPadreId(), model.getEntiHija().getId());
+        model = enenService.select(model.getEntiPadreId(), model.getEntiHija().getId());
     }
 }

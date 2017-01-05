@@ -14,8 +14,8 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.LabelValueVO;
-import xeredi.argo.model.metamodelo.bo.EntidadGrupoDatoBO;
-import xeredi.argo.model.metamodelo.bo.EntidadTipoDatoBO;
+import xeredi.argo.model.metamodelo.service.EntidadGrupoDatoService;
+import xeredi.argo.model.metamodelo.service.EntidadTipoDatoService;
 import xeredi.argo.model.metamodelo.service.TipoDatoService;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.EntidadGrupoDatoCriterioVO;
@@ -50,6 +50,12 @@ public final class EntidadTipoDatoEditAction extends CrudEditAction<EntidadTipoD
 	@Inject
 	private I18nService i18nService;
 
+	@Inject
+	private EntidadTipoDatoService entdService;
+
+	@Inject
+	private EntidadGrupoDatoService engdService;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -62,9 +68,7 @@ public final class EntidadTipoDatoEditAction extends CrudEditAction<EntidadTipoD
 		} else {
 			Preconditions.checkNotNull(model.getId());
 
-			final EntidadTipoDatoBO entdBO = new EntidadTipoDatoBO();
-
-			model = entdBO.select(model.getId(), getIdioma());
+			model = entdService.select(model.getId(), getIdioma());
 			i18nMap = i18nService.selectMap(model);
 		}
 	}
@@ -75,13 +79,12 @@ public final class EntidadTipoDatoEditAction extends CrudEditAction<EntidadTipoD
 	@Override
 	public void doLoadDependencies() throws ApplicationException {
 		if (accion == AccionCodigo.create) {
-			final EntidadGrupoDatoBO engdBO = new EntidadGrupoDatoBO();
 			final EntidadGrupoDatoCriterioVO engdCriterio = new EntidadGrupoDatoCriterioVO();
 
 			engdCriterio.setEntiId(model.getEntiId());
 			engdCriterio.setIdioma(getIdioma());
 
-			engdList.addAll(engdBO.selectLabelValues(engdCriterio));
+			engdList.addAll(engdService.selectLabelValues(engdCriterio));
 
 			final TipoDatoCriterioVO tpdtCriterioVO = new TipoDatoCriterioVO();
 

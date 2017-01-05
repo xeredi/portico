@@ -11,7 +11,7 @@ import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
-import xeredi.argo.model.metamodelo.bo.AccionEspecialBO;
+import xeredi.argo.model.metamodelo.service.AccionEspecialService;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.AccionEspecialVO;
 
@@ -31,6 +31,9 @@ public class AccionEspecialEditAction extends CrudEditAction<AccionEspecialVO> {
 	@Inject
 	private I18nService i18nService;
 
+	@Inject
+	private AccionEspecialService acesService;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -43,9 +46,7 @@ public class AccionEspecialEditAction extends CrudEditAction<AccionEspecialVO> {
 		} else {
 			Preconditions.checkNotNull(model.getId());
 
-			final AccionEspecialBO acesBO = new AccionEspecialBO();
-
-			model = acesBO.select(model.getId(), getIdioma());
+			model = acesService.select(model.getId(), getIdioma());
 			i18nMap = i18nService.selectMap(model);
 		}
 	}
