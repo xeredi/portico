@@ -8,8 +8,8 @@ import com.google.inject.Inject;
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.ValoracionLineaBO;
 import xeredi.argo.model.facturacion.service.AspectoService;
+import xeredi.argo.model.facturacion.service.ValoracionLineaService;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
@@ -40,6 +40,9 @@ public final class ValoracionLineaDetailAction extends CrudDetailAction<Valoraci
 	@Inject
 	private AspectoService aspcService;
 
+	@Inject
+	private ValoracionLineaService vlrlService;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -47,15 +50,13 @@ public final class ValoracionLineaDetailAction extends CrudDetailAction<Valoraci
 	public void doDetail() throws ApplicationException {
 		Preconditions.checkNotNull(model.getId());
 
-		final ValoracionLineaBO vlrlBO = new ValoracionLineaBO();
-
 		{
 			final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
 
 			vlrlCriterio.setId(model.getId());
 			vlrlCriterio.setIdioma(getIdioma());
 
-			model = vlrlBO.selectObject(vlrlCriterio);
+			model = vlrlService.selectObject(vlrlCriterio);
 		}
 
 		// Busqueda de la linea padre
@@ -67,7 +68,7 @@ public final class ValoracionLineaDetailAction extends CrudDetailAction<Valoraci
 			vlrlCriterio.setId(model.getPadreId());
 			vlrlCriterio.setIdioma(getIdioma());
 
-			vlrlPadre = vlrlBO.selectObject(vlrlCriterio);
+			vlrlPadre = vlrlService.selectObject(vlrlCriterio);
 		}
 
 		// Busqueda de las lineas hija (coef/bonif)
@@ -78,7 +79,7 @@ public final class ValoracionLineaDetailAction extends CrudDetailAction<Valoraci
 			vlrlCriterio.setSoloHijos(true);
 			vlrlCriterio.setIdioma(getIdioma());
 
-			vlrlHijosList = vlrlBO.selectList(vlrlCriterio);
+			vlrlHijosList = vlrlService.selectList(vlrlCriterio);
 		}
 
 		final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();

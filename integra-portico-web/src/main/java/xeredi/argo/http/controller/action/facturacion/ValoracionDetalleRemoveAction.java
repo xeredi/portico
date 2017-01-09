@@ -1,33 +1,33 @@
 package xeredi.argo.http.controller.action.facturacion;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.ValoracionDetalleBO;
+import xeredi.argo.model.facturacion.service.ValoracionDetalleService;
 import xeredi.argo.model.facturacion.vo.ValoracionDetalleVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ValoracionDetalleRemoveAction.
  */
-@Data
 public final class ValoracionDetalleRemoveAction extends CrudRemoveAction<ValoracionDetalleVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -1970434275265288322L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -1970434275265288322L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doRemove() throws ApplicationException {
-        Preconditions.checkNotNull(model.getId());
-        Preconditions.checkNotNull(model.getVlrlId());
+	@Inject
+	private ValoracionDetalleService vlrdService;
 
-        final ValoracionDetalleBO vlrdBO = new ValoracionDetalleBO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doRemove() throws ApplicationException {
+		Preconditions.checkNotNull(model.getId());
+		Preconditions.checkNotNull(model.getVlrlId());
 
-        vlrdBO.delete(model);
-    }
+		vlrdService.delete(model);
+	}
 }

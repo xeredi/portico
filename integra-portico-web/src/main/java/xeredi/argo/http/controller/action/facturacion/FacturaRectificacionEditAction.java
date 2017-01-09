@@ -3,12 +3,13 @@ package xeredi.argo.http.controller.action.facturacion;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.FacturaBO;
-import xeredi.argo.model.facturacion.bo.ValoracionBO;
+import xeredi.argo.model.facturacion.service.ValoracionService;
 import xeredi.argo.model.facturacion.vo.FacturaRectificacionVO;
 import xeredi.argo.model.facturacion.vo.FacturaVO;
 import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
@@ -18,40 +19,42 @@ import xeredi.argo.model.facturacion.vo.ValoracionVO;
 /**
  * The Class FacturaRectificacionEditAction.
  */
-@Data
 public final class FacturaRectificacionEditAction extends CrudEditAction<FacturaRectificacionVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -9102133120619646073L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -9102133120619646073L;
 
-    /** The vlrc list. */
-    private List<ValoracionVO> vlrcList;
+	/** The vlrc list. */
+	@Getter
+	private List<ValoracionVO> vlrcList;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doEdit() throws ApplicationException {
-        Preconditions.checkNotNull(model.getFctrId());
+	@Inject
+	private ValoracionService vlrcService;
 
-        final FacturaBO fctrBO = new FacturaBO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doEdit() throws ApplicationException {
+		Preconditions.checkNotNull(model.getFctrId());
 
-        final FacturaVO fctr = fctrBO.select(model.getFctrId(), getIdioma());
+		final FacturaBO fctrBO = new FacturaBO();
 
-        final ValoracionBO vlrcBO = new ValoracionBO();
-        final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
+		final FacturaVO fctr = fctrBO.select(model.getFctrId(), getIdioma());
 
-        vlrcCriterio.setFctr(fctr);
-        vlrcCriterio.setIdioma(getIdioma());
+		final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
 
-        vlrcList = vlrcBO.selectList(vlrcCriterio);
-    }
+		vlrcCriterio.setFctr(fctr);
+		vlrcCriterio.setIdioma(getIdioma());
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doLoadDependencies() throws ApplicationException {
-        // noop
-    }
+		vlrcList = vlrcService.selectList(vlrcCriterio);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doLoadDependencies() throws ApplicationException {
+		// noop
+	}
 }

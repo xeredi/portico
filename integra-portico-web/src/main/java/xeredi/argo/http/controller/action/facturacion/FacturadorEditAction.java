@@ -13,7 +13,7 @@ import xeredi.argo.model.comun.service.PuertoService;
 import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
-import xeredi.argo.model.facturacion.bo.FacturaSerieBO;
+import xeredi.argo.model.facturacion.service.FacturaSerieService;
 import xeredi.argo.model.facturacion.vo.FacturaSerieCriterioVO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieVO;
 import xeredi.argo.model.facturacion.vo.FacturadorVO;
@@ -51,6 +51,9 @@ public final class FacturadorEditAction extends CrudEditAction<FacturadorVO> {
 	@Inject
 	private PuertoService prtoService;
 
+	@Inject
+	private FacturaSerieService fcsrService;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -69,12 +72,11 @@ public final class FacturadorEditAction extends CrudEditAction<FacturadorVO> {
 		Preconditions.checkNotNull(model);
 		Preconditions.checkNotNull(model.getFecha());
 
-		final FacturaSerieBO fcsrBO = new FacturaSerieBO();
 		final FacturaSerieCriterioVO fcsrCriterio = new FacturaSerieCriterioVO();
 
 		fcsrCriterio.setAnio(model.getFecha().get(Calendar.YEAR));
 
-		fcsrList = fcsrBO.selectList(fcsrCriterio);
+		fcsrList = fcsrService.selectList(fcsrCriterio);
 		grupoTipoList = ValoracionGrupoTipo.values();
 
 		if (model.getVlrcId() == null) {

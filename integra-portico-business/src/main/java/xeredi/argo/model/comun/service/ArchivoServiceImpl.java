@@ -6,11 +6,11 @@ import java.io.InputStream;
 import java.util.Calendar;
 import java.util.List;
 
+import org.apache.ibatis.session.ExecutorType;
 import org.mybatis.guice.transactional.Transactional;
 
 import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgUtilBO;
@@ -30,8 +30,7 @@ import xeredi.argo.model.util.GzipUtil;
 /**
  * The Class ArchivoServiceImpl.
  */
-@Singleton
-@Transactional
+@Transactional(executorType = ExecutorType.REUSE)
 public class ArchivoServiceImpl implements ArchivoService {
 
 	/** The arch DAO. */

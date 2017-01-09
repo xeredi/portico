@@ -10,7 +10,7 @@ import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.LabelValueVO;
-import xeredi.argo.model.facturacion.bo.ValoracionBO;
+import xeredi.argo.model.facturacion.service.ValoracionService;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
 import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
 import xeredi.argo.model.metamodelo.service.TipoServicioService;
@@ -43,6 +43,9 @@ public final class ValoracionEditAction extends CrudEditAction<ValoracionVO> {
 	@Inject
 	private TipoServicioService tpsrService;
 
+	@Inject
+	private ValoracionService vlrcService;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -59,9 +62,7 @@ public final class ValoracionEditAction extends CrudEditAction<ValoracionVO> {
 		case edit:
 			Preconditions.checkNotNull(model.getId());
 
-			final ValoracionBO vlrcBO = new ValoracionBO();
-
-			model = vlrcBO.select(model.getId(), getIdioma());
+			model = vlrcService.select(model.getId(), getIdioma());
 
 			break;
 		default:

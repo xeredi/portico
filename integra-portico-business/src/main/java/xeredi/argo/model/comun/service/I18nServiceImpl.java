@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.ibatis.session.ExecutorType;
 import org.mybatis.guice.transactional.Transactional;
 
 import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.dao.I18nDAO;
@@ -24,8 +24,7 @@ import xeredi.argo.model.comun.vo.Versionable;
 /**
  * The Class I18nServiceImpl.
  */
-@Singleton
-@Transactional
+@Transactional(executorType = ExecutorType.REUSE)
 public class I18nServiceImpl implements I18nService {
 
 	/** The i 18 n DAO. */

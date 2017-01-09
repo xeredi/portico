@@ -1,11 +1,11 @@
 package xeredi.argo.http.controller.action.facturacion;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.ValoracionDetalleBO;
+import xeredi.argo.model.facturacion.service.ValoracionDetalleService;
 import xeredi.argo.model.facturacion.vo.ValoracionDetalleCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionDetalleVO;
 
@@ -13,21 +13,22 @@ import xeredi.argo.model.facturacion.vo.ValoracionDetalleVO;
 /**
  * The Class ValoracionDetalleListAction.
  */
-@Data
-public final class ValoracionDetalleListAction extends GridListAction<ValoracionDetalleCriterioVO, ValoracionDetalleVO> {
+public final class ValoracionDetalleListAction
+		extends GridListAction<ValoracionDetalleCriterioVO, ValoracionDetalleVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 5836376477924004332L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 5836376477924004332L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doList() throws ApplicationException {
-        Preconditions.checkNotNull(model.getVlrlId());
+	@Inject
+	private ValoracionDetalleService vlrdService;
 
-        final ValoracionDetalleBO vlrdBO = new ValoracionDetalleBO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doList() throws ApplicationException {
+		Preconditions.checkNotNull(model.getVlrlId());
 
-        resultList = vlrdBO.selectList(model, getOffset(), limit);
-    }
+		resultList = vlrdService.selectList(model, getOffset(), limit);
+	}
 }

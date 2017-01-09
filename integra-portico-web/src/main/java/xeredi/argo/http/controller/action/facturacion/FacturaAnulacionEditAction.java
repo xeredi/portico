@@ -4,12 +4,13 @@ import java.util.Calendar;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.FacturaBO;
-import xeredi.argo.model.facturacion.bo.FacturaSerieBO;
+import xeredi.argo.model.facturacion.service.FacturaSerieService;
 import xeredi.argo.model.facturacion.vo.FacturaAnulacionVO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieCriterioVO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieVO;
@@ -27,6 +28,9 @@ public final class FacturaAnulacionEditAction extends CrudEditAction<FacturaAnul
 	/** The fcsr list. */
 	@Getter
 	private List<FacturaSerieVO> fcsrList;
+
+	@Inject
+	private FacturaSerieService fcsrService;
 
 	/**
 	 * {@inheritDoc}
@@ -47,11 +51,10 @@ public final class FacturaAnulacionEditAction extends CrudEditAction<FacturaAnul
 	 */
 	@Override
 	public void doLoadDependencies() throws ApplicationException {
-		final FacturaSerieBO fcsrBO = new FacturaSerieBO();
 		final FacturaSerieCriterioVO fcsrCriterio = new FacturaSerieCriterioVO();
 
 		fcsrCriterio.setAnio(Calendar.getInstance().get(Calendar.YEAR));
 
-		fcsrList = fcsrBO.selectList(fcsrCriterio);
+		fcsrList = fcsrService.selectList(fcsrCriterio);
 	}
 }

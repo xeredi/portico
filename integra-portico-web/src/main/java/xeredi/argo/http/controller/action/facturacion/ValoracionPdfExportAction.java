@@ -11,11 +11,11 @@ import com.google.inject.Inject;
 import xeredi.argo.http.controller.action.comun.CrudFileExportAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.argo.model.facturacion.bo.ValoracionBO;
-import xeredi.argo.model.facturacion.bo.ValoracionCargoBO;
-import xeredi.argo.model.facturacion.bo.ValoracionImpuestoBO;
-import xeredi.argo.model.facturacion.bo.ValoracionLineaBO;
 import xeredi.argo.model.facturacion.report.ValoracionPdf;
+import xeredi.argo.model.facturacion.service.ValoracionCargoService;
+import xeredi.argo.model.facturacion.service.ValoracionImpuestoService;
+import xeredi.argo.model.facturacion.service.ValoracionLineaService;
+import xeredi.argo.model.facturacion.service.ValoracionService;
 import xeredi.argo.model.facturacion.vo.ValoracionCargoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionImpuestoVO;
@@ -40,6 +40,18 @@ public final class ValoracionPdfExportAction extends CrudFileExportAction<Valora
 	@Inject
 	private ParametroService prmtService;
 
+	@Inject
+	private ValoracionService vlrcService;
+
+	@Inject
+	private ValoracionLineaService vlrlService;
+
+	@Inject
+	private ValoracionCargoService vlrgService;
+
+	@Inject
+	private ValoracionImpuestoService vlriService;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -47,27 +59,22 @@ public final class ValoracionPdfExportAction extends CrudFileExportAction<Valora
 	public void doExport() throws ApplicationException, IOException {
 		Preconditions.checkNotNull(model.getId());
 
-		final ValoracionBO vlrcBO = new ValoracionBO();
-
-		model = vlrcBO.select(model.getId(), getIdioma());
+		model = vlrcService.select(model.getId(), getIdioma());
 
 		final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
 
 		vlrcCriterio.setId(model.getId());
 		vlrcCriterio.setIdioma(getIdioma());
 
-		final ValoracionCargoBO vlrgBO = new ValoracionCargoBO();
-		final List<ValoracionCargoVO> vlrgList = vlrgBO.selectList(vlrcCriterio);
-		final ValoracionImpuestoBO vlriBO = new ValoracionImpuestoBO();
-		final List<ValoracionImpuestoVO> vlriList = vlriBO.selectList(vlrcCriterio);
+		final List<ValoracionCargoVO> vlrgList = vlrgService.selectList(vlrcCriterio);
+		final List<ValoracionImpuestoVO> vlriList = vlriService.selectList(vlrcCriterio);
 
-		final ValoracionLineaBO vlrlBO = new ValoracionLineaBO();
 		final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
 
 		vlrlCriterio.setVlrcId(model.getId());
 		vlrlCriterio.setIdioma(getIdioma());
 
-		final List<ValoracionLineaVO> vlrlList = vlrlBO.selectList(vlrlCriterio);
+		final List<ValoracionLineaVO> vlrlList = vlrlService.selectList(vlrlCriterio);
 
 		final TipoDatoVO tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
 		final ParametroVO pagador = prmtService.select(model.getPagador().getId(), getIdioma(), model.getFref());

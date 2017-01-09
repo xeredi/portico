@@ -8,10 +8,10 @@ import com.google.inject.Inject;
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.ValoracionBO;
-import xeredi.argo.model.facturacion.bo.ValoracionCargoBO;
-import xeredi.argo.model.facturacion.bo.ValoracionImpuestoBO;
 import xeredi.argo.model.facturacion.service.AspectoService;
+import xeredi.argo.model.facturacion.service.ValoracionCargoService;
+import xeredi.argo.model.facturacion.service.ValoracionImpuestoService;
+import xeredi.argo.model.facturacion.service.ValoracionService;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionCargoVO;
@@ -50,6 +50,15 @@ public final class ValoracionDetailAction extends CrudDetailAction<ValoracionVO>
 	@Inject
 	private AspectoService aspcService;
 
+	@Inject
+	private ValoracionService vlrcService;
+
+	@Inject
+	private ValoracionCargoService vlrgService;
+
+	@Inject
+	private ValoracionImpuestoService vlriService;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -57,23 +66,15 @@ public final class ValoracionDetailAction extends CrudDetailAction<ValoracionVO>
 	public void doDetail() throws ApplicationException {
 		Preconditions.checkNotNull(model.getId());
 
-		final ValoracionBO vlrcBO = new ValoracionBO();
-
-		model = vlrcBO.select(model.getId(), getIdioma());
+		model = vlrcService.select(model.getId(), getIdioma());
 
 		final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
 
 		vlrcCriterio.setId(model.getId());
 		vlrcCriterio.setIdioma(getIdioma());
 
-		final ValoracionImpuestoBO vlriBO = new ValoracionImpuestoBO();
-
-		vlriList = vlriBO.selectList(vlrcCriterio);
-
-		final ValoracionCargoBO vlrgBO = new ValoracionCargoBO();
-
-		vlrgList = vlrgBO.selectList(vlrcCriterio);
-
+		vlriList = vlriService.selectList(vlrcCriterio);
+		vlrgList = vlrgService.selectList(vlrcCriterio);
 		tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
 
 		final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();

@@ -2,15 +2,16 @@ package xeredi.argo.http.controller.action.comun;
 
 import java.util.List;
 
+import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
+import com.opensymphony.xwork2.ModelDriven;
+
 import lombok.Getter;
 import lombok.Setter;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.proxy.ConfigurationProxy;
+import xeredi.argo.model.comun.service.ConfigurationProxyService;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.Typeahead;
-
-import com.google.common.base.Preconditions;
-import com.opensymphony.xwork2.ModelDriven;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -23,43 +24,44 @@ import com.opensymphony.xwork2.ModelDriven;
  */
 public abstract class TypeaheadAction<C extends Typeahead, R> extends BaseAction implements ModelDriven<C> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -2890042689865301209L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -2890042689865301209L;
 
-    /** The Constant ROWS. */
-    private static final int ROWS = ConfigurationProxy.getInt(ConfigurationKey.filter_limit);
+	/** The model. */
+	@Getter
+	@Setter
+	protected C model;
 
-    /** The model. */
-    @Getter
-    @Setter
-    protected C model;
+	/** The result list. */
+	@Getter
+	protected List<R> resultList;
 
-    /** The result list. */
-    @Getter
-    protected List<R> resultList;
+	/** The limit. */
+	@Setter
+	protected int limit;
 
-    /** The limit. */
-    @Setter
-    protected int limit = ROWS;
+	@Inject
+	private ConfigurationProxyService confProxy;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void doExecute() throws ApplicationException {
-        Preconditions.checkNotNull(model);
-        // Preconditions.checkNotNull(model.getTextoBusqueda());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final void doExecute() throws ApplicationException {
+		Preconditions.checkNotNull(model);
 
-        model.setIdioma(getIdioma());
+		model.setIdioma(getIdioma());
 
-        doTypeahead();
-    }
+		limit = confProxy.getInt(ConfigurationKey.filter_limit);
 
-    /**
-     * Do execute.
-     *
-     * @throws ApplicationException
-     *             the application exception
-     */
-    public abstract void doTypeahead() throws ApplicationException;
+		doTypeahead();
+	}
+
+	/**
+	 * Do execute.
+	 *
+	 * @throws ApplicationException
+	 *             the application exception
+	 */
+	public abstract void doTypeahead() throws ApplicationException;
 }

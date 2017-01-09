@@ -1,39 +1,39 @@
 package xeredi.argo.http.controller.action.facturacion;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.argo.model.facturacion.bo.ValoracionBO;
+import xeredi.argo.model.facturacion.service.ValoracionService;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ValoracionSaveAction.
  */
-@Data
 public final class ValoracionSaveAction extends CrudSaveAction<ValoracionVO> {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -4029857636749956262L;
+
+	@Inject
+	private ValoracionService vlrcService;
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void doSave() throws ApplicationException {
-        final ValoracionBO vlrcBO = new ValoracionBO();
-
         switch (accion) {
         case create:
-            vlrcBO.insert(model);
+            vlrcService.insert(model);
 
             break;
         case edit:
-            vlrcBO.update(model);
+            vlrcService.update(model);
 
             break;
         default:

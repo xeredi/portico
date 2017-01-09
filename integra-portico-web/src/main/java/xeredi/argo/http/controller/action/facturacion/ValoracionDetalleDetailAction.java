@@ -8,9 +8,9 @@ import com.google.inject.Inject;
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.ValoracionDetalleBO;
-import xeredi.argo.model.facturacion.bo.ValoracionLineaBO;
 import xeredi.argo.model.facturacion.service.AspectoService;
+import xeredi.argo.model.facturacion.service.ValoracionDetalleService;
+import xeredi.argo.model.facturacion.service.ValoracionLineaService;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
@@ -47,6 +47,12 @@ public final class ValoracionDetalleDetailAction extends CrudDetailAction<Valora
 	@Inject
 	private AspectoService aspcService;
 
+	@Inject
+	private ValoracionLineaService vlrlService;
+
+	@Inject
+	private ValoracionDetalleService vlrdService;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -54,9 +60,7 @@ public final class ValoracionDetalleDetailAction extends CrudDetailAction<Valora
 	public void doDetail() throws ApplicationException {
 		Preconditions.checkNotNull(model.getId());
 
-		final ValoracionDetalleBO vlrdBO = new ValoracionDetalleBO();
-
-		model = vlrdBO.select(model.getId(), getIdioma());
+		model = vlrdService.select(model.getId(), getIdioma());
 
 		// Busqueda de lineas hijas (coef/bonif)
 		if (model.getRgla().getTipo() == ReglaTipo.T) {
@@ -66,16 +70,15 @@ public final class ValoracionDetalleDetailAction extends CrudDetailAction<Valora
 			vlrdCriterio.setIdioma(getIdioma());
 			vlrdCriterio.setSoloHijos(true);
 
-			vlrdHijosList = vlrdBO.selectList(vlrdCriterio);
+			vlrdHijosList = vlrdService.selectList(vlrdCriterio);
 		}
 
-		final ValoracionLineaBO vlrlBO = new ValoracionLineaBO();
 		final ValoracionLineaCriterioVO vlrlCriterio = new ValoracionLineaCriterioVO();
 
 		vlrlCriterio.setId(model.getVlrlId());
 		vlrlCriterio.setIdioma(getIdioma());
 
-		vlrl = vlrlBO.selectObject(vlrlCriterio);
+		vlrl = vlrlService.selectObject(vlrlCriterio);
 
 		if (vlrl.getId() == vlrl.getPadreId()) {
 			vlrlPadre = vlrl;
@@ -85,7 +88,7 @@ public final class ValoracionDetalleDetailAction extends CrudDetailAction<Valora
 			vlrlPadreCriterio.setId(vlrl.getPadreId());
 			vlrlPadreCriterio.setIdioma(getIdioma());
 
-			vlrlPadre = vlrlBO.selectObject(vlrlPadreCriterio);
+			vlrlPadre = vlrlService.selectObject(vlrlPadreCriterio);
 		}
 
 		final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();

@@ -1,9 +1,11 @@
 package xeredi.argo.http.controller.action.facturacion;
 
-import lombok.Data;
+import com.google.inject.Inject;
+
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.ValoracionBO;
+import xeredi.argo.model.facturacion.service.ValoracionService;
 import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
 import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
@@ -14,25 +16,26 @@ import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
 /**
  * The Class ValoracionListAction.
  */
-@Data
 public final class ValoracionListAction extends GridListAction<ValoracionCriterioVO, ValoracionVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -3608142356966434674L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -3608142356966434674L;
 
-    /** The tpdt cod exencion. */
-    private TipoDatoVO tpdtCodExencion;
+	/** The tpdt cod exencion. */
+	@Getter
+	private TipoDatoVO tpdtCodExencion;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doList() throws ApplicationException {
-        final ValoracionBO vlrcBO = new ValoracionBO();
+	@Inject
+	private ValoracionService vlrcService;
 
-        model.setPendienteFacturar(true);
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doList() throws ApplicationException {
+		model.setPendienteFacturar(true);
 
-        resultList = vlrcBO.selectList(model, getOffset(), limit);
-        tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
-    }
+		resultList = vlrcService.selectList(model, getOffset(), limit);
+		tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
+	}
 }

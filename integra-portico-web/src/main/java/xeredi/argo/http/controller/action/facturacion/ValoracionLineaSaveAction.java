@@ -1,13 +1,13 @@
 package xeredi.argo.http.controller.action.facturacion;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.argo.model.facturacion.bo.ValoracionLineaBO;
+import xeredi.argo.model.facturacion.service.ValoracionLineaService;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
@@ -16,57 +16,57 @@ import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 /**
  * The Class ValoracionLineaSaveAction.
  */
-@Data
 public final class ValoracionLineaSaveAction extends CrudSaveAction<ValoracionLineaVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 2626755272488026780L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 2626755272488026780L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSave() throws ApplicationException {
-        final ValoracionLineaBO vlrlBO = new ValoracionLineaBO();
+	@Inject
+	private ValoracionLineaService vlrlService;
 
-        switch (accion) {
-        case create:
-            vlrlBO.insert(model);
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSave() throws ApplicationException {
+		switch (accion) {
+		case create:
+			vlrlService.insert(model);
 
-            break;
-        case edit:
-            vlrlBO.update(model);
+			break;
+		case edit:
+			vlrlService.update(model);
 
-            break;
-        default:
-            throw new Error("Accion no valida: " + accion);
-        }
-    }
+			break;
+		default:
+			throw new Error("Accion no valida: " + accion);
+		}
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doValidate() throws ApplicationException {
-        Preconditions.checkNotNull(model.getVlrcId());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doValidate() throws ApplicationException {
+		Preconditions.checkNotNull(model.getVlrcId());
 
-        if (accion == AccionCodigo.edit) {
-            Preconditions.checkNotNull(model.getId());
-            Preconditions.checkNotNull(model.getVlrcId());
-        }
+		if (accion == AccionCodigo.edit) {
+			Preconditions.checkNotNull(model.getId());
+			Preconditions.checkNotNull(model.getVlrcId());
+		}
 
-        FieldValidator.validateRequired(this, MessageI18nKey.rgla, model.getRgla());
+		FieldValidator.validateRequired(this, MessageI18nKey.rgla, model.getRgla());
 
-        if (!hasErrors()) {
-            FieldValidator.validateRequired(this, MessageI18nKey.rgla, model.getRgla().getId());
+		if (!hasErrors()) {
+			FieldValidator.validateRequired(this, MessageI18nKey.rgla, model.getRgla().getId());
 
-            if (model.getRgla().getTipo() == ReglaTipo.T) {
-                FieldValidator.validateRequired(this, MessageI18nKey.vlrl_impuesto, model.getImpuesto());
+			if (model.getRgla().getTipo() == ReglaTipo.T) {
+				FieldValidator.validateRequired(this, MessageI18nKey.vlrl_impuesto, model.getImpuesto());
 
-                if (!hasErrors()) {
-                    FieldValidator.validateRequired(this, MessageI18nKey.vlrl_impuesto, model.getImpuesto().getId());
-                }
-            }
-        }
-    }
+				if (!hasErrors()) {
+					FieldValidator.validateRequired(this, MessageI18nKey.vlrl_impuesto, model.getImpuesto().getId());
+				}
+			}
+		}
+	}
 }

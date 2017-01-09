@@ -9,10 +9,10 @@ import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.FacturaBO;
-import xeredi.argo.model.facturacion.bo.ValoracionBO;
-import xeredi.argo.model.facturacion.bo.ValoracionCargoBO;
-import xeredi.argo.model.facturacion.bo.ValoracionImpuestoBO;
 import xeredi.argo.model.facturacion.service.AspectoService;
+import xeredi.argo.model.facturacion.service.ValoracionCargoService;
+import xeredi.argo.model.facturacion.service.ValoracionImpuestoService;
+import xeredi.argo.model.facturacion.service.ValoracionService;
 import xeredi.argo.model.facturacion.vo.AspectoCriterioVO;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.FacturaVO;
@@ -49,6 +49,15 @@ public final class FacturaDetailAction extends CrudDetailAction<FacturaVO> {
 	@Inject
 	private AspectoService aspcService;
 
+	@Inject
+	private ValoracionService vlrcService;
+
+	@Inject
+	private ValoracionCargoService vlrgService;
+
+	@Inject
+	private ValoracionImpuestoService vlriService;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -57,9 +66,6 @@ public final class FacturaDetailAction extends CrudDetailAction<FacturaVO> {
 		Preconditions.checkNotNull(model.getId());
 
 		final FacturaBO fctrBO = new FacturaBO();
-		final ValoracionBO vlrcBO = new ValoracionBO();
-		final ValoracionCargoBO vlrgBO = new ValoracionCargoBO();
-		final ValoracionImpuestoBO vlriBO = new ValoracionImpuestoBO();
 
 		model = fctrBO.select(model.getId(), getIdioma());
 
@@ -68,9 +74,9 @@ public final class FacturaDetailAction extends CrudDetailAction<FacturaVO> {
 		vlrcCriterio.setFctr(model);
 		vlrcCriterio.setIdioma(getIdioma());
 
-		vlrcList = vlrcBO.selectList(vlrcCriterio);
-		fctgList = vlrgBO.selectList(vlrcCriterio);
-		fctiList = vlriBO.selectList(vlrcCriterio);
+		vlrcList = vlrcService.selectList(vlrcCriterio);
+		fctgList = vlrgService.selectList(vlrcCriterio);
+		fctiList = vlriService.selectList(vlrcCriterio);
 
 		final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
 

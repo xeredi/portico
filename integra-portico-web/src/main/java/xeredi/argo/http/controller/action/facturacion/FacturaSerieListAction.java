@@ -1,9 +1,10 @@
 package xeredi.argo.http.controller.action.facturacion;
 
-import lombok.Data;
+import com.google.inject.Inject;
+
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.FacturaSerieBO;
+import xeredi.argo.model.facturacion.service.FacturaSerieService;
 import xeredi.argo.model.facturacion.vo.FacturaSerieCriterioVO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieVO;
 
@@ -11,19 +12,19 @@ import xeredi.argo.model.facturacion.vo.FacturaSerieVO;
 /**
  * The Class FacturaSerieListAction.
  */
-@Data
 public final class FacturaSerieListAction extends GridListAction<FacturaSerieCriterioVO, FacturaSerieVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 8695014228430229258L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 8695014228430229258L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doList() throws ApplicationException {
-        final FacturaSerieBO fcsrBO = new FacturaSerieBO();
+	@Inject
+	private FacturaSerieService fcsrService;
 
-        resultList = fcsrBO.selectList(model, getOffset(), limit);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doList() throws ApplicationException {
+		resultList = fcsrService.selectList(model, getOffset(), limit);
+	}
 }

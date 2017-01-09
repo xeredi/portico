@@ -1,9 +1,10 @@
 package xeredi.argo.http.controller.action.facturacion;
 
-import lombok.Data;
+import com.google.inject.Inject;
+
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.ValoracionLineaBO;
+import xeredi.argo.model.facturacion.service.ValoracionLineaService;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
 
@@ -11,19 +12,19 @@ import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
 /**
  * The Class ValoracionLineaListAction.
  */
-@Data
 public final class ValoracionLineaListAction extends GridListAction<ValoracionLineaCriterioVO, ValoracionLineaVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -1895265213593160732L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -1895265213593160732L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doList() throws ApplicationException {
-        final ValoracionLineaBO vlrlBO = new ValoracionLineaBO();
+	@Inject
+	private ValoracionLineaService vlrlService;
 
-        resultList = vlrlBO.selectList(model, getOffset(), limit);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doList() throws ApplicationException {
+		resultList = vlrlService.selectList(model, getOffset(), limit);
+	}
 }

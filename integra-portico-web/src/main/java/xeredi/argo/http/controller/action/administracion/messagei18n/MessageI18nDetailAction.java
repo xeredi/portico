@@ -2,11 +2,12 @@ package xeredi.argo.http.controller.action.administracion.messagei18n;
 
 import java.util.Map;
 
-import lombok.Data;
+import com.google.inject.Inject;
+
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
-import xeredi.argo.model.comun.bo.MessageI18nBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.MessageI18nService;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.comun.vo.MessageI18nVO;
 
@@ -14,23 +15,23 @@ import xeredi.argo.model.comun.vo.MessageI18nVO;
 /**
  * The Class MessageI18nDetailAction.
  */
-@Data
 public final class MessageI18nDetailAction extends CrudDetailAction<MessageI18nKey> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 111777223068179652L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 111777223068179652L;
 
-    /** The i18n map. */
-    @Getter
-    private Map<String, MessageI18nVO> i18nMap;
+	/** The i18n map. */
+	@Getter
+	private Map<String, MessageI18nVO> i18nMap;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doDetail() throws ApplicationException {
-        final MessageI18nBO bo = new MessageI18nBO();
+	@Inject
+	private MessageI18nService m18nService;
 
-        i18nMap = bo.selectKeyMap(model);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doDetail() throws ApplicationException {
+		i18nMap = m18nService.selectKeyMap(model);
+	}
 }

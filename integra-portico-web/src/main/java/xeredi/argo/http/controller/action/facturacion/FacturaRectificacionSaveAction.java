@@ -2,7 +2,6 @@ package xeredi.argo.http.controller.action.facturacion;
 
 import com.google.common.base.Preconditions;
 
-import lombok.Data;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -14,7 +13,6 @@ import xeredi.argo.model.facturacion.vo.FacturaRectificacionVO;
 /**
  * The Class FacturaRectificacionSaveAction.
  */
-@Data
 public final class FacturaRectificacionSaveAction extends CrudSaveAction<FacturaRectificacionVO> {
 
     /** The Constant serialVersionUID. */
