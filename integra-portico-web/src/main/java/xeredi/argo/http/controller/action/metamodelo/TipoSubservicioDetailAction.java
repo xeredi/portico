@@ -6,8 +6,8 @@ import com.google.inject.Inject;
 
 import lombok.Getter;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.argo.model.metamodelo.service.EntidadService;
+import xeredi.argo.model.metamodelo.service.TipoSubservicioService;
 import xeredi.argo.model.metamodelo.service.TramiteService;
 import xeredi.argo.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
@@ -42,14 +42,15 @@ public final class TipoSubservicioDetailAction extends EntidadDetailAction<TipoS
 	@Inject
 	private TramiteService trmtService;
 
+	@Inject
+	private TipoSubservicioService tpssService;
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void doSpecificDetail() throws ApplicationException {
-		final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
-
-		model = tpssBO.select(model.getId(), getIdioma());
+		model = tpssService.select(model.getId(), getIdioma());
 
 		{
 			final EntidadCriterioVO entiCriterio = new EntidadCriterioVO();

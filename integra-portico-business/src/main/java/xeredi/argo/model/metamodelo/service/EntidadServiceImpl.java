@@ -3,10 +3,10 @@ package xeredi.argo.model.metamodelo.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.ExecutorType;
 import org.mybatis.guice.transactional.Transactional;
 
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.vo.LabelValueVO;
@@ -18,8 +18,7 @@ import xeredi.argo.model.metamodelo.vo.EntidadVO;
 /**
  * The Class EntidadServiceImpl.
  */
-@Singleton
-@Transactional
+@Transactional(executorType = ExecutorType.REUSE)
 public class EntidadServiceImpl implements EntidadService {
 
 	/** The enti DAO. */

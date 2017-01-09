@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.ExecutorType;
 import org.mybatis.guice.transactional.Transactional;
 
 import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgUtilBO;
@@ -26,8 +26,7 @@ import xeredi.argo.model.metamodelo.vo.EntidadGrupoDatoVO;
 /**
  * The Class EntidadGrupoDatoServiceImpl.
  */
-@Singleton
-@Transactional
+@Transactional(executorType = ExecutorType.REUSE)
 public class EntidadGrupoDatoServiceImpl implements EntidadGrupoDatoService {
 
 	/** The engd DAO. */

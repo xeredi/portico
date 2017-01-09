@@ -1,37 +1,36 @@
 package xeredi.argo.http.controller.action.proceso;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.google.inject.Inject;
+
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.OrderByElement.OrderByType;
-import xeredi.argo.model.proceso.bo.ProcesoBO;
+import xeredi.argo.model.proceso.service.ProcesoService;
 import xeredi.argo.model.proceso.vo.ProcesoCriterioVO;
-import xeredi.argo.model.proceso.vo.ProcesoCriterioVO.OrderByColumn;
+import xeredi.argo.model.proceso.vo.ProcesoCriterioVO.ProcesoOrderByColumn;
 import xeredi.argo.model.proceso.vo.ProcesoVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ProcesoListAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class ProcesoListAction extends GridListAction<ProcesoCriterioVO, ProcesoVO> {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -4892003930947515760L;
+
+	@Inject
+	private ProcesoService prbtService;
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void doList() throws ApplicationException {
-		final ProcesoBO prbtBO = new ProcesoBO();
-
 		if (model.getOrderByList().isEmpty()) {
-			model.addOrderBy(OrderByColumn.prbt_falta.name(), OrderByType.DESC);
+			model.addOrderBy(ProcesoOrderByColumn.prbt_falta.name(), OrderByType.DESC);
 		}
 
-		resultList = prbtBO.selectList(model, getOffset(), limit);
+		resultList = prbtService.selectList(model, getOffset(), limit);
 	}
 }

@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
 
 import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
@@ -33,8 +33,7 @@ import xeredi.argo.model.util.PaginatedList;
 /**
  * The Class SubparametroServiceImpl.
  */
-@Singleton
-@Transactional
+@Transactional(executorType = ExecutorType.BATCH)
 public class SubparametroServiceImpl implements SubparametroService {
 
 	/** The sprm DAO. */
@@ -49,7 +48,7 @@ public class SubparametroServiceImpl implements SubparametroService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final void insert(SubparametroVO sprm, TipoSubparametroDetailVO tpspDetail) throws OverlapException {
+	public void insert(SubparametroVO sprm, TipoSubparametroDetailVO tpspDetail) throws OverlapException {
 		Preconditions.checkNotNull(sprm.getVersion());
 
 		// Validar que los datos del subparametro son correctos
@@ -109,7 +108,7 @@ public class SubparametroServiceImpl implements SubparametroService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final void duplicate(SubparametroVO sprm, TipoSubparametroDetailVO tpspDetail) throws OverlapException {
+	public void duplicate(SubparametroVO sprm, TipoSubparametroDetailVO tpspDetail) throws OverlapException {
 		Preconditions.checkNotNull(sprm.getId());
 
 		if (sprmDAO.exists(sprm)) {
@@ -157,7 +156,7 @@ public class SubparametroServiceImpl implements SubparametroService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final void update(SubparametroVO sprm, TipoSubparametroDetailVO tpspDetail)
+	public void update(SubparametroVO sprm, TipoSubparametroDetailVO tpspDetail)
 			throws InstanceNotFoundException, OverlapException {
 		Preconditions.checkNotNull(sprm.getVersion());
 		Preconditions.checkNotNull(sprm.getVersion().getId());
@@ -223,7 +222,7 @@ public class SubparametroServiceImpl implements SubparametroService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final void delete(SubparametroVO sprm) throws InstanceNotFoundException {
+	public void delete(SubparametroVO sprm) throws InstanceNotFoundException {
 		Preconditions.checkNotNull(sprm.getVersion());
 		Preconditions.checkNotNull(sprm.getVersion().getId());
 
@@ -256,8 +255,7 @@ public class SubparametroServiceImpl implements SubparametroService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final PaginatedList<SubparametroVO> selectList(SubparametroCriterioVO sprmCriterioVO, int offset,
-			int limit) {
+	public PaginatedList<SubparametroVO> selectList(SubparametroCriterioVO sprmCriterioVO, int offset, int limit) {
 		final List<SubparametroVO> sprmList = new ArrayList<>();
 		final int count = sprmDAO.count(sprmCriterioVO);
 
@@ -274,7 +272,7 @@ public class SubparametroServiceImpl implements SubparametroService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final List<SubparametroVO> selectList(SubparametroCriterioVO sprmCriterioVO) {
+	public List<SubparametroVO> selectList(SubparametroCriterioVO sprmCriterioVO) {
 		final List<SubparametroVO> sprmList = sprmDAO.selectList(sprmCriterioVO);
 
 		if (!sprmList.isEmpty()) {
@@ -288,7 +286,7 @@ public class SubparametroServiceImpl implements SubparametroService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final SubparametroVO selectObject(Long sprmId, String idioma, Date fechaVigencia) {
+	public SubparametroVO selectObject(Long sprmId, String idioma, Date fechaVigencia) {
 		final SubparametroCriterioVO sprmCriterioVO = new SubparametroCriterioVO();
 
 		sprmCriterioVO.setId(sprmId);
@@ -312,7 +310,7 @@ public class SubparametroServiceImpl implements SubparametroService {
 	 * @param sprmCriterioVO
 	 *            the sprm criterio VO
 	 */
-	private final void fillDependencies(final Collection<SubparametroVO> sprmList,
+	private void fillDependencies(final Collection<SubparametroVO> sprmList,
 			final SubparametroCriterioVO sprmCriterioVO) {
 		if (!sprmList.isEmpty()) {
 			final Set<Long> spvrIds = new HashSet<>();

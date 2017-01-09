@@ -3,11 +3,11 @@ package xeredi.argo.model.metamodelo.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.ExecutorType;
 import org.mybatis.guice.transactional.Transactional;
 
 import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgUtilBO;
@@ -28,8 +28,7 @@ import xeredi.argo.model.seguridad.vo.FuncionalidadGrupoCriterioVO;
 /**
  * The Class AccionEspecialServiceImpl.
  */
-@Singleton
-@Transactional
+@Transactional(executorType = ExecutorType.REUSE)
 public class AccionEspecialServiceImpl implements AccionEspecialService {
 
 	/** The aces DAO. */

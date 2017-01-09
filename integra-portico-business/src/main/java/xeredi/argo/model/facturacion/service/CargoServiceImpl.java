@@ -6,13 +6,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
 
 import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
+import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.dao.I18nDAO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
@@ -30,8 +31,7 @@ import xeredi.argo.model.util.PaginatedList;
 /**
  * The Class CargoServiceImpl.
  */
-@Singleton
-@Transactional
+@Transactional(executorType = ExecutorType.REUSE)
 public class CargoServiceImpl implements CargoService {
 
 	/** The crgo DAO. */
@@ -46,7 +46,9 @@ public class CargoServiceImpl implements CargoService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public PaginatedList<CargoVO> selectList(CargoCriterioVO crgoCriterioVO, int offset, int limit) {
+	@Transactional
+	public final PaginatedList<CargoVO> selectList(@NonNull final CargoCriterioVO crgoCriterioVO, int offset,
+			int limit) {
 		final int count = crgoDAO.count(crgoCriterioVO);
 
 		return new PaginatedList<CargoVO>(
@@ -58,7 +60,8 @@ public class CargoServiceImpl implements CargoService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<CargoVO> selectTypeaheadList(CargoCriterioVO crgoCriterio, int limit) {
+	@Transactional
+	public final List<CargoVO> selectTypeaheadList(@NonNull final CargoCriterioVO crgoCriterio, int limit) {
 		crgoCriterio.setTextoBusqueda("%" + crgoCriterio.getTextoBusqueda() + "%");
 
 		if (crgoCriterio.getFechaVigencia() == null) {
@@ -72,7 +75,8 @@ public class CargoServiceImpl implements CargoService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<CargoVO> selectList(CargoCriterioVO crgoCriterioVO) {
+	@Transactional
+	public final List<CargoVO> selectList(@NonNull final CargoCriterioVO crgoCriterioVO) {
 		return crgoDAO.selectList(crgoCriterioVO);
 	}
 
@@ -80,7 +84,9 @@ public class CargoServiceImpl implements CargoService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public CargoVO select(Long id, Date fref, String idioma) throws InstanceNotFoundException {
+	@Transactional
+	public final CargoVO select(@NonNull final Long id, @NonNull final Date fref, final String idioma)
+			throws InstanceNotFoundException {
 		final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 
 		crgoCriterio.setId(id);
@@ -100,7 +106,8 @@ public class CargoServiceImpl implements CargoService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public CargoVO select(Long versionId, String idioma) throws InstanceNotFoundException {
+	@Transactional
+	public final CargoVO select(@NonNull final Long versionId, final String idioma) throws InstanceNotFoundException {
 		final CargoCriterioVO crgoCriterio = new CargoCriterioVO();
 
 		crgoCriterio.setVersionId(versionId);
@@ -119,7 +126,8 @@ public class CargoServiceImpl implements CargoService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public CargoVO selectObject(CargoCriterioVO crgoCriterio) {
+	@Transactional
+	public final CargoVO selectObject(@NonNull final CargoCriterioVO crgoCriterio) {
 		return crgoDAO.selectObject(crgoCriterio);
 	}
 
@@ -127,7 +135,9 @@ public class CargoServiceImpl implements CargoService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void insert(CargoVO crgo, Map<String, I18nVO> i18nMap) throws OverlapException {
+	@Transactional
+	public final void insert(@NonNull final CargoVO crgo, @NonNull final Map<String, I18nVO> i18nMap)
+			throws OverlapException {
 		Preconditions.checkNotNull(crgo.getVersion());
 		Preconditions.checkNotNull(crgo.getVersion().getFini());
 		Preconditions.checkNotNull(crgo.getTpsr());
@@ -157,7 +167,9 @@ public class CargoServiceImpl implements CargoService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void update(CargoVO crgo, Map<String, I18nVO> i18nMap) throws InstanceNotFoundException, OverlapException {
+	@Transactional
+	public final void update(@NonNull final CargoVO crgo, @NonNull final Map<String, I18nVO> i18nMap)
+			throws InstanceNotFoundException, OverlapException {
 		Preconditions.checkNotNull(crgo.getVersion());
 		Preconditions.checkNotNull(crgo.getVersion().getId());
 
@@ -181,7 +193,8 @@ public class CargoServiceImpl implements CargoService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void delete(CargoVO crgo) throws InstanceNotFoundException {
+	@Transactional
+	public final void delete(@NonNull final CargoVO crgo) throws InstanceNotFoundException {
 		Preconditions.checkNotNull(crgo.getVersion());
 		Preconditions.checkNotNull(crgo.getVersion().getId());
 

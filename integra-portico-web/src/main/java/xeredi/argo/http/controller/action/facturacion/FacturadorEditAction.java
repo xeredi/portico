@@ -4,11 +4,12 @@ import java.util.Calendar;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
-import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.PuertoService;
 import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
@@ -17,65 +18,73 @@ import xeredi.argo.model.facturacion.vo.FacturaSerieCriterioVO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieVO;
 import xeredi.argo.model.facturacion.vo.FacturadorVO;
 import xeredi.argo.model.facturacion.vo.ValoracionGrupoTipo;
-import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.argo.model.metamodelo.service.TipoServicioService;
+import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class FacturadorEditAction.
  */
-@Data
 public final class FacturadorEditAction extends CrudEditAction<FacturadorVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -1389260062489112937L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -1389260062489112937L;
 
-    /** The fcsr list. */
-    private List<FacturaSerieVO> fcsrList;
+	/** The fcsr list. */
+	@Getter
+	private List<FacturaSerieVO> fcsrList;
 
-    /** The tpsr list. */
-    private List<LabelValueVO> tpsrList;
+	/** The tpsr list. */
+	@Getter
+	private List<LabelValueVO> tpsrList;
 
-    /** The prto list. */
-    private List<PuertoVO> prtoList;
+	/** The prto list. */
+	@Getter
+	private List<PuertoVO> prtoList;
 
-    private ValoracionGrupoTipo[] grupoTipoList;
+	@Getter
+	private ValoracionGrupoTipo[] grupoTipoList;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doEdit() throws ApplicationException {
-        Preconditions.checkNotNull(model);
+	@Inject
+	private TipoServicioService tpsrService;
 
-        model.setFecha(Calendar.getInstance());
-    }
+	@Inject
+	private PuertoService prtoService;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doLoadDependencies() throws ApplicationException {
-        Preconditions.checkNotNull(model);
-        Preconditions.checkNotNull(model.getFecha());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doEdit() throws ApplicationException {
+		Preconditions.checkNotNull(model);
 
-        final FacturaSerieBO fcsrBO = new FacturaSerieBO();
-        final FacturaSerieCriterioVO fcsrCriterio = new FacturaSerieCriterioVO();
+		model.setFecha(Calendar.getInstance());
+	}
 
-        fcsrCriterio.setAnio(model.getFecha().get(Calendar.YEAR));
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doLoadDependencies() throws ApplicationException {
+		Preconditions.checkNotNull(model);
+		Preconditions.checkNotNull(model.getFecha());
 
-        fcsrList = fcsrBO.selectList(fcsrCriterio);
+		final FacturaSerieBO fcsrBO = new FacturaSerieBO();
+		final FacturaSerieCriterioVO fcsrCriterio = new FacturaSerieCriterioVO();
 
-        grupoTipoList = ValoracionGrupoTipo.values();
+		fcsrCriterio.setAnio(model.getFecha().get(Calendar.YEAR));
 
-        if (model.getVlrcId() == null) {
-            tpsrList = TipoServicioProxy.selectLabelValues();
+		fcsrList = fcsrBO.selectList(fcsrCriterio);
+		grupoTipoList = ValoracionGrupoTipo.values();
 
-            final PuertoBO prtoBO = new PuertoBO();
-            final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+		if (model.getVlrcId() == null) {
+			tpsrList = tpsrService.selectLabelValues(new TipoServicioCriterioVO());
 
-            prtoCriterio.setIdioma(getIdioma());
+			final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
-            prtoList = prtoBO.selectList(prtoCriterio);
-        }
-    }
+			prtoCriterio.setIdioma(getIdioma());
+
+			prtoList = prtoService.selectList(prtoCriterio);
+		}
+	}
 }

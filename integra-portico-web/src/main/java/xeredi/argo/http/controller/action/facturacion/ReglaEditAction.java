@@ -18,8 +18,8 @@ import xeredi.argo.model.facturacion.service.ReglaService;
 import xeredi.argo.model.facturacion.vo.CargoVO;
 import xeredi.argo.model.facturacion.vo.ReglaTipo;
 import xeredi.argo.model.facturacion.vo.ReglaVO;
-import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.argo.model.metamodelo.service.TipoServicioService;
+import xeredi.argo.model.metamodelo.service.TipoSubservicioService;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioCriterioVO;
@@ -55,6 +55,9 @@ public final class ReglaEditAction extends CrudEditAction<ReglaVO> {
 
 	@Inject
 	private I18nService i18nService;
+
+	@Inject
+	private TipoSubservicioService tpssService;
 
 	/**
 	 * {@inheritDoc}
@@ -94,14 +97,13 @@ public final class ReglaEditAction extends CrudEditAction<ReglaVO> {
 
 			entiFacturableList = tpsrService.selectLabelValues(tpsrCriterioVO);
 
-			final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
 			final TipoSubservicioCriterioVO tpssCriterioVO = new TipoSubservicioCriterioVO();
 
 			tpssCriterioVO.setTpsrId(crgo.getTpsr().getId());
 			tpssCriterioVO.setFacturable(Boolean.TRUE);
 			tpssCriterioVO.setIdioma(getIdioma());
 
-			entiFacturableList.addAll(tpssBO.selectLabelValues(tpssCriterioVO));
+			entiFacturableList.addAll(tpssService.selectLabelValues(tpssCriterioVO));
 		}
 	}
 }

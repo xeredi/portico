@@ -1,34 +1,32 @@
 package xeredi.argo.http.controller.action.proceso;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.proceso.bo.ProcesoBO;
+import xeredi.argo.model.proceso.service.ProcesoService;
 import xeredi.argo.model.proceso.vo.ProcesoVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ProcesoCancelarAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class ProcesoRemoveAction extends CrudRemoveAction<ProcesoVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 3995570668859920070L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 3995570668859920070L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doRemove() throws ApplicationException {
-        Preconditions.checkNotNull(model.getId());
+	@Inject
+	private ProcesoService prbtService;
 
-        final ProcesoBO prbtBO = new ProcesoBO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doRemove() throws ApplicationException {
+		Preconditions.checkNotNull(model.getId());
 
-        prbtBO.cancelar(model);
-    }
+		prbtService.cancelar(model);
+	}
 }

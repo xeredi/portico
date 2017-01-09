@@ -11,10 +11,10 @@ import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
-import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.argo.model.metamodelo.service.EntidadService;
 import xeredi.argo.model.metamodelo.service.TipoDatoService;
 import xeredi.argo.model.metamodelo.service.TipoServicioService;
+import xeredi.argo.model.metamodelo.service.TipoSubservicioService;
 import xeredi.argo.model.metamodelo.service.TramiteService;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
@@ -53,6 +53,9 @@ public final class TramiteEditAction extends CrudEditAction<TramiteVO> {
 
 	@Inject
 	private I18nService i18nService;
+
+	@Inject
+	private TipoSubservicioService tpssService;
 
 	/**
 	 * {@inheritDoc}
@@ -98,8 +101,7 @@ public final class TramiteEditAction extends CrudEditAction<TramiteVO> {
 
 			break;
 		case S:
-			final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
-			final TipoSubservicioVO tpss = tpssBO.select(model.getEntiId(), getIdioma());
+			final TipoSubservicioVO tpss = tpssService.select(model.getEntiId(), getIdioma());
 
 			Preconditions.checkNotNull(tpss.getTpdtEstado());
 			Preconditions.checkNotNull(tpss.getTpdtEstado().getId());

@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.google.common.base.Preconditions;
 
-import lombok.Data;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.bo.FacturaBO;
@@ -19,39 +19,39 @@ import xeredi.argo.model.facturacion.vo.FacturaVO;
 /**
  * The Class FacturaAnulacionEditAction.
  */
-@Data
 public final class FacturaAnulacionEditAction extends CrudEditAction<FacturaAnulacionVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 3480470491984180806L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 3480470491984180806L;
 
-    /** The fcsr list. */
-    private List<FacturaSerieVO> fcsrList;
+	/** The fcsr list. */
+	@Getter
+	private List<FacturaSerieVO> fcsrList;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doEdit() throws ApplicationException {
-        Preconditions.checkNotNull(model.getFctrId());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doEdit() throws ApplicationException {
+		Preconditions.checkNotNull(model.getFctrId());
 
-        final FacturaBO fctrBO = new FacturaBO();
-        final FacturaVO fctr = fctrBO.select(model.getFctrId(), getIdioma());
+		final FacturaBO fctrBO = new FacturaBO();
+		final FacturaVO fctr = fctrBO.select(model.getFctrId(), getIdioma());
 
-        model.setFecha(Calendar.getInstance().getTime());
-        model.setFcsrId(fctr.getFcsr().getId());
-    }
+		model.setFecha(Calendar.getInstance().getTime());
+		model.setFcsrId(fctr.getFcsr().getId());
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doLoadDependencies() throws ApplicationException {
-        final FacturaSerieBO fcsrBO = new FacturaSerieBO();
-        final FacturaSerieCriterioVO fcsrCriterio = new FacturaSerieCriterioVO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doLoadDependencies() throws ApplicationException {
+		final FacturaSerieBO fcsrBO = new FacturaSerieBO();
+		final FacturaSerieCriterioVO fcsrCriterio = new FacturaSerieCriterioVO();
 
-        fcsrCriterio.setAnio(Calendar.getInstance().get(Calendar.YEAR));
+		fcsrCriterio.setAnio(Calendar.getInstance().get(Calendar.YEAR));
 
-        fcsrList = fcsrBO.selectList(fcsrCriterio);
-    }
+		fcsrList = fcsrBO.selectList(fcsrCriterio);
+	}
 }

@@ -4,12 +4,13 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import lombok.Data;
+import com.google.inject.Inject;
+
 import xeredi.argo.http.controller.action.item.ItemXlsExportAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.argo.model.estadistica.bo.EstadisticaBO;
 import xeredi.argo.model.estadistica.report.EstadisticaXls;
+import xeredi.argo.model.estadistica.service.EstadisticaService;
 import xeredi.argo.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.argo.model.metamodelo.proxy.TipoEstadisticaProxy;
 import xeredi.argo.model.metamodelo.vo.TipoEstadisticaDetailVO;
@@ -18,34 +19,37 @@ import xeredi.argo.model.metamodelo.vo.TipoEstadisticaDetailVO;
 /**
  * The Class EstadisticaXlsExportAction.
  */
-@Data
 public final class EstadisticaXlsExportAction extends ItemXlsExportAction<EstadisticaCriterioVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -1981745354519002750L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -1981745354519002750L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSpecificXlsExport() throws ApplicationException, IOException {
-        final EstadisticaBO itemBO = new EstadisticaBO();
-        final TipoEstadisticaDetailVO enti = TipoEstadisticaProxy.select(criterio.getEntiId());
+	/** The estd service. */
+	@Inject
+	private EstadisticaService estdService;
 
-        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
-            final EstadisticaXls excelUtil = new EstadisticaXls(getLocale(), baos, itemBO.selectList(criterio), enti);
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSpecificXlsExport() throws ApplicationException, IOException {
+		final TipoEstadisticaDetailVO enti = TipoEstadisticaProxy.select(criterio.getEntiId());
 
-            excelUtil.generate();
+		try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
+			final EstadisticaXls excelUtil = new EstadisticaXls(getLocale(), baos, estdService.selectList(criterio),
+					enti);
 
-            stream = new ByteArrayInputStream(baos.toByteArray());
-        }
-    }
+			excelUtil.generate();
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getFilename() {
-        return MessageI18nKey.estd.name() + '_' + criterio.getEntiId();
-    }
+			stream = new ByteArrayInputStream(baos.toByteArray());
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getFilename() {
+		return MessageI18nKey.estd.name() + '_' + criterio.getEntiId();
+	}
 }

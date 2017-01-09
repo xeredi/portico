@@ -9,9 +9,9 @@ import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.item.vo.ItemTramiteVO;
-import xeredi.argo.model.metamodelo.proxy.EntidadProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.service.TramiteProxyService;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
@@ -42,12 +42,15 @@ public final class ItemTramiteSaveAction extends BaseAction implements Funcional
 	@Inject
 	private TramiteProxyService trmtProxy;
 
+	@Inject
+	private EntidadProxyService entiProxy;
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void doExecute() throws ApplicationException {
-		final AbstractEntidadDetailVO enti = EntidadProxy.select(model.getTrmt().getEntiId());
+		final AbstractEntidadDetailVO enti = entiProxy.select(model.getTrmt().getEntiId());
 
 		doValidate();
 
@@ -87,7 +90,7 @@ public final class ItemTramiteSaveAction extends BaseAction implements Funcional
 		Preconditions.checkNotNull(model.getTrmt().getEntiId());
 
 		final TramiteDetailVO trmt = trmtProxy.select(model.getTrmt().getId());
-		final AbstractEntidadDetailVO enti = EntidadProxy.select(model.getTrmt().getEntiId());
+		final AbstractEntidadDetailVO enti = entiProxy.select(model.getTrmt().getEntiId());
 
 		switch (enti.getEnti().getTipo()) {
 		case T:

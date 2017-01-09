@@ -8,7 +8,7 @@ import com.google.inject.Inject;
 import xeredi.argo.http.controller.action.comun.CrudFileExportAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.service.ArchivoService;
-import xeredi.argo.model.estadistica.bo.PeriodoProcesoBO;
+import xeredi.argo.model.estadistica.service.PeriodoProcesoService;
 import xeredi.argo.model.estadistica.vo.PeriodoProcesoVO;
 
 // TODO: Auto-generated Javadoc
@@ -17,38 +17,39 @@ import xeredi.argo.model.estadistica.vo.PeriodoProcesoVO;
  */
 public final class PeriodoProcesoFileExportAction extends CrudFileExportAction<PeriodoProcesoVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -139099742146825401L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -139099742146825401L;
 
 	@Inject
 	private ArchivoService archService;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doExport() throws ApplicationException, IOException {
-        Preconditions.checkNotNull(model.getId());
+	@Inject
+	private PeriodoProcesoService peprService;
 
-        final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doExport() throws ApplicationException, IOException {
+		Preconditions.checkNotNull(model.getId());
 
-        model = peprBO.select(model.getId(), getIdioma());
-        stream = archService.selectStream(model.getArin().getId());
-    }
+		model = peprService.select(model.getId(), getIdioma());
+		stream = archService.selectStream(model.getArin().getId());
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getFilename() {
-        return model.getFilename();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getFilename() {
+		return model.getFilename();
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public ContentType getContentType() {
-        return ContentType.zip;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ContentType getContentType() {
+		return ContentType.zip;
+	}
 }

@@ -21,7 +21,7 @@ import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
 import xeredi.argo.model.proceso.batch.estadistica.ProcesoCargaOppe;
-import xeredi.argo.model.proceso.bo.ProcesoBO;
+import xeredi.argo.model.proceso.service.ProcesoService;
 import xeredi.argo.model.proceso.vo.ItemTipo;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
 
@@ -40,6 +40,9 @@ public final class PeriodoProcesoSaveAction extends CrudSaveAction<ProcesoEstadi
 	@Inject
 	private ArchivoService archService;
 
+	@Inject
+	private ProcesoService prbtService;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -47,7 +50,6 @@ public final class PeriodoProcesoSaveAction extends CrudSaveAction<ProcesoEstadi
 	public void doSave() throws ApplicationException {
 		final SuperpuertoVO sprt = sprtService.select(model.getPepr().getSprt().getId(), getIdioma());
 
-		final ProcesoBO prbtBO = new ProcesoBO();
 		final Map<String, String> parametroMap = new HashMap<>();
 
 		parametroMap.put(ProcesoCargaOppe.params.autp.name(), sprt.getCodigo());
@@ -64,12 +66,12 @@ public final class PeriodoProcesoSaveAction extends CrudSaveAction<ProcesoEstadi
 
 			final ArchivoVO arch = archService.create(file, ArchivoSentido.E);
 
-			prbtBO.crear(SessionManager.getUsroId(), ProcesoTipo.EST_CARGA, parametroMap, ItemTipo.arch,
+			prbtService.crear(SessionManager.getUsroId(), ProcesoTipo.EST_CARGA, parametroMap, ItemTipo.arch,
 					Arrays.asList(arch.getArin().getId()));
 
 			break;
 		case create:
-			prbtBO.crear(SessionManager.getUsroId(), ProcesoTipo.EST_CREACION, parametroMap, null, null);
+			prbtService.crear(SessionManager.getUsroId(), ProcesoTipo.EST_CREACION, parametroMap, null, null);
 
 			break;
 		default:

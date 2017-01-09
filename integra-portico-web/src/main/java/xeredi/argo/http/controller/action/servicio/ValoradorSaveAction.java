@@ -8,16 +8,15 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
-import xeredi.argo.model.proceso.bo.ProcesoBO;
+import xeredi.argo.model.proceso.service.ProcesoService;
 import xeredi.argo.model.proceso.vo.ItemTipo;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
 import xeredi.argo.model.proceso.vo.ProcesoVO;
@@ -31,49 +30,49 @@ import xeredi.argo.proceso.facturacion.ProcesoValorador;
 /**
  * The Class ValoradorSaveAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class ValoradorSaveAction extends CrudSaveAction<ValoradorVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 8899968426612094160L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 8899968426612094160L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSave() throws ApplicationException {
-        final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        final ProcesoBO prbtBO = new ProcesoBO();
-        final List<Long> itemEntradaList = Arrays.asList(model.getSrvc().getId());
-        final Map<String, String> parametroMap = new HashMap<>();
+	@Inject
+	private ProcesoService prbtService;
 
-        parametroMap.put(ProcesoValorador.Params.fliq.name(), dateFormat.format(model.getFliq()));
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSave() throws ApplicationException {
+		final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		final List<Long> itemEntradaList = Arrays.asList(model.getSrvc().getId());
+		final Map<String, String> parametroMap = new HashMap<>();
 
-        final ProcesoVO prbt = prbtBO.crear(usroId, ProcesoTipo.VALORADOR, parametroMap, ItemTipo.srvc,
-                itemEntradaList);
+		parametroMap.put(ProcesoValorador.Params.fliq.name(), dateFormat.format(model.getFliq()));
 
-        model.setPrbt(prbt);
-    }
+		final ProcesoVO prbt = prbtService.crear(usroId, ProcesoTipo.VALORADOR, parametroMap, ItemTipo.srvc,
+				itemEntradaList);
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doValidate() throws ApplicationException {
-        Preconditions.checkNotNull(model.getSrvc());
-        Preconditions.checkNotNull(model.getSrvc().getEntiId());
-        Preconditions.checkNotNull(model.getSrvc().getId());
+		model.setPrbt(prbt);
+	}
 
-        FieldValidator.validateRequired(this, MessageI18nKey.vlrc_fliq, model.getFliq());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doValidate() throws ApplicationException {
+		Preconditions.checkNotNull(model.getSrvc());
+		Preconditions.checkNotNull(model.getSrvc().getEntiId());
+		Preconditions.checkNotNull(model.getSrvc().getId());
 
-        final TipoServicioDetailVO tpsr = TipoServicioProxy.select(model.getSrvc().getEntiId());
+		FieldValidator.validateRequired(this, MessageI18nKey.vlrc_fliq, model.getFliq());
 
-        final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getSrvc().getEntiId(), usroId);
-        final ServicioVO srvc = srvcBO.select(model.getSrvc().getId(), getIdioma());
+		final TipoServicioDetailVO tpsr = TipoServicioProxy.select(model.getSrvc().getEntiId());
 
-        if (!tpsr.getEnti().getEstadosVlrcSet().contains(srvc.getEstado())) {
-            addActionError(MessageI18nKey.E00016, srvc.getEstado());
-        }
-    }
+		final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getSrvc().getEntiId(), usroId);
+		final ServicioVO srvc = srvcBO.select(model.getSrvc().getId(), getIdioma());
+
+		if (!tpsr.getEnti().getEstadosVlrcSet().contains(srvc.getEstado())) {
+			addActionError(MessageI18nKey.E00016, srvc.getEstado());
+		}
+	}
 }

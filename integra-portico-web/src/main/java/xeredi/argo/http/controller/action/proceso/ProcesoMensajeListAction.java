@@ -1,12 +1,11 @@
 package xeredi.argo.http.controller.action.proceso;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.GridListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.proceso.bo.ProcesoBO;
+import xeredi.argo.model.proceso.service.ProcesoService;
 import xeredi.argo.model.proceso.vo.ProcesoMensajeCriterioVO;
 import xeredi.argo.model.proceso.vo.ProcesoMensajeVO;
 
@@ -14,22 +13,21 @@ import xeredi.argo.model.proceso.vo.ProcesoMensajeVO;
 /**
  * The Class ProcesoMensajeListAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class ProcesoMensajeListAction extends GridListAction<ProcesoMensajeCriterioVO, ProcesoMensajeVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 5625987046816994729L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 5625987046816994729L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doList() throws ApplicationException {
-        Preconditions.checkNotNull(model.getPrbtId());
+	@Inject
+	private ProcesoService prbtService;
 
-        final ProcesoBO prbtBO = new ProcesoBO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doList() throws ApplicationException {
+		Preconditions.checkNotNull(model.getPrbtId());
 
-        resultList = prbtBO.selectPrmnList(model, getOffset(), limit);
-    }
+		resultList = prbtService.selectPrmnList(model, getOffset(), limit);
+	}
 }

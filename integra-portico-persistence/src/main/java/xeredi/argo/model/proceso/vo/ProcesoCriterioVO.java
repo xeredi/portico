@@ -17,7 +17,7 @@ public final class ProcesoCriterioVO extends BaseCriterioVO {
     /**
      * The Enum OrderByColumns.
      */
-    public enum OrderByColumn {
+    public enum ProcesoOrderByColumn {
         /** The prbt pk. */
         prbt_pk,
         /** The prbt usro pk. */

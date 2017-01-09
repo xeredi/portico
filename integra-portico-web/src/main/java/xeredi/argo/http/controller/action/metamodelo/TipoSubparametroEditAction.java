@@ -8,8 +8,8 @@ import com.google.inject.Inject;
 import lombok.Getter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.LabelValueVO;
-import xeredi.argo.model.metamodelo.bo.TipoSubparametroBO;
 import xeredi.argo.model.metamodelo.service.EntidadService;
+import xeredi.argo.model.metamodelo.service.TipoSubparametroService;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoEntidad;
@@ -30,6 +30,9 @@ public final class TipoSubparametroEditAction extends EntidadEditAction<TipoSubp
 	@Inject
 	private EntidadService entiService;
 
+	@Inject
+	private TipoSubparametroService tpspService;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -40,9 +43,7 @@ public final class TipoSubparametroEditAction extends EntidadEditAction<TipoSubp
 		} else {
 			Preconditions.checkNotNull(model.getId());
 
-			final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
-
-			model = tpspBO.select(model.getId(), getIdioma());
+			model = tpspService.select(model.getId(), getIdioma());
 		}
 	}
 

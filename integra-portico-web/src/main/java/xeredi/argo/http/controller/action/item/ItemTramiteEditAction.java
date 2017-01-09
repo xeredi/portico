@@ -18,9 +18,9 @@ import xeredi.argo.model.item.vo.ItemTramiteDatoVO;
 import xeredi.argo.model.item.vo.ItemTramiteVO;
 import xeredi.argo.model.item.vo.ItemVO;
 import xeredi.argo.model.maestro.service.ParametroService;
-import xeredi.argo.model.metamodelo.proxy.EntidadProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.service.TramiteProxyService;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoEntidad;
@@ -73,6 +73,9 @@ public final class ItemTramiteEditAction extends BaseAction implements ModelDriv
 	private TramiteProxyService trmtProxy;
 
 	@Inject
+	private EntidadProxyService entiProxy;
+
+	@Inject
 	private ParametroService prmtService;
 
 	/**
@@ -87,7 +90,7 @@ public final class ItemTramiteEditAction extends BaseAction implements ModelDriv
 
 		model.setTrmt(trmt.getTrmt());
 
-		final TipoEntidad tipoEntidad = EntidadProxy.select(model.getTrmt().getEntiId()).getEnti().getTipo();
+		final TipoEntidad tipoEntidad = entiProxy.select(model.getTrmt().getEntiId()).getEnti().getTipo();
 
 		switch (tipoEntidad) {
 		case T:
@@ -96,6 +99,8 @@ public final class ItemTramiteEditAction extends BaseAction implements ModelDriv
 			final ServicioVO srvc = srvcBO.select(model.getItemId(), getIdioma());
 
 			prtoId = srvc.getPrto().getId();
+
+			model.setFref(srvc.getFref());
 
 			item = srvc;
 			enti = tpsr;
@@ -107,6 +112,8 @@ public final class ItemTramiteEditAction extends BaseAction implements ModelDriv
 			final SubservicioVO ssrv = ssrvBO.select(model.getItemId(), getIdioma());
 
 			prtoId = ssrv.getSrvc().getPrto().getId();
+
+			model.setFref(ssrv.getFref());
 
 			model.setOitemFini(ssrv.getFini());
 			model.setOitemFfin(ssrv.getFfin());

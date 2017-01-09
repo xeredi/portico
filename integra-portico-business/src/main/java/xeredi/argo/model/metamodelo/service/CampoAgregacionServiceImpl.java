@@ -2,10 +2,10 @@ package xeredi.argo.model.metamodelo.service;
 
 import java.util.List;
 
+import org.apache.ibatis.session.ExecutorType;
 import org.mybatis.guice.transactional.Transactional;
 
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
@@ -19,8 +19,7 @@ import xeredi.argo.model.metamodelo.vo.CampoAgregacionVO;
 /**
  * The Class CampoAgregacionServiceImpl.
  */
-@Singleton
-@Transactional
+@Transactional(executorType = ExecutorType.REUSE)
 public class CampoAgregacionServiceImpl implements CampoAgregacionService {
 
 	/** The cmag DAO. */

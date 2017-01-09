@@ -8,8 +8,8 @@ import com.google.inject.Inject;
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.argo.model.metamodelo.service.EntidadEntidadService;
+import xeredi.argo.model.metamodelo.service.TipoSubservicioService;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.EntidadEntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadEntidadVO;
@@ -31,6 +31,9 @@ public final class EntidadEntidadEditAction extends CrudEditAction<EntidadEntida
 
 	@Inject
 	private EntidadEntidadService enenService;
+
+	@Inject
+	private TipoSubservicioService tpssService;
 
 	/**
 	 * {@inheritDoc}
@@ -57,13 +60,12 @@ public final class EntidadEntidadEditAction extends CrudEditAction<EntidadEntida
 	 */
 	@Override
 	public void doLoadDependencies() throws ApplicationException {
-		final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
 		final TipoSubservicioCriterioVO tpssCriterio = new TipoSubservicioCriterioVO();
 
 		// FIXME Hay que buscar por el tipo de servicio, no por la entidad padre
 		tpssCriterio.setIdioma(getIdioma());
 		tpssCriterio.setTpsrId(model.getEntiPadreId());
 
-		tpssList = tpssBO.selectList(tpssCriterio);
+		tpssList = tpssService.selectList(tpssCriterio);
 	}
 }

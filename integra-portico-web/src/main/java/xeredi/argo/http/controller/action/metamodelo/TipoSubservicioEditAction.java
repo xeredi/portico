@@ -8,8 +8,8 @@ import com.google.inject.Inject;
 import lombok.Getter;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.LabelValueVO;
-import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.argo.model.metamodelo.service.TipoDatoService;
+import xeredi.argo.model.metamodelo.service.TipoSubservicioService;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.TipoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoElemento;
@@ -21,40 +21,41 @@ import xeredi.argo.model.metamodelo.vo.TipoSubservicioVO;
  */
 public final class TipoSubservicioEditAction extends EntidadEditAction<TipoSubservicioVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 5529476683109631764L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 5529476683109631764L;
 
-    /** The tpdt estado list. */
-    @Getter
-    private List<LabelValueVO> tpdtEstadoList;
-    
-    @Inject
-    private TipoDatoService tpdtService;
+	/** The tpdt estado list. */
+	@Getter
+	private List<LabelValueVO> tpdtEstadoList;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSpecificEdit() throws ApplicationException {
-        if (accion == AccionCodigo.create) {
-            Preconditions.checkNotNull(model.getTpsrId());
-        } else {
-            final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
+	@Inject
+	private TipoDatoService tpdtService;
 
-            model = tpssBO.select(model.getId(), getIdioma());
-        }
-    }
+	@Inject
+	private TipoSubservicioService tpssService;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSpecificLoadDependencies() throws ApplicationException {
-        final TipoDatoCriterioVO tpdtCriterio = new TipoDatoCriterioVO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSpecificEdit() throws ApplicationException {
+		if (accion == AccionCodigo.create) {
+			Preconditions.checkNotNull(model.getTpsrId());
+		} else {
+			model = tpssService.select(model.getId(), getIdioma());
+		}
+	}
 
-        tpdtCriterio.setTipoElemento(TipoElemento.CR);
-        tpdtCriterio.setIdioma(getIdioma());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSpecificLoadDependencies() throws ApplicationException {
+		final TipoDatoCriterioVO tpdtCriterio = new TipoDatoCriterioVO();
 
-        tpdtEstadoList = tpdtService.selectLabelValues(tpdtCriterio);
-    }
+		tpdtCriterio.setTipoElemento(TipoElemento.CR);
+		tpdtCriterio.setIdioma(getIdioma());
+
+		tpdtEstadoList = tpdtService.selectLabelValues(tpdtCriterio);
+	}
 }

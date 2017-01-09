@@ -1,34 +1,32 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
+import xeredi.argo.model.metamodelo.service.TipoSubservicioService;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoSubservicioRemoveAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class TipoSubservicioRemoveAction extends CrudRemoveAction<TipoSubservicioVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -5990811920550460016L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -5990811920550460016L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doRemove() throws ApplicationException {
-        Preconditions.checkNotNull(model.getId());
+	@Inject
+	private TipoSubservicioService tpssService;
 
-        final TipoSubservicioBO entiBO = new TipoSubservicioBO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doRemove() throws ApplicationException {
+		Preconditions.checkNotNull(model.getId());
 
-        entiBO.delete(model);
-    }
+		tpssService.delete(model);
+	}
 }

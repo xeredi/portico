@@ -14,8 +14,9 @@ import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.facturacion.service.CargoService;
 import xeredi.argo.model.facturacion.vo.CargoTipo;
 import xeredi.argo.model.facturacion.vo.CargoVO;
-import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.argo.model.metamodelo.service.TipoServicioService;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
+import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -44,6 +45,9 @@ public final class CargoEditAction extends CrudEditAction<CargoVO> {
 	@Inject
 	private I18nService i18nService;
 
+	@Inject
+	private TipoServicioService tpsrService;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -61,7 +65,7 @@ public final class CargoEditAction extends CrudEditAction<CargoVO> {
 	@Override
 	public void doLoadDependencies() throws ApplicationException {
 		if (accion == AccionCodigo.create) {
-			tpsrList = TipoServicioProxy.selectLabelValues();
+			tpsrList = tpsrService.selectLabelValues(new TipoServicioCriterioVO());
 		}
 
 		tipos = CargoTipo.values();

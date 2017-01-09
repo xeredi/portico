@@ -4,71 +4,78 @@ import java.util.Date;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.facturacion.bo.ValoracionBO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
 import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
-import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.argo.model.metamodelo.service.TipoServicioService;
 import xeredi.argo.model.metamodelo.vo.Entidad;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
+import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ValoracionEditAction.
  */
-@Data
 public final class ValoracionEditAction extends CrudEditAction<ValoracionVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -5032238434151606002L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -5032238434151606002L;
 
-    /** The tpsr list. */
-    private List<LabelValueVO> tpsrList;
+	/** The tpsr list. */
+	@Getter
+	private List<LabelValueVO> tpsrList;
 
-    /** The pagador enti id. */
-    private Long pagadorEntiId;
+	/** The pagador enti id. */
+	@Getter
+	private Long pagadorEntiId;
 
-    /** The tpdt cod exencion. */
-    private TipoDatoVO tpdtCodExencion;
+	/** The tpdt cod exencion. */
+	@Getter
+	private TipoDatoVO tpdtCodExencion;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doEdit() throws ApplicationException {
-        switch (accion) {
-        case create:
-            model = new ValoracionVO();
+	@Inject
+	private TipoServicioService tpsrService;
 
-            model.setFalta(new Date());
-            model.setFliq(new Date());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doEdit() throws ApplicationException {
+		switch (accion) {
+		case create:
+			model = new ValoracionVO();
 
-            break;
-        case edit:
-            Preconditions.checkNotNull(model.getId());
+			model.setFalta(new Date());
+			model.setFliq(new Date());
 
-            final ValoracionBO vlrcBO = new ValoracionBO();
+			break;
+		case edit:
+			Preconditions.checkNotNull(model.getId());
 
-            model = vlrcBO.select(model.getId(), getIdioma());
+			final ValoracionBO vlrcBO = new ValoracionBO();
 
-            break;
-        default:
-            throw new Error("Accion no valida: " + accion);
-        }
-    }
+			model = vlrcBO.select(model.getId(), getIdioma());
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doLoadDependencies() throws ApplicationException {
-        tpsrList = TipoServicioProxy.selectLabelValues();
-        pagadorEntiId = Entidad.ORGANIZACION.getId();
-        tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
-    }
+			break;
+		default:
+			throw new Error("Accion no valida: " + accion);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doLoadDependencies() throws ApplicationException {
+		tpsrList = tpsrService.selectLabelValues(new TipoServicioCriterioVO());
+		pagadorEntiId = Entidad.ORGANIZACION.getId();
+		tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
+	}
 }

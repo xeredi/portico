@@ -1,56 +1,54 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
+import xeredi.argo.model.metamodelo.service.TipoSubservicioService;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TipoSubservicioSaveAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class TipoSubservicioSaveAction extends EntidadSaveAction<TipoSubservicioVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -2564809133906860884L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -2564809133906860884L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSpecificValidate() throws ApplicationException {
-        Preconditions.checkNotNull(model.getTpsrId());
+	@Inject
+	private TipoSubservicioService tpssService;
 
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_temporal, model.isTemporal());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_facturable, model.isFacturable());
-        FieldValidator.validateRequired(this, MessageI18nKey.enti_exencionable, model.isExencionable());
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSpecificValidate() throws ApplicationException {
+		Preconditions.checkNotNull(model.getTpsrId());
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSave() throws ApplicationException {
-        final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
+		FieldValidator.validateRequired(this, MessageI18nKey.enti_temporal, model.isTemporal());
+		FieldValidator.validateRequired(this, MessageI18nKey.enti_facturable, model.isFacturable());
+		FieldValidator.validateRequired(this, MessageI18nKey.enti_exencionable, model.isExencionable());
+	}
 
-        switch (accion) {
-        case create:
-            tpssBO.insert(model, i18nMap);
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSave() throws ApplicationException {
+		switch (accion) {
+		case create:
+			tpssService.insert(model, i18nMap);
 
-            break;
-        case edit:
-            tpssBO.update(model, i18nMap);
+			break;
+		case edit:
+			tpssService.update(model, i18nMap);
 
-            break;
-        default:
-            throw new Error("Accion no soportada: " + accion);
-        }
-    }
+			break;
+		default:
+			throw new Error("Accion no soportada: " + accion);
+		}
+	}
 }

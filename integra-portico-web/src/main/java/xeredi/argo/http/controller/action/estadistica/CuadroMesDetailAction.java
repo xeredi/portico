@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.estadistica.bo.CuadroMesBO;
-import xeredi.argo.model.estadistica.bo.PeriodoProcesoBO;
+import xeredi.argo.model.estadistica.service.CuadroMesService;
+import xeredi.argo.model.estadistica.service.PeriodoProcesoService;
 import xeredi.argo.model.estadistica.vo.CuadroMesVO;
 import xeredi.argo.model.estadistica.vo.PeriodoProcesoVO;
 
@@ -17,28 +18,31 @@ import xeredi.argo.model.estadistica.vo.PeriodoProcesoVO;
 /**
  * The Class CuadroMesAction.
  */
-@Data
 public final class CuadroMesDetailAction extends CrudDetailAction<PeriodoProcesoVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 6080323896171314975L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 6080323896171314975L;
 
-    /** The cdms map. */
-    private Map<String, List<CuadroMesVO>> cdmsMap;
+	/** The cdms map. */
+	@Getter
+	private Map<String, List<CuadroMesVO>> cdmsMap;
 
-    // acciones web
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doDetail() throws ApplicationException {
-        Preconditions.checkNotNull(model);
-        Preconditions.checkNotNull(model.getId());
+	@Inject
+	private PeriodoProcesoService peprService;
 
-        final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
-        final CuadroMesBO cdmsBO = new CuadroMesBO();
+	@Inject
+	private CuadroMesService cdmsService;
 
-        model = peprBO.select(model.getId(), getIdioma());
-        cdmsMap = cdmsBO.selectMap(model.getId());
-    }
+	// acciones web
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doDetail() throws ApplicationException {
+		Preconditions.checkNotNull(model);
+		Preconditions.checkNotNull(model.getId());
+
+		model = peprService.select(model.getId(), getIdioma());
+		cdmsMap = cdmsService.selectMap(model.getId());
+	}
 }

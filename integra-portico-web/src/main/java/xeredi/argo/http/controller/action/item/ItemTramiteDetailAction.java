@@ -10,9 +10,9 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.item.bo.ItemTramiteBO;
 import xeredi.argo.model.item.vo.ItemTramiteVO;
 import xeredi.argo.model.item.vo.ItemVO;
-import xeredi.argo.model.metamodelo.proxy.EntidadProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.service.TramiteProxyService;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
@@ -64,6 +64,9 @@ public final class ItemTramiteDetailAction extends BaseAction
 	@Inject
 	private TramiteProxyService trmtProxy;
 
+	@Inject
+	private EntidadProxyService entiProxy;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -77,7 +80,7 @@ public final class ItemTramiteDetailAction extends BaseAction
 		model = ittrBO.select(model.getId(), getIdioma());
 		trmt = trmtProxy.select(model.getTrmt().getId());
 
-		final TipoEntidad tipoEntidad = EntidadProxy.select(model.getTrmt().getEntiId()).getEnti().getTipo();
+		final TipoEntidad tipoEntidad = entiProxy.select(model.getTrmt().getEntiId()).getEnti().getTipo();
 
 		switch (tipoEntidad) {
 		case T:

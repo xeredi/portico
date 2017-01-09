@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.inject.Inject;
+
 import lombok.Setter;
 import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.http.controller.session.SessionManager;
@@ -14,7 +16,7 @@ import xeredi.argo.model.comun.proxy.ConfigurationProxy;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.proceso.batch.pesca.ProcesoBuquePesca;
-import xeredi.argo.model.proceso.bo.ProcesoBO;
+import xeredi.argo.model.proceso.service.ProcesoService;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
 import xeredi.argo.model.servicio.vo.ServicioCriterioVO;
 
@@ -24,29 +26,30 @@ import xeredi.argo.model.servicio.vo.ServicioCriterioVO;
  */
 public final class GenerarExecuteAction extends BaseAction {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -4956601131901400553L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -4956601131901400553L;
 
-    /** The model. */
-    @Setter
-    private ServicioCriterioVO model;
+	/** The model. */
+	@Setter
+	private ServicioCriterioVO model;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doExecute() throws ApplicationException {
-        FieldValidator.validateRequired(this, MessageI18nKey.ffin, model.getFrefMax());
+	@Inject
+	private ProcesoService prbtService;
 
-        if (!hasErrors()) {
-            final ProcesoBO prbtBO = new ProcesoBO();
-            final Map<String, String> parametroMap = new HashMap<>();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doExecute() throws ApplicationException {
+		FieldValidator.validateRequired(this, MessageI18nKey.ffin, model.getFrefMax());
 
-            final DateFormat format = new SimpleDateFormat(ConfigurationProxy.getString(ConfigurationKey.date_format));
+		if (!hasErrors()) {
+			final Map<String, String> parametroMap = new HashMap<>();
+			final DateFormat format = new SimpleDateFormat(ConfigurationProxy.getString(ConfigurationKey.date_format));
 
-            parametroMap.put(ProcesoBuquePesca.params.ffin.name(), format.format(model.getFrefMax()));
+			parametroMap.put(ProcesoBuquePesca.params.ffin.name(), format.format(model.getFrefMax()));
 
-            prbtBO.crear(SessionManager.getUsroId(), ProcesoTipo.SBUP_CREACION, parametroMap, null, null);
-        }
-    }
+			prbtService.crear(SessionManager.getUsroId(), ProcesoTipo.SBUP_CREACION, parametroMap, null, null);
+		}
+	}
 }

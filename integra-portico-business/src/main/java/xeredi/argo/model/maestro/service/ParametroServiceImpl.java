@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
 
 import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgUtilBO;
@@ -46,10 +46,8 @@ import xeredi.argo.model.util.PaginatedList;
 /**
  * The Class ParametroServiceImpl.
  */
-@Singleton
-@Transactional
+@Transactional(executorType = ExecutorType.BATCH)
 public class ParametroServiceImpl implements ParametroService {
-
 	/** The prmt DAO. */
 	@Inject
 	private ParametroDAO prmtDAO;
@@ -74,7 +72,7 @@ public class ParametroServiceImpl implements ParametroService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final void insert(@NonNull final ParametroVO prmt, @NonNull final TipoParametroDetailVO tpprDetail,
+	public void insert(@NonNull final ParametroVO prmt, @NonNull final TipoParametroDetailVO tpprDetail,
 			final Map<String, I18nVO> i18nMap) throws OverlapException {
 		Preconditions.checkNotNull(prmt.getParametro());
 		Preconditions.checkNotNull(prmt.getVersion());
@@ -147,7 +145,7 @@ public class ParametroServiceImpl implements ParametroService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final void duplicate(@NonNull final ParametroVO prmt, @NonNull final TipoParametroDetailVO tpprDetail,
+	public void duplicate(@NonNull final ParametroVO prmt, @NonNull final TipoParametroDetailVO tpprDetail,
 			final Map<String, I18nVO> i18nMap) throws OverlapException, InstanceNotFoundException {
 		Preconditions.checkNotNull(prmt.getId());
 		Preconditions.checkNotNull(prmt.getParametro());
@@ -318,7 +316,7 @@ public class ParametroServiceImpl implements ParametroService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final void duplicateVersion(@NonNull final ParametroVO prmt, @NonNull final TipoParametroDetailVO tpprDetail,
+	public void duplicateVersion(@NonNull final ParametroVO prmt, @NonNull final TipoParametroDetailVO tpprDetail,
 			final Map<String, I18nVO> i18nMap) throws OverlapException, InstanceNotFoundException {
 		Preconditions.checkNotNull(prmt.getId());
 		Preconditions.checkNotNull(prmt.getVersion());
@@ -409,7 +407,7 @@ public class ParametroServiceImpl implements ParametroService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final void update(@NonNull final ParametroVO prmt, @NonNull final TipoParametroDetailVO tpprDetail,
+	public void update(@NonNull final ParametroVO prmt, @NonNull final TipoParametroDetailVO tpprDetail,
 			final Map<String, I18nVO> i18nMap) throws OverlapException, InstanceNotFoundException {
 		Preconditions.checkNotNull(prmt.getVersion());
 		Preconditions.checkNotNull(prmt.getVersion().getId());
@@ -480,7 +478,7 @@ public class ParametroServiceImpl implements ParametroService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final void delete(@NonNull final ParametroVO prmt) throws InstanceNotFoundException {
+	public void delete(@NonNull final ParametroVO prmt) throws InstanceNotFoundException {
 		Preconditions.checkNotNull(prmt.getVersion());
 		Preconditions.checkNotNull(prmt.getVersion().getId());
 
@@ -515,7 +513,7 @@ public class ParametroServiceImpl implements ParametroService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final List<ParametroVO> selectList(@NonNull final ParametroCriterioVO prmtCriterioVO) {
+	public List<ParametroVO> selectList(@NonNull final ParametroCriterioVO prmtCriterioVO) {
 		final List<ParametroVO> prmtList = prmtDAO.selectList(prmtCriterioVO);
 
 		fillDependencies(prmtList, prmtCriterioVO, false);
@@ -527,7 +525,7 @@ public class ParametroServiceImpl implements ParametroService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final PaginatedList<ParametroVO> selectList(@NonNull final ParametroCriterioVO prmtCriterioVO, int offset,
+	public PaginatedList<ParametroVO> selectList(@NonNull final ParametroCriterioVO prmtCriterioVO, int offset,
 			int limit) {
 		final List<ParametroVO> prmtList = new ArrayList<>();
 		final int count = prmtDAO.count(prmtCriterioVO);
@@ -545,7 +543,7 @@ public class ParametroServiceImpl implements ParametroService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final Map<Long, ParametroVO> selectMap(@NonNull final ParametroCriterioVO prmtCriterioVO) {
+	public Map<Long, ParametroVO> selectMap(@NonNull final ParametroCriterioVO prmtCriterioVO) {
 		final Map<Long, ParametroVO> prmtMap = prmtDAO.selectMap(prmtCriterioVO);
 
 		fillDependencies(prmtMap.values(), prmtCriterioVO, false);
@@ -557,7 +555,7 @@ public class ParametroServiceImpl implements ParametroService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final Map<String, ParametroVO> selectMapByCodigo(@NonNull final ParametroCriterioVO prmtCriterioVO) {
+	public Map<String, ParametroVO> selectMapByCodigo(@NonNull final ParametroCriterioVO prmtCriterioVO) {
 		final Map<String, ParametroVO> prmtMap = prmtDAO.selectMapByCodigo(prmtCriterioVO);
 
 		fillDependencies(prmtMap.values(), prmtCriterioVO, false);
@@ -569,7 +567,7 @@ public class ParametroServiceImpl implements ParametroService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final Map<String, Long> selectMapCodigoId(@NonNull final ParametroCriterioVO prmtCriterioVO) {
+	public Map<String, Long> selectMapCodigoId(@NonNull final ParametroCriterioVO prmtCriterioVO) {
 		final Map<String, Long> map = new HashMap<>();
 
 		for (final ParametroVO prmtVO : prmtDAO.selectList(prmtCriterioVO)) {
@@ -591,7 +589,7 @@ public class ParametroServiceImpl implements ParametroService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final Map<Long, String> selectMapIdCodigo(@NonNull final ParametroCriterioVO prmtCriterioVO) {
+	public Map<Long, String> selectMapIdCodigo(@NonNull final ParametroCriterioVO prmtCriterioVO) {
 		final Map<Long, String> map = new HashMap<>();
 
 		for (final ParametroVO prmtVO : prmtDAO.selectList(prmtCriterioVO)) {
@@ -605,7 +603,7 @@ public class ParametroServiceImpl implements ParametroService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final Map<Long, List<LabelValueVO>> selectLabelValues(@NonNull final Set<Long> tpprIds,
+	public Map<Long, List<LabelValueVO>> selectLabelValues(@NonNull final Set<Long> tpprIds,
 			@NonNull final Date fechaReferencia, final String idioma) {
 		final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
 
@@ -630,7 +628,7 @@ public class ParametroServiceImpl implements ParametroService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final List<LabelValueVO> selectLabelValues(@NonNull final ParametroCriterioVO criterioVO) {
+	public List<LabelValueVO> selectLabelValues(@NonNull final ParametroCriterioVO criterioVO) {
 		final List<LabelValueVO> list = new ArrayList<>();
 
 		for (final ParametroVO prmt : prmtDAO.selectList(criterioVO)) {
@@ -644,7 +642,7 @@ public class ParametroServiceImpl implements ParametroService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final ParametroVO selectObject(@NonNull final ParametroCriterioVO prmtCriterio) {
+	public ParametroVO selectObject(@NonNull final ParametroCriterioVO prmtCriterio) {
 		final ParametroVO prmt = prmtDAO.selectObject(prmtCriterio);
 
 		if (prmt != null) {
@@ -658,7 +656,7 @@ public class ParametroServiceImpl implements ParametroService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final ParametroVO select(@NonNull final Long prmtId, @NonNull final String idioma,
+	public ParametroVO select(@NonNull final Long prmtId, @NonNull final String idioma,
 			@NonNull final Date fechaVigencia) throws InstanceNotFoundException {
 		final ParametroCriterioVO prmtCriterio = new ParametroCriterioVO();
 
@@ -679,7 +677,7 @@ public class ParametroServiceImpl implements ParametroService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final List<ParametroVO> selectTypeaheadList(@NonNull final ParametroCriterioVO criterio, int limit) {
+	public List<ParametroVO> selectTypeaheadList(@NonNull final ParametroCriterioVO criterio, int limit) {
 		Preconditions.checkNotNull(criterio.getEntiId());
 		Preconditions.checkNotNull(criterio.getFechaVigencia());
 		Preconditions.checkNotNull(criterio.getIdioma());

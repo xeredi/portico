@@ -3,14 +3,14 @@ package xeredi.argo.http.controller.action.proceso;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.ArchivoInfoVO;
 import xeredi.argo.model.proceso.bo.ProcesoBO;
+import xeredi.argo.model.proceso.service.ProcesoService;
 import xeredi.argo.model.proceso.vo.ProcesoItemVO;
 import xeredi.argo.model.proceso.vo.ProcesoParametroVO;
 import xeredi.argo.model.proceso.vo.ProcesoVO;
@@ -19,40 +19,44 @@ import xeredi.argo.model.proceso.vo.ProcesoVO;
 /**
  * The Class ProcesoDetailAction.
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
 public final class ProcesoDetailAction extends CrudDetailAction<ProcesoVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -2068504814675826214L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -2068504814675826214L;
 
-    /** The prar entrada list. */
-    private List<ArchivoInfoVO> arinEntradaList;
+	/** The prar entrada list. */
+	@Getter
+	private List<ArchivoInfoVO> arinEntradaList;
 
-    /** The prar salida list. */
-    private List<ArchivoInfoVO> arinSalidaList;
+	/** The prar salida list. */
+	@Getter
+	private List<ArchivoInfoVO> arinSalidaList;
 
-    /** The prit entrada list. */
-    private List<ProcesoItemVO> pritEntradaList;
+	/** The prit entrada list. */
+	@Getter
+	private List<ProcesoItemVO> pritEntradaList;
 
-    /** The prit salida list. */
-    private List<ProcesoItemVO> pritSalidaList;
+	/** The prit salida list. */
+	@Getter
+	private List<ProcesoItemVO> pritSalidaList;
 
-    /** The prpm map. */
-    private Map<String, ProcesoParametroVO> prpmMap;
+	/** The prpm map. */
+	@Getter
+	private Map<String, ProcesoParametroVO> prpmMap;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doDetail() throws ApplicationException {
-        final ProcesoBO prbtBO = new ProcesoBO();
+	@Inject
+	private ProcesoService prbtService;
 
-        model = prbtBO.select(model.getId());
-        arinEntradaList = prbtBO.selectArinEntradaList(model.getId());
-        arinSalidaList = prbtBO.selectArinSalidaList(model.getId());
-        pritEntradaList = prbtBO.selectPritEntradaList(model.getId());
-        pritSalidaList = prbtBO.selectPritSalidaList(model.getId());
-        prpmMap = prbtBO.selectPrpmMap(model.getId());
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doDetail() throws ApplicationException {
+		model = prbtService.select(model.getId());
+		arinEntradaList = prbtService.selectArinEntradaList(model.getId());
+		arinSalidaList = prbtService.selectArinSalidaList(model.getId());
+		pritEntradaList = prbtService.selectPritEntradaList(model.getId());
+		pritSalidaList = prbtService.selectPritSalidaList(model.getId());
+		prpmMap = prbtService.selectPrpmMap(model.getId());
+	}
 }

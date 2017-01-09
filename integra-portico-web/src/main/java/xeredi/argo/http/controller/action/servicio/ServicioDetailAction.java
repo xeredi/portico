@@ -13,7 +13,7 @@ import xeredi.argo.model.comun.vo.ArchivoInfoVO;
 import xeredi.argo.model.item.bo.ItemTramiteBO;
 import xeredi.argo.model.item.vo.ItemTramiteCriterioVO;
 import xeredi.argo.model.item.vo.ItemTramiteVO;
-import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.argo.model.metamodelo.service.TipoServicioProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.argo.model.servicio.bo.ServicioBO;
 import xeredi.argo.model.servicio.bo.ServicioBOFactory;
@@ -39,12 +39,15 @@ public final class ServicioDetailAction extends ItemDetailAction<ServicioVO, Tip
 	@Inject
 	private ArchivoService archService;
 
+	@Inject
+	private TipoServicioProxyService tpsrProxy;
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void doSpecificDetail() throws ApplicationException {
-		enti = TipoServicioProxy.select(model.getEntiId());
+		enti = tpsrProxy.select(model.getEntiId());
 
 		final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId(), usroId);
 

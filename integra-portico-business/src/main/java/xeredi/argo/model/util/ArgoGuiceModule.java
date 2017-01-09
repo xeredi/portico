@@ -2,11 +2,15 @@ package xeredi.argo.model.util;
 
 import java.util.Properties;
 
+import org.apache.ibatis.executor.loader.javassist.JavassistProxyFactory;
+import org.apache.ibatis.logging.nologging.NoLoggingImpl;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
+import org.apache.ibatis.type.JdbcType;
 import org.mybatis.guice.MyBatisModule;
-import org.mybatis.guice.datasource.builtin.PooledDataSourceProvider;
+import org.mybatis.guice.datasource.bonecp.BoneCPProvider;
 
+import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 
 import xeredi.argo.model.comun.service.ArchivoService;
@@ -21,6 +25,12 @@ import xeredi.argo.model.comun.service.PuertoService;
 import xeredi.argo.model.comun.service.PuertoServiceImpl;
 import xeredi.argo.model.comun.service.SuperpuertoService;
 import xeredi.argo.model.comun.service.SuperpuertoServiceImpl;
+import xeredi.argo.model.estadistica.service.CuadroMesService;
+import xeredi.argo.model.estadistica.service.CuadroMesServiceImpl;
+import xeredi.argo.model.estadistica.service.EstadisticaService;
+import xeredi.argo.model.estadistica.service.EstadisticaServiceImpl;
+import xeredi.argo.model.estadistica.service.PeriodoProcesoService;
+import xeredi.argo.model.estadistica.service.PeriodoProcesoServiceImpl;
 import xeredi.argo.model.facturacion.service.AspectoCargoService;
 import xeredi.argo.model.facturacion.service.AspectoCargoServiceImpl;
 import xeredi.argo.model.facturacion.service.AspectoService;
@@ -53,6 +63,8 @@ import xeredi.argo.model.metamodelo.service.EntidadEntidadService;
 import xeredi.argo.model.metamodelo.service.EntidadEntidadServiceImpl;
 import xeredi.argo.model.metamodelo.service.EntidadGrupoDatoService;
 import xeredi.argo.model.metamodelo.service.EntidadGrupoDatoServiceImpl;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
+import xeredi.argo.model.metamodelo.service.EntidadProxyServiceImpl;
 import xeredi.argo.model.metamodelo.service.EntidadService;
 import xeredi.argo.model.metamodelo.service.EntidadServiceImpl;
 import xeredi.argo.model.metamodelo.service.EntidadTipoDatoService;
@@ -65,14 +77,22 @@ import xeredi.argo.model.metamodelo.service.TipoEstadisticaService;
 import xeredi.argo.model.metamodelo.service.TipoEstadisticaServiceImpl;
 import xeredi.argo.model.metamodelo.service.TipoParametroService;
 import xeredi.argo.model.metamodelo.service.TipoParametroServiceImpl;
+import xeredi.argo.model.metamodelo.service.TipoServicioProxyService;
+import xeredi.argo.model.metamodelo.service.TipoServicioProxyServiceImpl;
 import xeredi.argo.model.metamodelo.service.TipoServicioService;
 import xeredi.argo.model.metamodelo.service.TipoServicioServiceImpl;
+import xeredi.argo.model.metamodelo.service.TipoSubparametroService;
+import xeredi.argo.model.metamodelo.service.TipoSubparametroServiceImpl;
+import xeredi.argo.model.metamodelo.service.TipoSubservicioService;
+import xeredi.argo.model.metamodelo.service.TipoSubservicioServiceImpl;
 import xeredi.argo.model.metamodelo.service.TramiteProxyService;
 import xeredi.argo.model.metamodelo.service.TramiteProxyServiceImpl;
 import xeredi.argo.model.metamodelo.service.TramiteService;
 import xeredi.argo.model.metamodelo.service.TramiteServiceImpl;
 import xeredi.argo.model.metamodelo.service.TramiteTipoDatoService;
 import xeredi.argo.model.metamodelo.service.TramiteTipoDatoServiceImpl;
+import xeredi.argo.model.proceso.service.ProcesoService;
+import xeredi.argo.model.proceso.service.ProcesoServiceImpl;
 import xeredi.argo.model.seguridad.service.GrupoService;
 import xeredi.argo.model.seguridad.service.GrupoServiceImpl;
 import xeredi.argo.model.seguridad.service.UsuarioPermisoService;
@@ -93,77 +113,94 @@ public final class ArgoGuiceModule extends MyBatisModule {
 	protected void initialize() {
 		final Properties properties = new Properties();
 
-		properties.setProperty("mybatis.environment.id", "local");
-		properties.setProperty("DataSource", "DBCP");
 		properties.setProperty("JDBC.driver", "oracle.jdbc.OracleDriver");
 		properties.setProperty("JDBC.url", "jdbc:oracle:thin:@127.0.0.1:1521:orcl");
 		properties.setProperty("JDBC.username", "portico");
 		properties.setProperty("JDBC.password", "portico");
 		properties.setProperty("JDBC.autoCommit", "false");
 
-		properties.setProperty("jdbcTypeForNull", "NULL");
-
-		bindDataSourceProviderType(PooledDataSourceProvider.class);
+		bindDataSourceProviderType(BoneCPProvider.class);
 		bindTransactionFactoryType(JdbcTransactionFactory.class);
-		executorType(ExecutorType.REUSE);
 		useCacheEnabled(false);
+		executorType(ExecutorType.REUSE);
+		environmentId("local");
+
+		bindConfigurationSetting(configuration -> {
+			configuration.setDefaultExecutorType(ExecutorType.REUSE);
+			configuration.setLogImpl(NoLoggingImpl.class);
+			// configuration.setLogImpl(Log4jImpl.class);
+			configuration.setJdbcTypeForNull(JdbcType.NULL);
+			configuration.setProxyFactory(new JavassistProxyFactory());
+		});
+
+		Names.bindProperties(binder(), properties);
 
 		addSimpleAliases("xeredi.argo.model.comun.vo");
+		addSimpleAliases("xeredi.argo.model.estadistica.vo");
 		addSimpleAliases("xeredi.argo.model.facturacion.vo");
 		addSimpleAliases("xeredi.argo.model.item.vo");
 		addSimpleAliases("xeredi.argo.model.maestro.vo");
 		addSimpleAliases("xeredi.argo.model.metamodelo.vo");
+		addSimpleAliases("xeredi.argo.model.proceso.vo");
 		addSimpleAliases("xeredi.argo.model.seguridad.vo");
 		addSimpleAliases("xeredi.argo.model.servicio.vo");
 
 		addMapperClasses("xeredi.argo.model.comun.dao");
+		addMapperClasses("xeredi.argo.model.estadistica.dao");
 		addMapperClasses("xeredi.argo.model.facturacion.dao");
 		addMapperClasses("xeredi.argo.model.maestro.dao");
 		addMapperClasses("xeredi.argo.model.maestro.dao.embdeportivas");
 		addMapperClasses("xeredi.argo.model.metamodelo.dao");
+		addMapperClasses("xeredi.argo.model.proceso.dao");
 		addMapperClasses("xeredi.argo.model.seguridad.dao");
 		addMapperClasses("xeredi.argo.model.servicio.dao");
-
-		Names.bindProperties(binder(), properties);
 
 		// setEnvironmentId("local");
 		// setClassPathResource("mybatis-config.xml");
 
-		bind(ArchivoService.class).to(ArchivoServiceImpl.class);
-		bind(ConfigurationService.class).to(ConfigurationServiceImpl.class);
-		bind(ConfigurationProxyService.class).to(ConfigurationProxyServiceImpl.class);
-		bind(I18nService.class).to(I18nServiceImpl.class);
-		bind(PuertoService.class).to(PuertoServiceImpl.class);
-		bind(SuperpuertoService.class).to(SuperpuertoServiceImpl.class);
-		bind(CodigoReferenciaService.class).to(CodigoReferenciaServiceImpl.class);
-		bind(TipoDatoService.class).to(TipoDatoServiceImpl.class);
-		bind(TramiteService.class).to(TramiteServiceImpl.class);
-		bind(TramiteProxyService.class).to(TramiteProxyServiceImpl.class);
-		bind(TramiteTipoDatoService.class).to(TramiteTipoDatoServiceImpl.class);
-		bind(ModuloService.class).to(ModuloServiceImpl.class);
-		bind(EntidadService.class).to(EntidadServiceImpl.class);
-		bind(EntidadEntidadService.class).to(EntidadEntidadServiceImpl.class);
-		bind(EntidadGrupoDatoService.class).to(EntidadGrupoDatoServiceImpl.class);
-		bind(EntidadTipoDatoService.class).to(EntidadTipoDatoServiceImpl.class);
-		bind(TipoEstadisticaService.class).to(TipoEstadisticaServiceImpl.class);
-		bind(TipoParametroService.class).to(TipoParametroServiceImpl.class);
-		bind(TipoServicioService.class).to(TipoServicioServiceImpl.class);
-		bind(AccionBaseService.class).to(AccionBaseServiceImpl.class);
-		bind(AccionEntidadService.class).to(AccionEntidadServiceImpl.class);
-		bind(AccionEntidadBaseService.class).to(AccionEntidadBaseServiceImpl.class);
-		bind(AccionEspecialService.class).to(AccionEspecialServiceImpl.class);
-		bind(CampoAgregacionService.class).to(CampoAgregacionServiceImpl.class);
-		bind(UsuarioService.class).to(UsuarioServiceImpl.class);
-		bind(UsuarioPermisoService.class).to(UsuarioPermisoServiceImpl.class);
-		bind(GrupoService.class).to(GrupoServiceImpl.class);
-		bind(ParametroService.class).to(ParametroServiceImpl.class);
-		bind(SubparametroService.class).to(SubparametroServiceImpl.class);
-		bind(AmarreDeportivoService.class).to(AmarreDeportivoServiceImpl.class);
-		bind(AspectoService.class).to(AspectoServiceImpl.class);
-		bind(AspectoCargoService.class).to(AspectoCargoServiceImpl.class);
-		bind(CargoService.class).to(CargoServiceImpl.class);
-		bind(ReglaService.class).to(ReglaServiceImpl.class);
-		bind(ReglaIncompatibleService.class).to(ReglaIncompatibleServiceImpl.class);
+		bind(ArchivoService.class).to(ArchivoServiceImpl.class).in(Singleton.class);
+		bind(ConfigurationService.class).to(ConfigurationServiceImpl.class).in(Singleton.class);
+		bind(ConfigurationProxyService.class).to(ConfigurationProxyServiceImpl.class).in(Singleton.class);
+		bind(I18nService.class).to(I18nServiceImpl.class).in(Singleton.class);
+		bind(PuertoService.class).to(PuertoServiceImpl.class).in(Singleton.class);
+		bind(SuperpuertoService.class).to(SuperpuertoServiceImpl.class).in(Singleton.class);
+		bind(CodigoReferenciaService.class).to(CodigoReferenciaServiceImpl.class).in(Singleton.class);
+		bind(TipoDatoService.class).to(TipoDatoServiceImpl.class).in(Singleton.class);
+		bind(TramiteService.class).to(TramiteServiceImpl.class).in(Singleton.class);
+		bind(TramiteProxyService.class).to(TramiteProxyServiceImpl.class).in(Singleton.class);
+		bind(TramiteTipoDatoService.class).to(TramiteTipoDatoServiceImpl.class).in(Singleton.class);
+		bind(ModuloService.class).to(ModuloServiceImpl.class).in(Singleton.class);
+		bind(EntidadService.class).to(EntidadServiceImpl.class).in(Singleton.class);
+		bind(EntidadProxyService.class).to(EntidadProxyServiceImpl.class).in(Singleton.class);
+		bind(EntidadEntidadService.class).to(EntidadEntidadServiceImpl.class).in(Singleton.class);
+		bind(EntidadGrupoDatoService.class).to(EntidadGrupoDatoServiceImpl.class).in(Singleton.class);
+		bind(EntidadTipoDatoService.class).to(EntidadTipoDatoServiceImpl.class).in(Singleton.class);
+		bind(TipoEstadisticaService.class).to(TipoEstadisticaServiceImpl.class).in(Singleton.class);
+		bind(TipoParametroService.class).to(TipoParametroServiceImpl.class).in(Singleton.class);
+		bind(TipoSubparametroService.class).to(TipoSubparametroServiceImpl.class).in(Singleton.class);
+		bind(TipoServicioService.class).to(TipoServicioServiceImpl.class).in(Singleton.class);
+		bind(TipoServicioProxyService.class).to(TipoServicioProxyServiceImpl.class).in(Singleton.class);
+		bind(TipoSubservicioService.class).to(TipoSubservicioServiceImpl.class).in(Singleton.class);
+		bind(AccionBaseService.class).to(AccionBaseServiceImpl.class).in(Singleton.class);
+		bind(AccionEntidadService.class).to(AccionEntidadServiceImpl.class).in(Singleton.class);
+		bind(AccionEntidadBaseService.class).to(AccionEntidadBaseServiceImpl.class).in(Singleton.class);
+		bind(AccionEspecialService.class).to(AccionEspecialServiceImpl.class).in(Singleton.class);
+		bind(CampoAgregacionService.class).to(CampoAgregacionServiceImpl.class).in(Singleton.class);
+		bind(UsuarioService.class).to(UsuarioServiceImpl.class).in(Singleton.class);
+		bind(UsuarioPermisoService.class).to(UsuarioPermisoServiceImpl.class).in(Singleton.class);
+		bind(GrupoService.class).to(GrupoServiceImpl.class).in(Singleton.class);
+		bind(ParametroService.class).to(ParametroServiceImpl.class).in(Singleton.class);
+		bind(SubparametroService.class).to(SubparametroServiceImpl.class).in(Singleton.class);
+		bind(AmarreDeportivoService.class).to(AmarreDeportivoServiceImpl.class).in(Singleton.class);
+		bind(AspectoService.class).to(AspectoServiceImpl.class).in(Singleton.class);
+		bind(AspectoCargoService.class).to(AspectoCargoServiceImpl.class).in(Singleton.class);
+		bind(CargoService.class).to(CargoServiceImpl.class).in(Singleton.class);
+		bind(ReglaService.class).to(ReglaServiceImpl.class).in(Singleton.class);
+		bind(ReglaIncompatibleService.class).to(ReglaIncompatibleServiceImpl.class).in(Singleton.class);
+		bind(PeriodoProcesoService.class).to(PeriodoProcesoServiceImpl.class).in(Singleton.class);
+		bind(CuadroMesService.class).to(CuadroMesServiceImpl.class).in(Singleton.class);
+		bind(EstadisticaService.class).to(EstadisticaServiceImpl.class).in(Singleton.class);
+		bind(ProcesoService.class).to(ProcesoServiceImpl.class).in(Singleton.class);
 	}
 
 }

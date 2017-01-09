@@ -14,8 +14,9 @@ import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.facturacion.service.AspectoService;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
-import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.argo.model.metamodelo.service.TipoServicioService;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
+import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -36,6 +37,9 @@ public final class AspectoEditAction extends CrudEditAction<AspectoVO> {
 
 	@Inject
 	private AspectoService aspcService;
+
+	@Inject
+	private TipoServicioService tpsrService;
 
 	@Inject
 	private I18nService i18nService;
@@ -59,7 +63,7 @@ public final class AspectoEditAction extends CrudEditAction<AspectoVO> {
 	@Override
 	public void doLoadDependencies() throws ApplicationException {
 		if (accion == AccionCodigo.create) {
-			tpsrList = TipoServicioProxy.selectLabelValues();
+			tpsrList = tpsrService.selectLabelValues(new TipoServicioCriterioVO());
 		}
 	}
 }

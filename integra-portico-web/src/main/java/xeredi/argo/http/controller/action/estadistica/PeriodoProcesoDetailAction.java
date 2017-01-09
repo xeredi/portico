@@ -3,12 +3,13 @@ package xeredi.argo.http.controller.action.estadistica;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
-import lombok.Data;
+import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.LabelValueVO;
-import xeredi.argo.model.estadistica.bo.PeriodoProcesoBO;
+import xeredi.argo.model.estadistica.service.PeriodoProcesoService;
 import xeredi.argo.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.argo.model.metamodelo.proxy.TipoEstadisticaProxy;
 
@@ -16,25 +17,26 @@ import xeredi.argo.model.metamodelo.proxy.TipoEstadisticaProxy;
 /**
  * The Class PeriodoProcesoDetailAction.
  */
-@Data
 public final class PeriodoProcesoDetailAction extends CrudDetailAction<PeriodoProcesoVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -4868698080267704484L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -4868698080267704484L;
 
-    /** The tpes list. */
-    private List<LabelValueVO> tpesList;
+	/** The tpes list. */
+	@Getter
+	private List<LabelValueVO> tpesList;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doDetail() throws ApplicationException {
-        Preconditions.checkNotNull(model.getId());
+	@Inject
+	private PeriodoProcesoService peprService;
 
-        final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doDetail() throws ApplicationException {
+		Preconditions.checkNotNull(model.getId());
 
-        model = peprBO.select(model.getId(), getIdioma());
-        tpesList = TipoEstadisticaProxy.selectLabelValues();
-    }
+		model = peprService.select(model.getId(), getIdioma());
+		tpesList = TipoEstadisticaProxy.selectLabelValues();
+	}
 }

@@ -6,9 +6,9 @@ import com.google.inject.Inject;
 
 import lombok.Getter;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.metamodelo.bo.TipoSubservicioBO;
 import xeredi.argo.model.metamodelo.service.EntidadService;
 import xeredi.argo.model.metamodelo.service.TipoServicioService;
+import xeredi.argo.model.metamodelo.service.TipoSubservicioService;
 import xeredi.argo.model.metamodelo.service.TramiteService;
 import xeredi.argo.model.metamodelo.vo.EntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadVO;
@@ -48,6 +48,9 @@ public final class TipoServicioDetailAction extends EntidadDetailAction<TipoServ
 	@Inject
 	private TramiteService trmtService;
 
+	@Inject
+	private TipoSubservicioService tpssService;
+
     /**
      * {@inheritDoc}
      */
@@ -55,13 +58,12 @@ public final class TipoServicioDetailAction extends EntidadDetailAction<TipoServ
     public void doSpecificDetail() throws ApplicationException {
         model = tpsrService.select(model.getId(), getIdioma());
 
-        final TipoSubservicioBO tpssBO = new TipoSubservicioBO();
         final TipoSubservicioCriterioVO tpssCriterio = new TipoSubservicioCriterioVO();
 
         tpssCriterio.setTpsrId(model.getId());
         tpssCriterio.setIdioma(getIdioma());
 
-        subentiList = tpssBO.selectList(tpssCriterio);
+        subentiList = tpssService.selectList(tpssCriterio);
 
         if (subentiList != null && !subentiList.isEmpty()) {
             final EntidadCriterioVO entiCriterio = new EntidadCriterioVO();

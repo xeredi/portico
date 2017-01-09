@@ -6,8 +6,8 @@ import com.google.inject.Inject;
 
 import lombok.Getter;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.metamodelo.bo.TipoSubparametroBO;
 import xeredi.argo.model.metamodelo.service.TipoParametroService;
+import xeredi.argo.model.metamodelo.service.TipoSubparametroService;
 import xeredi.argo.model.metamodelo.vo.TipoParametroVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroVO;
@@ -18,29 +18,31 @@ import xeredi.argo.model.metamodelo.vo.TipoSubparametroVO;
  */
 public final class TipoParametroDetailAction extends EntidadDetailAction<TipoParametroVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 9182419626664730526L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 9182419626664730526L;
 
-    /** The tpsp list. */
-    @Getter
-    private List<TipoSubparametroVO> subentiList;
+	/** The tpsp list. */
+	@Getter
+	private List<TipoSubparametroVO> subentiList;
 
-    @Inject
-    private TipoParametroService tpprService;
+	@Inject
+	private TipoParametroService tpprService;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSpecificDetail() throws ApplicationException {
-        model = tpprService.select(model.getId(), getIdioma());
+	@Inject
+	private TipoSubparametroService tpspService;
 
-        final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
-        final TipoSubparametroCriterioVO tpspCriterio = new TipoSubparametroCriterioVO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSpecificDetail() throws ApplicationException {
+		model = tpprService.select(model.getId(), getIdioma());
 
-        tpspCriterio.setTpprId(model.getId());
-        tpspCriterio.setIdioma(getIdioma());
+		final TipoSubparametroCriterioVO tpspCriterio = new TipoSubparametroCriterioVO();
 
-        subentiList = tpspBO.selectList(tpspCriterio);
-    }
+		tpspCriterio.setTpprId(model.getId());
+		tpspCriterio.setIdioma(getIdioma());
+
+		subentiList = tpspService.selectList(tpspCriterio);
+	}
 }
