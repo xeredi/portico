@@ -10,7 +10,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.maestro.service.ParametroService;
 import xeredi.argo.model.maestro.vo.ParametroCriterioVO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
-import xeredi.argo.model.metamodelo.proxy.TipoParametroProxy;
+import xeredi.argo.model.metamodelo.service.TipoParametroProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
 
 // TODO: Auto-generated Javadoc
@@ -25,12 +25,15 @@ public final class ParametroTypeaheadAction extends ItemTypeaheadAction<Parametr
 	@Inject
 	private ParametroService prmtService;
 
+	@Inject
+	private TipoParametroProxyService tpprProxy;
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public final void doSpecificTypeahead() throws ApplicationException {
-		final TipoParametroDetailVO entiDetail = TipoParametroProxy.select(model.getEntiId());
+		final TipoParametroDetailVO entiDetail = tpprProxy.select(model.getEntiId());
 
 		if (entiDetail.getEnti().getPuerto()) {
 			Preconditions.checkNotNull(model.getPrto());

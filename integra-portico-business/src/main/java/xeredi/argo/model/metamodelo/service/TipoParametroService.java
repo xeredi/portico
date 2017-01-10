@@ -17,12 +17,15 @@ import xeredi.argo.model.util.PaginatedList;
  * The Interface TipoParametroService.
  */
 public interface TipoParametroService {
+
 	/**
 	 * Select label values.
 	 *
+	 * @param tpprCriterio
+	 *            the tppr criterio
 	 * @return the list
 	 */
-	public List<LabelValueVO> selectLabelValues();
+	public List<LabelValueVO> selectLabelValues(final TipoParametroCriterioVO tpprCriterio);
 
 	/**
 	 * Select list.

@@ -5,13 +5,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.inject.Inject;
+
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.LabelValueVO;
-import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
-import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
+import xeredi.argo.model.metamodelo.service.TipoServicioService;
+import xeredi.argo.model.metamodelo.service.TipoSubservicioService;
+import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
+import xeredi.argo.model.metamodelo.vo.TipoSubservicioCriterioVO;
+import xeredi.argo.model.metamodelo.vo.TipoSubservicioVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -19,31 +23,45 @@ import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
  */
 public final class ServicioIndexAction extends BaseAction {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -5523514529976849793L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -5523514529976849793L;
 
-    @Getter
-    private List<LabelValueVO> resultList;
+	@Getter
+	private List<LabelValueVO> resultList;
 
-    /** {@link Map} de tipos de subservicio indexados por id de tipo de servicio. */
-    @Getter
-    private Map<Long, List<LabelValueVO>> tpssMap;
+	/**
+	 * {@link Map} de tipos de subservicio indexados por id de tipo de servicio.
+	 */
+	@Getter
+	private Map<Long, List<LabelValueVO>> tpssMap;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doExecute() throws ApplicationException {
-        resultList = TipoServicioProxy.selectLabelValues();
+	@Inject
+	private TipoSubservicioService tpssService;
 
-        tpssMap = new HashMap<>();
+	@Inject
+	private TipoServicioService tpsrService;
 
-        for (final TipoSubservicioDetailVO vo : TipoSubservicioProxy.selectMap().values()) {
-            if (!tpssMap.containsKey(vo.getEnti().getTpsrId())) {
-                tpssMap.put(vo.getEnti().getTpsrId(), new ArrayList<LabelValueVO>());
-            }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doExecute() throws ApplicationException {
+		final TipoServicioCriterioVO tpsrCriterio = new TipoServicioCriterioVO();
 
-            tpssMap.get(vo.getEnti().getTpsrId()).add(new LabelValueVO(vo.getEnti().getNombre(), vo.getEnti().getId()));
-        }
-    }
+		tpsrCriterio.setIdioma(getIdioma());
+		resultList = tpsrService.selectLabelValues(tpsrCriterio);
+		tpssMap = new HashMap<>();
+
+		final TipoSubservicioCriterioVO tpssCriterio = new TipoSubservicioCriterioVO();
+
+		tpssCriterio.setIdioma(getIdioma());
+
+		for (final TipoSubservicioVO vo : tpssService.selectList(tpssCriterio)) {
+			if (!tpssMap.containsKey(vo.getTpsrId())) {
+				tpssMap.put(vo.getTpsrId(), new ArrayList<LabelValueVO>());
+			}
+
+			tpssMap.get(vo.getTpsrId()).add(new LabelValueVO(vo.getNombre(), vo.getId()));
+		}
+	}
 }

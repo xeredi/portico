@@ -12,8 +12,8 @@ import xeredi.argo.http.controller.session.SessionManager;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.http.view.estadistica.ProcesoEstadisticaVO;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.proxy.ConfigurationProxy;
 import xeredi.argo.model.comun.service.ArchivoService;
+import xeredi.argo.model.comun.service.ConfigurationProxyService;
 import xeredi.argo.model.comun.service.SuperpuertoService;
 import xeredi.argo.model.comun.vo.ArchivoSentido;
 import xeredi.argo.model.comun.vo.ArchivoVO;
@@ -43,6 +43,9 @@ public final class PeriodoProcesoSaveAction extends CrudSaveAction<ProcesoEstadi
 	@Inject
 	private ProcesoService prbtService;
 
+	@Inject
+	private ConfigurationProxyService confProxy;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -59,8 +62,7 @@ public final class PeriodoProcesoSaveAction extends CrudSaveAction<ProcesoEstadi
 
 		switch (accion) {
 		case load:
-			final String foldername = ConfigurationProxy
-					.getString(ConfigurationKey.estadistica_files_oppe_entrada_home);
+			final String foldername = confProxy.getString(ConfigurationKey.estadistica_files_oppe_entrada_home);
 			final String filepath = foldername + "/" + model.getPepr().getFilename() + ".zip";
 			final File file = new File(filepath);
 

@@ -59,7 +59,7 @@
 		<umlgraph.version>5.6.6</umlgraph.version>
 
 		<commons-lang3.version>3.5</commons-lang3.version>
-		<mybatis.version>3.4.1</mybatis.version>
+		<mybatis.version>3.4.2</mybatis.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
 		<commons-pool.version>1.6</commons-pool.version>
 		<commons-configuration.version>1.10</commons-configuration.version>
@@ -73,8 +73,10 @@
 		<guava.version>20.0</guava.version>
 		<commons-io.version>2.5</commons-io.version>
 		<commons-compress.version>1.12</commons-compress.version>
-		<antlr4-runtime.version>4.5.3</antlr4-runtime.version>
+		<antlr4-runtime.version>4.6</antlr4-runtime.version>
 		<xdocreport.version>1.0.6</xdocreport.version>
+		<mybatis-guice.version>3.9</mybatis-guice.version>
+		<guice.version>4.1.0</guice.version>
 
 		<quartz.version>2.2.3</quartz.version>
 

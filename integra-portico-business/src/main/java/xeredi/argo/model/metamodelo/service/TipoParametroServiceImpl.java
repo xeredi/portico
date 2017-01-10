@@ -50,10 +50,10 @@ public class TipoParametroServiceImpl implements TipoParametroService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<LabelValueVO> selectLabelValues() {
+	public List<LabelValueVO> selectLabelValues(final TipoParametroCriterioVO tpprCriterio) {
 		final List<LabelValueVO> list = new ArrayList<>();
 
-		for (final TipoParametroVO tppr : selectList(new TipoParametroCriterioVO())) {
+		for (final TipoParametroVO tppr : selectList(tpprCriterio)) {
 			list.add(new LabelValueVO(tppr.getNombre(), tppr.getId()));
 		}
 

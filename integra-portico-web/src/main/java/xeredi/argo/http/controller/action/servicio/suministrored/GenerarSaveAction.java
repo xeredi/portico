@@ -9,7 +9,7 @@ import com.google.inject.Inject;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.proxy.ConfigurationProxy;
+import xeredi.argo.model.comun.service.ConfigurationProxyService;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.proceso.service.ProcesoService;
@@ -29,14 +29,16 @@ public final class GenerarSaveAction extends CrudSaveAction<ServicioMaestroCrite
 	@Inject
 	private ProcesoService prbtService;
 
+	@Inject
+	private ConfigurationProxyService confProxy;
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void doSave() throws ApplicationException {
 		final Map<String, String> parametroMap = new HashMap<>();
-		final SimpleDateFormat format = new SimpleDateFormat(
-				ConfigurationProxy.getString(ConfigurationKey.date_format));
+		final SimpleDateFormat format = new SimpleDateFormat(confProxy.getString(ConfigurationKey.date_format));
 
 		parametroMap.put(ProcesoSuministroRed.params.ffin.name(), format.format(model.getFfin()));
 

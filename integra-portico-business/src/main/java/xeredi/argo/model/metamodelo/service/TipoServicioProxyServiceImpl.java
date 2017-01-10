@@ -1,8 +1,6 @@
 package xeredi.argo.model.metamodelo.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -11,7 +9,6 @@ import org.apache.commons.logging.LogFactory;
 import com.google.inject.Inject;
 
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
-import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
 import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
@@ -24,10 +21,7 @@ import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
  */
 public class TipoServicioProxyServiceImpl implements TipoServicioProxyService {
 	/** The Constant LOG. */
-	private static final Log LOG = LogFactory.getLog(TipoServicioProxyService.class);
-
-	/** The Constant LABEL_VALUE_LIST. */
-	private static final List<LabelValueVO> LABEL_VALUE_LIST = new ArrayList<>();
+	private static final Log LOG = LogFactory.getLog(TipoServicioProxyServiceImpl.class);
 
 	/** The Constant TIPO_SERVICIO_MAP. */
 	private static final Map<Long, TipoServicioDetailVO> MAP = new HashMap<>();
@@ -57,18 +51,6 @@ public class TipoServicioProxyServiceImpl implements TipoServicioProxyService {
 	}
 
 	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<LabelValueVO> selectLabelValues() {
-		if (MAP.isEmpty()) {
-			load();
-		}
-
-		return LABEL_VALUE_LIST;
-	}
-
-	/**
 	 * Load.
 	 */
 	private synchronized void load() {
@@ -87,8 +69,6 @@ public class TipoServicioProxyServiceImpl implements TipoServicioProxyService {
 		}
 
 		entiProxy.fillDependencies(MAP);
-
-		LABEL_VALUE_LIST.addAll(tpsrService.selectLabelValues(new TipoServicioCriterioVO()));
 
 		LOG.info("TipoServicio Load Success");
 	}

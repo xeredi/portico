@@ -13,7 +13,7 @@ import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.maestro.service.ParametroService;
 import xeredi.argo.model.maestro.vo.ParametroVO;
-import xeredi.argo.model.metamodelo.proxy.TipoParametroProxy;
+import xeredi.argo.model.metamodelo.service.TipoParametroProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
 import xeredi.argo.model.util.DateUtil;
 
@@ -33,12 +33,15 @@ public final class ParametroSaveAction extends ItemSaveAction<ParametroVO> {
 	@Inject
 	private ParametroService prmtService;
 
+	@Inject
+	private TipoParametroProxyService tpprProxy;
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void doSpecificValidate() throws ApplicationException {
-		final TipoParametroDetailVO enti = TipoParametroProxy.select(model.getEntiId());
+		final TipoParametroDetailVO enti = tpprProxy.select(model.getEntiId());
 
 		if (enti.getEnti().getPuerto()) {
 			FieldValidator.validateRequired(this, MessageI18nKey.prto, model.getPrto());
@@ -76,7 +79,7 @@ public final class ParametroSaveAction extends ItemSaveAction<ParametroVO> {
 	 */
 	@Override
 	public void doSave() throws ApplicationException {
-		final TipoParametroDetailVO enti = TipoParametroProxy.select(model.getEntiId());
+		final TipoParametroDetailVO enti = tpprProxy.select(model.getEntiId());
 
 		switch (accion) {
 		case create:

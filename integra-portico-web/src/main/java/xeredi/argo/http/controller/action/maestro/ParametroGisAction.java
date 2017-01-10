@@ -12,7 +12,7 @@ import xeredi.argo.model.gis.vo.MarkerVO;
 import xeredi.argo.model.maestro.service.ParametroService;
 import xeredi.argo.model.maestro.vo.ParametroCriterioVO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
-import xeredi.argo.model.metamodelo.proxy.TipoParametroProxy;
+import xeredi.argo.model.metamodelo.service.TipoParametroProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
 
 // TODO: Auto-generated Javadoc
@@ -26,6 +26,9 @@ public final class ParametroGisAction extends ItemGisAction<ParametroCriterioVO,
 
 	@Inject
 	private ParametroService prmtService;
+
+	@Inject
+	private TipoParametroProxyService tpprProxy;
 
 	/**
 	 * {@inheritDoc}
@@ -70,7 +73,7 @@ public final class ParametroGisAction extends ItemGisAction<ParametroCriterioVO,
 
 			map.getMarkerList().add(marker);
 			itemMap.put(item.getId(), item);
-			entiMap.put(item.getEntiId(), TipoParametroProxy.select(item.getEntiId()));
+			entiMap.put(item.getEntiId(), tpprProxy.select(item.getEntiId()));
 		}
 
 		map.getCenter().setLatitude((minLat + maxLat) / 2);

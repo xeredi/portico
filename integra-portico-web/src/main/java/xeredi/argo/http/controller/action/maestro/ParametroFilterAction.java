@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.google.inject.Inject;
+
 import lombok.Getter;
 import lombok.Setter;
 import xeredi.argo.http.controller.action.item.ItemFilterAction;
@@ -12,7 +14,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.maestro.vo.ParametroCriterioVO;
-import xeredi.argo.model.metamodelo.proxy.TipoParametroProxy;
+import xeredi.argo.model.metamodelo.service.TipoParametroProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
 
 // TODO: Auto-generated Javadoc
@@ -21,43 +23,46 @@ import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
  */
 public final class ParametroFilterAction extends ItemFilterAction<ParametroCriterioVO, TipoParametroDetailVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -1740124942966001653L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -1740124942966001653L;
 
-    /** The prto list. */
-    @Getter
-    private List<PuertoVO> prtoList;
+	/** The prto list. */
+	@Getter
+	private List<PuertoVO> prtoList;
 
-    /** The fecha vigencia. */
-    @Getter
-    @Setter
-    private Date fechaVigencia;
+	/** The fecha vigencia. */
+	@Getter
+	@Setter
+	private Date fechaVigencia;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSpecificPrepareFilter() throws ApplicationException {
-        enti = TipoParametroProxy.select(model.getEntiId());
+	@Inject
+	private TipoParametroProxyService tpprProxy;
 
-        if (fechaVigencia == null) {
-            fechaVigencia = Calendar.getInstance().getTime();
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSpecificPrepareFilter() throws ApplicationException {
+		enti = tpprProxy.select(model.getEntiId());
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSpecificLoadDependencies() throws ApplicationException {
-        if (enti.getEnti().getPuerto()) {
-            final PuertoBO prtoBO = new PuertoBO();
-            final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+		if (fechaVigencia == null) {
+			fechaVigencia = Calendar.getInstance().getTime();
+		}
+	}
 
-            prtoCriterio.setSprtId(getSprtId());
-            prtoCriterio.setIdioma(getIdioma());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSpecificLoadDependencies() throws ApplicationException {
+		if (enti.getEnti().getPuerto()) {
+			final PuertoBO prtoBO = new PuertoBO();
+			final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
-            prtoList = prtoBO.selectList(prtoCriterio);
-        }
-    }
+			prtoCriterio.setSprtId(getSprtId());
+			prtoCriterio.setIdioma(getIdioma());
+
+			prtoList = prtoBO.selectList(prtoCriterio);
+		}
+	}
 }

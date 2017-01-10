@@ -12,7 +12,7 @@ import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.http.controller.session.SessionManager;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.proxy.ConfigurationProxy;
+import xeredi.argo.model.comun.service.ConfigurationProxyService;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.proceso.batch.amarredep.ProcesoAmarreDeportivo;
@@ -36,6 +36,9 @@ public final class GenerarExecuteAction extends BaseAction {
 	@Inject
 	private ProcesoService prbtService;
 
+	@Inject
+	private ConfigurationProxyService confProxy;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -45,11 +48,9 @@ public final class GenerarExecuteAction extends BaseAction {
 
 		if (!hasErrors()) {
 			final Map<String, String> parametroMap = new HashMap<>();
-
-			final DateFormat format = new SimpleDateFormat(ConfigurationProxy.getString(ConfigurationKey.date_format));
+			final DateFormat format = new SimpleDateFormat(confProxy.getString(ConfigurationKey.date_format));
 
 			parametroMap.put(ProcesoAmarreDeportivo.params.ffin.name(), format.format(model.getFrefMax()));
-
 			prbtService.crear(SessionManager.getUsroId(), ProcesoTipo.SAMD_CREACION, parametroMap, null, null);
 		}
 	}

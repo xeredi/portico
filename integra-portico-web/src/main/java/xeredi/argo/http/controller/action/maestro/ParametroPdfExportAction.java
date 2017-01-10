@@ -22,8 +22,8 @@ import xeredi.argo.model.maestro.vo.ParametroCriterioVO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.argo.model.maestro.vo.SubparametroVO;
-import xeredi.argo.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.argo.model.metamodelo.proxy.TipoSubparametroProxy;
+import xeredi.argo.model.metamodelo.service.TipoParametroProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroDetailVO;
 
@@ -42,6 +42,9 @@ public final class ParametroPdfExportAction extends ItemFileExportAction<Paramet
 	@Inject
 	private SubparametroService sprmService;
 
+	@Inject
+	private TipoParametroProxyService tpprProxy;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -51,7 +54,7 @@ public final class ParametroPdfExportAction extends ItemFileExportAction<Paramet
 
 		model = prmtService.select(model.getId(), getIdioma(), model.getFref());
 
-		final TipoParametroDetailVO entiDetail = TipoParametroProxy.select(model.getEntiId());
+		final TipoParametroDetailVO entiDetail = tpprProxy.select(model.getEntiId());
 		final Map<Long, TipoSubparametroDetailVO> entiHijasMap = new HashMap<>();
 		final Map<Long, List<SubparametroVO>> itemHijosMap = new HashMap<>();
 

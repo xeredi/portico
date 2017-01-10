@@ -12,7 +12,7 @@ import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.maestro.report.ParametroXls;
 import xeredi.argo.model.maestro.service.ParametroService;
 import xeredi.argo.model.maestro.vo.ParametroCriterioVO;
-import xeredi.argo.model.metamodelo.proxy.TipoParametroProxy;
+import xeredi.argo.model.metamodelo.service.TipoParametroProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
 
 // TODO: Auto-generated Javadoc
@@ -27,12 +27,15 @@ public final class ParametroXlsExportAction extends ItemXlsExportAction<Parametr
 	@Inject
 	private ParametroService prmtService;
 
+	@Inject
+	private TipoParametroProxyService tpprProxy;
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void doSpecificXlsExport() throws ApplicationException, IOException {
-		final TipoParametroDetailVO enti = TipoParametroProxy.select(criterio.getEntiId());
+		final TipoParametroDetailVO enti = tpprProxy.select(criterio.getEntiId());
 
 		try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
 			final ParametroXls excelUtil = new ParametroXls(getLocale(), baos, prmtService.selectList(criterio), enti);
