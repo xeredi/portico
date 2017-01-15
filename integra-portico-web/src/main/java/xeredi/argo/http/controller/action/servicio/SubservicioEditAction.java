@@ -3,10 +3,11 @@ package xeredi.argo.http.controller.action.servicio;
 import java.util.Calendar;
 
 import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
 
 import xeredi.argo.http.controller.action.item.ItemEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
 import xeredi.argo.model.servicio.bo.ServicioBO;
 import xeredi.argo.model.servicio.bo.ServicioBOFactory;
@@ -20,58 +21,61 @@ import xeredi.argo.model.servicio.vo.SubservicioVO;
  */
 public final class SubservicioEditAction extends ItemEditAction<SubservicioVO, TipoSubservicioDetailVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -3286199992331373729L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -3286199992331373729L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSpecificEdit() throws ApplicationException {
-        enti = TipoSubservicioProxy.select(model.getEntiId());
+	@Inject
+	private EntidadProxyService entiProxy;
 
-        final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getEntiId(), usroId);
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSpecificEdit() throws ApplicationException {
+		enti = entiProxy.selectTpss(model.getEntiId());
 
-        switch (accion) {
-        case create:
-            if (model.getSrvc() != null && model.getSrvc().getId() != null) {
-                final ServicioBO srvcBO = ServicioBOFactory.newInstance(enti.getEnti().getTpsrId(), usroId);
+		final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getEntiId(), usroId);
 
-                model.setSrvc(srvcBO.select(model.getSrvc().getId(), getIdioma()));
-                model.setFref(model.getSrvc().getFref());
+		switch (accion) {
+		case create:
+			if (model.getSrvc() != null && model.getSrvc().getId() != null) {
+				final ServicioBO srvcBO = ServicioBOFactory.newInstance(enti.getEnti().getTpsrId(), usroId);
 
-                // Si viene de un subservicio padre, lo buscamos
-                for (final Long entiId : model.getSsrvPadreMap().keySet()) {
-                    final SubservicioBO ssrvPadreBO = SubservicioBOFactory.newInstance(entiId, getUsroId());
+				model.setSrvc(srvcBO.select(model.getSrvc().getId(), getIdioma()));
+				model.setFref(model.getSrvc().getFref());
 
-                    model.getSsrvPadreMap().put(entiId,
-                            ssrvPadreBO.select(model.getSsrvPadreMap().get(entiId).getId(), getIdioma()));
-                }
-            } else {
-                model.setFref(Calendar.getInstance().getTime());
-            }
+				// Si viene de un subservicio padre, lo buscamos
+				for (final Long entiId : model.getSsrvPadreMap().keySet()) {
+					final SubservicioBO ssrvPadreBO = SubservicioBOFactory.newInstance(entiId, getUsroId());
 
-            model.setEstado(enti.getEnti().getEstadoDef());
+					model.getSsrvPadreMap().put(entiId,
+							ssrvPadreBO.select(model.getSsrvPadreMap().get(entiId).getId(), getIdioma()));
+				}
+			} else {
+				model.setFref(Calendar.getInstance().getTime());
+			}
 
-            break;
-        case edit:
-        case duplicate:
-            Preconditions.checkNotNull(model.getSrvc());
-            Preconditions.checkNotNull(model.getSrvc().getId());
+			model.setEstado(enti.getEnti().getEstadoDef());
 
-            model = ssrvBO.select(model.getId(), getIdioma());
+			break;
+		case edit:
+		case duplicate:
+			Preconditions.checkNotNull(model.getSrvc());
+			Preconditions.checkNotNull(model.getSrvc().getId());
 
-            break;
-        default:
-            throw new Error("Invalid action: " + accion.name());
-        }
-    }
+			model = ssrvBO.select(model.getId(), getIdioma());
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doLoadSpecificDependencies() throws ApplicationException {
-        // noop
-    }
+			break;
+		default:
+			throw new Error("Invalid action: " + accion.name());
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doLoadSpecificDependencies() throws ApplicationException {
+		// noop
+	}
 }

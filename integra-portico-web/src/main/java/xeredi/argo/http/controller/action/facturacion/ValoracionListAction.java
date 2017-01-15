@@ -8,7 +8,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.facturacion.service.ValoracionService;
 import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
-import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
+import xeredi.argo.model.metamodelo.service.TipoDatoProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
 
@@ -28,6 +28,9 @@ public final class ValoracionListAction extends GridListAction<ValoracionCriteri
 	@Inject
 	private ValoracionService vlrcService;
 
+	@Inject
+	private TipoDatoProxyService tpdtProxy;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -36,6 +39,6 @@ public final class ValoracionListAction extends GridListAction<ValoracionCriteri
 		model.setPendienteFacturar(true);
 
 		resultList = vlrcService.selectList(model, getOffset(), limit);
-		tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
+		tpdtCodExencion = tpdtProxy.select(TipoDato.COD_EXEN.getId());
 	}
 }

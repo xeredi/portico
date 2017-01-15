@@ -3,6 +3,9 @@ package xeredi.argo.http.controller.action.servicio;
 import java.util.Calendar;
 import java.util.List;
 
+import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
+
 import lombok.Getter;
 import xeredi.argo.http.controller.action.item.ItemEditAction;
 import xeredi.argo.http.util.FieldFiller;
@@ -10,13 +13,11 @@ import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
-import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.argo.model.servicio.bo.ServicioBO;
 import xeredi.argo.model.servicio.bo.ServicioBOFactory;
 import xeredi.argo.model.servicio.vo.ServicioVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -24,60 +25,63 @@ import com.google.common.base.Preconditions;
  */
 public final class ServicioEditAction extends ItemEditAction<ServicioVO, TipoServicioDetailVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -8810469278894148887L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -8810469278894148887L;
 
-    /** The prto list. */
-    @Getter
-    private List<PuertoVO> prtoList;
+	/** The prto list. */
+	@Getter
+	private List<PuertoVO> prtoList;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSpecificEdit() throws ApplicationException {
-        final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId(), usroId);
+	@Inject
+	private EntidadProxyService entiProxy;
 
-        enti = TipoServicioProxy.select(model.getEntiId());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSpecificEdit() throws ApplicationException {
+		final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId(), usroId);
 
-        switch (accion) {
-        case create:
-            model.setFref(Calendar.getInstance().getTime());
-            model.setAnno(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
-            model.setEstado(enti.getEnti().getEstadoDef());
+		enti = entiProxy.selectTpsr(model.getEntiId());
 
-            FieldFiller.fillDefaultValues(model, enti);
+		switch (accion) {
+		case create:
+			model.setFref(Calendar.getInstance().getTime());
+			model.setAnno(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+			model.setEstado(enti.getEnti().getEstadoDef());
 
-            break;
-        case duplicate:
-            Preconditions.checkNotNull(model.getId());
+			FieldFiller.fillDefaultValues(model, enti);
 
-            model = srvcBO.select(model.getId(), getIdioma());
-            model.setEstado(enti.getEnti().getEstadoDef());
+			break;
+		case duplicate:
+			Preconditions.checkNotNull(model.getId());
 
-            break;
-        case edit:
-            Preconditions.checkNotNull(model.getId());
+			model = srvcBO.select(model.getId(), getIdioma());
+			model.setEstado(enti.getEnti().getEstadoDef());
 
-            model = srvcBO.select(model.getId(), getIdioma());
+			break;
+		case edit:
+			Preconditions.checkNotNull(model.getId());
 
-            break;
-        default:
-            throw new Error("Invalid action: " + accion.name());
-        }
-    }
+			model = srvcBO.select(model.getId(), getIdioma());
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doLoadSpecificDependencies() throws ApplicationException {
-        final PuertoBO prtoBO = new PuertoBO();
-        final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+			break;
+		default:
+			throw new Error("Invalid action: " + accion.name());
+		}
+	}
 
-        prtoCriterio.setSprtId(getSprtId());
-        prtoCriterio.setIdioma(getIdioma());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doLoadSpecificDependencies() throws ApplicationException {
+		final PuertoBO prtoBO = new PuertoBO();
+		final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
-        prtoList = prtoBO.selectList(prtoCriterio);
-    }
+		prtoCriterio.setSprtId(getSprtId());
+		prtoCriterio.setIdioma(getIdioma());
+
+		prtoList = prtoBO.selectList(prtoCriterio);
+	}
 }

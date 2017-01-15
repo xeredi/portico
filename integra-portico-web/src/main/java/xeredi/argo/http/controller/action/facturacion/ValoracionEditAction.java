@@ -12,7 +12,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.facturacion.service.ValoracionService;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
-import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
+import xeredi.argo.model.metamodelo.service.TipoDatoProxyService;
 import xeredi.argo.model.metamodelo.service.TipoServicioService;
 import xeredi.argo.model.metamodelo.vo.Entidad;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
@@ -46,6 +46,9 @@ public final class ValoracionEditAction extends CrudEditAction<ValoracionVO> {
 	@Inject
 	private ValoracionService vlrcService;
 
+	@Inject
+	private TipoDatoProxyService tpdtProxy;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -77,6 +80,6 @@ public final class ValoracionEditAction extends CrudEditAction<ValoracionVO> {
 	public void doLoadDependencies() throws ApplicationException {
 		tpsrList = tpsrService.selectLabelValues(new TipoServicioCriterioVO());
 		pagadorEntiId = Entidad.ORGANIZACION.getId();
-		tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
+		tpdtCodExencion = tpdtProxy.select(TipoDato.COD_EXEN.getId());
 	}
 }

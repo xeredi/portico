@@ -9,8 +9,6 @@ import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.item.vo.ItemTramiteVO;
-import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.service.TramiteProxyService;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
@@ -94,7 +92,7 @@ public final class ItemTramiteSaveAction extends BaseAction implements Funcional
 
 		switch (enti.getEnti().getTipo()) {
 		case T:
-			final TipoServicioDetailVO tpsr = TipoServicioProxy.select(model.getTrmt().getEntiId());
+			final TipoServicioDetailVO tpsr = (TipoServicioDetailVO) entiProxy.select(model.getTrmt().getEntiId());
 
 			if (tpsr.getEnti().isTemporal()) {
 				FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getDitemFini());
@@ -103,7 +101,8 @@ public final class ItemTramiteSaveAction extends BaseAction implements Funcional
 
 			break;
 		case S:
-			final TipoSubservicioDetailVO tpss = TipoSubservicioProxy.select(model.getTrmt().getEntiId());
+			final TipoSubservicioDetailVO tpss = (TipoSubservicioDetailVO) entiProxy
+					.select(model.getTrmt().getEntiId());
 
 			if (tpss.getEnti().isTemporal()) {
 				FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getDitemFini());

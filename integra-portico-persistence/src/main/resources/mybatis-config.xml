@@ -7,25 +7,18 @@
 	<properties resource="Configuration_env.properties" />
 
 	<settings>
-		<setting name="logImpl" value="LOG4J" />
+		<setting name="logImpl" value="NO_LOGGING" />
 		<setting name="proxyFactory" value="JAVASSIST" />
 		<setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
 
 	<typeAliases>
 		<package name="xeredi.argo.model" />
-		<!-- package name="xeredi.argo.model.auditoria.vo" />
-		<package name="xeredi.argo.model.comun.vo" />
-		<package name="xeredi.argo.model.estadistica.vo" />
-		<package name="xeredi.argo.model.facturacion.vo" />
-		<package name="xeredi.argo.model.gis.vo" />
-		<package name="xeredi.argo.model.item.vo" />
-		<package name="xeredi.argo.model.maestro.vo" />
-		<package name="xeredi.argo.model.metamodelo.vo" />
-		<package name="xeredi.argo.model.proceso.vo" />
-		<package name="xeredi.argo.model.seguridad.vo" />
-		<package name="xeredi.argo.model.servicio.vo" />
-		<package name="xeredi.argo.model.servicio.vo.manifiesto" / -->
+		<!-- package name="xeredi.argo.model.auditoria.vo" /> <package name="xeredi.argo.model.comun.vo" /> <package
+			name="xeredi.argo.model.estadistica.vo" /> <package name="xeredi.argo.model.facturacion.vo" /> <package name="xeredi.argo.model.gis.vo"
+			/> <package name="xeredi.argo.model.item.vo" /> <package name="xeredi.argo.model.maestro.vo" /> <package name="xeredi.argo.model.metamodelo.vo"
+			/> <package name="xeredi.argo.model.proceso.vo" /> <package name="xeredi.argo.model.seguridad.vo" /> <package name="xeredi.argo.model.servicio.vo"
+			/> <package name="xeredi.argo.model.servicio.vo.manifiesto" / -->
 	</typeAliases>
 
 	<typeHandlers>
@@ -70,22 +63,13 @@
 
 	<mappers>
 		<package name="xeredi.argo.model" />
-		<!-- package name="xeredi.argo.model.auditoria.dao" />
-		<package name="xeredi.argo.model.comun.dao" />
-		<package name="xeredi.argo.model.estadistica.dao" />
-		<package name="xeredi.argo.model.facturacion.dao" />
-		<package name="xeredi.argo.model.item.dao" />
-		<package name="xeredi.argo.model.maestro.dao" />
-		<package name="xeredi.argo.model.maestro.dao.embdeportivas" />
-		<package name="xeredi.argo.model.metamodelo.dao" />
-		<package name="xeredi.argo.model.proceso.dao" />
-		<package name="xeredi.argo.model.seguridad.dao" />
-		<package name="xeredi.argo.model.servicio.dao" />
-		<package name="xeredi.argo.model.servicio.dao.amarredep" />
-		<package name="xeredi.argo.model.servicio.dao.buquepesca" />
-		<package name="xeredi.argo.model.servicio.dao.escala" />
-		<package name="xeredi.argo.model.servicio.dao.manifiesto" />
-		<package name="xeredi.argo.model.servicio.dao.pesca" />
-		<package name="xeredi.argo.model.servicio.dao.suministrored" / -->
+		<!-- package name="xeredi.argo.model.auditoria.dao" /> <package name="xeredi.argo.model.comun.dao" /> <package
+			name="xeredi.argo.model.estadistica.dao" /> <package name="xeredi.argo.model.facturacion.dao" /> <package name="xeredi.argo.model.item.dao"
+			/> <package name="xeredi.argo.model.maestro.dao" /> <package name="xeredi.argo.model.maestro.dao.embdeportivas"
+			/> <package name="xeredi.argo.model.metamodelo.dao" /> <package name="xeredi.argo.model.proceso.dao" /> <package
+			name="xeredi.argo.model.seguridad.dao" /> <package name="xeredi.argo.model.servicio.dao" /> <package name="xeredi.argo.model.servicio.dao.amarredep"
+			/> <package name="xeredi.argo.model.servicio.dao.buquepesca" /> <package name="xeredi.argo.model.servicio.dao.escala"
+			/> <package name="xeredi.argo.model.servicio.dao.manifiesto" /> <package name="xeredi.argo.model.servicio.dao.pesca"
+			/> <package name="xeredi.argo.model.servicio.dao.suministrored" / -->
 	</mappers>
 </configuration>

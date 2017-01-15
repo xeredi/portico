@@ -17,7 +17,7 @@ import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.maestro.service.ParametroService;
 import xeredi.argo.model.maestro.vo.ParametroVO;
-import xeredi.argo.model.metamodelo.service.TipoParametroProxyService;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
 
@@ -48,14 +48,14 @@ public final class ParametroEditAction extends ItemEditAction<ParametroVO, TipoP
 	private PuertoService prtoService;
 
 	@Inject
-	private TipoParametroProxyService tpprProxy;
+	private EntidadProxyService entiProxy;
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void doSpecificEdit() throws ApplicationException {
-		enti = tpprProxy.select(model.getEntiId());
+		enti = entiProxy.selectTppr(model.getEntiId());
 
 		if (accion == AccionCodigo.create) {
 			i18nMap = new HashMap<String, I18nVO>();

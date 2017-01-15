@@ -1,14 +1,13 @@
 <div data-ng-if="vm.tpprList">
-    <fieldset>
-        <div class="col-sm-6 col-md-4 col-lg-3 form-group-sm">
-            <input type="text" data-ng-model="tpprSearch.label" maxlength="30" class="form-control" />
-        </div>
-    </fieldset>
+	<fieldset>
+		<div class="col-sm-6 col-md-4 col-lg-3 form-group-sm">
+			<input type="text" data-ng-model="tpprSearch.label" maxlength="30" class="form-control" />
+		</div>
+	</fieldset>
 
-    <div class="list-group">
-        <a data-ng-href="#!/maestro/parametro/grid/{{tppr.value}}"
-            class="list-group-item col-sm-6 col-md-4 col-lg-3"
-            data-ng-repeat="tppr in (vm.tpprList | filter:tpprSearch) track by $index"
-            data-ng-bind="tppr.label"></a>
-    </div>
+	<div class="list-group">
+		<a data-ng-href="#!/maestro/parametro/grid/{{::tppr.value}}"
+			class="list-group-item col-sm-6 col-md-4 col-lg-3"
+			data-ng-repeat="tppr in (vm.tpprList | filter:tpprSearch) track by tppr.value" data-ng-bind="::tppr.label"></a>
+	</div>
 </div>

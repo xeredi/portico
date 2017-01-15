@@ -18,7 +18,7 @@ import xeredi.argo.model.facturacion.vo.ValoracionCargoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionImpuestoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
-import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
+import xeredi.argo.model.metamodelo.service.TipoDatoProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
 
@@ -59,6 +59,9 @@ public final class ValoracionDetailAction extends CrudDetailAction<ValoracionVO>
 	@Inject
 	private ValoracionImpuestoService vlriService;
 
+	@Inject
+	private TipoDatoProxyService tpdtProxy;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -75,7 +78,7 @@ public final class ValoracionDetailAction extends CrudDetailAction<ValoracionVO>
 
 		vlriList = vlriService.selectList(vlrcCriterio);
 		vlrgList = vlrgService.selectList(vlrcCriterio);
-		tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
+		tpdtCodExencion = tpdtProxy.select(TipoDato.COD_EXEN.getId());
 
 		final AspectoCriterioVO aspcCriterio = new AspectoCriterioVO();
 

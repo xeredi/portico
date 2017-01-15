@@ -24,7 +24,7 @@ import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
 import xeredi.argo.model.maestro.service.ParametroService;
 import xeredi.argo.model.maestro.vo.ParametroVO;
-import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
+import xeredi.argo.model.metamodelo.service.TipoDatoProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
 
@@ -52,6 +52,9 @@ public final class ValoracionPdfExportAction extends CrudFileExportAction<Valora
 	@Inject
 	private ValoracionImpuestoService vlriService;
 
+	@Inject
+	private TipoDatoProxyService tpdtProxy;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -76,7 +79,7 @@ public final class ValoracionPdfExportAction extends CrudFileExportAction<Valora
 
 		final List<ValoracionLineaVO> vlrlList = vlrlService.selectList(vlrlCriterio);
 
-		final TipoDatoVO tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
+		final TipoDatoVO tpdtCodExencion = tpdtProxy.select(TipoDato.COD_EXEN.getId());
 		final ParametroVO pagador = prmtService.select(model.getPagador().getId(), getIdioma(), model.getFref());
 
 		if (LOG.isInfoEnabled()) {

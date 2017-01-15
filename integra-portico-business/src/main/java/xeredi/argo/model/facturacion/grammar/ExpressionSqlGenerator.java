@@ -7,6 +7,8 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.google.common.base.Preconditions;
+
 import xeredi.argo.model.facturacion.grammar.ExpressionParser.ConditionContext;
 import xeredi.argo.model.facturacion.grammar.ExpressionParser.DecodeBranchContext;
 import xeredi.argo.model.facturacion.grammar.ExpressionParser.FormulaContext;
@@ -21,8 +23,6 @@ import xeredi.argo.model.metamodelo.vo.TipoDato;
 import xeredi.argo.model.metamodelo.vo.TipoEntidad;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
 
-import com.google.common.base.Preconditions;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class ExpressionSqlGenerator.
@@ -31,10 +31,10 @@ public final class ExpressionSqlGenerator extends ExpressionBaseVisitor {
 	private static final Log LOG = LogFactory.getLog(ExpressionSqlGenerator.class);
 
 	/** The enti detalle base. */
-	final transient AbstractEntidadDetailVO entiDetailBase;
+	private final transient AbstractEntidadDetailVO entiDetailBase;
 
 	/** The path type. */
-	final transient PathType pathType;
+	private final transient PathType pathType;
 
 	/**
 	 * Instantiates a new expression sql generator.

@@ -152,6 +152,17 @@ public abstract class ProcesoTemplate {
 					batchPrmtSet.clear();
 				}
 			}
+
+			// Validacion de los maestros
+			for (final String parametro : prbtData.getCodigoMaestroMap().get(entidad)) {
+				if (tpprDetail.getEnti().getPuerto()) {
+					// FIXME Validar maestros con Puerto
+				} else {
+					if (!prbtData.getMaestroMap().get(entidad).containsKey(parametro)) {
+						addError(MensajeCodigo.G_001, "entidad: " + entidad.name() + ", codigo: " + parametro);
+					}
+				}
+			}
 		}
 	}
 

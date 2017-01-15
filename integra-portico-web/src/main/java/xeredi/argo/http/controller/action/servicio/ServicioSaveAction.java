@@ -1,17 +1,18 @@
 package xeredi.argo.http.controller.action.servicio;
 
+import com.google.common.base.Preconditions;
+import com.google.inject.Inject;
+
 import xeredi.argo.http.controller.action.item.ItemSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.argo.model.servicio.bo.ServicioBO;
 import xeredi.argo.model.servicio.bo.ServicioBOFactory;
 import xeredi.argo.model.servicio.vo.ServicioVO;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -22,12 +23,15 @@ public final class ServicioSaveAction extends ItemSaveAction<ServicioVO> {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 8100605830957326882L;
 
+	@Inject
+	private EntidadProxyService entiProxy;
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void doSpecificValidate() throws ApplicationException {
-        final TipoServicioDetailVO enti = TipoServicioProxy.select(model.getEntiId());
+        final TipoServicioDetailVO enti = entiProxy.selectTpsr(model.getEntiId());
 
         if (accion == AccionCodigo.create) {
             FieldValidator.validateRequired(this, MessageI18nKey.prto, model.getPrto());

@@ -8,7 +8,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.estadistica.service.EstadisticaService;
 import xeredi.argo.model.estadistica.vo.EstadisticaCriterioVO;
 import xeredi.argo.model.estadistica.vo.EstadisticaVO;
-import xeredi.argo.model.metamodelo.proxy.TipoEstadisticaProxy;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoEstadisticaDetailVO;
 
 // TODO: Auto-generated Javadoc
@@ -24,6 +24,9 @@ public final class EstadisticaListAction
 	@Inject
 	private EstadisticaService estdService;
 
+	@Inject
+	private EntidadProxyService entiProxy;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -33,7 +36,7 @@ public final class EstadisticaListAction
 		Preconditions.checkNotNull(model.getPepr().getId());
 		Preconditions.checkNotNull(model.getPepr().getSprtId());
 
-		enti = TipoEstadisticaProxy.select(model.getEntiId());
+		enti = entiProxy.selectTpes(model.getEntiId());
 		resultList = estdService.selectList(model, getOffset(), limit);
 	}
 }

@@ -11,8 +11,8 @@ import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
 
 import xeredi.argo.http.controller.action.item.ItemFileExportAction;
-import xeredi.argo.model.comun.bo.I18nUtilBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.maestro.report.ParametroPdf;
@@ -22,8 +22,7 @@ import xeredi.argo.model.maestro.vo.ParametroCriterioVO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.argo.model.maestro.vo.SubparametroVO;
-import xeredi.argo.model.metamodelo.proxy.TipoSubparametroProxy;
-import xeredi.argo.model.metamodelo.service.TipoParametroProxyService;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroDetailVO;
 
@@ -43,7 +42,10 @@ public final class ParametroPdfExportAction extends ItemFileExportAction<Paramet
 	private SubparametroService sprmService;
 
 	@Inject
-	private TipoParametroProxyService tpprProxy;
+	private I18nService i18nService;
+
+	@Inject
+	private EntidadProxyService entiProxy;
 
 	/**
 	 * {@inheritDoc}
@@ -54,7 +56,7 @@ public final class ParametroPdfExportAction extends ItemFileExportAction<Paramet
 
 		model = prmtService.select(model.getId(), getIdioma(), model.getFref());
 
-		final TipoParametroDetailVO entiDetail = tpprProxy.select(model.getEntiId());
+		final TipoParametroDetailVO entiDetail = entiProxy.selectTppr(model.getEntiId());
 		final Map<Long, TipoSubparametroDetailVO> entiHijasMap = new HashMap<>();
 		final Map<Long, List<SubparametroVO>> itemHijosMap = new HashMap<>();
 
@@ -73,12 +75,12 @@ public final class ParametroPdfExportAction extends ItemFileExportAction<Paramet
 				sprmCriterioVO.setFechaVigencia(model.getFref());
 				sprmCriterioVO.setIdioma(getIdioma());
 
-				entiHijasMap.put(entiId, TipoSubparametroProxy.select(entiId));
+				entiHijasMap.put(entiId, entiProxy.selectTpsp(entiId));
 				itemHijosMap.put(entiId, sprmService.selectList(sprmCriterioVO));
 			}
 		}
 
-		final Map<String, I18nVO> i18nMap = entiDetail.getEnti().isI18n() ? I18nUtilBO.selectMap(model)
+		final Map<String, I18nVO> i18nMap = entiDetail.getEnti().isI18n() ? i18nService.selectMap(model)
 				: new HashMap<>();
 
 		try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {

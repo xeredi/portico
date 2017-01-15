@@ -18,15 +18,10 @@ import xeredi.argo.model.item.vo.ItemTramiteDatoVO;
 import xeredi.argo.model.item.vo.ItemTramiteVO;
 import xeredi.argo.model.item.vo.ItemVO;
 import xeredi.argo.model.maestro.service.ParametroService;
-import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
 import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.service.TramiteProxyService;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
-import xeredi.argo.model.metamodelo.vo.TipoEntidad;
 import xeredi.argo.model.metamodelo.vo.TipoHtml;
-import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
-import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
 import xeredi.argo.model.metamodelo.vo.TramiteDetailVO;
 import xeredi.argo.model.metamodelo.vo.TramiteTipoDatoVO;
 import xeredi.argo.model.servicio.bo.ServicioBO;
@@ -90,12 +85,11 @@ public final class ItemTramiteEditAction extends BaseAction implements ModelDriv
 
 		model.setTrmt(trmt.getTrmt());
 
-		final TipoEntidad tipoEntidad = entiProxy.select(model.getTrmt().getEntiId()).getEnti().getTipo();
+		enti = entiProxy.select(model.getTrmt().getEntiId());
 
-		switch (tipoEntidad) {
+		switch (enti.getEnti().getTipo()) {
 		case T:
-			final TipoServicioDetailVO tpsr = TipoServicioProxy.select(model.getTrmt().getEntiId());
-			final ServicioBO srvcBO = ServicioBOFactory.newInstance(tpsr.getEnti().getId(), usroId);
+			final ServicioBO srvcBO = ServicioBOFactory.newInstance(enti.getEnti().getId(), usroId);
 			final ServicioVO srvc = srvcBO.select(model.getItemId(), getIdioma());
 
 			prtoId = srvc.getPrto().getId();
@@ -103,12 +97,10 @@ public final class ItemTramiteEditAction extends BaseAction implements ModelDriv
 			model.setFref(srvc.getFref());
 
 			item = srvc;
-			enti = tpsr;
 
 			break;
 		case S:
-			final TipoSubservicioDetailVO tpss = TipoSubservicioProxy.select(model.getTrmt().getEntiId());
-			final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getTrmt().getEntiId(), usroId);
+			final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(enti.getEnti().getId(), usroId);
 			final SubservicioVO ssrv = ssrvBO.select(model.getItemId(), getIdioma());
 
 			prtoId = ssrv.getSrvc().getPrto().getId();
@@ -121,13 +113,12 @@ public final class ItemTramiteEditAction extends BaseAction implements ModelDriv
 			model.setDitemFfin(ssrv.getFfin());
 
 			item = ssrv;
-			enti = tpss;
 
 			break;
 		case P:
 			throw new Error("No implementado!!");
 		default:
-			throw new Error("Invalid entity type: " + tipoEntidad);
+			throw new Error("Invalid entity type: " + enti.getEnti().getTipo());
 		}
 
 		if (!trmt.getTpdtList().isEmpty()) {

@@ -10,7 +10,7 @@ import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.maestro.service.SubparametroService;
 import xeredi.argo.model.maestro.vo.SubparametroVO;
-import xeredi.argo.model.metamodelo.proxy.TipoSubparametroProxy;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroDetailVO;
 import xeredi.argo.model.util.DateUtil;
@@ -26,12 +26,15 @@ public final class SubparametroSaveAction extends ItemSaveAction<SubparametroVO>
 	@Inject
 	private SubparametroService sprmService;
 
+	@Inject
+	private EntidadProxyService entiProxy;
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void doSpecificValidate() throws ApplicationException {
-		final TipoSubparametroDetailVO enti = TipoSubparametroProxy.select(model.getEntiId());
+		final TipoSubparametroDetailVO enti = entiProxy.selectTpsp(model.getEntiId());
 
 		if (accion != AccionCodigo.edit) {
 			FieldValidator.validateRequired(this, getText("enti_" + enti.getEnti().getTpprAsociado().getId()),
@@ -57,7 +60,7 @@ public final class SubparametroSaveAction extends ItemSaveAction<SubparametroVO>
 	 */
 	@Override
 	public void doSave() throws ApplicationException {
-		final TipoSubparametroDetailVO enti = TipoSubparametroProxy.select(model.getEntiId());
+		final TipoSubparametroDetailVO enti = entiProxy.selectTpsp(model.getEntiId());
 
 		switch (accion) {
 		case create:

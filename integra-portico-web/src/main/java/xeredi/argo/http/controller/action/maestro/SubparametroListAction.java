@@ -10,7 +10,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.maestro.service.SubparametroService;
 import xeredi.argo.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.argo.model.maestro.vo.SubparametroVO;
-import xeredi.argo.model.metamodelo.proxy.TipoSubparametroProxy;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroDetailVO;
 
 // TODO: Auto-generated Javadoc
@@ -26,6 +26,9 @@ public final class SubparametroListAction
 	@Inject
 	private SubparametroService sprmService;
 
+	@Inject
+	private EntidadProxyService entiProxy;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -37,7 +40,7 @@ public final class SubparametroListAction
 			model.setFechaVigencia(Calendar.getInstance().getTime());
 		}
 
-		enti = TipoSubparametroProxy.select(model.getEntiId());
+		enti = entiProxy.selectTpsp(model.getEntiId());
 		resultList = sprmService.selectList(model, getOffset(), limit);
 	}
 }

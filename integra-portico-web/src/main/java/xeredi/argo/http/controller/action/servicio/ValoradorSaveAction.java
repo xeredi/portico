@@ -14,7 +14,7 @@ import xeredi.argo.http.controller.action.comun.CrudSaveAction;
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.argo.model.proceso.service.ProcesoService;
 import xeredi.argo.model.proceso.vo.ItemTipo;
@@ -37,6 +37,9 @@ public final class ValoradorSaveAction extends CrudSaveAction<ValoradorVO> {
 
 	@Inject
 	private ProcesoService prbtService;
+
+	@Inject
+	private EntidadProxyService entiProxy;
 
 	/**
 	 * {@inheritDoc}
@@ -66,7 +69,7 @@ public final class ValoradorSaveAction extends CrudSaveAction<ValoradorVO> {
 
 		FieldValidator.validateRequired(this, MessageI18nKey.vlrc_fliq, model.getFliq());
 
-		final TipoServicioDetailVO tpsr = TipoServicioProxy.select(model.getSrvc().getEntiId());
+		final TipoServicioDetailVO tpsr = entiProxy.selectTpsr(model.getSrvc().getEntiId());
 
 		final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getSrvc().getEntiId(), usroId);
 		final ServicioVO srvc = srvcBO.select(model.getSrvc().getId(), getIdioma());

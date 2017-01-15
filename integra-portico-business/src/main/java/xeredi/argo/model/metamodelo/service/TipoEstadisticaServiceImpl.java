@@ -50,10 +50,10 @@ public class TipoEstadisticaServiceImpl implements TipoEstadisticaService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<LabelValueVO> selectLabelValues() {
+	public List<LabelValueVO> selectLabelValues(final TipoEstadisticaCriterioVO tpesCriterio) {
 		final List<LabelValueVO> list = new ArrayList<>();
 
-		for (final TipoEstadisticaVO tpes : selectList(new TipoEstadisticaCriterioVO())) {
+		for (final TipoEstadisticaVO tpes : selectList(tpesCriterio)) {
 			list.add(new LabelValueVO(tpes.getNombre(), tpes.getId()));
 		}
 

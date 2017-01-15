@@ -1,8 +1,10 @@
 package xeredi.argo.http.controller.action.servicio;
 
+import com.google.inject.Inject;
+
 import xeredi.argo.http.controller.action.item.ItemListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
 import xeredi.argo.model.servicio.bo.SubservicioBO;
 import xeredi.argo.model.servicio.bo.SubservicioBOFactory;
@@ -13,21 +15,24 @@ import xeredi.argo.model.servicio.vo.SubservicioVO;
 /**
  * The Class SubservicioListAction.
  */
-public final class SubservicioListAction extends
-        ItemListAction<SubservicioCriterioVO, SubservicioVO, TipoSubservicioDetailVO> {
+public final class SubservicioListAction
+		extends ItemListAction<SubservicioCriterioVO, SubservicioVO, TipoSubservicioDetailVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 7791150298212933914L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 7791150298212933914L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSpecificList() throws ApplicationException {
-        enti = TipoSubservicioProxy.select(model.getEntiId());
+	@Inject
+	private EntidadProxyService entiProxy;
 
-        final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getEntiId(), usroId);
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSpecificList() throws ApplicationException {
+		enti = entiProxy.selectTpss(model.getEntiId());
 
-        resultList = ssrvBO.selectList(model, getOffset(), limit);
-    }
+		final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getEntiId(), usroId);
+
+		resultList = ssrvBO.selectList(model, getOffset(), limit);
+	}
 }

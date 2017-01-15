@@ -21,9 +21,11 @@ public interface TipoEstadisticaService {
 	/**
 	 * Select label values.
 	 *
+	 * @param tpesCriterio
+	 *            the tpes criterio
 	 * @return the list
 	 */
-	public List<LabelValueVO> selectLabelValues();
+	public List<LabelValueVO> selectLabelValues(final TipoEstadisticaCriterioVO tpesCriterio);
 
 	/**
 	 * Select list.

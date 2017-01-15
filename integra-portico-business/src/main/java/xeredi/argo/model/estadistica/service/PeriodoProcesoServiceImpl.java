@@ -48,7 +48,7 @@ import xeredi.argo.model.estadistica.vo.PeriodoProcesoCriterioVO;
 import xeredi.argo.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.argo.model.item.vo.ItemDatoVO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
-import xeredi.argo.model.metamodelo.proxy.TipoEstadisticaProxy;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.Entidad;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
@@ -96,6 +96,10 @@ public class PeriodoProcesoServiceImpl implements PeriodoProcesoService {
 	/** The esag DAO. */
 	@Inject
 	private EstadisticaAgregadoDAO esagDAO;
+
+	/** The enti proxy. */
+	@Inject
+	private EntidadProxyService entiProxy;
 
 	/**
 	 * {@inheritDoc}
@@ -1038,7 +1042,7 @@ public class PeriodoProcesoServiceImpl implements PeriodoProcesoService {
 	private List<EstadisticaVO> obtenerEstadisticas(@NonNull final PeriodoProcesoVO pepr, @NonNull final Long tpesId,
 			@NonNull final List<EstadisticaAgregadoVO> esagList) {
 
-		final TipoEstadisticaDetailVO tpesDetail = TipoEstadisticaProxy.select(tpesId);
+		final TipoEstadisticaDetailVO tpesDetail = entiProxy.selectTpes(tpesId);
 		final List<EstadisticaVO> estdList = new ArrayList<>();
 
 		for (final EstadisticaAgregadoVO esag : esagList) {

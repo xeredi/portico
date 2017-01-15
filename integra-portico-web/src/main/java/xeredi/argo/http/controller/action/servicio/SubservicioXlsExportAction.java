@@ -4,10 +4,12 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import com.google.inject.Inject;
+
 import xeredi.argo.http.controller.action.item.ItemXlsExportAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
 import xeredi.argo.model.servicio.bo.SubservicioBO;
 import xeredi.argo.model.servicio.bo.SubservicioBOFactory;
@@ -20,36 +22,39 @@ import xeredi.argo.model.servicio.vo.SubservicioCriterioVO;
  */
 public final class SubservicioXlsExportAction extends ItemXlsExportAction<SubservicioCriterioVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -8891503734091108175L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -8891503734091108175L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSpecificXlsExport() throws ApplicationException, IOException {
-        final TipoSubservicioDetailVO enti = TipoSubservicioProxy.select(criterio.getEntiId());
+	@Inject
+	private EntidadProxyService entiProxy;
 
-        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-            final SubservicioBO itemBO = SubservicioBOFactory.newInstance(criterio.getEntiId(), usroId);
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSpecificXlsExport() throws ApplicationException, IOException {
+		final TipoSubservicioDetailVO enti = entiProxy.selectTpss(criterio.getEntiId());
 
-            if (itemBO.count(criterio) > 10000) {
-                throw new Error("No se pueden generar Excels de mas de 10.000 filas");
-            }
+		try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+			final SubservicioBO itemBO = SubservicioBOFactory.newInstance(criterio.getEntiId(), usroId);
 
-            final SubservicioXls excelUtil = new SubservicioXls(getLocale(), baos, itemBO.selectList(criterio), enti);
+			if (itemBO.count(criterio) > 10000) {
+				throw new Error("No se pueden generar Excels de mas de 10.000 filas");
+			}
 
-            excelUtil.generate();
+			final SubservicioXls excelUtil = new SubservicioXls(getLocale(), baos, itemBO.selectList(criterio), enti);
 
-            stream = new ByteArrayInputStream(baos.toByteArray());
-        }
-    }
+			excelUtil.generate();
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getFilename() {
-        return MessageI18nKey.ssrv.name() + '_' + criterio.getEntiId();
-    }
+			stream = new ByteArrayInputStream(baos.toByteArray());
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getFilename() {
+		return MessageI18nKey.ssrv.name() + '_' + criterio.getEntiId();
+	}
 }

@@ -1,192 +1,192 @@
-<div data-ng-if="vm.pepr">
-    <table class="table-bordered table-condensed table-hover">
-        <thead>
-            <tr>
-                <th colspan="13">RESUMEN MENSUAL DE TRAFICO PORTUARIO (<span data-translate="sprt"></span>:
-                    {{vm.pepr.sprt.codigo}} - <span data-translate="pepr_anio"></span>: {{vm.pepr.anio}} - <span
-                    data-translate="pepr_mes"></span>: {{vm.pepr.mes}})
-                </th>
-            </tr>
-            <tr>
-                <th colspan="4" rowspan="3" />
-                <th colspan="4">CABOTAJE (Tm.)</th>
-                <th colspan="4">EXTERIOR (Tm.)</th>
-                <th colspan="1" rowspan="3">TRANSB. (Tm.)</th>
-            </tr>
-            <tr>
-                <th colspan="1" rowspan="2" data-translate="cdms_embarcado"></th>
-                <th colspan="1" rowspan="2" data-translate="cdms_desembarcado"></th>
-                <th colspan="2" data-translate="cdms_transito"></th>
-                <th colspan="1" rowspan="2" data-translate="cdms_embarcado"></th>
-                <th colspan="1" rowspan="2" data-translate="cdms_desembarcado"></th>
-                <th colspan="2" data-translate="cdms_transito"></th>
-            </tr>
-            <tr>
-                <th colspan="1" data-translate="cdms_embarcado"></th>
-                <th colspan="1" data-translate="cdms_desembarcado"></th>
-                <th colspan="1" data-translate="cdms_embarcado"></th>
-                <th colspan="1" data-translate="cdms_desembarcado"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th colspan="1" rowspan="4" data-translate="cdms_GL"></th>
-                <th colspan="3" data-translate="cdms_GLPETR"></th>
-                <td data-ng-repeat="cdms in vm.cdmsMap['GLPETR'] track by $index"><span
-                    class="pull-right" data-ng-bind="cdms.cantidad | number:0"></span></td>
-            </tr>
-            <tr>
-                <th colspan="3" data-translate="cdms_GLGASN"></th>
-                <td data-ng-repeat="cdms in vm.cdmsMap['GLGASN'] track by $index"><span
-                    class="pull-right" data-ng-bind="cdms.cantidad | number:0"></span></td>
-            </tr>
-            <tr>
-                <th colspan="3" data-translate="cdms_GLPREF"></th>
-                <td data-ng-repeat="cdms in vm.cdmsMap['GLPREF'] track by $index"><span
-                    class="pull-right" data-ng-bind="cdms.cantidad | number:0"></span></td>
-            </tr>
-            <tr>
-                <th colspan="3" data-translate="cdms_GLOTRO"></th>
-                <td data-ng-repeat="cdms in vm.cdmsMap['GLOTRO'] track by $index"><span
-                    class="pull-right" data-ng-bind="cdms.cantidad | number:0"></span></td>
-            </tr>
+<div data-ng-if="::vm.pepr">
+	<table class="table-bordered table-condensed table-hover">
+		<thead>
+			<tr>
+				<th colspan="13">RESUMEN MENSUAL DE TRAFICO PORTUARIO (<span data-translate="sprt"></span>:
+					{{::vm.pepr.sprt.codigo}} - <span data-translate="pepr_anio"></span>: {{::vm.pepr.anio}} - <span
+					data-translate="pepr_mes"></span>: {{::vm.pepr.mes}})
+				</th>
+			</tr>
+			<tr>
+				<th colspan="4" rowspan="3" />
+				<th colspan="4">CABOTAJE (Tm.)</th>
+				<th colspan="4">EXTERIOR (Tm.)</th>
+				<th colspan="1" rowspan="3">TRANSB. (Tm.)</th>
+			</tr>
+			<tr>
+				<th colspan="1" rowspan="2" data-translate="cdms_embarcado"></th>
+				<th colspan="1" rowspan="2" data-translate="cdms_desembarcado"></th>
+				<th colspan="2" data-translate="cdms_transito"></th>
+				<th colspan="1" rowspan="2" data-translate="cdms_embarcado"></th>
+				<th colspan="1" rowspan="2" data-translate="cdms_desembarcado"></th>
+				<th colspan="2" data-translate="cdms_transito"></th>
+			</tr>
+			<tr>
+				<th colspan="1" data-translate="cdms_embarcado"></th>
+				<th colspan="1" data-translate="cdms_desembarcado"></th>
+				<th colspan="1" data-translate="cdms_embarcado"></th>
+				<th colspan="1" data-translate="cdms_desembarcado"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th colspan="1" rowspan="4" data-translate="cdms_GL"></th>
+				<th colspan="3" data-translate="cdms_GLPETR"></th>
+				<td data-ng-repeat="cdms in ::vm.cdmsMap['GLPETR'] track by $index"><span class="pull-right"
+					data-ng-bind="::(cdms.cantidad | number:0)"></span></td>
+			</tr>
+			<tr>
+				<th colspan="3" data-translate="cdms_GLGASN"></th>
+				<td data-ng-repeat="cdms in ::vm.cdmsMap['GLGASN'] track by $index"><span class="pull-right"
+					data-ng-bind="::(cdms.cantidad | number:0)"></span></td>
+			</tr>
+			<tr>
+				<th colspan="3" data-translate="cdms_GLPREF"></th>
+				<td data-ng-repeat="cdms in ::vm.cdmsMap['GLPREF'] track by $index"><span class="pull-right"
+					data-ng-bind="::(cdms.cantidad | number:0)"></span></td>
+			</tr>
+			<tr>
+				<th colspan="3" data-translate="cdms_GLOTRO"></th>
+				<td data-ng-repeat="cdms in ::vm.cdmsMap['GLOTRO'] track by $index"><span class="pull-right"
+					data-ng-bind="::(cdms.cantidad | number:0)"></span></td>
+			</tr>
 
-            <tr>
-                <th colspan="1" rowspan="2" data-translate="cdms_GS"></th>
-                <th colspan="3" data-translate="cdms_GSIESP"></th>
-                <td data-ng-repeat="cdms in vm.cdmsMap['GSIESP'] track by $index"><span
-                    class="pull-right" data-ng-bind="cdms.cantidad | number:0"></span></td>
-            </tr>
-            <tr>
-                <th colspan="3" data-translate="cdms_GSNIES"></th>
-                <td data-ng-repeat="cdms in vm.cdmsMap['GSNIES'] track by $index"><span
-                    class="pull-right" data-ng-bind="cdms.cantidad | number:0"></span></td>
-            </tr>
-            <tr>
-                <th colspan="4" data-translate="cdms_MG"></th>
-                <td data-ng-repeat="cdms in vm.cdmsMap['MG'] track by $index"><span class="pull-right"
-                    data-ng-bind="cdms.cantidad | number:0"></span></td>
-            </tr>
-            <tr>
-                <th colspan="4" data-translate="cdms_PASAJE"></th>
-                <td data-ng-repeat="cdms in vm.cdmsMap['PASAJE'] track by $index"><span
-                    class="pull-right" data-ng-bind="cdms.cantidad | number:0"></span></td>
-            </tr>
-            <tr>
-                <th colspan="4" data-translate="cdms_PASCRU"></th>
-                <td data-ng-repeat="cdms in vm.cdmsMap['PASCRU'] track by $index"><span
-                    class="pull-right" data-ng-bind="cdms.cantidad | number:0"></span></td>
-            </tr>
-            <tr>
-                <th colspan="4" data-translate="cdms_VET2"></th>
-                <td data-ng-repeat="cdms in vm.cdmsMap['VET2'] track by $index"><span class="pull-right"
-                    data-ng-bind="cdms.cantidad | number:0"></span></td>
-            </tr>
-            <tr>
-                <th colspan="1" rowspan="5">CONTENEDORES</th>
-                <th colspan="1" rowspan="4">&ge; 20 pies</th>
-                <th colspan="1" rowspan="2" data-translate="cdms_ca"></th>
-                <th colspan="1" data-translate="cdms_numero"></th>
-                <td data-ng-repeat="cdms in vm.cdmsMap['CNUMCA'] track by $index"><span
-                    class="pull-right" data-ng-bind="cdms.cantidad | number:0"></span></td>
-            </tr>
-            <tr>
-                <th colspan="1" data-translate="cdms_tm"></th>
-                <td data-ng-repeat="cdms in vm.cdmsMap['CTONCA'] track by $index"><span
-                    class="pull-right" data-ng-bind="cdms.cantidad | number:0"></span></td>
-            </tr>
-            <tr>
-                <th colspan="1" rowspan="2" data-translate="cdms_va"></th>
-                <th colspan="1" data-translate="cdms_numero"></th>
-                <td data-ng-repeat="cdms in vm.cdmsMap['CNUMVA'] track by $index"><span
-                    class="pull-right" data-ng-bind="cdms.cantidad | number:0"></span></td>
-            </tr>
-            <tr>
-                <th colspan="1" data-translate="cdms_tm"></th>
-                <td data-ng-repeat="cdms in vm.cdmsMap['CTONVA'] track by $index"><span
-                    class="pull-right" data-ng-bind="cdms.cantidad | number:0"></span></td>
-            </tr>
-            <tr>
-                <th colspan="2" data-translate="cdms_CTEUS"></th>
-                <th colspan="1" data-translate="cdms_numero"></th>
-                <td data-ng-repeat="cdms in vm.cdmsMap['CTEUS'] track by $index"><span class="pull-right"
-                    data-ng-bind="cdms.cantidad | number:0"></span></td>
-            </tr>
-            <tr>
-                <th colspan="2" rowspan="3" data-translate="cdms_RR"></th>
-                <th colspan="1" rowspan="2" data-translate="cdms_RRC"></th>
-                <th colspan="1" data-translate="cdms_teus"></th>
-                <td data-ng-repeat="cdms in vm.cdmsMap['RRTEUS'] track by $index"><span
-                    class="pull-right" data-ng-bind="cdms.cantidad | number:0"></span></td>
-            </tr>
-            <tr>
-                <th colspan="1" data-translate="cdms_tm"></th>
-                <td data-ng-repeat="cdms in vm.cdmsMap['RRTONC'] track by $index"><span
-                    class="pull-right" data-ng-bind="cdms.cantidad | number:0"></span></td>
-            </tr>
-            <tr>
-                <th colspan="1" data-translate="cdms_RRO"></th>
-                <th colspan="1" data-translate="cdms_tm"></th>
-                <td data-ng-repeat="cdms in vm.cdmsMap['RRTONO'] track by $index"><span
-                    class="pull-right" data-ng-bind="cdms.cantidad | number:0"></span></td>
-            </tr>
-        </tbody>
-    </table>
+			<tr>
+				<th colspan="1" rowspan="2" data-translate="cdms_GS"></th>
+				<th colspan="3" data-translate="cdms_GSIESP"></th>
+				<td data-ng-repeat="cdms in ::vm.cdmsMap['GSIESP'] track by $index"><span class="pull-right"
+					data-ng-bind="::(cdms.cantidad | number:0)"></span></td>
+			</tr>
+			<tr>
+				<th colspan="3" data-translate="cdms_GSNIES"></th>
+				<td data-ng-repeat="cdms in ::vm.cdmsMap['GSNIES'] track by $index"><span class="pull-right"
+					data-ng-bind="::(cdms.cantidad | number:0)"></span></td>
+			</tr>
+			<tr>
+				<th colspan="4" data-translate="cdms_MG"></th>
+				<td data-ng-repeat="cdms in ::vm.cdmsMap['MG'] track by $index"><span class="pull-right"
+					data-ng-bind="::(cdms.cantidad | number:0)"></span></td>
+			</tr>
+			<tr>
+				<th colspan="4" data-translate="cdms_PASAJE"></th>
+				<td data-ng-repeat="cdms in ::vm.cdmsMap['PASAJE'] track by $index"><span class="pull-right"
+					data-ng-bind="::(cdms.cantidad | number:0)"></span></td>
+			</tr>
+			<tr>
+				<th colspan="4" data-translate="cdms_PASCRU"></th>
+				<td data-ng-repeat="cdms in ::vm.cdmsMap['PASCRU'] track by $index"><span class="pull-right"
+					data-ng-bind="::(cdms.cantidad | number:0)"></span></td>
+			</tr>
+			<tr>
+				<th colspan="4" data-translate="cdms_VET2"></th>
+				<td data-ng-repeat="cdms in ::vm.cdmsMap['VET2'] track by $index"><span class="pull-right"
+					data-ng-bind="::(cdms.cantidad | number:0)"></span></td>
+			</tr>
+			<tr>
+				<th colspan="1" rowspan="5">CONTENEDORES</th>
+				<th colspan="1" rowspan="4">&ge; 20 pies</th>
+				<th colspan="1" rowspan="2" data-translate="cdms_ca"></th>
+				<th colspan="1" data-translate="cdms_numero"></th>
+				<td data-ng-repeat="cdms in ::vm.cdmsMap['CNUMCA'] track by $index"><span class="pull-right"
+					data-ng-bind="::(cdms.cantidad | number:0)"></span></td>
+			</tr>
+			<tr>
+				<th colspan="1" data-translate="cdms_tm"></th>
+				<td data-ng-repeat="cdms in ::vm.cdmsMap['CTONCA'] track by $index"><span class="pull-right"
+					data-ng-bind="::(cdms.cantidad | number:0)"></span></td>
+			</tr>
+			<tr>
+				<th colspan="1" rowspan="2" data-translate="cdms_va"></th>
+				<th colspan="1" data-translate="cdms_numero"></th>
+				<td data-ng-repeat="cdms in ::vm.cdmsMap['CNUMVA'] track by $index"><span class="pull-right"
+					data-ng-bind="::(cdms.cantidad | number:0)"></span></td>
+			</tr>
+			<tr>
+				<th colspan="1" data-translate="cdms_tm"></th>
+				<td data-ng-repeat="cdms in ::vm.cdmsMap['CTONVA'] track by $index"><span class="pull-right"
+					data-ng-bind="::(cdms.cantidad | number:0)"></span></td>
+			</tr>
+			<tr>
+				<th colspan="2" data-translate="cdms_CTEUS"></th>
+				<th colspan="1" data-translate="cdms_numero"></th>
+				<td data-ng-repeat="cdms in ::vm.cdmsMap['CTEUS'] track by $index"><span class="pull-right"
+					data-ng-bind="::(cdms.cantidad | number:0)"></span></td>
+			</tr>
+			<tr>
+				<th colspan="2" rowspan="3" data-translate="cdms_RR"></th>
+				<th colspan="1" rowspan="2" data-translate="cdms_RRC"></th>
+				<th colspan="1" data-translate="cdms_teus"></th>
+				<td data-ng-repeat="cdms in ::vm.cdmsMap['RRTEUS'] track by $index"><span class="pull-right"
+					data-ng-bind="::(cdms.cantidad | number:0)"></span></td>
+			</tr>
+			<tr>
+				<th colspan="1" data-translate="cdms_tm"></th>
+				<td data-ng-repeat="cdms in ::vm.cdmsMap['RRTONC'] track by $index"><span class="pull-right"
+					data-ng-bind="::(cdms.cantidad | number:0)"></span></td>
+			</tr>
+			<tr>
+				<th colspan="1" data-translate="cdms_RRO"></th>
+				<th colspan="1" data-translate="cdms_tm"></th>
+				<td data-ng-repeat="cdms in ::vm.cdmsMap['RRTONO'] track by $index"><span class="pull-right"
+					data-ng-bind="::(cdms.cantidad | number:0)"></span></td>
+			</tr>
+		</tbody>
+	</table>
 
-    <table class="table-bordered table-condensed table-hover">
-        <tbody>
-            <tr>
-                <th colspan="4" />
-                <th colspan="1" data-translate="cdms_embarcado"></th>
-                <th colspan="1" data-translate="cdms_desembarcado"></th>
-                <th colspan="1" data-translate="cdms_transito"></th>
-                <th colspan="1" data-translate="cdms_transbordo"></th>
-            </tr>
-            <tr>
-                <th colspan="4" data-translate="cdms_TRALOC"></th>
-                <td data-ng-repeat="cdms in vm.cdmsMap['TRALOC'] track by $index"><span
-                    class="pull-right" data-ng-bind="cdms.cantidad | number:0"></span></td>
-            </tr>
-            <tr>
-                <th colspan="4" data-translate="cdms_PESCAF"></th>
-                <td />
-                <td data-ng-repeat="cdms in vm.cdmsMap['PESCAF'] track by $index"><span
-                    class="pull-right" data-ng-bind="cdms.cantidad | number:0"></span></td>
-            </tr>
-            <tr>
-                <th colspan="2" rowspan="2" data-translate="cdms_AV"></th>
-                <th colspan="2" data-translate="cdms_AVPPET"></th>
-                <td data-ng-repeat="cdms in vm.cdmsMap['AVPPET'] track by $index"><span
-                    class="pull-right" data-ng-bind="cdms.cantidad | number:0"></span></td>
-            </tr>
-            <tr>
-                <th colspan="2" data-translate="cdms_AVOTRO"></th>
-                <td data-ng-repeat="cdms in vm.cdmsMap['AVOTRO'] track by $index"><span
-                    class="pull-right" data-ng-bind="cdms.cantidad | number:0"></span></td>
-            </tr>
-        </tbody>
-    </table>
+	<table class="table-bordered table-condensed table-hover">
+		<tbody>
+			<tr>
+				<th colspan="4" />
+				<th colspan="1" data-translate="cdms_embarcado"></th>
+				<th colspan="1" data-translate="cdms_desembarcado"></th>
+				<th colspan="1" data-translate="cdms_transito"></th>
+				<th colspan="1" data-translate="cdms_transbordo"></th>
+			</tr>
+			<tr>
+				<th colspan="4" data-translate="cdms_TRALOC"></th>
+				<td data-ng-repeat="cdms in ::vm.cdmsMap['TRALOC'] track by $index"><span class="pull-right"
+					data-ng-bind="::(cdms.cantidad | number:0)"></span></td>
+			</tr>
+			<tr>
+				<th colspan="4" data-translate="cdms_PESCAF"></th>
+				<td />
+				<td data-ng-repeat="cdms in ::vm.cdmsMap['PESCAF'] track by $index"><span class="pull-right"
+					data-ng-bind="::(cdms.cantidad | number:0)"></span></td>
+			</tr>
+			<tr>
+				<th colspan="2" rowspan="2" data-translate="cdms_AV"></th>
+				<th colspan="2" data-translate="cdms_AVPPET"></th>
+				<td data-ng-repeat="cdms in ::vm.cdmsMap['AVPPET'] track by $index"><span class="pull-right"
+					data-ng-bind="::(cdms.cantidad | number:0)"></span></td>
+			</tr>
+			<tr>
+				<th colspan="2" data-translate="cdms_AVOTRO"></th>
+				<td data-ng-repeat="cdms in ::vm.cdmsMap['AVOTRO'] track by $index"><span class="pull-right"
+					data-ng-bind="::(cdms.cantidad | number:0)"></span></td>
+			</tr>
+		</tbody>
+	</table>
 
-    <table class="table-bordered table-condensed table-hover">
-        <tbody>
-            <tr>
-                <th colspan="4" />
-                <th colspan="1">NACIONALES</th>
-                <th colspan="1">EXTRANJEROS</th>
-                <th colspan="1">CRUCEROS</th>
-            </tr>
-            <tr>
-                <th colspan="4">BUQUES ENTRADOS (Nº)</th>
-                <td data-ng-repeat="cdms in vm.cdmsMap['BUQUNI'] track by $index"><span
-                    class="pull-right" data-ng-bind="cdms.cantidad | number:0"></span></td>
-                <td data-ng-repeat="cdms in vm.cdmsMap['CRUBUQ'] track by $index"><span
-                    class="pull-right" data-ng-bind="cdms.cantidad | number:0"></span></td>
-            </tr>
-            <tr>
-                <th colspan="4">UDS. ARQUEO (GT)</th>
-                <td data-ng-repeat="cdms in vm.cdmsMap['BUQGT'] track by $index"><span class="pull-right"
-                    data-ng-bind="cdms.cantidad | number:0"></span></td>
-            </tr>
-        </tbody>
-    </table>
+	<table class="table-bordered table-condensed table-hover">
+		<tbody>
+			<tr>
+				<th colspan="4" />
+				<th colspan="1">NACIONALES</th>
+				<th colspan="1">EXTRANJEROS</th>
+				<th colspan="1">CRUCEROS</th>
+			</tr>
+			<tr>
+				<th colspan="4">BUQUES ENTRADOS (Nï¿½)</th>
+				<td data-ng-repeat="cdms in ::vm.cdmsMap['BUQUNI'] track by $index"><span class="pull-right"
+					data-ng-bind="::(cdms.cantidad | number:0)"></span></td>
+				<td data-ng-repeat="cdms in ::vm.cdmsMap['CRUBUQ'] track by $index"><span class="pull-right"
+					data-ng-bind="::(cdms.cantidad | number:0)"></span></td>
+			</tr>
+			<tr>
+				<th colspan="4">UDS. ARQUEO (GT)</th>
+				<td data-ng-repeat="cdms in ::vm.cdmsMap['BUQGT'] track by $index"><span class="pull-right"
+					data-ng-bind="::(cdms.cantidad | number:0)"></span></td>
+			</tr>
+		</tbody>
+	</table>
 </div>

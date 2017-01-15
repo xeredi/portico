@@ -12,7 +12,7 @@ import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.estadistica.report.EstadisticaXls;
 import xeredi.argo.model.estadistica.service.EstadisticaService;
 import xeredi.argo.model.estadistica.vo.EstadisticaCriterioVO;
-import xeredi.argo.model.metamodelo.proxy.TipoEstadisticaProxy;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoEstadisticaDetailVO;
 
 // TODO: Auto-generated Javadoc
@@ -28,12 +28,15 @@ public final class EstadisticaXlsExportAction extends ItemXlsExportAction<Estadi
 	@Inject
 	private EstadisticaService estdService;
 
+	@Inject
+	private EntidadProxyService entiProxy;
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void doSpecificXlsExport() throws ApplicationException, IOException {
-		final TipoEstadisticaDetailVO enti = TipoEstadisticaProxy.select(criterio.getEntiId());
+		final TipoEstadisticaDetailVO enti = entiProxy.selectTpes(criterio.getEntiId());
 
 		try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
 			final EstadisticaXls excelUtil = new EstadisticaXls(getLocale(), baos, estdService.selectList(criterio),

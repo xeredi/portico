@@ -4,10 +4,12 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import com.google.inject.Inject;
+
 import xeredi.argo.http.controller.action.item.ItemXlsExportAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.argo.model.servicio.bo.ServicioBO;
 import xeredi.argo.model.servicio.bo.ServicioBOFactory;
@@ -23,12 +25,15 @@ public final class ServicioXlsExportAction extends ItemXlsExportAction<ServicioC
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 4791188932107630324L;
 
+	@Inject
+	private EntidadProxyService entiProxy;
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void doSpecificXlsExport() throws ApplicationException, IOException {
-        final TipoServicioDetailVO enti = TipoServicioProxy.select(criterio.getEntiId());
+        final TipoServicioDetailVO enti = entiProxy.selectTpsr(criterio.getEntiId());
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             final ServicioBO itemBO = ServicioBOFactory.newInstance(criterio.getEntiId(), usroId);

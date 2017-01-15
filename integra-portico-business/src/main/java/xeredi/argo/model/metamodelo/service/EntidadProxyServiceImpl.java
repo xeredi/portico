@@ -13,7 +13,6 @@ import com.google.inject.Inject;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
 import xeredi.argo.model.metamodelo.proxy.ValidacionProxy;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadCriterioVO;
@@ -21,17 +20,34 @@ import xeredi.argo.model.metamodelo.vo.AccionEntidadVO;
 import xeredi.argo.model.metamodelo.vo.AccionEspecialCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionEspecialVO;
 import xeredi.argo.model.metamodelo.vo.EntidadCriterioVO;
-import xeredi.argo.model.metamodelo.vo.EntidadDetailVO;
 import xeredi.argo.model.metamodelo.vo.EntidadEntidadCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadEntidadVO;
 import xeredi.argo.model.metamodelo.vo.EntidadGrupoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadGrupoDatoVO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoCriterioVO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
-import xeredi.argo.model.metamodelo.vo.EntidadVO;
+import xeredi.argo.model.metamodelo.vo.TipoEstadisticaCriterioVO;
+import xeredi.argo.model.metamodelo.vo.TipoEstadisticaDetailVO;
+import xeredi.argo.model.metamodelo.vo.TipoEstadisticaVO;
+import xeredi.argo.model.metamodelo.vo.TipoParametroCriterioVO;
+import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
+import xeredi.argo.model.metamodelo.vo.TipoParametroVO;
+import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
+import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
+import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
+import xeredi.argo.model.metamodelo.vo.TipoSubparametroCriterioVO;
+import xeredi.argo.model.metamodelo.vo.TipoSubparametroDetailVO;
+import xeredi.argo.model.metamodelo.vo.TipoSubparametroVO;
+import xeredi.argo.model.metamodelo.vo.TipoSubservicioCriterioVO;
+import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
+import xeredi.argo.model.metamodelo.vo.TipoSubservicioVO;
 import xeredi.argo.model.metamodelo.vo.TramiteCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TramiteVO;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class EntidadProxyServiceImpl.
+ */
 public class EntidadProxyServiceImpl implements EntidadProxyService {
 
 	/** The Constant LOG. */
@@ -43,26 +59,56 @@ public class EntidadProxyServiceImpl implements EntidadProxyService {
 	/** The Constant ENTIDAD_MAP. */
 	private static final Map<Long, AbstractEntidadDetailVO> MAP = new HashMap<>();
 
+	/** The enti service. */
 	@Inject
 	private EntidadService entiService;
 
+	/** The tppr service. */
+	@Inject
+	private TipoParametroService tpprService;
+
+	/** The tpsp service. */
+	@Inject
+	private TipoSubparametroService tpspService;
+
+	/** The tpsr service. */
+	@Inject
+	private TipoServicioService tpsrService;
+
+	/** The tpss service. */
+	@Inject
+	private TipoSubservicioService tpssService;
+
+	/** The tpes service. */
+	@Inject
+	private TipoEstadisticaService tpesService;
+
+	/** The engd service. */
 	@Inject
 	private EntidadGrupoDatoService engdService;
 
+	/** The entd service. */
 	@Inject
 	private EntidadTipoDatoService entdService;
 
+	/** The enen service. */
 	@Inject
 	private EntidadEntidadService enenService;
 
+	/** The acen service. */
 	@Inject
 	private AccionEntidadService acenService;
 
+	/** The aces service. */
 	@Inject
 	private AccionEspecialService acesService;
 
+	/** The trmt service. */
 	@Inject
 	private TramiteService trmtService;
+
+	@Inject
+	private TipoDatoProxyService tpdtProxy;
 
 	/**
 	 * {@inheritDoc}
@@ -84,31 +130,92 @@ public class EntidadProxyServiceImpl implements EntidadProxyService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void fillDependencies(Map<Long, ? extends AbstractEntidadDetailVO> entiMap) {
-		if (MAP.isEmpty()) {
-			load();
-		}
-
-		for (final AbstractEntidadDetailVO entiDetail : entiMap.values()) {
-			if (MAP.containsKey(entiDetail.getEnti().getId())) {
-				entiDetail.setEntdList(MAP.get(entiDetail.getEnti().getId()).getEntdList());
-				entiDetail.setEntdGridList(MAP.get(entiDetail.getEnti().getId()).getEntdGridList());
-				entiDetail.setEntdMap(MAP.get(entiDetail.getEnti().getId()).getEntdMap());
-				entiDetail.setEntiHijasList(MAP.get(entiDetail.getEnti().getId()).getEntiHijasList());
-				entiDetail.setEntiPadresList(MAP.get(entiDetail.getEnti().getId()).getEntiPadresList());
-				entiDetail.setAcenMap(MAP.get(entiDetail.getEnti().getId()).getAcenMap());
-				entiDetail.setAcesList(MAP.get(entiDetail.getEnti().getId()).getAcesList());
-				entiDetail.setEngdList(MAP.get(entiDetail.getEnti().getId()).getEngdList());
-				entiDetail.setTrmtList(MAP.get(entiDetail.getEnti().getId()).getTrmtList());
-			}
-		}
+	public TipoParametroDetailVO selectTppr(Long id) {
+		return (TipoParametroDetailVO) select(id);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TipoSubparametroDetailVO selectTpsp(Long id) {
+		return (TipoSubparametroDetailVO) select(id);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TipoServicioDetailVO selectTpsr(Long id) {
+		return (TipoServicioDetailVO) select(id);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TipoSubservicioDetailVO selectTpss(Long id) {
+		return (TipoSubservicioDetailVO) select(id);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TipoEstadisticaDetailVO selectTpes(Long id) {
+		return (TipoEstadisticaDetailVO) select(id);
+	}
+
+	/**
+	 * Load.
+	 */
 	private synchronized void load() {
 		LOG.info("Entity Load");
 
-		for (final EntidadVO enti : entiService.selectList(new EntidadCriterioVO())) {
-			final EntidadDetailVO entiDetail = new EntidadDetailVO();
+		for (final TipoParametroVO enti : tpprService.selectList(new TipoParametroCriterioVO())) {
+			final TipoParametroDetailVO entiDetail = new TipoParametroDetailVO();
+
+			entiDetail.setEnti(enti);
+
+			MAP.put(entiDetail.getEnti().getId(), entiDetail);
+		}
+
+		for (final TipoSubparametroVO enti : tpspService.selectList(new TipoSubparametroCriterioVO())) {
+			final TipoSubparametroDetailVO entiDetail = new TipoSubparametroDetailVO();
+
+			entiDetail.setEnti(enti);
+
+			MAP.put(entiDetail.getEnti().getId(), entiDetail);
+
+			((TipoParametroDetailVO) MAP.get(enti.getTpprId())).getSubentiList().add(enti);
+		}
+
+		for (final TipoServicioVO enti : tpsrService.selectList(new TipoServicioCriterioVO())) {
+			if (enti.getTpdtEstado() != null) {
+				enti.setTpdtEstado(tpdtProxy.select(enti.getTpdtEstado().getId()));
+			}
+
+			final TipoServicioDetailVO entiDetail = new TipoServicioDetailVO();
+
+			entiDetail.setEnti(enti);
+
+			MAP.put(entiDetail.getEnti().getId(), entiDetail);
+		}
+
+		for (final TipoSubservicioVO enti : tpssService.selectList(new TipoSubservicioCriterioVO())) {
+			if (enti.getTpdtEstado() != null) {
+				enti.setTpdtEstado(tpdtProxy.select(enti.getTpdtEstado().getId()));
+			}
+
+			final TipoSubservicioDetailVO entiDetail = new TipoSubservicioDetailVO();
+
+			entiDetail.setEnti(enti);
+
+			MAP.put(entiDetail.getEnti().getId(), entiDetail);
+		}
+
+		for (final TipoEstadisticaVO enti : tpesService.selectList(new TipoEstadisticaCriterioVO())) {
+			final TipoEstadisticaDetailVO entiDetail = new TipoEstadisticaDetailVO();
 
 			entiDetail.setEnti(enti);
 
@@ -128,7 +235,7 @@ public class EntidadProxyServiceImpl implements EntidadProxyService {
 			final AbstractEntidadDetailVO entiDetail = MAP.get(entd.getEntiId());
 
 			if (entd.getTpdt() != null) {
-				entd.setTpdt(TipoDatoProxy.select(entd.getTpdt().getId()));
+				entd.setTpdt(tpdtProxy.select(entd.getTpdt().getId()));
 
 				if (entd.getValidacion() != null) {
 					entd.setVldn(ValidacionProxy.generate(entd.getTpdt().getTipoElemento(), entd.getValidacion()));

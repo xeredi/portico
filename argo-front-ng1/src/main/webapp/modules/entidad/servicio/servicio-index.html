@@ -1,16 +1,13 @@
 <div class="row" data-ng-repeat="tpsr in vm.tpsrList track by $index"
-	data-ng-if="mc.hasAcen(tpsr.value, 'list')">
+	data-ng-if="::mc.hasAcen(tpsr.value, 'list')">
 	<div class="col-sm-6 col-md-4 col-lg-3">
-		<a data-ng-href="#!/servicio/servicio/grid/{{tpsr.value}}"
-			class="list-group-item active"
-			data-ng-bind="('enti_' + tpsr.value | translate | uppercase)"></a>
+		<a data-ng-href="#!/servicio/servicio/grid/{{::tpsr.value}}" class="list-group-item active"
+			data-ng-bind="::('enti_' + tpsr.value | translate | uppercase)"></a>
 	</div>
 	<div class="list-group col-sm-6 col-md-8 col-lg-9">
-		<a data-ng-if="mc.hasAcen(tpss.value, 'list')"
-			data-ng-href="#!/servicio/subservicio/grid/{{tpss.value}}"
-			class="col-md-6 col-lg-4 list-group-item"
-			data-ng-repeat="tpss in vm.tpssMap[tpsr.value] track by $index"
-			class="list-group-item"
-			data-ng-bind="('enti_' + tpss.value | translate | uppercase)"></a>
+		<a data-ng-if="::mc.hasAcen(tpss.value, 'list')"
+			data-ng-href="#!/servicio/subservicio/grid/{{::tpss.value}}" class="col-md-6 col-lg-4 list-group-item"
+			data-ng-repeat="tpss in vm.tpssMap[tpsr.value] track by $index" class="list-group-item"
+			data-ng-bind="::('enti_' + tpss.value | translate | uppercase)"></a>
 	</div>
 </div>

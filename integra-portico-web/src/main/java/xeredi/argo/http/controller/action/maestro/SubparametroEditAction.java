@@ -15,7 +15,7 @@ import xeredi.argo.model.maestro.service.ParametroService;
 import xeredi.argo.model.maestro.service.SubparametroService;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.maestro.vo.SubparametroVO;
-import xeredi.argo.model.metamodelo.proxy.TipoSubparametroProxy;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroDetailVO;
 
@@ -41,6 +41,9 @@ public final class SubparametroEditAction extends ItemEditAction<SubparametroVO,
 	@Inject
 	private PuertoService prtoService;
 
+	@Inject
+	private EntidadProxyService entiProxy;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -48,7 +51,7 @@ public final class SubparametroEditAction extends ItemEditAction<SubparametroVO,
 	public void doSpecificEdit() throws ApplicationException {
 		Preconditions.checkNotNull(model.getPrmtId());
 
-		enti = TipoSubparametroProxy.select(model.getEntiId());
+		enti = entiProxy.selectTpsp(model.getEntiId());
 
 		if (accion == AccionCodigo.create) {
 			final ParametroVO prmt = prmtService.select(model.getPrmtId(), getIdioma(), model.getFref());

@@ -10,10 +10,10 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.service.ArchivoService;
 import xeredi.argo.model.comun.vo.ArchivoCriterioVO;
 import xeredi.argo.model.comun.vo.ArchivoInfoVO;
-import xeredi.argo.model.item.bo.ItemTramiteBO;
+import xeredi.argo.model.item.service.ItemTramiteService;
 import xeredi.argo.model.item.vo.ItemTramiteCriterioVO;
 import xeredi.argo.model.item.vo.ItemTramiteVO;
-import xeredi.argo.model.metamodelo.service.TipoServicioProxyService;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.argo.model.servicio.bo.ServicioBO;
 import xeredi.argo.model.servicio.bo.ServicioBOFactory;
@@ -40,14 +40,17 @@ public final class ServicioDetailAction extends ItemDetailAction<ServicioVO, Tip
 	private ArchivoService archService;
 
 	@Inject
-	private TipoServicioProxyService tpsrProxy;
+	private ItemTramiteService ittrService;
+
+	@Inject
+	private EntidadProxyService entiProxy;
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void doSpecificDetail() throws ApplicationException {
-		enti = tpsrProxy.select(model.getEntiId());
+		enti = entiProxy.selectTpsr(model.getEntiId());
 
 		final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId(), usroId);
 
@@ -60,13 +63,12 @@ public final class ServicioDetailAction extends ItemDetailAction<ServicioVO, Tip
 		arinList = archService.selectList(archCriterio);
 
 		if (enti.getEnti().getTpdtEstado() != null) {
-			final ItemTramiteBO ittrBO = new ItemTramiteBO();
 			final ItemTramiteCriterioVO ittrCriterio = new ItemTramiteCriterioVO();
 
 			ittrCriterio.setItemId(model.getId());
 			ittrCriterio.setIdioma(getIdioma());
 
-			ittrList = ittrBO.selectList(ittrCriterio);
+			ittrList = ittrService.selectList(ittrCriterio);
 		}
 	}
 }

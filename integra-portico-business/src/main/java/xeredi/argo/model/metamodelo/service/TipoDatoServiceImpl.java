@@ -2,6 +2,7 @@ package xeredi.argo.model.metamodelo.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -157,6 +158,44 @@ public class TipoDatoServiceImpl implements TipoDatoService {
 		return new PaginatedList<>(
 				count > offset ? tpdtDAO.selectList(tpdtCriterio, new RowBounds(offset, limit)) : new ArrayList<>(),
 				offset, limit, count);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<Long, TipoDatoVO> selectMap(TipoDatoCriterioVO tpdtCriterio) {
+		final Map<Long, TipoDatoVO> tpdtMap = tpdtDAO.selectMap(tpdtCriterio);
+		final Map<Long, List<CodigoReferenciaVO>> cdrfMap = new HashMap<>();
+
+		for (final CodigoReferenciaVO cdrf : cdrfDAO.selectList(new CodigoReferenciaCriterioVO())) {
+			if (!cdrfMap.containsKey(cdrf.getTpdtId())) {
+				cdrfMap.put(cdrf.getTpdtId(), new ArrayList<CodigoReferenciaVO>());
+			}
+
+			cdrfMap.get(cdrf.getTpdtId()).add(cdrf);
+
+			cdrf.setTpdtId(null);
+			cdrf.setOrden(null);
+		}
+
+		for (final TipoDatoVO tpdt : tpdtMap.values()) {
+			if (cdrfMap.containsKey(tpdt.getId())) {
+				tpdt.setCdrfList(cdrfMap.get(tpdt.getId()));
+
+				final Set<String> cdrfCodeSet = new HashSet<>();
+
+				for (final CodigoReferenciaVO cdrf : cdrfMap.get(tpdt.getId())) {
+					cdrfCodeSet.add(cdrf.getValor());
+				}
+
+				tpdt.setCdrfCodeSet(cdrfCodeSet);
+			}
+
+			tpdtMap.put(tpdt.getId(), tpdt);
+		}
+
+		return tpdtMap;
 	}
 
 	/**

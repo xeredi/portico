@@ -23,7 +23,7 @@
                                     data-ng-model="vm.searchCriteria.numero" class="form-control" />
                             </div>
 
-                            <div data-ng-if="vm.enti.enti.tpdtEstado"
+                            <div data-ng-if="::vm.enti.enti.tpdtEstado"
                                 class="col-sm-3 col-md-2 col-xl-1 form-group-sm">
                                 <label data-translate="ssrv_estado"></label> <select
                                     data-ng-model="vm.searchCriteria.estado"
@@ -43,7 +43,7 @@
                             </div>
                         </div>
 
-                        <div class="row" data-ng-if="vm.enti.enti.temporal">
+                        <div class="row" data-ng-if="::vm.enti.enti.temporal">
                             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
                                 <label data-translate="fini"></label>
                                 <div>
@@ -74,7 +74,7 @@
                             </div>
                         </div>
 
-                        <div class="row" data-ng-if="vm.enti.enti.temporal">
+                        <div class="row" data-ng-if="::vm.enti.enti.temporal">
                             <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
                                 <label data-translate="ffin"></label>
                                 <div>

@@ -11,57 +11,55 @@
 <title data-ng-bind="'ARGO - ' + title"></title>
 </head>
 <body data-ng-controller="MainController as mc">
-    <header class="navbar navbar-default navbar-fixed-top">
-        <nav class="collapse navbar-collapse" role="navigation">
-            <ul class="nav navbar-nav">
-                <li><a data-ng-href="#!/" class="brand" data-ng-bind="title"></a></li>
-                <!-- li><span data-ng-bind="requestTimeMs"></span></li-->
-            </ul>
-            <div class="nav navbar-nav navbar-right">
-                <ul class="dropdown">
-                    <li class="btn-group" data-uib-dropdown data-is-open="status.isopen"><a
-                        class="btn btn-primary dropdown-toggle" data-uib-dropdown-toggle data-ng-disabled="disabled"
-                        data-translate="menu"></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li role="presentation" class="divider"></li>
-                            <li><a data-ng-href="#!/" data-translate="page_home"></a></li>
-                            <li role="presentation" class="divider"></li>
-                            <li><a data-ng-if="mc.hasMdlo('servicios')" data-ng-href="#!/servicio"
-                                data-translate="srvcList"></a></li>
-                            <li><a data-ng-if="mc.hasMdlo('estadisticas')"
-                                data-ng-href="#!/estadistica/periodo-proceso/grid" data-translate="estdList"></a></li>
-                            <li><a data-ng-if="mc.hasMdlo('maestros')" data-ng-href="#!/maestro"
-                                data-translate="prmtList"></a></li>
-                            <li><a data-ng-if="mc.hasMdlo('facturacion')" data-ng-href="#!/facturacion"
-                                data-translate="sec_facturacion"></a></li>
-                            <li><a data-ng-if="mc.hasMdlo('procesos')" data-ng-href="#!/proceso/proceso/grid"
-                                data-translate="prbtList"></a></li>
-                            <li><a data-ng-if="mc.hasMdlo('administracion')" data-ng-href="#!/administracion"
-                                data-translate="sec_administracion"></a></li>
-                            <li role="presentation" class="divider"></li>
-                            <li><a data-ng-href="#!/seguridad/usuario/salir" data-translate="usro_salir"></a></li>
-                        </ul></li>
-                </ul>
-            </div>
-        </nav>
-    </header>
+	<header class="navbar navbar-default navbar-fixed-top">
+		<nav class="collapse navbar-collapse" role="navigation">
+			<ul class="nav navbar-nav">
+				<li><a data-ng-href="#!/" class="brand" data-ng-bind="title"></a></li>
+				<!-- li><span data-ng-bind="requestTimeMs"></span></li-->
+			</ul>
+			<div class="nav navbar-nav navbar-right">
+				<ul class="dropdown">
+					<li class="btn-group" data-uib-dropdown data-is-open="status.isopen"><a
+						class="btn btn-primary dropdown-toggle" data-uib-dropdown-toggle data-ng-disabled="disabled"
+						data-translate="menu"></a>
+						<ul class="dropdown-menu" role="menu">
+							<li role="presentation" class="divider"></li>
+							<li><a data-ng-href="#!/" data-translate="page_home"></a></li>
+							<li role="presentation" class="divider"></li>
+							<li><a data-ng-if="::mc.hasMdlo('servicios')" data-ng-href="#!/servicio" data-translate="srvcList"></a></li>
+							<li><a data-ng-if="::mc.hasMdlo('estadisticas')"
+								data-ng-href="#!/estadistica/periodo-proceso/grid" data-translate="estdList"></a></li>
+							<li><a data-ng-if="::mc.hasMdlo('maestros')" data-ng-href="#!/maestro" data-translate="prmtList"></a></li>
+							<li><a data-ng-if="::mc.hasMdlo('facturacion')" data-ng-href="#!/facturacion"
+								data-translate="sec_facturacion"></a></li>
+							<li><a data-ng-if="::mc.hasMdlo('procesos')" data-ng-href="#!/proceso/proceso/grid"
+								data-translate="prbtList"></a></li>
+							<li><a data-ng-if="::mc.hasMdlo('administracion')" data-ng-href="#!/administracion"
+								data-translate="sec_administracion"></a></li>
+							<li role="presentation" class="divider"></li>
+							<li><a data-ng-href="#!/seguridad/usuario/salir" data-translate="usro_salir"></a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
 
-    <div id="body-content" data-ng-cloack>
-        <div data-ng-cloak data-ng-if="actionErrors" class="alert alert-danger" role="alert">
-            <span data-translate="errorList"></span>
-            <ul>
-                <li data-ng-repeat="error in actionErrors track by $index" data-ng-bind="error"></li>
-            </ul>
-        </div>
-        <span data-us-spinner="{radius:30, width:8, length: 16}" data-spinner-key="spinner"></span>
-        <div data-ng-view class="container-fluid"></div>
-        <div data-ui-view class="container-fluid"></div>
-    </div>
+	<div id="body-content" data-ng-cloack>
+		<div data-ng-cloak data-ng-if="actionErrors" class="alert alert-danger" role="alert">
+			<span data-translate="errorList"></span>
+			<ul>
+				<li data-ng-repeat="error in actionErrors track by $index" data-ng-bind="error"></li>
+			</ul>
+		</div>
+		<span data-us-spinner="{radius:30, width:8, length: 16}" data-spinner-key="spinner"></span>
+		<div data-ng-view class="container-fluid"></div>
+		<div data-ui-view class="container-fluid"></div>
+	</div>
 
-    <script type="text/javascript" src="wro/dependencies.js"></script>
+	<script type="text/javascript" src="wro/dependencies.js"></script>
 
-    <script type="text/javascript" src="wro/core.js"></script>
-    <script type="text/javascript" src="modules/i18n/i18n_messages_es.js"></script>
+	<script type="text/javascript" src="wro/core.js"></script>
+	<script type="text/javascript" src="modules/i18n/i18n_messages_es.js"></script>
 </body>
 </html>
 

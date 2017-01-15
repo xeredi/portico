@@ -3,14 +3,14 @@
 
     angular.module(
             "argo.common.config",
-            [ "ngRoute", "mgcrea.ngStrap", "mgcrea.ngStrap.aside", "ui.bootstrap.tpls", "ui.bootstrap.tabs",
-                    "ui.bootstrap.pagination", "ui.bootstrap.dropdown", "ui.bootstrap.typeahead",
-                    "ui.bootstrap.tooltip", "pascalprecht.translate", "angularSpinner", "uiGmapgoogle-maps",
-                    "ngFileUpload", "ngFileSaver", "LocalStorageModule", "argo.i18n",
-                    "argo.administracion.controller", "argo.metamodelo.controller",
-                    "argo.facturacion.controller", "argo.item.controller", "argo.maestro.controller",
-                    "argo.servicio.controller", "argo.estadistica.controller", "argo.proceso.controller",
-                    "argo.seguridad.controller" ])
+            [ "ngRoute", "ngSanitize", "mgcrea.ngStrap", "mgcrea.ngStrap.aside", "ui.bootstrap.tpls",
+                    "ui.bootstrap.tabs", "ui.bootstrap.pagination", "ui.bootstrap.dropdown",
+                    "ui.bootstrap.typeahead", "ui.bootstrap.tooltip", "pascalprecht.translate",
+                    "angularSpinner", "uiGmapgoogle-maps", "ngFileUpload", "ngFileSaver",
+                    "LocalStorageModule", "argo.i18n", "argo.administracion.controller",
+                    "argo.metamodelo.controller", "argo.facturacion.controller", "argo.item.controller",
+                    "argo.maestro.controller", "argo.servicio.controller", "argo.estadistica.controller",
+                    "argo.proceso.controller", "argo.seguridad.controller" ])
 
     .config(routeProvider_config)
 
@@ -183,36 +183,29 @@
 
     /* @ngInject */
     function httpInterceptor($q, $rootScope, $location, usSpinnerService) {
-        var activeRequests = 0;
-        var startTimeMs;
-
         return {
             request : request,
+            requestError : requestError,
             response : response,
             responseError : responseError
         };
 
         function request(req) {
-            if (activeRequests == 0) {
-                startTimeMs = (new Date()).getMilliseconds();
-            }
-
-            activeRequests++;
             usSpinnerService.spin("spinner");
 
             return req;
         }
 
+        function requestError(rejection) {
+            alert("Response Error: " + rejection);
+
+            usSpinnerService.stop("spinner");
+
+            return rejection;
+        }
+
         function response(res) {
-            activeRequests--;
-
-            if (activeRequests <= 0) {
-                usSpinnerService.stop("spinner");
-
-                activeRequests = 0;
-
-                $rootScope.requestTimeMs = (new Date()).getMilliseconds() - startTimeMs;
-            }
+            usSpinnerService.stop("spinner");
 
             $rootScope.actionErrors = null;
 
@@ -226,6 +219,8 @@
                     case "login":
                         $location.path("/seguridad/usuario/acceso");
 
+                        usSpinnerService.stop("spinner");
+
                         return $q.reject(res);
 
                         break;
@@ -233,6 +228,8 @@
                         // alert("Errores");
 
                         $rootScope.actionErrors = res.data.actionErrors;
+
+                        usSpinnerService.stop("spinner");
 
                         return $q.reject(res.data.actionErrors);
 
@@ -247,23 +244,23 @@
 
                     $rootScope.actionErrors = res.data.actionErrors;
 
+                    usSpinnerService.stop("spinner");
+
                     return $q.reject(res.data.actionErrors);
                 }
             }
 
+            usSpinnerService.stop("spinner");
+
             return res;
         }
 
-        function responseError(res) {
-            alert("Response Error");
+        function responseError(rejection) {
+            alert("Response Error: " + rejection);
 
-            activeRequests--;
+            usSpinnerService.stop("spinner");
 
-            if (activeRequests <= 0) {
-                usSpinnerService.stop("spinner");
-            }
-
-            return res;
+            return rejection;
         }
     }
 

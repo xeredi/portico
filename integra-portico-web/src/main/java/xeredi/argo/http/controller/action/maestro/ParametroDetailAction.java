@@ -11,7 +11,7 @@ import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.maestro.service.ParametroService;
 import xeredi.argo.model.maestro.vo.ParametroVO;
-import xeredi.argo.model.metamodelo.service.TipoParametroProxyService;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
 
 // TODO: Auto-generated Javadoc
@@ -34,14 +34,14 @@ public final class ParametroDetailAction extends ItemDetailAction<ParametroVO, T
 	private I18nService i18nService;
 
 	@Inject
-	private TipoParametroProxyService tpprProxy;
+	private EntidadProxyService entiProxy;
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void doSpecificDetail() throws ApplicationException {
-		enti = tpprProxy.select(model.getEntiId());
+		enti = entiProxy.selectTppr(model.getEntiId());
 		model = prmtService.select(model.getId(), getIdioma(), model.getFref());
 
 		if (enti.getEnti().isI18n()) {

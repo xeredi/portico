@@ -14,7 +14,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.maestro.vo.ParametroCriterioVO;
-import xeredi.argo.model.metamodelo.service.TipoParametroProxyService;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
 
 // TODO: Auto-generated Javadoc
@@ -36,14 +36,14 @@ public final class ParametroFilterAction extends ItemFilterAction<ParametroCrite
 	private Date fechaVigencia;
 
 	@Inject
-	private TipoParametroProxyService tpprProxy;
+	private EntidadProxyService entiProxy;
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void doSpecificPrepareFilter() throws ApplicationException {
-		enti = tpprProxy.select(model.getEntiId());
+		enti = entiProxy.selectTppr(model.getEntiId());
 
 		if (fechaVigencia == null) {
 			fechaVigencia = Calendar.getInstance().getTime();

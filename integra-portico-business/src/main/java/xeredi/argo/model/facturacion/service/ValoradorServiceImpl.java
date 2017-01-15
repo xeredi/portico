@@ -51,9 +51,7 @@ import xeredi.argo.model.facturacion.vo.ValoracionDetalleVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaAgregadaVO;
 import xeredi.argo.model.facturacion.vo.ValoracionTemporalVO;
 import xeredi.argo.model.facturacion.vo.ValoradorContextoVO;
-import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
-import xeredi.argo.model.metamodelo.service.TipoServicioProxyService;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.argo.model.proceso.vo.ProcesoVO;
 import xeredi.argo.model.servicio.dao.ServicioDAO;
@@ -109,9 +107,8 @@ public class ValoradorServiceImpl implements ValoradorService {
 	@Inject
 	private ReglaDAO rglaDAO;
 
-	/** The tpsr proxy. */
 	@Inject
-	private TipoServicioProxyService tpsrProxy;
+	private EntidadProxyService entiProxy;
 
 	/**
 	 * {@inheritDoc}
@@ -150,7 +147,7 @@ public class ValoradorServiceImpl implements ValoradorService {
 			}
 		}
 
-		final TipoServicioDetailVO tpsr = tpsrProxy.select(srvc.getEntiId());
+		final TipoServicioDetailVO tpsr = entiProxy.selectTpsr(srvc.getEntiId());
 
 		if (!tpsr.getEnti().getEstadosVlrcSet().contains(srvc.getEstado())) {
 			throw new Error("Servicio en estado no facturable: " + srvc.getEstado());
@@ -413,14 +410,14 @@ public class ValoradorServiceImpl implements ValoradorService {
 					switch (rgla.getEnti().getTipo()) {
 					case T:
 						vldrContexto.setEstadosVlrcSet(
-								TipoServicioProxy.select(rgla.getEnti().getId()).getEnti().getEstadosVlrcSet());
+								entiProxy.selectTpsr(rgla.getEnti().getId()).getEnti().getEstadosVlrcSet());
 
 						vlrtList.addAll(vlrtDAO.selectAplicarReglaServicio(vldrContexto));
 
 						break;
 					default:
 						vldrContexto.setEstadosVlrcSet(
-								TipoSubservicioProxy.select(rgla.getEnti().getId()).getEnti().getEstadosVlrcSet());
+								entiProxy.selectTpss(rgla.getEnti().getId()).getEnti().getEstadosVlrcSet());
 
 						vlrtList.addAll(vlrtDAO.selectAplicarReglaSubservicio(vldrContexto));
 

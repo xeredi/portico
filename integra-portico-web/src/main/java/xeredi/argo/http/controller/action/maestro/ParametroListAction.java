@@ -9,7 +9,7 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.maestro.service.ParametroService;
 import xeredi.argo.model.maestro.vo.ParametroCriterioVO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
-import xeredi.argo.model.metamodelo.service.TipoParametroProxyService;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
 
 // TODO: Auto-generated Javadoc
@@ -25,7 +25,7 @@ public final class ParametroListAction extends ItemListAction<ParametroCriterioV
 	private ParametroService prmtService;
 
 	@Inject
-	private TipoParametroProxyService tpprProxy;
+	private EntidadProxyService entiProxy;
 
 	/**
 	 * {@inheritDoc}
@@ -36,7 +36,7 @@ public final class ParametroListAction extends ItemListAction<ParametroCriterioV
 			model.setFechaVigencia(Calendar.getInstance().getTime());
 		}
 
-		enti = tpprProxy.select(model.getEntiId());
+		enti = entiProxy.selectTppr(model.getEntiId());
 		resultList = prmtService.selectList(model, getOffset(), limit);
 	}
 }

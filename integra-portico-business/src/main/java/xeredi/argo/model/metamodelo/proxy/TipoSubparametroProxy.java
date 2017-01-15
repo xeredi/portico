@@ -22,85 +22,76 @@ import xeredi.argo.model.metamodelo.vo.TipoSubparametroVO;
  * The Class TipoSubparametroProxy.
  */
 public final class TipoSubparametroProxy {
-    /** The Constant LOG. */
-    private static final Log LOG = LogFactory.getLog(TipoSubparametroProxy.class);
+	/** The Constant LOG. */
+	private static final Log LOG = LogFactory.getLog(TipoSubparametroProxy.class);
 
-    /** The Constant LABEL_VALUE_LIST. */
-    private static final List<LabelValueVO> LABEL_VALUE_LIST = new ArrayList<>();
+	/** The Constant LABEL_VALUE_LIST. */
+	private static final List<LabelValueVO> LABEL_VALUE_LIST = new ArrayList<>();
 
-    /** The Constant TIPO_SUBPARAMETRO_MAP. */
-    private static final Map<Long, TipoSubparametroDetailVO> TIPO_SUBPARAMETRO_MAP = new HashMap<>();
+	/** The Constant TIPO_SUBPARAMETRO_MAP. */
+	private static final Map<Long, TipoSubparametroDetailVO> TIPO_SUBPARAMETRO_MAP = new HashMap<>();
 
-    static {
-        load();
-    }
+	static {
+		load();
+	}
 
-    /**
-     * Instantiates a new tipo subparametro proxy.
-     */
-    private TipoSubparametroProxy() {
-        super();
-    }
+	/**
+	 * Instantiates a new tipo subparametro proxy.
+	 */
+	private TipoSubparametroProxy() {
+		super();
+	}
 
-    /**
-     * Select label values.
-     *
-     * @return the list
-     */
-    public static List<LabelValueVO> selectLabelValues() {
-        return LABEL_VALUE_LIST;
-    }
+	/**
+	 * Select label values.
+	 *
+	 * @return the list
+	 */
+	public static List<LabelValueVO> selectLabelValues() {
+		return LABEL_VALUE_LIST;
+	}
 
-    /**
-     * Select map.
-     *
-     * @return the map
-     */
-    public static Map<Long, TipoSubparametroDetailVO> selectMap() {
-        return TIPO_SUBPARAMETRO_MAP;
-    }
+	/**
+	 * Select.
+	 *
+	 * @param id
+	 *            the id
+	 * @return the tipo subparametro vo
+	 */
+	public static TipoSubparametroDetailVO select(@NonNull final Long id) {
+		if (!TIPO_SUBPARAMETRO_MAP.containsKey(id)) {
+			throw new Error(new InstanceNotFoundException(MessageI18nKey.tpsp, id));
+		}
 
-    /**
-     * Select.
-     *
-     * @param id
-     *            the id
-     * @return the tipo subparametro vo
-     */
-    public static TipoSubparametroDetailVO select(@NonNull final Long id) {
-        if (!TIPO_SUBPARAMETRO_MAP.containsKey(id)) {
-            throw new Error(new InstanceNotFoundException(MessageI18nKey.tpsp, id));
-        }
+		return TIPO_SUBPARAMETRO_MAP.get(id);
+	}
 
-        return TIPO_SUBPARAMETRO_MAP.get(id);
-    }
+	/**
+	 * Load.
+	 */
+	static synchronized void load() {
+		LOG.info("Carga de tipos de subparametro");
 
-    /**
-     * Load.
-     */
-    static synchronized void load() {
-        LOG.info("Carga de tipos de subparametro");
+		final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
+		final List<TipoSubparametroVO> tpspList = tpspBO.selectList(new TipoSubparametroCriterioVO());
 
-        final TipoSubparametroBO tpspBO = new TipoSubparametroBO();
-        final List<TipoSubparametroVO> tpspList = tpspBO.selectList(new TipoSubparametroCriterioVO());
+		for (final TipoSubparametroVO tpsp : tpspList) {
+			final TipoSubparametroDetailVO tpspDetail = new TipoSubparametroDetailVO();
 
-        for (final TipoSubparametroVO tpsp : tpspList) {
-            final TipoSubparametroDetailVO tpspDetail = new TipoSubparametroDetailVO();
+			tpspDetail.setEnti(tpsp);
 
-            tpspDetail.setEnti(tpsp);
+			// if (tpspVO.getTpprAsociado() != null) {
+			// tpspVO.setTpprAsociado(TipoParametroProxy.select(tpspVO.getTpprAsociado().getId()));
+			// }
 
-            // if (tpspVO.getTpprAsociado() != null) {
-            // tpspVO.setTpprAsociado(TipoParametroProxy.select(tpspVO.getTpprAsociado().getId()));
-            // }
+			TIPO_SUBPARAMETRO_MAP.put(tpspDetail.getEnti().getId(), tpspDetail);
+		}
 
-            TIPO_SUBPARAMETRO_MAP.put(tpspDetail.getEnti().getId(), tpspDetail);
-        }
+		EntidadProxy.loadDependencies(TIPO_SUBPARAMETRO_MAP);
 
-        EntidadProxy.loadDependencies(TIPO_SUBPARAMETRO_MAP);
+		LABEL_VALUE_LIST.addAll(tpspBO.selectLabelValues());
 
-        LABEL_VALUE_LIST.addAll(tpspBO.selectLabelValues());
-
-        LOG.info("Carga de tipos de subparametro OK");
-    }
+		LOG.info("Carga de tipos de subparametro OK");
+	}
 
 }

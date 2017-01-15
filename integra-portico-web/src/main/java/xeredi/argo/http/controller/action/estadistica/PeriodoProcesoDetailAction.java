@@ -11,7 +11,8 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.estadistica.service.PeriodoProcesoService;
 import xeredi.argo.model.estadistica.vo.PeriodoProcesoVO;
-import xeredi.argo.model.metamodelo.proxy.TipoEstadisticaProxy;
+import xeredi.argo.model.metamodelo.service.TipoEstadisticaService;
+import xeredi.argo.model.metamodelo.vo.TipoEstadisticaCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -29,6 +30,9 @@ public final class PeriodoProcesoDetailAction extends CrudDetailAction<PeriodoPr
 	@Inject
 	private PeriodoProcesoService peprService;
 
+	@Inject
+	private TipoEstadisticaService tpesService;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -37,6 +41,6 @@ public final class PeriodoProcesoDetailAction extends CrudDetailAction<PeriodoPr
 		Preconditions.checkNotNull(model.getId());
 
 		model = peprService.select(model.getId(), getIdioma());
-		tpesList = TipoEstadisticaProxy.selectLabelValues();
+		tpesList = tpesService.selectLabelValues(new TipoEstadisticaCriterioVO());
 	}
 }

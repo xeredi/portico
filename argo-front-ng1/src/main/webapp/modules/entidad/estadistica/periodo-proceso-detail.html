@@ -1,57 +1,54 @@
-<div data-ng-if="vm.model">
-    <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group">
-            <button data-ng-click="vm.fileExport()" class="btn btn-default">
-                <i class="glyphicon glyphicon-download-alt"></i> <span data-translate="btn_exportar"></span>
-            </button>
-        </div>
-        <div class="btn-group">
-            <button data-ng-if="mc.hasAcbsPath('pepr-remove')" data-ng-click="vm.remove()"
-                class="btn btn-default">
-                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
-            </button>
-        </div>
-    </div>
+<div data-ng-if="::vm.model">
+	<div class="btn-toolbar" role="toolbar">
+		<div class="btn-group">
+			<button data-ng-click="vm.fileExport()" class="btn btn-default">
+				<i class="glyphicon glyphicon-download-alt"></i> <span data-translate="btn_exportar"></span>
+			</button>
+		</div>
+		<div class="btn-group">
+			<button data-ng-if="mc.hasAcbsPath('pepr-remove')" data-ng-click="vm.remove()" class="btn btn-default">
+				<i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
+			</button>
+		</div>
+	</div>
 
-    <fieldset>
-        <div class="row">
-            <div class="col-sm-4 col-md-3 col-md-2 form-group-sm">
-                <label data-translate="sprt"></label>
-                <p class="form-control-static" data-ng-bind="vm.model.sprt.etiqueta"></p>
-            </div>
-            <div class="col-sm-2 col-md-1 col-md-1 form-group-sm">
-                <label data-translate="pepr_anio"></label>
-                <p class="form-control-static number" data-ng-bind="vm.model.anio" class="number"></p>
-            </div>
-            <div class="col-sm-2 col-md-1 col-md-1 form-group-sm">
-                <label data-translate="pepr_mes"></label>
-                <p class="form-control-static number" data-ng-bind="vm.model.mes"></p>
-            </div>
-            <div class="col-sm-3 col-md-2 col-md-1 form-group-sm">
-                <label data-translate="pepr_cdmsGenerado"></label>
-                <p class="form-control-static">
-                    <i class="glyphicon glyphicon-{{vm.model.cdmsGenerado ? 'ok' : 'remove'}}"></i>
-                </p>
-            </div>
-            <div class="col-sm-2 col-md-2 form-group-sm">
-                <label data-translate="pepr_falta"></label>
-                <p class="form-control-static"
-                    data-ng-bind="vm.model.falta | date: ('format_datetime' | translate)"></p>
-            </div>
-            <div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
-                <label data-translate="pepr_arch"></label>
-                <p class="form-control-static" data-ng-bind="vm.model.arin.nombre"></p>
-            </div>
-        </div>
-    </fieldset>
+	<fieldset>
+		<div class="row">
+			<div class="col-sm-4 col-md-3 col-md-2 form-group-sm">
+				<label data-translate="sprt"></label>
+				<p class="form-control-static" data-ng-bind="vm.model.sprt.etiqueta"></p>
+			</div>
+			<div class="col-sm-2 col-md-1 col-md-1 form-group-sm">
+				<label data-translate="pepr_anio"></label>
+				<p class="form-control-static number" data-ng-bind="vm.model.anio" class="number"></p>
+			</div>
+			<div class="col-sm-2 col-md-1 col-md-1 form-group-sm">
+				<label data-translate="pepr_mes"></label>
+				<p class="form-control-static number" data-ng-bind="vm.model.mes"></p>
+			</div>
+			<div class="col-sm-3 col-md-2 col-md-1 form-group-sm">
+				<label data-translate="pepr_cdmsGenerado"></label>
+				<p class="form-control-static">
+					<i class="glyphicon glyphicon-{{vm.model.cdmsGenerado ? 'ok' : 'remove'}}"></i>
+				</p>
+			</div>
+			<div class="col-sm-2 col-md-2 form-group-sm">
+				<label data-translate="pepr_falta"></label>
+				<p class="form-control-static" data-ng-bind="vm.model.falta | date: ('format_datetime' | translate)"></p>
+			</div>
+			<div class="col-sm-2 col-md-2 col-lg-1 form-group-sm">
+				<label data-translate="pepr_arch"></label>
+				<p class="form-control-static" data-ng-bind="vm.model.arin.nombre"></p>
+			</div>
+		</div>
+	</fieldset>
 
-    <div class="list-group col-sm-4 col-md-3">
-        <a data-ng-if="mc.hasAcbsPath('cdms-detail')"
-            data-ng-href="#!/estadistica/cuadro-mes/detail/{{vm.model.id}}" class="list-group-item"
-            data-ng-bind="'cdms' | translate | uppercase"></a> <a
-            data-ng-if="mc.hasAcen(enti.value, 'list')"
-            data-ng-href="#!/estadistica/estadistica/grid/{{enti.value}}/{{vm.model.id}}/{{vm.model.sprt.id}}"
-            class="list-group-item" data-ng-repeat="enti in vm.tpesList track by $index"
-            data-ng-bind="'enti_' + enti.value | translate | uppercase"></a>
-    </div>
+	<div class="list-group col-sm-4 col-md-3">
+		<a data-ng-if="::mc.hasAcbsPath('cdms-detail')"
+			data-ng-href="#!/estadistica/cuadro-mes/detail/{{::vm.model.id}}" class="list-group-item"
+			data-ng-bind="::('cdms' | translate | uppercase)"></a> <a data-ng-if="::mc.hasAcen(enti.value, 'list')"
+			data-ng-href="#!/estadistica/estadistica/grid/{{::enti.value}}/{{::vm.model.id}}/{{::vm.model.sprt.id}}"
+			class="list-group-item" data-ng-repeat="enti in ::vm.tpesList track by $index"
+			data-ng-bind="::('enti_' + enti.value | translate | uppercase)"></a>
+	</div>
 </div>

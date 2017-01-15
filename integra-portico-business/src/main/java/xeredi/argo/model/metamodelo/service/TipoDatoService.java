@@ -90,6 +90,15 @@ public interface TipoDatoService {
 			final int limit);
 
 	/**
+	 * Select map.
+	 *
+	 * @param tpdtCriterio
+	 *            the tpdt criterio
+	 * @return the map
+	 */
+	Map<Long, TipoDatoVO> selectMap(@NonNull final TipoDatoCriterioVO tpdtCriterio);
+
+	/**
 	 * Select label values.
 	 *
 	 * @param tpdtCriterio

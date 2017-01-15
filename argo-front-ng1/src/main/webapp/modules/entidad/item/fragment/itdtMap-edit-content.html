@@ -1,148 +1,91 @@
 <div data-ng-repeat="engd in vm.enti.engdList track by $index">
-    <fieldset>
-        <legend data-ng-if="vm.enti.engdList.length > 1" data-ng-bind="'engd_' + engd.id | translate"></legend>
+	<fieldset>
+		<legend data-ng-if="::(vm.enti.engdList.length > 1)" data-ng-bind="::('engd_' + engd.id | translate)"></legend>
 
-        <div class="row">
-            <div data-ng-repeat="tpdtId in vm.enti.entdList track by $index"
-                data-ng-if="vm.enti.entdMap[tpdtId].grupo == engd.numero" data-ng-switch
-                data-on="vm.enti.entdMap[tpdtId].tpdt.tipoElemento">
-                <div data-ng-switch-when="BO" class="form-group-sm" data-ng-class="vm.enti.entdMap[tpdtId].spanCss">
-                    <label data-ng-bind="'entd_' + vm.enti.entdMap[tpdtId].id | translate"></label> <select
-                        data-ng-model="vm.item.itdtMap[tpdtId].cantidadEntera"
-                        data-ng-options="item as ('format_' + item | translate) for item in [1 , 0]"
-                        class="form-control">
-                        <option />
-                    </select>
-                </div>
-                <div data-ng-switch-when="ND" class="form-group-sm" data-ng-class="vm.enti.entdMap[tpdtId].spanCss">
-                    <label data-ng-bind="'entd_' + vm.enti.entdMap[tpdtId].id | translate"></label> <input type="text"
-                        data-ng-model="vm.item.itdtMap[tpdtId].cantidadDecimal" class="form-control number" />
-                </div>
-                <div data-ng-switch-when="NE" class="form-group-sm" data-ng-class="vm.enti.entdMap[tpdtId].spanCss">
-                    <label data-ng-bind="'entd_' + vm.enti.entdMap[tpdtId].id | translate"></label> <input type="text"
-                        data-ng-model="vm.item.itdtMap[tpdtId].cantidadEntera" class="form-control number" />
-                </div>
-                <div data-ng-switch-when="FE" class="form-group-sm" data-ng-class="vm.enti.entdMap[tpdtId].spanCss">
-                    <label data-ng-bind="'entd_' + vm.enti.entdMap[tpdtId].id | translate"></label> <input type="text"
-                        class="form-control" data-ng-model="vm.item.itdtMap[tpdtId].fecha" data-bs-datepicker />
-                </div>
-                <div data-ng-switch-when="FH" class="form-group-sm" data-ng-class="vm.enti.entdMap[tpdtId].spanCss">
-                    <label data-ng-bind="'entd_' + vm.enti.entdMap[tpdtId].id | translate"></label> <input type="text"
-                        class="form-control" data-ng-model="vm.item.itdtMap[tpdtId].fecha" data-bs-datepicker />
-                </div>
-                <div data-ng-switch-when="FH" class="form-group-sm" data-ng-class="vm.enti.entdMap[tpdtId].spanCss">
-                    <label>&nbsp</label> <input type="text" class="form-control"
-                        data-ng-model="vm.item.itdtMap[tpdtId].fecha" data-bs-timepicker />
-                </div>
-                <div data-ng-switch-when="CR" class="form-group-sm" data-ng-class="vm.enti.entdMap[tpdtId].spanCss">
-                    <label data-ng-bind="'entd_' + vm.enti.entdMap[tpdtId].id | translate"></label> <select
-                        data-ng-model="vm.item.itdtMap[tpdtId].cadena"
-                        data-ng-options="cdrf.valor as ('cdrf_' + tpdtId + '_' + cdrf.valor | translate) for cdrf in vm.enti.entdMap[tpdtId].tpdt.cdrfList"
-                        class="form-control">
-                        <option />
-                    </select>
-                </div>
+		<div class="row">
+			<div data-ng-repeat="tpdtId in vm.enti.entdList track by $index"
+				data-ng-if="::(vm.enti.entdMap[tpdtId].grupo == engd.numero)" data-ng-switch
+				data-on="::vm.enti.entdMap[tpdtId].tpdt.tipoElemento">
+				<div data-ng-switch-when="BO" class="form-group-sm" data-ng-class="::vm.enti.entdMap[tpdtId].spanCss">
+					<label data-ng-bind="::('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label> <select
+						data-ng-model="vm.item.itdtMap[tpdtId].cantidadEntera"
+						data-ng-options="item as ('format_' + item | translate) for item in [1 , 0]" class="form-control">
+						<option />
+					</select>
+				</div>
+				<div data-ng-switch-when="ND" class="form-group-sm" data-ng-class="::vm.enti.entdMap[tpdtId].spanCss">
+					<label data-ng-bind="::('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label> <input type="text"
+						data-ng-model="vm.item.itdtMap[tpdtId].cantidadDecimal" class="form-control number" />
+				</div>
+				<div data-ng-switch-when="NE" class="form-group-sm" data-ng-class="::vm.enti.entdMap[tpdtId].spanCss">
+					<label data-ng-bind="::('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label> <input type="text"
+						data-ng-model="vm.item.itdtMap[tpdtId].cantidadEntera" class="form-control number" />
+				</div>
+				<div data-ng-switch-when="FE" class="form-group-sm" data-ng-class="::vm.enti.entdMap[tpdtId].spanCss">
+					<label data-ng-bind="::('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label> <input type="text"
+						class="form-control" data-ng-model="vm.item.itdtMap[tpdtId].fecha" data-bs-datepicker />
+				</div>
+				<div data-ng-switch-when="FH" class="form-group-sm" data-ng-class="::vm.enti.entdMap[tpdtId].spanCss">
+					<label data-ng-bind="::('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label> <input type="text"
+						class="form-control" data-ng-model="vm.item.itdtMap[tpdtId].fecha" data-bs-datepicker />
+				</div>
+				<div data-ng-switch-when="FH" class="form-group-sm" data-ng-class="::vm.enti.entdMap[tpdtId].spanCss">
+					<label>&nbsp</label> <input type="text" class="form-control"
+						data-ng-model="vm.item.itdtMap[tpdtId].fecha" data-bs-timepicker />
+				</div>
+				<div data-ng-switch-when="CR" class="form-group-sm" data-ng-class="::vm.enti.entdMap[tpdtId].spanCss">
+					<label data-ng-bind="::('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label> <select
+						data-ng-model="vm.item.itdtMap[tpdtId].cadena"
+						data-ng-options="cdrf.valor as ('cdrf_' + tpdtId + '_' + cdrf.valor | translate) for cdrf in ::vm.enti.entdMap[tpdtId].tpdt.cdrfList"
+						class="form-control">
+						<option />
+					</select>
+				</div>
 
-                <div data-ng-switch-when="TX">
-                    <div data-ng-if="vm.enti.entdMap[tpdtId].tpdt.tpht == 'T'" class="form-group-sm"
-                        data-ng-class="vm.enti.entdMap[tpdtId].spanCss">
-                        <label data-ng-bind="('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label> <input
-                            type="text" data-ng-model="vm.item.itdtMap[tpdtId].cadena" class="form-control" />
-                    </div>
-                    <div data-ng-if="vm.enti.entdMap[tpdtId].tpdt.tpht == 'TA'" class="col-sm-12 form-group-sm">
-                        <div class="form-group-sm" data-ng-class="vm.enti.entdMap[tpdtId].spanCss">
-                            <label data-ng-bind="('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label>
-                            <textarea rows="4" data-ng-model="vm.item.itdtMap[tpdtId].cadena" class="form-control"
-                                data-ng-bind="vm.item.itdtMap[tpdtId].cadena"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div data-ng-switch-when="PR" data-ng-if="vm.enti.entdMap[tpdtId].tpdt.tpht == 'S'"
-                    class="form-group-sm" data-ng-class="vm.enti.entdMap[tpdtId].spanCss">
-                    <label data-ng-bind="'entd_' + vm.enti.entdMap[tpdtId].id | translate"></label> <select
-                        data-ng-model="vm.item.itdtMap[tpdtId].prmt.id"
-                        data-ng-options="labelValue.value as labelValue.label for labelValue in vm.labelValuesMap[vm.enti.entdMap[tpdtId].tpdt.enti.id]"
-                        class="form-control">
-                        <option />
-                    </select>
-                </div>
-                <div data-ng-switch-when="PR" data-ng-if="vm.enti.entdMap[tpdtId].tpdt.tpht == 'F'"
-                    class="form-group-sm" data-ng-class="vm.enti.entdMap[tpdtId].spanCss">
-                    <label data-ng-bind="'entd_' + vm.enti.entdMap[tpdtId].id | translate"></label> <input
-                        data-ng-disabled="vm.enti.entdMap[tpdtId].tpdt.enti.puerto && vm.prtoId == null"
-                        class="form-control" data-ng-controller="ParametroTypeaheadController as ta" type="text"
-                        autocomplete="off" data-ng-model="vm.item.itdtMap[tpdtId].prmt"
-                        data-uib-typeahead="prmt as prmt.etiqueta for prmt in ta.getLabelValues(vm.enti.entdMap[tpdtId].tpdt.enti.id, $viewValue, vm.prtoId, vm.fechaVigencia)"
-                        data-typeahead-editable="false" data-typeahead-wait-ms="250" data-typeahead-min-length="0"
-                        class="form-control">
-                </div>
-                <div data-ng-switch-when="SR" class="form-group-sm" data-ng-class="vm.enti.entdMap[tpdtId].spanCss">
-                    <label data-ng-bind="'entd_' + vm.enti.entdMap[tpdtId].id | translate"></label> <input
-                        class="form-control" data-ng-controller="ServicioTypeaheadController as ta" type="text"
-                        autocomplete="off" data-ng-model="vm.item.itdtMap[tpdtId].srvc"
-                        data-uib-typeahead="srvc as srvc.etiqueta for srvc in ta.search(vm.enti.entdMap[tpdtId].tpdt.enti.id, $viewValue)"
-                        data-typeahead-editable="false" data-typeahead-wait-ms="250" class="form-control">
-                </div>
-            </div>
-        </div>
-    </fieldset>
+				<div data-ng-switch-when="TX">
+					<div data-ng-switch="::vm.enti.entdMap[tpdtId].tpdt.tpht">
+						<div data-ng-switch-when="T" class="form-group-sm" data-ng-class="::vm.enti.entdMap[tpdtId].spanCss">
+							<label data-ng-bind="::('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label> <input type="text"
+								data-ng-model="vm.item.itdtMap[tpdtId].cadena" class="form-control" />
+						</div>
+						<div data-ng-switch-when="TA" class="col-sm-12 form-group-sm">
+							<div class="form-group-sm" data-ng-class="::vm.enti.entdMap[tpdtId].spanCss">
+								<label data-ng-bind="::('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label>
+								<textarea rows="4" data-ng-model="vm.item.itdtMap[tpdtId].cadena" class="form-control"
+									data-ng-bind="vm.item.itdtMap[tpdtId].cadena"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div data-ng-switch-when="PR">
+					<div data-ng-switch="::vm.enti.entdMap[tpdtId].tpdt.tpht">
+						<div data-ng-switch-when="S" class="form-group-sm" data-ng-class="::vm.enti.entdMap[tpdtId].spanCss">
+							<label data-ng-bind="::('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label> <select
+								data-ng-model="vm.item.itdtMap[tpdtId].prmt.id"
+								data-ng-options="labelValue.value as labelValue.label for labelValue in ::vm.labelValuesMap[vm.enti.entdMap[tpdtId].tpdt.enti.id]"
+								class="form-control">
+								<option />
+							</select>
+						</div>
+						<div data-ng-switch-when="F" class="form-group-sm" data-ng-class="::vm.enti.entdMap[tpdtId].spanCss">
+							<label data-ng-bind="::('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label> <input
+								data-ng-disabled="vm.enti.entdMap[tpdtId].tpdt.enti.puerto && vm.prtoId == null" class="form-control"
+								data-ng-controller="ParametroTypeaheadController as ta" type="text" autocomplete="off"
+								data-ng-model="vm.item.itdtMap[tpdtId].prmt"
+								data-uib-typeahead="prmt as prmt.etiqueta for prmt in ta.getLabelValues(vm.enti.entdMap[tpdtId].tpdt.enti.id, $viewValue, vm.prtoId, vm.fechaVigencia)"
+								data-typeahead-editable="false" data-typeahead-wait-ms="250" data-typeahead-min-length="0"
+								class="form-control">
+						</div>
+					</div>
+				</div>
+				<div data-ng-switch-when="SR" class="form-group-sm" data-ng-class="::vm.enti.entdMap[tpdtId].spanCss">
+					<label data-ng-bind="::('entd_' + vm.enti.entdMap[tpdtId].id | translate)"></label> <input
+						class="form-control" data-ng-controller="ServicioTypeaheadController as ta" type="text"
+						autocomplete="off" data-ng-model="vm.item.itdtMap[tpdtId].srvc"
+						data-uib-typeahead="srvc as srvc.etiqueta for srvc in ta.search(vm.enti.entdMap[tpdtId].tpdt.enti.id, $viewValue)"
+						data-typeahead-editable="false" data-typeahead-wait-ms="250" class="form-control">
+				</div>
+			</div>
+		</div>
+	</fieldset>
 </div>
-
-<!--
-<div data-ng-repeat="engd in vm.enti.engdList track by $index">
-    <fieldset>
-        <legend data-ng-if="vm.enti.engdList.length > 1" data-ng-bind="'engd_' + engd.id | translate"></legend>
-
-        <div class="row">
-            <div data-ng-repeat="tpdtId in vm.enti.entdList track by $index"
-                data-ng-if="vm.enti.entdMap[tpdtId].grupo == engd.numero" data-ng-switch
-                data-on="vm.enti.entdMap[tpdtId].tpdt.tipoElemento" class="form-group-sm"
-                data-ng-class="vm.enti.entdMap[tpdtId].spanCss">
-                <label data-ng-bind="'entd_' + vm.enti.entdMap[tpdtId].id | translate"></label> <select
-                    data-ng-switch-when="BO" data-ng-model="vm.item.itdtMap[tpdtId].cantidadEntera"
-                    data-ng-options="item as ('format_' + item | translate) for item in [1 , 0]" class="form-control">
-                    <option />
-                </select> <input data-ng-switch-when="ND" type="text" data-ng-model="vm.item.itdtMap[tpdtId].cantidadDecimal"
-                    class="form-control number" /> <input data-ng-switch-when="NE" type="text"
-                    data-ng-model="vm.item.itdtMap[tpdtId].cantidadEntera" class="form-control number" /> <input
-                    data-ng-switch-when="FE" type="text" class="form-control"
-                    data-ng-model="vm.item.itdtMap[tpdtId].fecha" data-bs-datepicker />
-                <div data-ng-switch-when="FH">
-                    <div class="col-sm-8 form-group">
-                        <input type="text" class="form-control" data-ng-model="vm.item.itdtMap[tpdtId].fecha"
-                            data-bs-datepicker />
-                    </div>
-                    <div class="col-sm-4 form-group">
-                        <input type="text" class="form-control" data-ng-model="vm.item.itdtMap[tpdtId].fecha"
-                            data-bs-timepicker />
-                    </div>
-                </div>
-                <select data-ng-switch-when="CR" data-ng-model="vm.item.itdtMap[tpdtId].cadena"
-                    data-ng-options="cdrf.valor as ('cdrf_' + tpdtId + '_' + cdrf.valor | translate) for cdrf in vm.enti.entdMap[tpdtId].tpdt.cdrfList"
-                    class="form-control">
-                    <option />
-                </select> <input data-ng-switch-when="TX" data-ng-if="vm.enti.entdMap[tpdtId].tpdt.tpht == 'T'" type="text"
-                    data-ng-model="vm.item.itdtMap[tpdtId].cadena" class="form-control" />
-                <textarea data-ng-switch-when="TX" data-ng-if="vm.enti.entdMap[tpdtId].tpdt.tpht == 'TA'" rows="4"
-                    data-ng-model="vm.item.itdtMap[tpdtId].cadena" class="form-control"
-                    data-ng-bind="vm.item.itdtMap[tpdtId].cadena"></textarea>
-                <select data-ng-switch-when="PR" data-ng-if="vm.enti.entdMap[tpdtId].tpdt.tpht == 'S'"
-                    data-ng-model="vm.item.itdtMap[tpdtId].prmt.id"
-                    data-ng-options="labelValue.value as labelValue.label for labelValue in vm.labelValuesMap[vm.enti.entdMap[tpdtId].tpdt.enti.id]"
-                    class="form-control">
-                    <option />
-                </select> <input data-ng-switch-when="PR" data-ng-if="vm.enti.entdMap[tpdtId].tpdt.tpht == 'F'"
-                    data-ng-disabled="vm.enti.entdMap[tpdtId].tpdt.enti.puerto && vm.prtoId == null"
-                    class="form-control" data-ng-controller="ParametroTypeaheadController as ta" type="text"
-                    autocomplete="off" data-ng-model="vm.item.itdtMap[tpdtId].prmt"
-                    data-uib-typeahead="prmt as prmt.etiqueta for prmt in ta.getLabelValues(vm.enti.entdMap[tpdtId].tpdt.enti.id, $viewValue, vm.prtoId, vm.fechaVigencia)"
-                    data-typeahead-editable="false" data-typeahead-wait-ms="250" class="form-control"> <input
-                    data-ng-switch-when="SR" class="form-control" data-ng-controller="ServicioTypeaheadController as ta"
-                    type="text" autocomplete="off" data-ng-model="vm.item.itdtMap[tpdtId].srvc"
-                    data-uib-typeahead="srvc as srvc.etiqueta for srvc in ta.search(vm.enti.entdMap[tpdtId].tpdt.enti.id, $viewValue)"
-                    data-typeahead-editable="false" data-typeahead-wait-ms="250" class="form-control">
-            </div>
-        </div>
-    </fieldset>
-</div>
- -->

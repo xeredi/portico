@@ -12,7 +12,7 @@ import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
-import xeredi.argo.model.metamodelo.proxy.TipoDatoProxy;
+import xeredi.argo.model.metamodelo.service.TipoDatoProxyService;
 import xeredi.argo.model.metamodelo.service.TipoServicioService;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
@@ -45,6 +45,9 @@ public final class ValoracionFilterAction extends GridFilterAction<ValoracionCri
 	@Inject
 	private PuertoService prtoService;
 
+	@Inject
+	private TipoDatoProxyService tpdtProxy;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -64,6 +67,6 @@ public final class ValoracionFilterAction extends GridFilterAction<ValoracionCri
 
 		prtoList = prtoService.selectList(prtoCriterio);
 		tpsrList = tpsrService.selectLabelValues(new TipoServicioCriterioVO());
-		tpdtCodExencion = TipoDatoProxy.select(TipoDato.COD_EXEN.getId());
+		tpdtCodExencion = tpdtProxy.select(TipoDato.COD_EXEN.getId());
 	}
 }

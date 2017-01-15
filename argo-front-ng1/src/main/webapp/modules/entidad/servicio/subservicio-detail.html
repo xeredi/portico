@@ -1,30 +1,32 @@
 <div data-ng-if="vm.item">
 	<div data-uib-tabset data-type="pills">
-		<div data-uib-tab data-select="vm.tabSelected(null)"
-			data-heading="{{'enti_' + vm.enti.enti.id | translate}}">
+		<div data-uib-tab data-select="vm.tabSelected(null)">
+			<div data-uib-tab-heading>
+				<span data-ng-bind="::('enti_' + vm.enti.enti.id | translate)"></span>
+			</div>
 			<div class="btn-toolbar" role="toolbar">
 				<div class="btn-group">
-					<a class="btn btn-default" data-ng-if="mc.hasAcen(vm.enti.enti.id, 'edit')"
-						data-ng-href="#!/servicio/subservicio/edit/edit/{{vm.enti.enti.id}}/{{vm.item.srvc.id}}/{{vm.item.id}}"><i
+					<a class="btn btn-default" data-ng-if="::mc.hasAcen(vm.enti.enti.id, 'edit')"
+						data-ng-href="#!/servicio/subservicio/edit/edit/{{::vm.enti.enti.id}}/{{::vm.item.srvc.id}}/{{::vm.item.id}}"><i
 						class="glyphicon glyphicon-edit"></i> <span data-translate="btn_editar"></span></a> <a
-						class="btn btn-default" data-ng-if="mc.hasAcen(vm.enti.enti.id, 'duplicate')"
-						data-ng-href="#!/servicio/subservicio/edit/duplicate/{{vm.enti.enti.id}}/{{vm.item.srvc.id}}/{{vm.item.id}}"><i
+						class="btn btn-default" data-ng-if="::mc.hasAcen(vm.enti.enti.id, 'duplicate')"
+						data-ng-href="#!/servicio/subservicio/edit/duplicate/{{::vm.enti.enti.id}}/{{::vm.item.srvc.id}}/{{::vm.item.id}}"><i
 						class="glyphicon glyphicon-tags"></i> <span data-translate="btn_duplicar"></span></a>
-					<button data-ng-if="mc.hasAcen(vm.enti.enti.id, 'remove')" data-ng-click="vm.remove()"
+					<button data-ng-if="::mc.hasAcen(vm.enti.enti.id, 'remove')" data-ng-click="vm.remove()"
 						class="btn btn-default">
 						<i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_borrar"></span>
 					</button>
 				</div>
 				<div class="btn-group">
-					<a class="btn btn-default" data-ng-href="#!/servicio/{{aces.path}}/{{vm.item.id}}"
-						data-ng-repeat="aces in vm.enti.acesList track by $index" data-ng-if="!aces.multiple"
-						data-ng-bind="'fncd_' + aces.id | translate"></a>
+					<a class="btn btn-default" data-ng-href="#!/servicio/{{::aces.path}}/{{::vm.item.id}}"
+						data-ng-repeat="aces in ::vm.enti.acesList track by $index" data-ng-if="::!aces.multiple"
+						data-ng-bind="::('fncd_' + aces.id | translate)"></a>
 				</div>
-				<div class="btn-group" data-ng-if="vm.enti.enti.tpdtEstado">
-					<a data-ng-repeat="trmt in vm.enti.trmtList track by $index"
+				<div class="btn-group" data-ng-if="::vm.enti.enti.tpdtEstado">
+					<a data-ng-repeat="trmt in ::vm.enti.trmtList track by $index"
 						data-ng-if="(vm.item.estado == trmt.estadoOrig) && mc.hasFncdId(trmt.id)"
-						data-ng-href="#!/item/item-tramite/edit/create/{{vm.item.entiId}}/{{vm.item.id}}/{{trmt.id}}"
-						class="btn btn-default" data-ng-bind="('trmt_' + trmt.id | translate)"></a>
+						data-ng-href="#!/item/item-tramite/edit/create/{{::vm.item.entiId}}/{{::vm.item.id}}/{{::trmt.id}}"
+						class="btn btn-default" data-ng-bind="::('trmt_' + trmt.id | translate)"></a>
 				</div>
 			</div>
 
@@ -33,9 +35,9 @@
 					<div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
 						<label data-translate="srvc"></label>
 						<p class="form-control-static">
-							<a data-ng-href="#!/servicio/servicio/detail/{{vm.item.srvc.entiId}}/{{vm.item.srvc.id}}"
-								data-ng-bind="vm.item.srvc.etiqueta" data-ng-if="mc.hasAcen(vm.item.srvc.entiId, 'detail')"></a> <span
-								data-ng-bind="vm.item.srvc.etiqueta" data-ng-if="!mc.hasAcen(vm.item.srvc.entiId, 'detail')"></span>
+							<a data-ng-href="#!/servicio/servicio/detail/{{::vm.item.srvc.entiId}}/{{::vm.item.srvc.id}}"
+								data-ng-bind="vm.item.srvc.etiqueta" data-ng-if="::mc.hasAcen(vm.item.srvc.entiId, 'detail')"></a> <span
+								data-ng-bind="vm.item.srvc.etiqueta" data-ng-if="::!mc.hasAcen(vm.item.srvc.entiId, 'detail')"></span>
 						</p>
 					</div>
 					<div class="col-sm-1 col-md-1 form-group-sm">
@@ -43,29 +45,29 @@
 						<p class="form-control-static number" data-ng-bind="vm.item.numero"></p>
 					</div>
 
-					<div data-ng-if="vm.enti.enti.tpdtEstado" class="col-sm-3 col-md-2 form-group-sm">
+					<div data-ng-if="::vm.enti.enti.tpdtEstado" class="col-sm-3 col-md-2 form-group-sm">
 						<label data-translate="ssrv_estado"></label>
 						<p class="form-control-static"
 							data-ng-bind="('cdrf_' + vm.enti.enti.tpdtEstado.id + '_' + vm.item.estado | translate)"></p>
 					</div>
 
-					<div data-ng-if="vm.enti.enti.temporal" class="col-sm-2 col-md-2 col-xl-1 form-group-sm">
+					<div data-ng-if="::vm.enti.enti.temporal" class="col-sm-2 col-md-2 col-xl-1 form-group-sm">
 						<label data-translate="fini"></label>
 						<p class="form-control-static" data-ng-bind="(vm.item.fini | date: ('format_datetime' | translate))"></p>
 					</div>
 
-					<div data-ng-if="vm.enti.enti.temporal" class="col-sm-2 col-md-2 col-xl-1 form-group-sm">
+					<div data-ng-if="::vm.enti.enti.temporal" class="col-sm-2 col-md-2 col-xl-1 form-group-sm">
 						<label data-translate="ffin"></label>
 						<p class="form-control-static" data-ng-bind="(vm.item.ffin | date: ('format_datetime' | translate))"></p>
 					</div>
 
-					<div data-ng-repeat="entiId in vm.enti.entiPadresList track by $index"
-						data-ng-if="(entiId != vm.enti.enti.tpsrId)" class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
-						<label data-ng-bind="('enti_' + entiId | translate)"></label>
+					<div data-ng-repeat="entiId in ::vm.enti.entiPadresList track by $index"
+						data-ng-if="::(entiId != vm.enti.enti.tpsrId)" class="col-sm-3 col-md-2 col-lg-2 form-group-sm">
+						<label data-ng-bind="::('enti_' + entiId | translate)"></label>
 						<p class="form-control-static">
 							<a data-ng-href="#!/servicio/subservicio/detail/{{entiId}}/{{vm.item.ssrvPadreMap[entiId].id}}"
-								data-ng-bind="vm.item.ssrvPadreMap[entiId].etiqueta" data-ng-if="mc.hasAcen(entiId, 'detail')"></a> <span
-								data-ng-bind="vm.item.ssrvPadreMap[entiId].etiqueta" data-ng-if="!mc.hasAcen(entiId, 'detail')"></span>
+								data-ng-bind="vm.item.ssrvPadreMap[entiId].etiqueta" data-ng-if="::mc.hasAcen(entiId, 'detail')"></a>
+							<span data-ng-bind="vm.item.ssrvPadreMap[entiId].etiqueta" data-ng-if="::!mc.hasAcen(entiId, 'detail')"></span>
 						</p>
 					</div>
 				</div>
@@ -74,12 +76,18 @@
 			</fieldset>
 		</div>
 		<div data-uib-tab data-active="vm.tabActive[-2]" data-select="vm.tabSelected(-2)"
-			data-ng-if="vm.ittrList.length" data-heading="{{'trmtList' | translate}}">
+			data-ng-if="vm.ittrList.length">
+			<div data-uib-tab-heading>
+				<span data-ng-bind="::('trmtList' | translate)"></span>
+			</div>
 			<div data-ng-include="'modules/entidad/item/fragment/item-tramite-grid-content.html'"></div>
 		</div>
-		<div data-ng-if="mc.hasAcen(entiHijaId, 'list')" data-uib-tab
-			data-ng-repeat="entiHijaId in vm.enti.entiHijasList track by $index" data-active="vm.tabActive[entiHijaId]"
-			data-select="vm.tabSelected(entiHijaId)" data-heading="{{'enti_' + entiHijaId | translate}}">
+		<div data-ng-if="::mc.hasAcen(entiHijaId, 'list')" data-uib-tab
+			data-ng-repeat="entiHijaId in ::vm.enti.entiHijasList track by $index"
+			data-active="vm.tabActive[entiHijaId]" data-select="vm.tabSelected(entiHijaId)">
+			<div data-uib-tab-heading>
+				<span data-ng-bind="::('enti_' + entiHijaId | translate)"></span>
+			</div>
 			<div data-ng-if="vm.itemHijosMap[entiHijaId]">
 				<div class="btn-toolbar" role="toolbar">
 					<div class="btn-group">
@@ -91,8 +99,8 @@
 					</div>
 
 					<div class="btn-group">
-						<a class="btn btn-default" data-ng-if="mc.hasAcen(entiHijaId, 'create')"
-							data-ng-href="#!/servicio/subservicio-dependiente/edit/create/{{entiHijaId}}/{{vm.item.srvc.id}}/{{vm.item.entiId}}/{{vm.item.id}}"><i
+						<a class="btn btn-default" data-ng-if="::mc.hasAcen(entiHijaId, 'create')"
+							data-ng-href="#!/servicio/subservicio-dependiente/edit/create/{{::entiHijaId}}/{{::vm.item.srvc.id}}/{{::vm.item.entiId}}/{{::vm.item.id}}"><i
 							class="glyphicon glyphicon-file"></i> <span data-translate="btn_crear"></span></a>
 					</div>
 				</div>
@@ -107,32 +115,32 @@
 								<th />
 
 								<th data-translate="ssrv_numero"></th>
-								<th data-ng-if="vm.entiHijasMap[entiHijaId].enti.tpdtEstado" data-translate="ssrv_estado"></th>
-								<th data-ng-if="vm.entiHijasMap[entiHijaId].enti.temporal" data-translate="fini"></th>
-								<th data-ng-if="vm.entiHijasMap[entiHijaId].enti.temporal" data-translate="ffin"></th>
+								<th data-ng-if="::vm.entiHijasMap[entiHijaId].enti.tpdtEstado" data-translate="ssrv_estado"></th>
+								<th data-ng-if="::vm.entiHijasMap[entiHijaId].enti.temporal" data-translate="fini"></th>
+								<th data-ng-if="::vm.entiHijasMap[entiHijaId].enti.temporal" data-translate="ffin"></th>
 
-								<th data-ng-repeat="tpdtId in vm.entiHijasMap[entiHijaId].entdGridList track by $index"
-									data-ng-bind="('entd_' + vm.entiHijasMap[entiHijaId].entdMap[tpdtId].id | translate)"></th>
+								<th data-ng-repeat="tpdtId in ::vm.entiHijasMap[entiHijaId].entdGridList track by $index"
+									data-ng-bind="::('entd_' + vm.entiHijasMap[entiHijaId].entdMap[tpdtId].id | translate)"></th>
 							</tr>
 						</thead>
 
 						<tbody>
 							<tr data-ng-repeat="itemHijo in vm.itemHijosMap[entiHijaId].list track by $index">
-								<td><a data-ng-if="mc.hasAcen(entiHijaId, 'detail')"
+								<td><a data-ng-if="::mc.hasAcen(entiHijaId, 'detail')"
 									data-ng-href="#!/servicio/subservicio/detail/{{itemHijo.entiId}}/{{itemHijo.id}}"><i
 										class="glyphicon glyphicon-search"></i></a></td>
 
 								<td data-ng-bind="itemHijo.numero" class="number"></td>
-								<td data-ng-if="vm.entiHijasMap[entiHijaId].enti.tpdtEstado" nowrap="nowrap"><span
+								<td data-ng-if="::vm.entiHijasMap[entiHijaId].enti.tpdtEstado" nowrap="nowrap"><span
 									data-ng-bind="itemHijo.estado"
 									data-uib-tooltip="{{('cdrf_' + vm.entiHijasMap[entiHijaId].enti.tpdtEstado.id + '_' + itemHijo.estado | translate)}}"></span></td>
-								<td data-ng-if="vm.entiHijasMap[entiHijaId].enti.temporal"
+								<td data-ng-if="::vm.entiHijasMap[entiHijaId].enti.temporal"
 									data-ng-bind="(itemHijo.fini | date: ('format_date' | translate))"></td>
-								<td data-ng-if="vm.entiHijasMap[entiHijaId].enti.temporal"
+								<td data-ng-if="::vm.entiHijasMap[entiHijaId].enti.temporal"
 									data-ng-bind="(itemHijo.ffin | date: ('format_date' | translate))"></td>
 
-								<td data-ng-repeat="tpdtId in vm.entiHijasMap[entiHijaId].entdGridList track by $index"
-									data-ng-switch="vm.entiHijasMap[entiHijaId].entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span
+								<td data-ng-repeat="tpdtId in ::vm.entiHijasMap[entiHijaId].entdGridList track by $index"
+									data-ng-switch="::vm.entiHijasMap[entiHijaId].entdMap[tpdtId].tpdt.tipoElemento" nowrap="nowrap"><span
 									data-ng-switch-when="BO"><i class="glyphicon"
 										data-ng-class="{1:'glyphicon-ok', 0:'glyphicon-remove'}[itemHijo.itdtMap[tpdtId].cantidadEntera]"></i></span>
 									<span data-ng-switch-when="ND" data-ng-bind="(itemHijo.itdtMap[tpdtId].cantidadEntera | number:2)"
