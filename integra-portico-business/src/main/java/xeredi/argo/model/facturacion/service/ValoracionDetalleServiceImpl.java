@@ -1,8 +1,10 @@
 package xeredi.argo.model.facturacion.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
 
 import com.google.inject.Inject;
@@ -49,8 +51,11 @@ public class ValoracionDetalleServiceImpl implements ValoracionDetalleService {
 	@Override
 	public PaginatedList<ValoracionDetalleVO> selectList(ValoracionDetalleCriterioVO vlrdCriterio, int offset,
 			int limit) {
-		// TODO Auto-generated method stub
-		return null;
+		final int count = vlrdDAO.count(vlrdCriterio);
+
+		return new PaginatedList<ValoracionDetalleVO>(
+				count > offset ? vlrdDAO.selectList(vlrdCriterio, new RowBounds(offset, limit)) : new ArrayList<>(),
+				offset, limit, count);
 	}
 
 	/**
@@ -58,8 +63,7 @@ public class ValoracionDetalleServiceImpl implements ValoracionDetalleService {
 	 */
 	@Override
 	public List<ValoracionDetalleVO> selectList(ValoracionDetalleCriterioVO vlrdCriterio) {
-		// TODO Auto-generated method stub
-		return null;
+		return vlrdDAO.selectList(vlrdCriterio);
 	}
 
 	/**
