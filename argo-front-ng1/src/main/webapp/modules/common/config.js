@@ -235,6 +235,8 @@
 
                         break;
                     default:
+                        usSpinnerService.stop("spinner");
+
                         break;
                     }
                 }
