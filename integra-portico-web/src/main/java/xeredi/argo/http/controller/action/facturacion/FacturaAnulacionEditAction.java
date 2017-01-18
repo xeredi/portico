@@ -9,8 +9,8 @@ import com.google.inject.Inject;
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.FacturaBO;
 import xeredi.argo.model.facturacion.service.FacturaSerieService;
+import xeredi.argo.model.facturacion.service.FacturaService;
 import xeredi.argo.model.facturacion.vo.FacturaAnulacionVO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieCriterioVO;
 import xeredi.argo.model.facturacion.vo.FacturaSerieVO;
@@ -32,6 +32,9 @@ public final class FacturaAnulacionEditAction extends CrudEditAction<FacturaAnul
 	@Inject
 	private FacturaSerieService fcsrService;
 
+	@Inject
+	private FacturaService fctrService;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -39,8 +42,7 @@ public final class FacturaAnulacionEditAction extends CrudEditAction<FacturaAnul
 	public void doEdit() throws ApplicationException {
 		Preconditions.checkNotNull(model.getFctrId());
 
-		final FacturaBO fctrBO = new FacturaBO();
-		final FacturaVO fctr = fctrBO.select(model.getFctrId(), getIdioma());
+		final FacturaVO fctr = fctrService.select(model.getFctrId(), getIdioma());
 
 		model.setFecha(Calendar.getInstance().getTime());
 		model.setFcsrId(fctr.getFcsr().getId());
