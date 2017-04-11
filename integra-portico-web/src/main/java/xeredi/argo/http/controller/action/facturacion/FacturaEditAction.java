@@ -6,8 +6,8 @@ import com.google.inject.Inject;
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.FacturaBO;
 import xeredi.argo.model.facturacion.service.AspectoService;
+import xeredi.argo.model.facturacion.service.FacturaService;
 import xeredi.argo.model.facturacion.vo.AspectoVO;
 import xeredi.argo.model.facturacion.vo.FacturaVO;
 
@@ -27,6 +27,9 @@ public final class FacturaEditAction extends CrudEditAction<FacturaVO> {
 	@Inject
 	private AspectoService aspcService;
 
+	@Inject
+	private FacturaService fctrService;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -34,9 +37,7 @@ public final class FacturaEditAction extends CrudEditAction<FacturaVO> {
 	public void doEdit() throws ApplicationException {
 		Preconditions.checkNotNull(model.getId());
 
-		final FacturaBO fctrBO = new FacturaBO();
-
-		model = fctrBO.select(model.getId(), getIdioma());
+		model = fctrService.select(model.getId(), getIdioma());
 		aspc = aspcService.select(model.getAspc().getId(), model.getFref(), getIdioma());
 	}
 

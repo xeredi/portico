@@ -41,6 +41,8 @@ import xeredi.argo.model.facturacion.service.CargoService;
 import xeredi.argo.model.facturacion.service.CargoServiceImpl;
 import xeredi.argo.model.facturacion.service.FacturaSerieService;
 import xeredi.argo.model.facturacion.service.FacturaSerieServiceImpl;
+import xeredi.argo.model.facturacion.service.FacturaService;
+import xeredi.argo.model.facturacion.service.FacturaServiceImpl;
 import xeredi.argo.model.facturacion.service.ReglaIncompatibleService;
 import xeredi.argo.model.facturacion.service.ReglaIncompatibleServiceImpl;
 import xeredi.argo.model.facturacion.service.ReglaService;
@@ -218,6 +220,7 @@ public final class ArgoGuiceModule extends MyBatisModule {
 		bind(AspectoService.class).to(AspectoServiceImpl.class).in(Singleton.class);
 		bind(AspectoCargoService.class).to(AspectoCargoServiceImpl.class).in(Singleton.class);
 		bind(CargoService.class).to(CargoServiceImpl.class).in(Singleton.class);
+		bind(FacturaService.class).to(FacturaServiceImpl.class).in(Singleton.class);
 		bind(ReglaService.class).to(ReglaServiceImpl.class).in(Singleton.class);
 		bind(ReglaIncompatibleService.class).to(ReglaIncompatibleServiceImpl.class).in(Singleton.class);
 		bind(ValoracionService.class).to(ValoracionServiceImpl.class).in(Singleton.class);

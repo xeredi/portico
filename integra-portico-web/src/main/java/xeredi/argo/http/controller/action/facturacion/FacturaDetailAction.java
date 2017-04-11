@@ -8,8 +8,8 @@ import com.google.inject.Inject;
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.facturacion.bo.FacturaBO;
 import xeredi.argo.model.facturacion.service.AspectoService;
+import xeredi.argo.model.facturacion.service.FacturaService;
 import xeredi.argo.model.facturacion.service.ValoracionCargoService;
 import xeredi.argo.model.facturacion.service.ValoracionImpuestoService;
 import xeredi.argo.model.facturacion.service.ValoracionService;
@@ -58,6 +58,9 @@ public final class FacturaDetailAction extends CrudDetailAction<FacturaVO> {
 	@Inject
 	private ValoracionImpuestoService vlriService;
 
+	@Inject
+	private FacturaService fctrService;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -65,9 +68,7 @@ public final class FacturaDetailAction extends CrudDetailAction<FacturaVO> {
 	public void doDetail() throws ApplicationException {
 		Preconditions.checkNotNull(model.getId());
 
-		final FacturaBO fctrBO = new FacturaBO();
-
-		model = fctrBO.select(model.getId(), getIdioma());
+		model = fctrService.select(model.getId(), getIdioma());
 
 		final ValoracionCriterioVO vlrcCriterio = new ValoracionCriterioVO();
 

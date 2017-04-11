@@ -23,34 +23,12 @@ Maquima Weblogic
 	Usuario: externos
 	Password: 3xt3rn4lsupport
 
-Maquina
+Maquina Integra 2
 	http://172.20.22.156/
 	http://172.20.22.156/Integrados/login.do?metodo=entrada
 
 	app: prueba/1
 	maquina: externos/3xt3rn4lsupport
-
-
-
-Doc Ténnica
-	integramandesa.puertos.es
-		DocumentacionTecnica.zip
-
-		SO: GNU/Linux Ubuntu Server 14.04.2 LTS
-		Hostname: integramandesa.puertos.es
-		IP: 172.20.22.90
-		Usuario: externos
-		Password: 3xt3rn4lsupport
-
-SVN
-	https://svn.puertos.es:4343/repos/IntegraMan
-	jrey_prodevelop / X25veh53
-
-OTR (incidencias)
-	cau.puertos.es/otrs/index.pl
-
-	jrey_prodevelop / X25veh53
-	rcorreas_prodevelop / KalaXok290
 
 Oracle
 		Servidor : zipi.puertos.es
@@ -77,6 +55,11 @@ puertos
 	PdE - Estadisticas
 		Oscar Souto 		915245578
 
+	PdE - Sistemas
+		Juanjo Melones - 915245524
+		Miguel Angel
+
+		
 	alicante
 		Patricia Fernandez	649775106
 		 Jose Angel Bellido Macho [jabellido@puertoalicante.com] 		Facturacion
@@ -110,5 +93,24 @@ puertos
 prodevelop
 	xrey@prodevelop.es / prodevelop
 
-Juanjo Melones - 915245524
-Miguel Angel
+
+Doc Ténnica
+	integramandesa.puertos.es
+		DocumentacionTecnica.zip
+
+		SO: GNU/Linux Ubuntu Server 14.04.2 LTS
+		Hostname: integramandesa.puertos.es
+		IP: 172.20.22.90
+		Usuario: externos
+		Password: 3xt3rn4lsupport
+
+SVN
+	https://svn.puertos.es:4343/repos/IntegraMan
+	jrey_prodevelop / X25veh53
+
+OTR (incidencias)
+	cau.puertos.es/otrs/index.pl
+
+	jrey_prodevelop / X25veh53
+	rcorreas_prodevelop / KalaXok290
+
