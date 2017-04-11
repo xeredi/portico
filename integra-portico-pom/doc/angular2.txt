@@ -1,3 +1,57 @@
+NPM EN LINUX (https://docs.npmjs.com/getting-started/fixing-npm-permissions)
+- Cambiar el directorio por defecto de NPM
+    - Crear carpeta donde guardar los módulos
+        $ mkdir ~/.npm-global
+    - Configurar npm para que utilice dicha carpeta
+        $ npm config set prefix '~/.npm-global'
+    - Modificar el archivo 'vi ~/.bash_profile', añadiendo la entrada:
+        export PATH=~/.npm-global/bin:$PATH
+    - Refrescar el archivo '.bash_profile'
+        $ source ~/.bash_profile
+    - Verificar que funciona correctamente:
+        $ npm install -g jshint
+
+INSTALACION MODULOS NPM
+$ npm install -g typescript
+$ npm install -g angular-cli
+$ npm install -g ionic
+$ npm install -g cordova
+...
+
+
+ANGULAR CLI (https://github.com/angular/angular-cli)
+- Prepara los ficheros iniciales de un proyecto angular 2
+    $ sudo npm install -g angular-cli
+    Desde la carpeta del proyecto:
+    $ ng init
+    $ ng init --routing (Crea un módulo para las URL)
+- Ejecutar en el servidor de desarrollo:
+    $ ng serve
+- Generar una distribucion:
+    $ ng build
+- Creación de módulos:
+    $ ng g module my-new-module
+    $ ng g module my-new-module --routing
+- Creación de componentes:
+    $ ng g component my-new-component
+    Ej: $ ng g component user-access
+- También se pueden crear:
+    - Componentes: $ ng g component nombre-componente
+    - Directivas:  $ ng g component nombre-directiva
+    - Pipes:       $ ng g pipe nombre-pipe
+    - Servicios:   $ ng g service nombre-servicio
+    - Clases:      $ ng g class nombre-clase
+    - Interfaces:  $ ng g interface nombre-interfaz
+    - Enums:       $ ng g enum nombre-enum
+    - Modulos:     $ ng g module nombre-modulo
+
+ECLIPSE
+- Ignorar la carpeta "node_modules" en la validación
+    - Seleccionar la carpeta "node_modules" -> Properties
+    - Marcar el check "Derived" de "Attributes"
+
+
+
 Comandos para instalar una aplicación:
 $ npm install
 $ npm run tsc
