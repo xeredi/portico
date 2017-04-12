@@ -356,171 +356,7 @@ s_CMP
     )? EOL
 ;
 
-
-
-s_TAX
-:
-    'TAX+' EOL
-;
-
-s_LIN
-:
-    'LIN+' EOL
-;
-
-s_STS
-:
-    'STS+' EOL
-;
-
-s_GPO
-:
-    'GPO+' EOL
-;
-
-s_GEI
-:
-    'GEI+' EOL
-;
-
-s_FII
-:
-    'FII+' EOL
-;
-
-s_IDT
-:
-    'IDT+' EOL
-;
-
-s_UNH
-:
-    'UNH' PLUS d_0062 PLUS s009
-    (
-        PLUS d_0068
-    )?
-    (
-        PLUS s010
-    )?
-    (
-        PLUS s016
-    )?
-    (
-        PLUS s017
-    )?
-    (
-        PLUS s018
-    )? EOL
-;
-
-s_DTM
-:
-    'DTM' PLUS c_C507 EOL
-;
-
-s_RFF
-:
-    'RFF' PLUS c_C506 EOL
-;
-
-s_GOR
-:
-    'GOR'
-    (
-        PLUS d_8323
-    )?
-    (
-        PLUS c_C232
-    )?
-    (
-        PLUS c_C232
-    )?
-    (
-        PLUS c_C232
-    )?
-    (
-        PLUS c_C232
-    )? EOL
-;
-
-s_TDT
-:
-    'TDT' PLUS d_8051
-    (
-        PLUS d_8028
-    )?
-    (
-        PLUS c_C220
-    )?
-    (
-        PLUS c_C001
-    )?
-    (
-        PLUS c_C040
-    )?
-    (
-        PLUS d_8101
-    )?
-    (
-        PLUS c_C401
-    )?
-    (
-        PLUS c_C222
-    )?
-    (
-        PLUS d_8281
-    )?
-    (
-        PLUS c_C003
-    )? EOL
-;
-
-s_LOC
-:
-    'LOC' PLUS d_3227
-    (
-        PLUS c_C517
-    )?
-    (
-        PLUS c_C519
-    )?
-    (
-        PLUS c_C553
-    )?
-    (
-        PLUS d_5479
-    )? EOL
-;
-
-s_NAD
-:
-    'NAD' PLUS d_3035
-    (
-        PLUS c_C082
-    )?
-    (
-        PLUS c_C058
-    )?
-    (
-        PLUS c_C080
-    )?
-    (
-        PLUS c_C059
-    )?
-    (
-        PLUS d_3164
-    )?
-    (
-        PLUS c_C819
-    )?
-    (
-        PLUS d_3251
-    )?
-    (
-        PLUS d_3207
-    )? EOL
-;
-
+/** CNI  CONSIGNMENT INFORMATION. */
 s_CNI
 :
     'CNI'
@@ -535,177 +371,106 @@ s_CNI
     )? EOL
 ;
 
-s_GID
-:
-    'GID'
-    (
-        PLUS d_1496
-    )?
-    (
-        PLUS c_C213
-    )?
-    (
-        PLUS c_C213
-    )?
-    (
-        PLUS c_C213
-    )?
-    (
-        PLUS c_C213
-    )?
-    (
-        PLUS c_C213
-    )? EOL
-;
-
-s_FTX
-:
-    'FTX' PLUS d_4451
-    (
-        PLUS d_4453?
-    )?
-    (
-        PLUS c_C107?
-    )?
-    (
-        PLUS c_C108?
-    )?
-    (
-        PLUS d_3453?
-    )?
-    (
-        PLUS d_4447?
-    )? EOL
-;
-
-s_MEA
-:
-    'MEA' PLUS d_6311
-    (
-        PLUS c_C502
-    )?
-    (
-        PLUS c_C174
-    )?
-    (
-        PLUS d_7383
-    )? EOL
-;
-
-s_PCI
-:
-    'PCI'
-    (
-        PLUS d_4233?
-    )?
-    (
-        PLUS c_C210?
-    )?
-    (
-        PLUS d_8169?
-    )?
-    (
-        PLUS c_C827?
-    )? EOL
-;
-
-s_DOC
-:
-    'DOC' PLUS c_C002
-    (
-        PLUS c_C503
-    )?
-    (
-        PLUS d_3153
-    )?
-    (
-        PLUS d_1220
-    )?
-    (
-        PLUS d_1218
-    )? EOL
-;
-
-s_SGP
-:
-    'SGP' PLUS c_C237
-    (
-        PLUS d_7224?
-    )? EOL
-;
-
-s_EQD
-:
-    'EQD' PLUS d_8053
-    (
-        PLUS c_C237
-    )?
-    (
-        PLUS c_C224
-    )?
-    (
-        PLUS d_8077
-    )?
-    (
-        PLUS d_8249
-    )?
-    (
-        PLUS d_8169
-    )?
-    (
-        PLUS d_4233
-    )? EOL
-;
-
-s_SEL
-:
-    'SEL'
-    (
-        PLUS d_9308
-    )?
-    (
-        PLUS c_C215
-    )?
-    (
-        PLUS d_4517
-    )?
-    (
-        PLUS c_C208
-    )?
-    (
-        PLUS d_4525
-    )? EOL
-;
-
-s_UNT
-:
-    'UNT' PLUS d_0074 PLUS d_0062 EOL
-;
-
+/** CNT  CONTROL TOTAL. */
 s_CNT
 :
     'CNT' PLUS c_C270 EOL
 ;
 
+/** COD  COMPONENT DETAILS. */
+s_COD
+:
+    'COD'
+    (
+        PLUS c_C823
+    )?
+    (
+        PLUS c_C824
+    )? EOL
+;
+
+/** COM  COMMUNICATION CONTACT. */
 s_COM
 :
     'COM' PLUS c_C076 EOL
 ;
 
+/** COT  CONTRIBUTION DETAILS. */
+s_COT
+:
+    'COT' PLUS d_5047
+    (
+        PLUS c_C953
+    )?
+    (
+        PLUS c_C522
+    )?
+    (
+        PLUS c_C203
+    )?
+    (
+        PLUS c_C960
+    )? EOL
+;
+
+/** CPI  CHARGE PAYMENT INSTRUCTIONS. */
 s_CPI
 :
     'CPI'
     (
-        PLUS c_C229?
+        PLUS c_C229
     )?
     (
-        PLUS c_C231?
+        PLUS c_C231
     )?
     (
-        PLUS d_4237?
+        PLUS d_4237
     )? EOL
 ;
 
+/** CPS  CONSIGNMENT PACKING SEQUENCE. */
+s_CPS
+:
+    'CPS' PLUS d_7164
+    (
+        PLUS d_7166
+    )?
+    (
+        PLUS d_7075
+    )? EOL
+;
+
+/** CPT  ACCOUNT IDENTIFICATION. */
+s_CPT
+:
+    'CPT' PLUS d_4437 PLUS c_C593 EOL
+;
+
+/** CST  CUSTOMS STATUS OF GOODS. */
+s_CST
+:
+    'CST'
+    (
+        PLUS d_1496
+    )?
+    (
+        PLUS c_C246
+    )?
+    (
+        PLUS c_C246
+    )?
+    (
+        PLUS c_C246
+    )?
+    (
+        PLUS c_C246
+    )?
+    (
+        PLUS c_C246
+    )? EOL
+;
+
+/** CTA  CONTACT INFORMATION. */
 s_CTA
 :
     'CTA'
@@ -717,6 +482,7 @@ s_CTA
     )? EOL
 ;
 
+/** CUX  CURRENCIES. */
 s_CUX
 :
     'CUX' PLUS c_C504
@@ -731,6 +497,37 @@ s_CUX
     )? EOL
 ;
 
+/** DAM  DAMAGE. */
+s_DAM
+:
+    'DAM' PLUS d_7493
+    (
+        PLUS c_C821
+    )?
+    (
+        PLUS c_C822
+    )?
+    (
+        PLUS c_C825
+    )?
+    (
+        PLUS c_C826
+    )? EOL
+;
+
+/** DFN  DEFINITION FUNCTION. */
+s_DFN
+:
+    'DFN' PLUS d_9023
+    (
+        PLUS d_9025
+    )?
+    (
+        PLUS d_4519
+    )? EOL
+;
+
+/** DGS  DANGEROUS GOODS. */
 s_DGS
 :
     'DGS'
@@ -778,9 +575,169 @@ s_DGS
     )? EOL
 ;
 
+/** DII  DIRECTORY IDENTIFICATION. */
+s_DII
+:
+    'DII' PLUS d_1056 PLUS d_1058
+    (
+        PLUS d_9148
+    )?
+    (
+        PLUS d_1476
+    )?
+    (
+        PLUS d_3453
+    )?
+    (
+        PLUS d_4513
+    )? EOL
+;
+
+/** DIM  DIMENSIONS. */
 s_DIM
 :
     'DIM' PLUS d_6145 PLUS c_C211 EOL
+;
+
+/** DLI  DOCUMENT LINE IDENTIFICATION. */
+s_DLI
+:
+    'DLI' PLUS d_1073 PLUS d_1082 EOL
+;
+
+/** DLM  DELIVERY LIMITATIONS. */
+s_DLM
+:
+    'DLM'
+    (
+        PLUS d_4455
+    )?
+    (
+        PLUS c_C522
+    )?
+    (
+        PLUS c_C214
+    )?
+    (
+        PLUS d_4457
+    )? EOL
+;
+
+/** DMS  DOCUMENT/MESSAGE SUMMARY. */
+s_DMS
+:
+    'DMS'
+    (
+        PLUS c_C106
+    )?
+    (
+        PLUS c_C002
+    )?
+    (
+        PLUS d_7240
+    )? EOL
+;
+
+/** DOC  DOCUMENT/MESSAGE DETAILS. */
+s_DOC
+:
+    'DOC' PLUS c_C002
+    (
+        PLUS c_C503
+    )?
+    (
+        PLUS d_3153
+    )?
+    (
+        PLUS d_1220
+    )?
+    (
+        PLUS d_1218
+    )? EOL
+;
+
+/** DRD  DATA REPRESENTATION DETAILS. */
+s_DRD
+:
+    'DRD'
+    (
+        PLUS d_7512
+    )?
+    (
+        PLUS d_7515
+    )?
+    (
+        PLUS d_9169
+    )?
+    (
+        PLUS d_6174
+    )? EOL
+;
+
+/** DSG  DOSAGE ADMINISTRATION. */
+s_DSG
+:
+    'DSG' PLUS d_6085
+    (
+        PLUS c_C838
+    )? EOL
+;
+
+/** DSI  DATA SET IDENTIFICATION. */
+s_DSI
+:
+    'DSI' PLUS c_C782
+    (
+        PLUS c_C082
+    )?
+    (
+        PLUS d_4405
+    )?
+    (
+        PLUS c_C286
+    )?
+    (
+        PLUS d_1060
+    )? EOL
+;
+
+/** DTM  DATE/TIME/PERIOD. */
+s_DTM
+:
+    'DTM' PLUS c_C507 EOL
+;
+
+/** EDT  EDITING DETAILS. */
+s_EDT
+:
+    'EDT'
+    (
+        PLUS d_6178
+    )?
+    (
+        PLUS d_9026
+    )?
+    (
+        PLUS d_9031
+    )?
+    (
+        PLUS d_4447
+    )? EOL
+;
+
+/** EFI  EXTERNAL FILE LINK IDENTIFICATION. */
+s_EFI
+:
+    'EFI' PLUS c_C077
+    (
+        PLUS c_C099
+    )?
+    (
+        PLUS d_1050
+    )?
+    (
+        PLUS d_9450
+    )? EOL
 ;
 
 s_EQA
@@ -791,9 +748,62 @@ s_EQA
     )? EOL
 ;
 
+s_EQD
+:
+    'EQD' PLUS d_8053
+    (
+        PLUS c_C237
+    )?
+    (
+        PLUS c_C224
+    )?
+    (
+        PLUS d_8077
+    )?
+    (
+        PLUS d_8249
+    )?
+    (
+        PLUS d_8169
+    )?
+    (
+        PLUS d_4233
+    )? EOL
+;
+
 s_EQN
 :
     'EQN' PLUS c_C523 EOL
+;
+
+s_ERC
+:
+    'ERC' PLUS c_C901 EOL
+;
+
+s_FII
+:
+    'FII+' EOL
+;
+
+s_FTX
+:
+    'FTX' PLUS d_4451
+    (
+        PLUS d_4453?
+    )?
+    (
+        PLUS c_C107?
+    )?
+    (
+        PLUS c_C108?
+    )?
+    (
+        PLUS d_3453?
+    )?
+    (
+        PLUS d_4447?
+    )? EOL
 ;
 
 s_GDS
@@ -804,6 +814,34 @@ s_GDS
     )?
     (
         PLUS c_C288
+    )? EOL
+;
+
+s_GEI
+:
+    'GEI+' EOL
+;
+
+s_GID
+:
+    'GID'
+    (
+        PLUS d_1496
+    )?
+    (
+        PLUS c_C213
+    )?
+    (
+        PLUS c_C213
+    )?
+    (
+        PLUS c_C213
+    )?
+    (
+        PLUS c_C213
+    )?
+    (
+        PLUS c_C213
     )? EOL
 ;
 
@@ -824,6 +862,31 @@ s_GIN
     )? EOL
 ;
 
+s_GOR
+:
+    'GOR'
+    (
+        PLUS d_8323
+    )?
+    (
+        PLUS c_C232
+    )?
+    (
+        PLUS c_C232
+    )?
+    (
+        PLUS c_C232
+    )?
+    (
+        PLUS c_C232
+    )? EOL
+;
+
+s_GPO
+:
+    'GPO+' EOL
+;
+
 s_HAN
 :
     'HAN'
@@ -840,9 +903,79 @@ s_ICD
     'ICD' PLUS c_C330 PLUS c_C331 EOL
 ;
 
+s_IDT
+:
+    'IDT+' EOL
+;
+
+s_LIN
+:
+    'LIN+' EOL
+;
+
+s_LOC
+:
+    'LOC' PLUS d_3227
+    (
+        PLUS c_C517
+    )?
+    (
+        PLUS c_C519
+    )?
+    (
+        PLUS c_C553
+    )?
+    (
+        PLUS d_5479
+    )? EOL
+;
+
+s_MEA
+:
+    'MEA' PLUS d_6311
+    (
+        PLUS c_C502
+    )?
+    (
+        PLUS c_C174
+    )?
+    (
+        PLUS d_7383
+    )? EOL
+;
+
 s_MOA
 :
     'MOA' PLUS c_C516 EOL
+;
+
+s_NAD
+:
+    'NAD' PLUS d_3035
+    (
+        PLUS c_C082
+    )?
+    (
+        PLUS c_C058
+    )?
+    (
+        PLUS c_C080
+    )?
+    (
+        PLUS c_C059
+    )?
+    (
+        PLUS d_3164
+    )?
+    (
+        PLUS c_C819
+    )?
+    (
+        PLUS d_3251
+    )?
+    (
+        PLUS d_3207
+    )? EOL
 ;
 
 s_PCD
@@ -850,6 +983,23 @@ s_PCD
     'PCD' PLUS c_C501
     (
         PLUS d_4405?
+    )? EOL
+;
+
+s_PCI
+:
+    'PCI'
+    (
+        PLUS d_4233?
+    )?
+    (
+        PLUS c_C210?
+    )?
+    (
+        PLUS d_8169?
+    )?
+    (
+        PLUS c_C827?
     )? EOL
 ;
 
@@ -870,6 +1020,11 @@ s_PIA
     )? EOL
 ;
 
+s_POC
+:
+    'POC' PLUS c_C525 EOL
+;
+
 s_PRI
 :
     'PRI'
@@ -884,6 +1039,11 @@ s_PRI
 s_QTY
 :
     'QTY' PLUS c_C186 EOL
+;
+
+s_RFF
+:
+    'RFF' PLUS c_C506 EOL
 ;
 
 s_RNG
@@ -905,6 +1065,26 @@ s_SCC
     )? EOL
 ;
 
+s_SEL
+:
+    'SEL'
+    (
+        PLUS d_9308
+    )?
+    (
+        PLUS c_C215
+    )?
+    (
+        PLUS d_4517
+    )?
+    (
+        PLUS c_C208
+    )?
+    (
+        PLUS d_4525
+    )? EOL
+;
+
 s_SEQ
 :
     'SEQ'
@@ -914,6 +1094,24 @@ s_SEQ
     (
         PLUS c_C286?
     )? EOL
+;
+
+s_SGP
+:
+    'SGP' PLUS c_C237
+    (
+        PLUS d_7224?
+    )? EOL
+;
+
+s_STS
+:
+    'STS+' EOL
+;
+
+s_TAX
+:
+    'TAX+' EOL
 ;
 
 s_TCC
@@ -930,6 +1128,38 @@ s_TCC
     )?
     (
         PLUS c_C554
+    )? EOL
+;
+
+s_TDT
+:
+    'TDT' PLUS d_8051
+    (
+        PLUS d_8028
+    )?
+    (
+        PLUS c_C220
+    )?
+    (
+        PLUS c_C001
+    )?
+    (
+        PLUS c_C040
+    )?
+    (
+        PLUS d_8101
+    )?
+    (
+        PLUS c_C401
+    )?
+    (
+        PLUS c_C222
+    )?
+    (
+        PLUS d_8281
+    )?
+    (
+        PLUS c_C003
     )? EOL
 ;
 
@@ -991,12 +1221,27 @@ s_TSR
     )? EOL
 ;
 
-s_ERC
+s_UNH
 :
-    'ERC' PLUS c_C901 EOL
+    'UNH' PLUS d_0062 PLUS s009
+    (
+        PLUS d_0068
+    )?
+    (
+        PLUS s010
+    )?
+    (
+        PLUS s016
+    )?
+    (
+        PLUS s017
+    )?
+    (
+        PLUS s018
+    )? EOL
 ;
 
-s_POC
+s_UNT
 :
-    'POC' PLUS c_C525 EOL
+    'UNT' PLUS d_0074 PLUS d_0062 EOL
 ;

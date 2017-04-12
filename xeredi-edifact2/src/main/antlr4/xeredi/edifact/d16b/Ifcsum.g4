@@ -4,7 +4,7 @@
  * 	http://www.unece.org/fileadmin/DAM/trade/untdid/d14b/trmd/ifcsum_c.htm
  * http://content.portdebarcelona.cat/cntmng/d/d/workspace/SpacesStore/2185ccaf-a590-4dba-8a64-74d95cb929b7/GuiaDSDescarga_Carga33b.pdf%7cGuiaDSDescarga_Carga33b.pdf
  */
- grammar Ifcsum;
+grammar Ifcsum;
 
 import edifact_d16b_segments, edifact_d16b_components, edifact_d16b_fields;
 
