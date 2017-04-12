@@ -2,207 +2,7 @@ parser grammar edifact_d16b_components;
 
 import edifact_d16b_fields, edifact_common;
 
-/*
-    C008 Monetary amount function detail
-    C009 Information category
-    C010 Information type
-    C011 Information detail
-    C012 Processing indicator
-    C019 Payment terms
-    C030 Event type
-    C040 Carrier
-    C042 Nationality details
-    C045 Bill level identification
-    C049 Remuneration type identification
-    C056 Contact details
-    C058 Name and address
-    C059 Street
-    C063 Event identification
-    C076 Communication contact
-    C077 File identification
-    C078 Account holder identification
-    C079 Computer environment identification
-    C080 Party name
-    C082 Party identification details
-    C085 Marital status details
-    C088 Institution identification
-    C090 Address details
-    C099 File details
-    C100 Terms of delivery or transport
-    C101 Religion details
-    C106 Document/message identification
-    C107 Text reference
-    C108 Text literal
-    C128 Rate details
-    C138 Price multiplier information
-    C174 Value/range
-    C186 Quantity details
-    C200 Charge
-    C202 Package type
-    C203 Rate/tariff class
-    C205 Hazard code
-    C206 Identification number
-    C208 Identity number range
-    C210 Marks & labels
-    C211 Dimensions
-    C212 Item number identification
-    C213 Number and type of packages
-    C214 Special services identification
-    C215 Seal issuer
-    C218 Hazardous material
-    C219 Movement type
-    C220 Mode of transport
-    C222 Transport identification
-    C223 Dangerous goods shipment flashpoint
-    C224 Equipment size and type
-    C229 Charge category
-    C231 Method of payment
-    C232 Government action
-    C233 Service
-    C234 UNDG information
-    C235 Hazard identification placard details
-    C236 Dangerous goods label
-    C237 Equipment identification
-    C239 Temperature setting
-    C240 Characteristic description
-    C241 Duty/tax/fee type
-    C242 Process type and description
-    C243 Duty/tax/fee detail
-    C244 Test method
-    C246 Customs identity codes
-    C270 Control
-    C272 Item characteristic
-    C273 Item description
-    C279 Quantity difference information
-    C280 Range
-    C286 Sequence information
-    C288 Product group
-    C289 Tunnel Restriction
-    C329 Pattern description
-    C330 Insurance cover type
-    C331 Insurance cover details
-    C332 Sales channel identification
-    C333 Information request
-    C401 Excess transportation information
-    C402 Package type identification
-    C501 Percentage details
-    C502 Measurement details
-    C503 Document/message details
-    C504 Currency details
-    C506 Reference
-    C507 Date/time/period
-    C508 Language details
-    C509 Price information
-    C512 Size details
-    C514 Sample location details
-    C515 Test reason
-    C516 Monetary amount
-    C517 Location identification
-    C519 Related location one identification
-    C521 Business function
-    C522 Instruction
-    C523 Number of unit details
-    C524 Handling instructions
-    C525 Purpose of conveyance call
-    C526 Frequency details
-    C527 Statistical details
-    C528 Commodity/rate detail
-    C531 Packaging details
-    C532 Returnable package details
-    C533 Duty/tax/fee account detail
-    C534 Payment instruction details
-    C536 Contract and carriage condition
-    C537 Transport priority
-    C543 Agreement type identification
-    C545 Index identification
-    C546 Index value
-    C549 Monetary amount function
-    C550 Requirement/condition identification
-    C551 Bank operation
-    C552 Allowance/charge information
-    C553 Related location two identification
-    C554 Rate/tariff class detail
-    C555 Status
-    C556 Status reason
-    C564 Physical or logical state information
-    C585 Priority details
-    C593 Account identification
-    C595 Accounting journal identification
-    C596 Accounting entry type details
-    C601 Status category
-    C701 Error point details
-    C702 Code set identification
-    C703 Nature of cargo
-    C709 Message identifier
-    C770 Array cell details
-    C778 Position identification
-    C779 Array structure identification
-    C780 Value list identification
-    C782 Data set identification
-    C783 Footnote set identification
-    C784 Footnote identification
-    C785 Statistical concept identification
-    C786 Structure component identification
-    C811 Question details
-    C812 Response details
-    C814 Safety section
-    C815 Additional safety information
-    C816 Name component details
-    C817 Address usage
-    C818 Person inherited characteristic details
-    C819 Country subdivision details
-    C820 Premium calculation component
-    C821 Type of damage
-    C822 Damage area
-    C823 Type of unit/component
-    C824 Component material
-    C825 Damage severity
-    C826 Action
-    C827 Type of marking
-    C828 Clinical intervention details
-    C829 Sub-line information
-    C830 Process identification details
-    C831 Result details
-    C836 Clinical information details
-    C837 Certainty details
-    C838 Dosage details
-    C839 Attendee category
-    C840 Attendance admission details
-    C841 Attendance discharge details
-    C844 Organisation classification detail
-    C848 Measurement unit details
-    C849 Parties to instruction
-    C850 Status of instruction
-    C851 Risk object type
-    C852 Risk object sub-type
-    C853 Error segment point details
-    C878 Charge/allowance account
-    C889 Characteristic value
-    C901 Application error detail
-    C941 Relationship
-    C942 Membership category
-    C944 Membership status
-    C945 Membership level
-    C948 Employment category
-    C950 Qualification classification
-    C951 Occupation
-    C953 Contribution type
-    C955 Attribute type
-    C956 Attribute detail
-    C960 Reason for change
-    C961 Formula complexity
-    C970 Clause name
-    C971 Proviso type
-    C972 Proviso calculation
-    C973 Applicability type
-    C974 Basis type
-    C977 Period detail
-
- */
-
-/**
- * C001 Transport means
- */
+/** C001 Transport means */
 c_C001
 :
     d_8179?
@@ -217,9 +17,7 @@ c_C001
     )?
 ;
 
-/**
- * C002 Document/message name
- */
+/** C002 Document/message name */
 c_C002
 :
     d_1001?
@@ -234,9 +32,7 @@ c_C002
     )?
 ;
 
-/**
- * C003 Power type
- */
+/** C003 Power type */
 c_C003
 :
     d_7041?
@@ -251,9 +47,7 @@ c_C003
     )?
 ;
 
-/**
- * C004 EVENT CATEGORY
- */
+/** C004 EVENT CATEGORY */
 c_C004
 :
     d_9637?
@@ -268,9 +62,7 @@ c_C004
     )?
 ;
 
-/**
- * C008 MONETARY AMOUNT FUNCTION DETAIL
- */
+/** C008 MONETARY AMOUNT FUNCTION DETAIL */
 c_C008
 :
     d_5105?
@@ -285,9 +77,7 @@ c_C008
     )?
 ;
 
-/**
- * C009 INFORMATION CATEGORY
- */
+/** C009 INFORMATION CATEGORY */
 c_C009
 :
     d_4149?
@@ -302,9 +92,7 @@ c_C009
     )?
 ;
 
-/**
- * C010 INFORMATION TYPE
- */
+/** C010 INFORMATION TYPE */
 c_C010
 :
     d_4473?
@@ -319,9 +107,7 @@ c_C010
     )?
 ;
 
-/**
- * C011 INFORMATION DETAIL
- */
+/** C011 INFORMATION DETAIL */
 c_C011
 :
     d_4151?
@@ -336,9 +122,7 @@ c_C011
     )?
 ;
 
-/**
- * C012 PROCESSING INDICATOR
- */
+/** C012 PROCESSING INDICATOR */
 c_C012
 :
     d_7365?
@@ -1157,7 +941,6 @@ c_C222
     )?
 ;
 
-       
 /**
  * C223 DANGEROUS GOODS SHIPMENT FLASHPOINT
  */
@@ -1186,7 +969,10 @@ c_C224
     )?
 ;
 
-c229
+/**
+ * C229 CHARGE CATEGORY
+ */
+c_C229
 :
     d_5237
     (
@@ -1197,7 +983,10 @@ c229
     )?
 ;
 
-c231
+/**
+ * C231 METHOD OF PAYMENT
+ */
+c_C231
 :
     d_4215
     (
@@ -1208,7 +997,10 @@ c231
     )?
 ;
 
-c232
+/**
+ * C232 GOVERNMENT ACTION
+ */
+c_C232
 :
     d_9415?
     (
@@ -1222,7 +1014,10 @@ c232
     )?
 ;
 
-c233
+/**
+ * C233 SERVICE
+ */
+c_C233
 :
     d_7273
     (
@@ -1242,7 +1037,10 @@ c233
     )?
 ;
 
-c234
+/**
+ * C234 UNDG INFORMATION
+ */
+c_C234
 :
     d_7124?
     (
@@ -1250,7 +1048,10 @@ c234
     )?
 ;
 
-c235
+/**
+ * C235 HAZARD IDENTIFICATION PLACARD DETAILS
+ */
+c_C235
 :
     d_8158?
     (
@@ -1258,7 +1059,10 @@ c235
     )?
 ;
 
-c236
+/**
+ * C236 DANGEROUS GOODS LABEL
+ */
+c_C236
 :
     d_8246?
     (
@@ -1272,7 +1076,10 @@ c236
     )?
 ;
 
-c237
+/**
+ * C237 EQUIPMENT IDENTIFICATION
+ */
+c_C237
 :
     d_8260?
     (
@@ -1286,7 +1093,10 @@ c237
     )?
 ;
 
-c239
+/**
+ * C239 TEMPERATURE SETTING
+ */
+c_C239
 :
     d_6246?
     (
@@ -1294,7 +1104,124 @@ c239
     )?
 ;
 
-c270
+/**
+ * C240 CHARACTERISTIC DESCRIPTION
+ */
+c_C240
+:
+    d_7037
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_7036?
+    )?
+    (
+        COLON d_7036?
+    )?
+;
+
+/**
+ * C241 DUTY/TAX/FEE TYPE
+ */
+c_C241
+:
+    d_5153?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_5152?
+    )?
+;
+
+/**
+ * C242 PROCESS TYPE AND DESCRIPTION
+ */
+c_C242
+:
+    d_7187
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_7186?
+    )?
+    (
+        COLON d_7186?
+    )?
+;
+
+/**
+ * C243 DUTY/TAX/FEE DETAIL
+ */
+c_C243
+:
+    d_5279?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_5278?
+    )?
+    (
+        COLON d_5273?
+    )?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+;
+
+/**
+ * C244 TEST METHOD
+ */
+c_C244
+:
+    d_4415?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_4416?
+    )?
+;
+
+/**
+ * C246 CUSTOMS IDENTITY CODES
+ */
+c_C246
+:
+    d_7361
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+;
+
+/**
+ * C270 CONTROL
+ */
+c_C270
 :
     d_6069 COLON d_6066
     (
@@ -1302,7 +1229,58 @@ c270
     )?
 ;
 
-c280
+/**
+ * C272 ITEM CHARACTERISTIC
+ */
+c_C272
+:
+    d_7081?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+;
+
+/**
+ * C273 ITEM DESCRIPTION
+ */
+c_C273
+:
+    d_7009?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_7008?
+    )?
+    (
+        COLON d_7008?
+    )?
+    (
+        COLON d_3453?
+    )?
+;
+
+/**
+ * C279 QUANTITY DIFFERENCE INFORMATION
+ */
+c_C279
+:
+    d_6064
+    (
+        COLON d_6063?
+    )?
+;
+
+/**
+ * C280 RANGE
+ */
+c_C280
 :
     d_6411
     (
@@ -1313,7 +1291,10 @@ c280
     )?
 ;
 
-c286
+/**
+ * C286 SEQUENCE INFORMATION
+ */
+c_C286
 :
     d_1050
     (
@@ -1327,7 +1308,10 @@ c286
     )?
 ;
 
-c288
+/**
+ * C288 PRODUCT GROUP
+ */
+c_C288
 :
     d_5389?
     (
@@ -1341,7 +1325,10 @@ c288
     )?
 ;
 
-c289
+/**
+ * C289 TUNNEL RESTRICTION
+ */
+c_C289
 :
     d_8461?
     (
@@ -1352,7 +1339,10 @@ c289
     )?
 ;
 
-c329
+/**
+ * C329 PATTERN DESCRIPTION
+ */
+c_C329
 :
     d_2013?
     (
@@ -1363,7 +1353,10 @@ c329
     )?
 ;
 
-c330
+/**
+ * C330 INSURANCE COVER TYPE
+ */
+c_C330
 :
     d_4497
     (
@@ -1374,7 +1367,10 @@ c330
     )?
 ;
 
-c331
+/**
+ * C331 INSURANCE COVER DETAILS
+ */
+c_C331
 :
     d_4495?
     (
@@ -1391,7 +1387,41 @@ c331
     )?
 ;
 
-c401
+/**
+ * C332 SALES CHANNEL IDENTIFICATION
+ */
+c_C332
+:
+    d_3496
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+;
+
+/**
+ * C333 INFORMATION REQUEST
+ */
+c_C333
+:
+    d_4511?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_4510?
+    )?
+;
+
+/**
+ * C401 EXCESS TRANSPORTATION INFORMATION
+ */
+c_C401
 :
     d_8457 COLON d_8459
     (
@@ -1399,7 +1429,27 @@ c401
     )?
 ;
 
-c501
+/**
+ * C402 PACKAGE TYPE IDENTIFICATION
+ */
+c_C402
+:
+    d_7077 COLON d_7064
+    (
+        COLON d_7143?
+    )?
+    (
+        COLON d_7064?
+    )?
+    (
+        COLON d_7143?
+    )?
+;
+
+/**
+ * C501 PERCENTAGE DETAILS
+ */
+c_C501
 :
     d_5245
     (
@@ -1416,7 +1466,10 @@ c501
     )?
 ;
 
-c502
+/**
+ * C502 MEASUREMENT DETAILS
+ */
+c_C502
 :
     d_6313?
     (
@@ -1430,7 +1483,10 @@ c502
     )?
 ;
 
-c503
+/**
+ * C503 DOCUMENT/MESSAGE DETAILS
+ */
+c_C503
 :
     d_1004?
     (
@@ -1450,7 +1506,10 @@ c503
     )?
 ;
 
-c504
+/**
+ * C504 CURRENCY DETAILS
+ */
+c_C504
 :
     d_6347
     (
@@ -1464,7 +1523,10 @@ c504
     )?
 ;
 
-c506
+/**
+ * C506 REFERENCE
+ */
+c_C506
 :
     d_1153
     (
@@ -1481,7 +1543,10 @@ c506
     )?
 ;
 
-c507
+/**
+ * C507 DATE/TIME/PERIOD
+ */
+c_C507
 :
     d_2005
     (
@@ -1492,7 +1557,21 @@ c507
     )?
 ;
 
-c509
+/**
+ * C508 LANGUAGE DETAILS
+ */
+c_C508
+:
+    d_3453?
+    (
+        COLON d_3452?
+    )?
+;
+
+/**
+ * C509 PRICE INFORMATION
+ */
+c_C509
 :
     d_5125
     (
@@ -1512,7 +1591,49 @@ c509
     )?
 ;
 
-c516
+/**
+ * C512 SIZE DETAILS
+ */
+c_C512
+:
+    d_6173?
+    (
+        COLON d_6174?
+    )?
+;
+
+/**
+ * C514 SAMPLE LOCATION DETAILS
+ */
+c_C514
+:
+    d_3237?
+    (
+        COLON d_3236?
+    )?
+;
+
+/**
+ * C515 TEST REASON
+ */
+c_C515
+:
+    d_4425?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_4424?
+    )?
+;
+
+/**
+ * C516 MONETARY AMOUNT
+ */
+c_C516
 :
     d_5025
     (
@@ -1529,7 +1650,10 @@ c516
     )?
 ;
 
-c517
+/**
+ * C517 LOCATION IDENTIFICATION
+ */
+c_C517
 :
     d_3225?
     (
@@ -1543,7 +1667,10 @@ c517
     )?
 ;
 
-c519
+/**
+ * C519 RELATED LOCATION ONE IDENTIFICATION
+ */
+c_C519
 :
     d_3223?
     (
@@ -1557,7 +1684,47 @@ c519
     )?
 ;
 
-c523
+/**
+ * C521 BUSINESS FUNCTION
+ */
+c_C521
+:
+    d_4027 COLON d_4025
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_4022?
+    )?
+;
+
+/**
+ * C522 INSTRUCTION
+ */
+c_C522
+:
+    d_4403
+    (
+        COLON d_4401?
+    )?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_4400?
+    )?
+;
+
+/**
+ * C523 NUMBER OF UNIT DETAILS
+ */
+c_C523
 :
     d_6350?
     (
@@ -1565,7 +1732,10 @@ c523
     )?
 ;
 
-c524
+/**
+ * C524 HANDLING INSTRUCTIONS
+ */
+c_C524
 :
     d_4079?
     (
@@ -1579,7 +1749,10 @@ c524
     )?
 ;
 
-c525
+/**
+ * C525 PURPOSE OF CONVEYANCE CALL
+ */
+c_C525
 :
     d_8025?
     (
@@ -1593,7 +1766,41 @@ c525
     )?
 ;
 
-c528
+/**
+ * C526 FREQUENCY DETAILS
+ */
+c_C526
+:
+    d_6071
+    (
+        COLON d_6072?
+    )?
+    (
+        COLON d_6411?
+    )?
+;
+
+/**
+ * C527 STATISTICAL DETAILS
+ */
+c_C527
+:
+    d_6314?
+    (
+        COLON d_6411?
+    )?
+    (
+        COLON d_6313?
+    )?
+    (
+        COLON d_6321?
+    )?
+;
+
+/**
+ * C528 COMMODITY/RATE DETAIL
+ */
+c_C528
 :
     d_7357?
     (
@@ -1604,7 +1811,68 @@ c528
     )?
 ;
 
-c536
+/**
+ * C531 PACKAGING DETAILS
+ */
+c_C531
+:
+    d_7075?
+    (
+        COLON d_7233?
+    )?
+    (
+        COLON d_7073?
+    )?
+;
+
+/**
+ * C532 RETURNABLE PACKAGE DETAILS
+ */
+c_C532
+:
+    d_8395?
+    (
+        COLON d_8393?
+    )?
+;
+
+/**
+ * C533 DUTY/TAX/FEE ACCOUNT DETAIL
+ */
+c_C533
+:
+    d_5289
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+;
+
+/** C534 PAYMENT INSTRUCTION DETAILS. */
+c_C534
+:
+    d_4439?
+    (
+        COLON d_4431?
+    )?
+    (
+        COLON d_4461?
+    )?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_4435?
+    )?
+;
+
+/** C536 CONTRACT AND CARRIAGE CONDITION. */
+c_C536
 :
     d_4065
     (
@@ -1615,7 +1883,8 @@ c536
     )?
 ;
 
-c537
+/** C537 TRANSPORT PRIORITY. */
+c_C537
 :
     d_4219
     (
@@ -1626,7 +1895,101 @@ c537
     )?
 ;
 
-c553
+/** C543 AGREEMENT TYPE IDENTIFICATION. */
+c_C543
+:
+    d_7431
+    (
+        COLON d_7433?
+    )?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_7434?
+    )?
+;
+
+/** C545 INDEX IDENTIFICATION */
+c_C545
+:
+    d_5013
+    (
+        COLON d_5027?
+    )?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+;
+
+/** C546 INDEX VALUE */
+c_C546
+:
+    d_5030
+    (
+        COLON d_5039?
+    )?
+;
+
+/** C549 MONETARY AMOUNT FUNCTION */
+c_C549
+:
+    d_5007?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_5006?
+    )?
+;
+
+/** C550 REQUIREMENT/CONDITION IDENTIFICATION */
+c_C550
+:
+    d_7295
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_7294?
+    )?
+;
+
+/** C551 BANK OPERATION */
+c_C551
+:
+    d_4383
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+;
+
+/** C552 ALLOWANCE/CHARGE INFORMATION */
+c_C552
+:
+    d_1230?
+    (
+        COLON d_5189?
+    )?
+;
+
+/** C553 RELATED LOCATION TWO IDENTIFICATION */
+c_C553
 :
     d_3233?
     (
@@ -1640,7 +2003,8 @@ c553
     )?
 ;
 
-c554
+/** C554 RATE/TARIFF CLASS DETAIL */
+c_C554
 :
     d_5243?
     (
@@ -1651,7 +2015,158 @@ c554
     )?
 ;
 
-c703
+/** C555 STATUS */
+c_C555
+:
+    d_4405
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_4404?
+    )?
+;
+
+/** C556 STATUS REASON */
+c_C556
+:
+    d_9013
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_9012?
+    )?
+;
+
+/** C564 PHYSICAL OR LOGICAL STATE INFORMATION */
+c_C564
+:
+    d_7007?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_7006?
+    )?
+;
+
+/** C585 PRIORITY DETAILS */
+c_C585
+:
+    d_4037?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_4036?
+    )?
+;
+
+/** C593 ACCOUNT IDENTIFICATION */
+c_C593
+:
+    d_1147
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_1148?
+    )?
+    (
+        COLON d_1146?
+    )?
+    (
+        COLON d_1146?
+    )?
+    (
+        COLON d_6345?
+    )?
+;
+
+/** C595 ACCOUNTING JOURNAL IDENTIFICATION */
+c_C595
+:
+    d_1171
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_1170?
+    )?
+;
+
+/** C596 ACCOUNTING ENTRY TYPE DETAILS */
+c_C596
+:
+    d_4475
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_4474?
+    )?
+;
+
+/** C601 STATUS CATEGORY. */
+c_C601
+:
+    d_9015
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+;
+
+/** C701 ERROR POINT DETAILS. */
+c_C701
+:
+    d_1049?
+    (
+        COLON d_1052?
+    )?
+    (
+        COLON d_1054?
+    )?
+;
+
+/** C702 CODE SET IDENTIFICATION. */
+c_C702
+:
+    d_9150?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+;
+
+/** C703 NATURE OF CARGO.  */
+c_C703
 :
     d_7085
     (
@@ -1662,7 +2177,206 @@ c703
     )?
 ;
 
-c819
+/** C709 MESSAGE IDENTIFIER.  */
+c_C709
+:
+    d_1003
+    (
+        COLON d_1056?
+    )?
+    (
+        COLON d_1058?
+    )?
+    (
+        COLON d_1476?
+    )?
+    (
+        COLON d_1523?
+    )?
+    (
+        COLON d_1060?
+    )?
+    (
+        COLON d_1373?
+    )?
+;
+
+/** C770 ARRAY CELL DETAILS.  */
+c_C770
+:
+    d_9424?
+;
+
+/** C778 POSITION IDENTIFICATION.  */
+c_C778
+:
+    d_7164?
+    (
+        COLON d_1050?
+    )?
+;
+
+/** C779 ARRAY STRUCTURE IDENTIFICATION.  */
+c_C779
+:
+    d_9428
+    (
+        COLON d_7405?
+    )?
+;
+
+/** C780 VALUE LIST IDENTIFICATION.  */
+c_C780
+:
+    d_1518
+    (
+        COLON d_7405?
+    )?
+;
+
+/** C782 DATA SET IDENTIFICATION.  */
+c_C782
+:
+    d_1520
+    (
+        COLON d_7405?
+    )?
+;
+
+/** C783 FOOTNOTE SET IDENTIFICATION.  */
+c_C783
+:
+    d_9430
+    (
+        COLON d_7405?
+    )?
+;
+
+/** C784 FOOTNOTE IDENTIFICATION.  */
+c_C784
+:
+    d_9432
+    (
+        COLON d_7405?
+    )?
+;
+
+/** C785 STATISTICAL CONCEPT IDENTIFICATION.  */
+c_C785
+:
+    d_6434
+    (
+        COLON d_7405?
+    )?
+;
+
+/** C786 STRUCTURE COMPONENT IDENTIFICATION.  */
+c_C786
+:
+    d_7512
+    (
+        COLON d_7405?
+    )?
+;
+
+/** C811 QUESTION DETAILS.  */
+c_C811
+:
+    d_4057?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_4056?
+    )?
+;
+
+/** C812 RESPONSE DETAILS.  */
+c_C812
+:
+    d_4345?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_4344?
+    )?
+;
+
+/** C814 SAFETY SECTION.  */
+c_C814
+:
+    d_4046
+    (
+        COLON d_4044?
+    )?
+;
+
+/** C815 ADDITIONAL SAFETY INFORMATION.  */
+c_C815
+:
+    d_4039
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_4038?
+    )?
+;
+
+/** C816 NAME COMPONENT DETAILS.  */
+c_C816
+:
+    d_3405
+    (
+        COLON d_3398?
+    )?
+    (
+        COLON d_3401?
+    )?
+    (
+        COLON d_3295?
+    )?
+;
+
+/** C817 ADDRESS USAGE.  */
+c_C817
+:
+    d_3299?
+    (
+        COLON d_3131?
+    )?
+    (
+        COLON d_3475?
+    )?
+;
+
+/** C818 PERSON INHERITED CHARACTERISTIC DETAILS.  */
+c_C818
+:
+    d_3311?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_3310?
+    )?
+;
+
+/** C819 COUNTRY SUBDIVISION DETAILS. */
+c_C819
 :
     d_3229?
     (
@@ -1676,7 +2390,110 @@ c819
     )?
 ;
 
-c827
+/** C820 PREMIUM CALCULATION COMPONENT. */
+c_C820
+:
+    d_4521?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+;
+
+/** C821 TYPE OF DAMAGE. */
+c_C821
+:
+    d_7501?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_7500?
+    )?
+;
+
+/** C822 DAMAGE AREA. */
+c_C822
+:
+    d_7503?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_7502?
+    )?
+;
+
+/** C823 TYPE OF UNIT/COMPONENT. */
+c_C823
+:
+    d_7505?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_7504?
+    )?
+;
+
+/** C824 COMPONENT MATERIAL. */
+c_C824
+:
+    d_7507?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_7506?
+    )?
+;
+
+/** C825 DAMAGE SEVERITY. */
+c_C825
+:
+    d_7509?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_7508?
+    )?
+;
+
+/** C826 ACTION. */
+c_C826
+:
+    d_1229?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_1228?
+    )?
+;
+
+/** C827 TYPE OF MARKING. */
+c_C827
 :
     d_7511
     (
@@ -1687,9 +2504,556 @@ c827
     )?
 ;
 
-c901
+/** C828 CLINICAL INTERVENTION DETAILS. */
+c_C828
+:
+    d_9437?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_9436?
+    )?
+;
+
+/** C829 SUB-LINE INFORMATION. */
+c_C829
+:
+    d_5495?
+    (
+        COLON d_1082?
+    )?
+;
+
+/** C830 PROCESS IDENTIFICATION DETAILS. */
+c_C830
+:
+    d_7191?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_7190?
+    )?
+;
+
+/** C831 RESULT DETAILS. */
+c_C831
+:
+    d_6314?
+    (
+        COLON d_6321?
+    )?
+    (
+        COLON d_6155?
+    )?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_6154?
+    )?
+;
+
+/** C836 CLINICAL INFORMATION DETAILS. */
+c_C836
+:
+    d_6413?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_6412?
+    )?
+;
+
+/** C837 CERTAINTY DETAILS. */
+c_C837
+:
+    d_4049?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_4048?
+    )?
+;
+
+/** C838 DOSAGE DETAILS. */
+c_C838
+:
+    d_6083?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_6082?
+    )?
+;
+
+/** C839 ATTENDEE CATEGORY. */
+c_C839
+:
+    d_7459?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_7458?
+    )?
+;
+
+/** C840 ATTENDANCE ADMISSION DETAILS. */
+c_C840
+:
+    d_9445?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_9444?
+    )?
+;
+
+/** C841 ATTENDANCE DISCHARGE DETAILS. */
+c_C841
+:
+    d_9447?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_9446?
+    )?
+;
+
+/** C844 ORGANISATION CLASSIFICATION DETAIL. */
+c_C844
+:
+    d_3083?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_3082?
+    )?
+;
+
+/** C848 MEASUREMENT UNIT DETAILS. */
+c_C848
+:
+    d_6411?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_6410?
+    )?
+;
+
+/** C849 PARTIES TO INSTRUCTION. */
+c_C849
+:
+    d_3301
+    (
+        COLON d_3285?
+    )?
+;
+
+/** C850 STATUS OF INSTRUCTION. */
+c_C850
+:
+    d_4405
+    (
+        COLON d_3036?
+    )?
+;
+
+/** C851 RISK OBJECT TYPE. */
+c_C851
+:
+    d_7179?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+;
+
+/** C852 RISK OBJECT SUB-TYPE. */
+c_C852
+:
+    d_7177?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_7176?
+    )?
+;
+
+/** C853 ERROR SEGMENT POINT DETAILS. */
+c_C853
+:
+    d_9166?
+    (
+        COLON d_1050?
+    )?
+    (
+        COLON d_1159?
+    )?
+;
+
+/** C878 CHARGE/ALLOWANCE ACCOUNT. */
+c_C878
+:
+    d_3434
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_3194?
+    )?
+    (
+        COLON d_6345?
+    )?
+;
+
+/** C889 CHARACTERISTIC VALUE. */
+c_C889
+:
+    d_7111?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_7110?
+    )?
+    (
+        COLON d_7110?
+    )?
+;
+
+/** C901 APPLICATION ERROR DETAIL. */
+c_C901
 :
     d_9321
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+;
+
+/** C941 RELATIONSHIP. */
+c_C941
+:
+    d_9143?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_9142?
+    )?
+;
+
+/** C942 MEMBERSHIP CATEGORY. */
+c_C942
+:
+    d_7451
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_7450?
+    )?
+;
+
+/** C944 MEMBERSHIP STATUS. */
+c_C944
+:
+    d_7453?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_7452?
+    )?
+;
+
+/** C945 MEMBERSHIP LEVEL. */
+c_C945
+:
+    d_7455
+    (
+        COLON d_7457?
+    )?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_7456?
+    )?
+;
+
+/** C948 EMPLOYMENT CATEGORY. */
+c_C948
+:
+    d_9005?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_9004?
+    )?
+;
+
+/** C950 QUALIFICATION CLASSIFICATION. */
+c_C950
+:
+    d_9007?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_9006?
+    )?
+    (
+        COLON d_9006?
+    )?
+;
+
+/** C951 OCCUPATION. */
+c_C951
+:
+    d_9009?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_9008?
+    )?
+    (
+        COLON d_9008?
+    )?
+;
+
+/** C953 CONTRIBUTION TYPE. */
+c_C953
+:
+    d_5049
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_5048?
+    )?
+;
+
+/** C955 ATTRIBUTE TYPE. */
+c_C955
+:
+    d_9021?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_9020?
+    )?
+;
+
+/** C956 ATTRIBUTE DETAIL. */
+c_C956
+:
+    d_9019?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_9018?
+    )?
+;
+
+/** C960 REASON FOR CHANGE. */
+c_C960
+:
+    d_4295?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_4294?
+    )?
+;
+
+/** C961 FORMULA COMPLEXITY. */
+c_C961
+:
+    d_9505?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+;
+
+/** C970 CLAUSE NAME. */
+c_C970
+:
+    d_4069?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_4068?
+    )?
+;
+
+/** C971 PROVISO TYPE. */
+c_C971
+:
+    d_4073?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_4072?
+    )?
+;
+
+/** C972 PROVISO CALCULATION. */
+c_C972
+:
+    d_4075?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_4074?
+    )?
+;
+
+/** C973 APPLICABILITY TYPE. */
+c_C973
+:
+    d_9049?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_9048?
+    )?
+;
+
+/** C974 BASIS TYPE. */
+c_C974
+:
+    d_9047?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_9046?
+    )?
+;
+
+/** C977 PERIOD DETAIL. */
+c_C977
+:
+    d_2119?
     (
         COLON d_1131?
     )?
