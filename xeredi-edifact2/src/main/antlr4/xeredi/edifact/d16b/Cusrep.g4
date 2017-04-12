@@ -4,65 +4,65 @@ import edifact_d16b_segments, edifact_d16b_components, edifact_d16b_fields;
 
 cusrep
 :
-	unh bgm dtm* qty* poc* ftx* mea* gei* gpo? sts* gr1* gr2* gr3* gr4* gr5* gr6* gr9* gr11* gr12* unt
+	s_UNH s_BGM s_DTM* s_QTY* s_POC* s_FTX* s_MEA* s_GEI* s_GPO? s_STS* gr_1* gr_2* gr_3* gr_4* gr_5* gr_6* gr_9* gr_11* gr_12* s_UNT
 ;
 
-gr1
+gr_1
 :
-	rff dtm?
+	s_RFF s_DTM?
 ;
 
-gr2
+gr_2
 :
-	loc dtm*
+	s_LOC s_DTM*
 ;
 
-gr3
+gr_3
 :
-	loc dtm*
+	s_LOC s_DTM*
 ;
 
-gr4
+gr_4
 :
-	doc rff? dtm? loc?
+	s_DOC s_RFF? s_DTM? s_LOC?
 ;
 
-gr5
+gr_5
 :
-	tax moa? fii? loc? rff? dtm* gei?
+	s_TAX s_MOA? s_FII? s_LOC? s_RFF? s_DTM* s_GEI?
 ;
 
-gr6
+gr_6
 :
-	nad gr7* gr8*
+	s_NAD gr_7* gr_8*
 ;
 
-gr7
+gr_7
 :
-	cta com*
+	s_CTA s_COM*
 ;
 
-gr8
+gr_8
 :
-	rff dtm?
+	s_RFF s_DTM?
 ;
 
-gr9
+gr_9
 :
-	tdt tpl? dtm? gr10*
+	s_TDT s_TPL? s_DTM? gr_10*
 ;
 
-gr10
+gr_10
 :
-	loc gpo? dtm* qty* nad* mea* poc* sts* ftx*
+	s_LOC s_GPO? s_DTM* s_QTY* s_NAD* s_MEA* s_POC* s_STS* s_FTX*
 ;
 
-gr11
+gr_11
 :
-	eqd eqn?
+	s_EQD s_EQN?
 ;
 
-gr12
+gr_12
 :
-	aut dtm?
+	s_AUT s_DTM?
 ;

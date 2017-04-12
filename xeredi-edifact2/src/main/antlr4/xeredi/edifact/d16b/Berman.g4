@@ -4,57 +4,57 @@ import edifact_d16b_segments, edifact_d16b_components, edifact_d16b_fields;
 
 berman
 :
-	unh bgm dtm* ftx* rff* qty* gr1* gr3* gr7* unt
+	s_UNH s_BGM s_DTM* s_FTX* s_RFF* s_QTY* gr_1* gr_3* gr_7* s_UNT
 ;
 
-gr1
+gr_1
 :
-	nad gr2*
+	s_NAD gr_2*
 ;
 
-gr2
+gr_2
 :
-	cta com*
+	s_CTA s_COM*
 ;
 
-gr3
+gr_3
 :
-	tdt rff* dtm* mea* ftx* com* gr4* gr5*
+	s_TDT s_RFF* s_DTM* s_MEA* s_FTX* s_COM* gr_4* gr_5*
 ;
 
-gr4
+gr_4
 :
-	loc dtm*
+	s_LOC s_DTM*
 ;
 
-gr5
+gr_5
 :
-	gor rff* nad* gr6*
+	s_GOR s_RFF* s_NAD* gr_6*
 ;
 
-gr6
+gr_6
 :
-	doc dtm* loc*
+	s_DOC s_DTM* s_LOC*
 ;
 
 /* Atraque */
-gr7
+gr_7
 :
-	tsr qty* ftx* gr8*
+	s_TSR s_QTY* s_FTX* gr_8*
 ;
 
-gr8
+gr_8
 :
-	loc mea* dtm* qty* poc* ftx* gr9*
+	s_LOC s_MEA* s_DTM* s_QTY* s_POC* s_FTX* gr_9*
 ;
 
 /* Operacion de Atraque */
-gr9
+gr_9
 :
-	han nad* gr10*
+	s_HAN s_NAD* gr_10*
 ;
 
-gr10
+gr_10
 :
-	gds ftx* mea* eqn* dgs*
+	s_GDS s_FTX* s_MEA* s_EQN* s_DGS*
 ;

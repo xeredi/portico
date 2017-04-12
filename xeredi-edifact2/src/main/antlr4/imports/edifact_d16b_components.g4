@@ -731,7 +731,27 @@ c_C100
     )?
 ;
 
-c106
+/**
+ * C101 RELIGION DETAILS
+ */
+c_C101
+:
+    d_3483
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_3482?
+    )?
+;
+
+/**
+ * C106 DOCUMENT/MESSAGE IDENTIFICATION
+ */
+c_C106
 :
     d_1004?
     (
@@ -742,7 +762,10 @@ c106
     )?
 ;
 
-c107
+/**
+ * C107 TEXT REFERENCE
+ */
+c_C107
 :
     d_4441
     (
@@ -753,7 +776,10 @@ c107
     )?
 ;
 
-c108
+/**
+ * C108 TEXT LITERAL
+ */
+c_C108
 :
     d_4440
     (
@@ -770,7 +796,35 @@ c108
     )?
 ;
 
-c174
+/**
+ * C128 RATE DETAILS
+ */
+c_C128
+:
+    d_5419 COLON d_5420
+    (
+        COLON d_5284?
+    )?
+    (
+        COLON d_6411?
+    )?
+;
+
+/**
+ * C138 PRICE MULTIPLIER INFORMATION
+ */
+c_C138
+:
+    d_5394
+    (
+        COLON d_5393?
+    )?
+;
+
+/**
+ * C174 VALUE/RANGE
+ */
+c_C174
 :
     d_6411
     (
@@ -787,7 +841,10 @@ c174
     )?
 ;
 
-c186
+/**
+ * C186 QUANTITY DETAILS
+ */
+c_C186
 :
     d_6063 COLON d_6060
     (
@@ -795,7 +852,10 @@ c186
     )?
 ;
 
-c200
+/**
+ * C200 CHARGE
+ */
+c_C200
 :
     d_8023?
     (
@@ -815,7 +875,27 @@ c200
     )?
 ;
 
-c203
+/**
+ * C202 PACKAGE TYPE
+ */
+c_C202
+:
+    d_7065
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_7064?
+    )?
+;
+
+/**
+ * C203 RATE/TARIFF CLASS
+ */
+c_C203
 :
     d_5243
     (
@@ -847,7 +927,10 @@ c203
     )?
 ;
 
-c205
+/**
+ * C205 HAZARD CODE
+ */
+c_C205
 :
     d_8351
     (
@@ -858,7 +941,24 @@ c205
     )?
 ;
 
-c208
+/**
+ * C206 IDENTIFICATION NUMBER
+ */
+c_C206
+:
+    d_7402
+    (
+        COLON d_7405?
+    )?
+    (
+        COLON d_4405?
+    )?
+;
+
+/**
+ * C208 IDENTITY NUMBER RANGE
+ */
+c_C208
 :
     d_7402
     (
@@ -866,7 +966,10 @@ c208
     )?
 ;
 
-c210
+/**
+ * C210 MARKS & LABELS
+ */
+c_C210
 :
     d_7102
     (
@@ -898,7 +1001,10 @@ c210
     )?
 ;
 
-c211
+/**
+ * C211 DIMENSIONS
+ */
+c_C211
 :
     d_6411
     (
@@ -915,7 +1021,10 @@ c211
     )?
 ;
 
-c212
+/**
+ * C212 ITEM NUMBER IDENTIFICATION
+ */
+c_C212
 :
     d_7140?
     (
@@ -929,7 +1038,10 @@ c212
     )?
 ;
 
-c213
+/**
+ * C213 NUMBER AND TYPE OF PACKAGES
+ */
+c_C213
 :
     d_7224?
     (
@@ -949,7 +1061,30 @@ c213
     )?
 ;
 
-c215
+/**
+ * C214 SPECIAL SERVICES IDENTIFICATION
+ */
+c_C214
+:
+    d_7161?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_7160?
+    )?
+    (
+        COLON d_7160?
+    )?
+;
+
+/**
+ * C215 SEAL ISSUER
+ */
+c_C215
 :
     d_9303?
     (
@@ -963,7 +1098,10 @@ c215
     )?
 ;
 
-c218
+/**
+ * C218 HAZARDOUS MATERIAL
+ */
+c_C218
 :
     d_7419?
     (
@@ -977,7 +1115,10 @@ c218
     )?
 ;
 
-c219
+/**
+ * C219 MOVEMENT TYPE
+ */
+c_C219
 :
     d_8335?
     (
@@ -985,7 +1126,10 @@ c219
     )?
 ;
 
-c220
+/**
+ * C220 MODE OF TRANSPORT
+ */
+c_C220
 :
     d_8067?
     (
@@ -993,7 +1137,10 @@ c220
     )?
 ;
 
-c222
+/**
+ * C222 TRANSPORT IDENTIFICATION
+ */
+c_C222
 :
     d_8213?
     (
@@ -1010,7 +1157,11 @@ c222
     )?
 ;
 
-c223
+       
+/**
+ * C223 DANGEROUS GOODS SHIPMENT FLASHPOINT
+ */
+c_C223
 :
     d_7106?
     (
@@ -1018,7 +1169,10 @@ c223
     )?
 ;
 
-c224
+/**
+ * C224 EQUIPMENT SIZE AND TYPE
+ */
+c_C224
 :
     d_8155?
     (
@@ -1546,64 +1700,64 @@ c901
 
 s009
 :
-    f0065 COLON f0052 COLON f0054 COLON f0051
+    d_0065 COLON d_0052 COLON d_0054 COLON d_0051
     (
-        COLON f0057?
+        COLON d_0057?
     )?
     (
-        COLON f0110?
+        COLON d_0110?
     )?
     (
-        COLON f0113?
+        COLON d_0113?
     )?
 ;
 
 s010
 :
-    f0070
+    d_0070
     (
-        COLON f0073?
+        COLON d_0073?
     )?
 ;
 
 s016
 :
-    f0115
+    d_0115
     (
-        COLON f0116?
+        COLON d_0116?
     )?
     (
-        COLON f0118?
+        COLON d_0118?
     )?
     (
-        COLON f0051?
+        COLON d_0051?
     )?
 ;
 
 s017
 :
-    f0121
+    d_0121
     (
-        COLON f0122?
+        COLON d_0122?
     )?
     (
-        COLON f0124?
+        COLON d_0124?
     )?
     (
-        COLON f0051?
+        COLON d_0051?
     )?
 ;
 
 s018
 :
-    f0127
+    d_0127
     (
-        COLON f0128?
+        COLON d_0128?
     )?
     (
-        COLON f0130?
+        COLON d_0130?
     )?
     (
-        COLON f0051?
+        COLON d_0051?
     )?
 ;

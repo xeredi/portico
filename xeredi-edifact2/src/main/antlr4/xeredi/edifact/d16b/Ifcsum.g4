@@ -10,205 +10,205 @@ import edifact_d16b_segments, edifact_d16b_components, edifact_d16b_fields;
 
  ifcsum
  :
- 	unh bgm dtm* moa* ftx* cnt* pcd? gds* gr1* gr2* gr4* gr7* gr8* gr9* gr23*
- 	gr27* unt
+ 	s_UNH s_BGM s_DTM* s_MOA* s_FTX* s_CNT* s_PCD? s_GDS* gr_1* gr_2* gr_4* gr_7* gr_8* gr_9* gr_23*
+ 	gr_27* s_UNT
  ;
 
- gr1
+ gr_1
  :
- 	rff dtm*
+ 	s_RFF s_DTM*
  ;
 
- gr2
+ gr_2
  :
- 	gor dtm* loc* sel* ftx* gr3*
+ 	s_GOR s_DTM* s_LOC* s_SEL* s_FTX* gr_3*
  ;
 
- gr3
+ gr_3
  :
- 	doc dtm?
+ 	s_DOC s_DTM?
  ;
 
 /* Consignatario Mercancia */
- gr4
+ gr_4
  :
- 	nad gr5* gr1*
+ 	s_NAD gr_5* gr_1*
  ;
 
- gr5
+ gr_5
  :
- 	cta com*
+ 	s_CTA s_COM*
  ;
 
- gr7
+ gr_7
  :
- 	tcc cux? pri? eqn? pcd? moa* qty* loc*
+ 	s_TCC s_CUX? s_PRI? s_EQN? s_PCD? s_MOA* s_QTY* s_LOC*
  ;
 
- gr8
+ gr_8
  :
- 	icd dtm? ftx*
+ 	s_ICD s_DTM? s_FTX*
  ;
 
- gr9
+ gr_9
  :
- 	tdt dtm* gr10* gr11* sel* ftx* gr12* gr13* gr5* gr15* gr8* gr1* gr18*
+ 	s_TDT s_DTM* gr_10* gr_11* s_SEL* s_FTX* gr_12* gr_13* gr_5* gr_15* gr_8* gr_1* gr_18*
  ;
 
- gr10
+ gr_10
  :
- 	tsr scc*
+ 	s_TSR s_SCC*
  ;
 
- gr11
+ gr_11
  :
- 	loc dtm*
+ 	s_LOC s_DTM*
  ;
 
- gr12
+ gr_12
  :
- 	mea eqn?
+ 	s_MEA s_EQN?
  ;
 
- gr13
+ gr_13
  :
- 	dim eqn?
+ 	s_DIM s_EQN?
  ;
 
- gr15
+ gr_15
  :
- 	tcc moa* pcd?
+ 	s_TCC s_MOA* s_PCD?
  ;
 
- gr18
+ gr_18
  :
- 	nad loc* gr5* gr3* gr21* gr1*
+ 	s_NAD s_LOC* gr_5* gr_3* gr_21* gr_1*
  ;
 
- gr21
+ gr_21
  :
- 	tcc cux? pri? eqn? pcd? moa* qty*
+ 	s_TCC s_CUX? s_PRI? s_EQN? s_PCD? s_MOA* s_QTY*
  ;
 
- gr23
+ gr_23
  :
- 	eqd eqn? tpl? tmd? mea* dim* sel* nad* loc* han? tmp? ftx* rff* pcd* gr24*
- 	gr25* gr5*
+ 	s_EQD s_EQN? s_TPL? s_TMD? s_MEA* s_DIM* s_SEL* s_NAD* s_LOC* s_HAN? s_TMP? s_FTX* s_RFF* s_PCD* gr_24*
+ 	gr_25* gr_5*
  ;
 
- gr24
+ gr_24
  :
- 	eqa eqn?
+ 	s_EQA s_EQN?
  ;
 
- gr25
+ gr_25
  :
- 	dgs ftx*
+ 	s_DGS s_FTX*
  ;
 
 /* BL */
- gr27
+ gr_27
  :
- 	cni gr28* gr30* cta? com* dtm* cnt* tsr* cux* pcd* moa* ftx* gds* gr11*
- 	gr33* gr1* gr2* gr37* gr38* gr8* gr40* gr46* gr53* gr73*
+ 	s_CNI gr_28* gr_30* s_CTA? s_COM* s_DTM* s_CNT* s_TSR* s_CUX* s_PCD* s_MOA* s_FTX* s_GDS* gr_11*
+ 	gr_33* gr_1* gr_2* gr_37* gr_38* gr_8* gr_40* gr_46* gr_53* gr_73*
  ;
 
- gr28
+ gr_28
  :
- 	sgp gr12*
+ 	s_SGP gr_12*
  ;
 
- gr30
+ gr_30
  :
- 	tpl gr12*
+ 	s_TPL gr_12*
  ;
 
- gr33
+ gr_33
  :
- 	tod loc*
+ 	s_TOD s_LOC*
  ;
 
- gr37
+ gr_37
  :
- 	cpi rff* cux? loc* moa*
+ 	s_CPI s_RFF* s_CUX? s_LOC* s_MOA*
  ;
 
- gr38
+ gr_38
  :
- 	tcc loc? ftx? cux? pri? eqn? pcd? moa* qty*
+ 	s_TCC s_LOC? s_FTX? s_CUX? s_PRI? s_EQN? s_PCD? s_MOA* s_QTY*
  ;
 
- gr40
+ gr_40
  :
- 	tdt dtm* gr10* gr11* gr43* gr44* gr8*
+ 	s_TDT s_DTM* gr_10* gr_11* gr_43* gr_44* gr_8*
  ;
 
- gr43
+ gr_43
  :
- 	rff dtm?
+ 	s_RFF s_DTM?
  ;
 
- gr44
+ gr_44
  :
- 	tcc moa* pcd?
+ 	s_TCC s_MOA* s_PCD?
  ;
 
- gr46
+ gr_46
  :
- 	nad loc* moa* gr5* gr3* gr21* gr1* gr37* gr52*
+ 	s_NAD s_LOC* s_MOA* gr_5* gr_3* gr_21* gr_1* gr_37* gr_52*
  ;
 
- gr52
+ gr_52
  :
- 	tsr rff? loc? tpl? ftx*
+ 	s_TSR s_RFF? s_LOC? s_TPL? s_FTX*
  ;
 
 /* Partida */
- gr53
+ gr_53
  :
- 	gid han? tmp? rng? tmd? loc* moa* pia* gin* ftx* gr54* gr12* gr13* gr1*
- 	gr58* gr59* gr2* gr30* gr64* gr7* gr8*
+ 	s_GID s_HAN? s_TMP? s_RNG? s_TMD? s_LOC* s_MOA* s_PIA* s_GIN* s_FTX* gr_54* gr_12* gr_13* gr_1*
+ 	gr_58* gr_59* gr_2* gr_30* gr_64* gr_7* gr_8*
  ;
 
- gr54
+ gr_54
  :
- 	nad dtm? gds*
+ 	s_NAD s_DTM? s_GDS*
  ;
 
 /* Marcas y etiquetas de partida */
- gr58
+ gr_58
  :
- 	pci rff? dtm? gin* mea* dim? ftx*
+ 	s_PCI s_RFF? s_DTM? s_GIN* s_MEA* s_DIM? s_FTX*
  ;
 
 /* Documentos de la partida */
- gr59
+ gr_59
  :
- 	doc dtm*
+ 	s_DOC s_DTM*
  ;
 
- gr64
+ gr_64
  :
- 	sgp seq? gr12*
+ 	s_SGP s_SEQ? gr_12*
  ;
 
- gr68
+ gr_68
  :
- 	dgs ftx* gr5* gr12* gr28*
+ 	s_DGS s_FTX* gr_5* gr_12* gr_28*
  ;
 
- gr73
+ gr_73
  :
- 	eqd eqn? tmd? mea* dim* sel* tpl* han? tmp? ftx* pcd* gr21* gr75* gr24*
- 	gr77*
+ 	s_EQD s_EQN? s_TMD? s_MEA* s_DIM* s_SEL* s_TPL* s_HAN? s_TMP? s_FTX* s_PCD* gr_21* gr_75* gr_24*
+ 	gr_77*
  ;
 
- gr75
+ gr_75
  :
- 	nad dtm?
+ 	s_NAD s_DTM?
  ;
 
- gr77
+ gr_77
  :
- 	dgs ftx* gr5*
+ 	s_DGS s_FTX* gr_5*
  ;

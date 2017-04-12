@@ -4,30 +4,30 @@ import edifact_d16b_segments;
 
 aperak
 :
-	unh bgm dtm* ftx* cnt* gr1* gr2* gr3* gr4* unt
+	s_UNH s_BGM s_DTM* s_FTX* s_CNT* gr_1* gr_2* gr_3* gr_4* s_UNT
 ;
 
-gr1
+gr_1
 :
-	doc dtm*
+	s_DOC s_DTM*
 ;
 
-gr2
+gr_2
 :
-	rff dtm*
+	s_RFF s_DTM*
 ;
 
-gr3
+gr_3
 :
-	nad cta* com*
+	s_NAD s_CTA* s_COM*
 ;
 
-gr4
+gr_4
 :
-	erc ftx* gr5*
+	s_ERC s_FTX* gr_5*
 ;
 
-gr5
+gr_5
 :
-	rff ftx*
+	s_RFF s_FTX*
 ;

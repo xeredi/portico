@@ -2,46 +2,46 @@ grammar edifact_d16b_segments;
 
 import edifact_d16b_components, edifact_d16b_fields, edifact_common;
 
-tax
+s_TAX
 :
 	'TAX+' EOL
 ;
 
-sts
+s_STS
 :
 	'STS+' EOL
 ;
 
-gpo
+s_GPO
 :
 	'GPO+' EOL
 ;
 
-gei
+s_GEI
 :
 	'GEI+' EOL
 ;
 
-fii
+s_FII
 :
 	'FII+' EOL
 ;
 
-aut
+s_AUT
 :
 	'AUT+' EOL
 ;
 
-idt
+s_IDT
 :
 	'IDT+' EOL
 ;
 
-unh
+s_UNH
 :
-	'UNH' PLUS f0062 PLUS s009
+	'UNH' PLUS d_0062 PLUS s009
 	(
-		PLUS f0068?
+		PLUS d_0068?
 	)?
 	(
 		PLUS s010?
@@ -57,38 +57,14 @@ unh
 	)? EOL
 ;
 
-/*
-bgm
-:
-	'BGM'
-	(
-		PLUS c002?
-	)?
-	(
-		PLUS c106?
-	)?
-	(
-		PLUS f1225?
-	)?
-	(
-		PLUS f4343?
-	)?
-	(
-		PLUS f1373?
-	)?
-	(
-		PLUS f3453?
-	)? EOL
-;
- */
-bgm
+s_BGM
 :
 	'BGM'
 	(
 		PLUS c_C002
 	)?
 	(
-		PLUS c106
+		PLUS c_C106
 	)?
 	(
 		PLUS d_1225
@@ -104,17 +80,17 @@ bgm
 	)? EOL
 ;
 
-dtm
+s_DTM
 :
 	'DTM' PLUS c507 EOL
 ;
 
-rff
+s_RFF
 :
 	'RFF' PLUS c506 EOL
 ;
 
-gor
+s_GOR
 :
 	'GOR'
 	(
@@ -134,14 +110,14 @@ gor
 	)? EOL
 ;
 
-tdt
+s_TDT
 :
 	'TDT' PLUS d_8051
 	(
 		PLUS d_8028
 	)?
 	(
-		PLUS c220
+		PLUS c_C220
 	)?
 	(
 		PLUS c_C001
@@ -156,7 +132,7 @@ tdt
 		PLUS c401
 	)?
 	(
-		PLUS c222
+		PLUS c_C222
 	)?
 	(
 		PLUS d_8281
@@ -166,7 +142,7 @@ tdt
 	)? EOL
 ;
 
-loc
+s_LOC
 :
 	'LOC' PLUS d_3227
 	(
@@ -183,7 +159,7 @@ loc
 	)? EOL
 ;
 
-nad
+s_NAD
 :
 	'NAD' PLUS d_3035
 	(
@@ -212,7 +188,7 @@ nad
 	)? EOL
 ;
 
-cni
+s_CNI
 :
 	'CNI'
 	(
@@ -226,40 +202,40 @@ cni
 	)? EOL
 ;
 
-gid
+s_GID
 :
 	'GID'
 	(
 		PLUS d_1496
 	)?
 	(
-		PLUS c213
+		PLUS c_C213
 	)?
 	(
-		PLUS c213
+		PLUS c_C213
 	)?
 	(
-		PLUS c213
+		PLUS c_C213
 	)?
 	(
-		PLUS c213
+		PLUS c_C213
 	)?
 	(
-		PLUS c213
+		PLUS c_C213
 	)? EOL
 ;
 
-ftx
+s_FTX
 :
 	'FTX' PLUS d_4451
 	(
 		PLUS d_4453?
 	)?
 	(
-		PLUS c107?
+		PLUS c_C107?
 	)?
 	(
-		PLUS c108?
+		PLUS c_C108?
 	)?
 	(
 		PLUS d_3453?
@@ -269,28 +245,28 @@ ftx
 	)? EOL
 ;
 
-mea
+s_MEA
 :
 	'MEA' PLUS d_6311
 	(
 		PLUS c502
 	)?
 	(
-		PLUS c174
+		PLUS c_C174
 	)?
 	(
 		PLUS d_7383
 	)? EOL
 ;
 
-pci
+s_PCI
 :
 	'PCI'
 	(
 		PLUS d_4233?
 	)?
 	(
-		PLUS c210?
+		PLUS c_C210?
 	)?
 	(
 		PLUS d_8169?
@@ -300,7 +276,7 @@ pci
 	)? EOL
 ;
 
-doc
+s_DOC
 :
 	'DOC' PLUS c_C002
 	(
@@ -317,7 +293,7 @@ doc
 	)? EOL
 ;
 
-sgp
+s_SGP
 :
 	'SGP' PLUS c237
 	(
@@ -325,14 +301,14 @@ sgp
 	)? EOL
 ;
 
-eqd
+s_EQD
 :
 	'EQD' PLUS d_8053
 	(
 		PLUS c237
 	)?
 	(
-		PLUS c224
+		PLUS c_C224
 	)?
 	(
 		PLUS d_8077
@@ -348,42 +324,42 @@ eqd
 	)? EOL
 ;
 
-sel
+s_SEL
 :
 	'SEL'
 	(
 		PLUS d_9308
 	)?
 	(
-		PLUS c215
+		PLUS c_C215
 	)?
 	(
 		PLUS d_4517
 	)?
 	(
-		PLUS c208
+		PLUS c_C208
 	)?
 	(
 		PLUS d_4525
 	)? EOL
 ;
 
-unt
+s_UNT
 :
-	'UNT' PLUS f0074 PLUS f0062 EOL
+	'UNT' PLUS d_0074 PLUS d_0062 EOL
 ;
 
-cnt
+s_CNT
 :
 	'CNT' PLUS c270 EOL
 ;
 
-com
+s_COM
 :
 	'COM' PLUS c_C076 EOL
 ;
 
-cpi
+s_CPI
 :
 	'CPI'
 	(
@@ -397,7 +373,7 @@ cpi
 	)? EOL
 ;
 
-cta
+s_CTA
 :
 	'CTA'
 	(
@@ -408,7 +384,7 @@ cta
 	)? EOL
 ;
 
-cux
+s_CUX
 :
 	'CUX' PLUS c504
 	(
@@ -422,20 +398,20 @@ cux
 	)? EOL
 ;
 
-dgs
+s_DGS
 :
 	'DGS'
 	(
 		PLUS d_8273
 	)?
 	(
-		PLUS c205
+		PLUS c_C205
 	)?
 	(
 		PLUS c234
 	)?
 	(
-		PLUS c223
+		PLUS c_C223
 	)?
 	(
 		PLUS d_8339
@@ -469,12 +445,12 @@ dgs
 	)? EOL
 ;
 
-dim
+s_DIM
 :
-	'DIM' PLUS d_6145 PLUS c211 EOL
+	'DIM' PLUS d_6145 PLUS c_C211 EOL
 ;
 
-eqa
+s_EQA
 :
 	'EQA' PLUS d_8053
 	(
@@ -482,12 +458,12 @@ eqa
 	)? EOL
 ;
 
-eqn
+s_EQN
 :
 	'EQN' PLUS c523 EOL
 ;
 
-gds
+s_GDS
 :
 	'GDS'
 	(
@@ -498,45 +474,45 @@ gds
 	)? EOL
 ;
 
-gin
+s_GIN
 :
-	'GIN' PLUS d_7402 PLUS c208
+	'GIN' PLUS d_7402 PLUS c_C208
 	(
-		PLUS c208?
+		PLUS c_C208?
 	)?
 	(
-		PLUS c208?
+		PLUS c_C208?
 	)?
 	(
-		PLUS c208?
+		PLUS c_C208?
 	)?
 	(
-		PLUS c208?
+		PLUS c_C208?
 	)? EOL
 ;
 
-han
+s_HAN
 :
 	'HAN'
 	(
 		PLUS c524
 	)?
 	(
-		PLUS c218
+		PLUS c_C218
 	)? EOL
 ;
 
-icd
+s_ICD
 :
 	'ICD' PLUS c330 PLUS c331 EOL
 ;
 
-moa
+s_MOA
 :
 	'MOA' PLUS c516 EOL
 ;
 
-pcd
+s_PCD
 :
 	'PCD' PLUS c501
 	(
@@ -544,24 +520,24 @@ pcd
 	)? EOL
 ;
 
-pia
+s_PIA
 :
-	'PIA' PLUS d_4347 PLUS c212
+	'PIA' PLUS d_4347 PLUS c_C212
 	(
-		PLUS c212
+		PLUS c_C212
 	)?
 	(
-		PLUS c212
+		PLUS c_C212
 	)?
 	(
-		PLUS c212
+		PLUS c_C212
 	)?
 	(
-		PLUS c212
+		PLUS c_C212
 	)? EOL
 ;
 
-pri
+s_PRI
 :
 	'PRI'
 	(
@@ -572,12 +548,12 @@ pri
 	)? EOL
 ;
 
-qty
+s_QTY
 :
-	'QTY' PLUS c186 EOL
+	'QTY' PLUS c_C186 EOL
 ;
 
-rng
+s_RNG
 :
 	'RNG' PLUS d_6167
 	(
@@ -585,7 +561,7 @@ rng
 	)? EOL
 ;
 
-scc
+s_SCC
 :
 	'SCC' PLUS d_4017
 	(
@@ -596,7 +572,7 @@ scc
 	)? EOL
 ;
 
-seq
+s_SEQ
 :
 	'SEQ'
 	(
@@ -607,14 +583,14 @@ seq
 	)? EOL
 ;
 
-tcc
+s_TCC
 :
 	'TCC'
 	(
-		PLUS c200
+		PLUS c_C200
 	)?
 	(
-		PLUS c203
+		PLUS c_C203
 	)?
 	(
 		PLUS c528
@@ -624,11 +600,11 @@ tcc
 	)? EOL
 ;
 
-tmd
+s_TMD
 :
 	'TMD'
 	(
-		PLUS c219
+		PLUS c_C219
 	)?
 	(
 		PLUS d_8332
@@ -638,7 +614,7 @@ tmd
 	)? EOL
 ;
 
-tmp
+s_TMP
 :
 	'TMP' PLUS d_6245
 	(
@@ -646,7 +622,7 @@ tmp
 	)? EOL
 ;
 
-tod
+s_TOD
 :
 	'TOD'
 	(
@@ -660,12 +636,12 @@ tod
 	)? EOL
 ;
 
-tpl
+s_TPL
 :
-	'TPL' PLUS c222 EOL
+	'TPL' PLUS c_C222 EOL
 ;
 
-tsr
+s_TSR
 :
 	'TSR'
 	(
@@ -682,12 +658,12 @@ tsr
 	)? EOL
 ;
 
-erc
+s_ERC
 :
 	'ERC' PLUS c901 EOL
 ;
 
-poc
+s_POC
 :
 	'POC' PLUS c525 EOL
 ;
