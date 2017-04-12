@@ -85,22 +85,22 @@ bgm
 :
 	'BGM'
 	(
-		PLUS c_C002?
+		PLUS c_C002
 	)?
 	(
-		PLUS c106?
+		PLUS c106
 	)?
 	(
-		PLUS d_1225?
+		PLUS d_1225
 	)?
 	(
-		PLUS d_4343?
+		PLUS d_4343
 	)?
 	(
-		PLUS d_1373?
+		PLUS d_1373
 	)?
 	(
-		PLUS d_3453?
+		PLUS d_3453
 	)? EOL
 ;
 
@@ -118,51 +118,51 @@ gor
 :
 	'GOR'
 	(
-		PLUS f8323?
+		PLUS d_8323
 	)?
 	(
-		PLUS c232?
+		PLUS c232
 	)?
 	(
-		PLUS c232?
+		PLUS c232
 	)?
 	(
-		PLUS c232?
+		PLUS c232
 	)?
 	(
-		PLUS c232?
+		PLUS c232
 	)? EOL
 ;
 
 tdt
 :
-	'TDT' PLUS f8051
+	'TDT' PLUS d_8051
 	(
-		PLUS f8028?
+		PLUS d_8028
 	)?
 	(
-		PLUS c220?
+		PLUS c220
 	)?
 	(
-		PLUS c_C001?
+		PLUS c_C001
 	)?
 	(
-		PLUS c040?
+		PLUS c_C040
 	)?
 	(
-		PLUS f8101?
+		PLUS d_8101
 	)?
 	(
-		PLUS c401?
+		PLUS c401
 	)?
 	(
-		PLUS c222?
+		PLUS c222
 	)?
 	(
-		PLUS f8281?
+		PLUS d_8281
 	)?
 	(
-		PLUS c_C003?
+		PLUS c_C003
 	)? EOL
 ;
 
@@ -170,16 +170,16 @@ loc
 :
 	'LOC' PLUS d_3227
 	(
-		PLUS c517?
+		PLUS c517
 	)?
 	(
-		PLUS c519?
+		PLUS c519
 	)?
 	(
-		PLUS c553?
+		PLUS c553
 	)?
 	(
-		PLUS d_5479?
+		PLUS d_5479
 	)? EOL
 ;
 
@@ -187,28 +187,28 @@ nad
 :
 	'NAD' PLUS d_3035
 	(
-		PLUS c082?
+		PLUS c_C082
 	)?
 	(
-		PLUS c058?
+		PLUS c_C058
 	)?
 	(
-		PLUS c080?
+		PLUS c_C080
 	)?
 	(
-		PLUS c059?
+		PLUS c_C059
 	)?
 	(
-		PLUS d_3164?
+		PLUS d_3164
 	)?
 	(
-		PLUS c819?
+		PLUS c819
 	)?
 	(
-		PLUS d_3251?
+		PLUS d_3251
 	)?
 	(
-		PLUS d_3207?
+		PLUS d_3207
 	)? EOL
 ;
 
@@ -216,13 +216,13 @@ cni
 :
 	'CNI'
 	(
-		PLUS d_1490?
+		PLUS d_1490
 	)?
 	(
-		PLUS c503?
+		PLUS c503
 	)?
 	(
-		PLUS d_1312?
+		PLUS d_1312
 	)? EOL
 ;
 
@@ -230,22 +230,22 @@ gid
 :
 	'GID'
 	(
-		PLUS d_1496?
+		PLUS d_1496
 	)?
 	(
-		PLUS c213?
+		PLUS c213
 	)?
 	(
-		PLUS c213?
+		PLUS c213
 	)?
 	(
-		PLUS c213?
+		PLUS c213
 	)?
 	(
-		PLUS c213?
+		PLUS c213
 	)?
 	(
-		PLUS c213?
+		PLUS c213
 	)? EOL
 ;
 
@@ -273,13 +273,13 @@ mea
 :
 	'MEA' PLUS d_6311
 	(
-		PLUS c502?
+		PLUS c502
 	)?
 	(
-		PLUS c174?
+		PLUS c174
 	)?
 	(
-		PLUS f7383?
+		PLUS d_7383
 	)? EOL
 ;
 
@@ -293,7 +293,7 @@ pci
 		PLUS c210?
 	)?
 	(
-		PLUS f8169?
+		PLUS d_8169?
 	)?
 	(
 		PLUS c827?
@@ -304,16 +304,16 @@ doc
 :
 	'DOC' PLUS c_C002
 	(
-		PLUS c503?
+		PLUS c503
 	)?
 	(
-		PLUS d_3153?
+		PLUS d_3153
 	)?
 	(
-		PLUS d_1220?
+		PLUS d_1220
 	)?
 	(
-		PLUS d_1218?
+		PLUS d_1218
 	)? EOL
 ;
 
@@ -321,30 +321,30 @@ sgp
 :
 	'SGP' PLUS c237
 	(
-		PLUS f7224?
+		PLUS d_7224?
 	)? EOL
 ;
 
 eqd
 :
-	'EQD' PLUS f8053
+	'EQD' PLUS d_8053
 	(
-		PLUS c237?
+		PLUS c237
 	)?
 	(
-		PLUS c224?
+		PLUS c224
 	)?
 	(
-		PLUS f8077?
+		PLUS d_8077
 	)?
 	(
-		PLUS f8249?
+		PLUS d_8249
 	)?
 	(
-		PLUS f8169?
+		PLUS d_8169
 	)?
 	(
-		PLUS d_4233?
+		PLUS d_4233
 	)? EOL
 ;
 
@@ -352,19 +352,19 @@ sel
 :
 	'SEL'
 	(
-		PLUS f9308?
+		PLUS d_9308
 	)?
 	(
-		PLUS c215?
+		PLUS c215
 	)?
 	(
-		PLUS d_4517?
+		PLUS d_4517
 	)?
 	(
-		PLUS c208?
+		PLUS c208
 	)?
 	(
-		PLUS d_4525?
+		PLUS d_4525
 	)? EOL
 ;
 
@@ -380,7 +380,7 @@ cnt
 
 com
 :
-	'COM' PLUS c076 EOL
+	'COM' PLUS c_C076 EOL
 ;
 
 cpi
@@ -401,10 +401,10 @@ cta
 :
 	'CTA'
 	(
-		PLUS d_3139?
+		PLUS d_3139
 	)?
 	(
-		PLUS c056?
+		PLUS c_C056
 	)? EOL
 ;
 
@@ -426,46 +426,46 @@ dgs
 :
 	'DGS'
 	(
-		PLUS f8273?
+		PLUS d_8273
 	)?
 	(
-		PLUS c205?
+		PLUS c205
 	)?
 	(
-		PLUS c234?
+		PLUS c234
 	)?
 	(
-		PLUS c223?
+		PLUS c223
 	)?
 	(
-		PLUS f8339?
+		PLUS d_8339
 	)?
 	(
-		PLUS f8364?
+		PLUS d_8364
 	)?
 	(
-		PLUS f8410?
+		PLUS d_8410
 	)?
 	(
-		PLUS f8126?
+		PLUS d_8126
 	)?
 	(
-		PLUS c235?
+		PLUS c235
 	)?
 	(
-		PLUS c236?
+		PLUS c236
 	)?
 	(
-		PLUS f8255?
+		PLUS d_8255
 	)?
 	(
-		PLUS f8179?
+		PLUS d_8179
 	)?
 	(
-		PLUS f8211?
+		PLUS d_8211
 	)?
 	(
-		PLUS c289?
+		PLUS c289
 	)? EOL
 ;
 
@@ -476,9 +476,9 @@ dim
 
 eqa
 :
-	'EQA' PLUS f8053
+	'EQA' PLUS d_8053
 	(
-		PLUS c237?
+		PLUS c237
 	)? EOL
 ;
 
@@ -491,16 +491,16 @@ gds
 :
 	'GDS'
 	(
-		PLUS c703?
+		PLUS c703
 	)?
 	(
-		PLUS c288?
+		PLUS c288
 	)? EOL
 ;
 
 gin
 :
-	'GIN' PLUS f7402 PLUS c208
+	'GIN' PLUS d_7402 PLUS c208
 	(
 		PLUS c208?
 	)?
@@ -519,10 +519,10 @@ han
 :
 	'HAN'
 	(
-		PLUS c524?
+		PLUS c524
 	)?
 	(
-		PLUS c218?
+		PLUS c218
 	)? EOL
 ;
 
@@ -548,16 +548,16 @@ pia
 :
 	'PIA' PLUS d_4347 PLUS c212
 	(
-		PLUS c212?
+		PLUS c212
 	)?
 	(
-		PLUS c212?
+		PLUS c212
 	)?
 	(
-		PLUS c212?
+		PLUS c212
 	)?
 	(
-		PLUS c212?
+		PLUS c212
 	)? EOL
 ;
 
@@ -589,10 +589,10 @@ scc
 :
 	'SCC' PLUS d_4017
 	(
-		PLUS d_4493?
+		PLUS d_4493
 	)?
 	(
-		PLUS c329?
+		PLUS c329
 	)? EOL
 ;
 
@@ -611,16 +611,16 @@ tcc
 :
 	'TCC'
 	(
-		PLUS c200?
+		PLUS c200
 	)?
 	(
-		PLUS c203?
+		PLUS c203
 	)?
 	(
-		PLUS c528?
+		PLUS c528
 	)?
 	(
-		PLUS c554?
+		PLUS c554
 	)? EOL
 ;
 
@@ -628,13 +628,13 @@ tmd
 :
 	'TMD'
 	(
-		PLUS c219?
+		PLUS c219
 	)?
 	(
-		PLUS f8332?
+		PLUS d_8332
 	)?
 	(
-		PLUS f8341?
+		PLUS d_8341
 	)? EOL
 ;
 
@@ -642,7 +642,7 @@ tmp
 :
 	'TMP' PLUS d_6245
 	(
-		PLUS c239?
+		PLUS c239
 	)? EOL
 ;
 
@@ -650,13 +650,13 @@ tod
 :
 	'TOD'
 	(
-		PLUS d_4055?
+		PLUS d_4055
 	)?
 	(
-		PLUS d_4215?
+		PLUS d_4215
 	)?
 	(
-		PLUS c100?
+		PLUS c_C100
 	)? EOL
 ;
 

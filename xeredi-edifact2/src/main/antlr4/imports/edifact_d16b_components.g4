@@ -1,4 +1,4 @@
-grammar edifact_d16b_components;
+parser grammar edifact_d16b_components;
 
 import edifact_d16b_fields, edifact_common;
 
@@ -205,16 +205,16 @@ import edifact_d16b_fields, edifact_common;
  */
 c_C001
 :
-	f8179?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
-	(
-		COLON f8178?
-	)?
+    d_8179?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_8178?
+    )?
 ;
 
 /**
@@ -222,16 +222,16 @@ c_C001
  */
 c_C002
 :
-	d_1001?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
-	(
-		COLON d_1000?
-	)?
+    d_1001?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_1000?
+    )?
 ;
 
 /**
@@ -239,1014 +239,1371 @@ c_C002
  */
 c_C003
 :
-	f7041?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
-	(
-		COLON f7040?
-	)?
+    d_7041?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_7040?
+    )?
 ;
 
 /**
  * C004 EVENT CATEGORY
  */
-//c_C004
-//:
-//    f9637?
-//    (
-//        COLON d_1131?
-//    )?
-//    (
-//        COLON d_3055?
-//    )?
-//    (
-//        COLON f9636?
-//    )?
-//;
-
-c040
+c_C004
 :
-	d_3127?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
-	(
-		COLON d_3126?
-	)?
+    d_9637?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_9636?
+    )?
 ;
 
-c056
+/**
+ * C008 MONETARY AMOUNT FUNCTION DETAIL
+ */
+c_C008
 :
-	d_3413?
-	(
-		COLON d_3412?
-	)?
+    d_5105?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_5104?
+    )?
 ;
 
-c058
+/**
+ * C009 INFORMATION CATEGORY
+ */
+c_C009
 :
-	d_3124
-	(
-		COLON d_3124?
-	)?
-	(
-		COLON d_3124?
-	)?
-	(
-		COLON d_3124?
-	)?
-	(
-		COLON d_3124?
-	)?
+    d_4149?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_4148?
+    )?
 ;
 
-c059
+/**
+ * C010 INFORMATION TYPE
+ */
+c_C010
 :
-	d_3042
-	(
-		COLON d_3042?
-	)?
-	(
-		COLON d_3042?
-	)?
-	(
-		COLON d_3042?
-	)?
+    d_4473?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_4472?
+    )?
 ;
 
-c076
+/**
+ * C011 INFORMATION DETAIL
+ */
+c_C011
 :
-	d_3148 COLON d_3155
+    d_4151?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_4150?
+    )?
 ;
 
-c080
+/**
+ * C012 PROCESSING INDICATOR
+ */
+c_C012
 :
-	d_3036
-	(
-		COLON d_3036?
-	)?
-	(
-		COLON d_3036?
-	)?
-	(
-		COLON d_3036?
-	)?
-	(
-		COLON d_3036?
-	)?
-	(
-		COLON d_3045?
-	)?
+    d_7365?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_7364?
+    )?
 ;
 
-c082
+/**
+ * C019 PAYMENT TERMS
+ */
+c_C019
 :
-	d_3039
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
+    d_4277?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_4276?
+    )?
 ;
 
-c100
+/**
+ * C030 EVENT TYPE
+ */
+c_C030
 :
-	d_4053?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
-	(
-		COLON d_4052?
-	)?
-	(
-		COLON d_4052?
-	)?
+    d_9171?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_9170?
+    )?
+;
+
+/**
+ * C040 CARRIER
+ */
+c_C040
+:
+    d_3127?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_3126?
+    )?
+;
+
+/**
+ * C042 NATIONALITY DETAILS
+ */
+c_C042
+:
+    d_3293?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_3292?
+    )?
+;
+
+/**
+ * C045 BILL LEVEL IDENTIFICATION
+ */
+c_C045
+:
+    d_7436?
+    (
+        COLON d_7438?
+    )?
+    (
+        COLON d_7440?
+    )?
+    (
+        COLON d_7442?
+    )?
+    (
+        COLON d_7444?
+    )?
+    (
+        COLON d_7446?
+    )?
+;
+
+/**
+ * C049 REMUNERATION TYPE IDENTIFICATION
+ */
+c_C049
+:
+    d_5315?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_5314?
+    )?
+    (
+        COLON d_5314?
+    )?
+;
+
+/**
+ * C056 CONTACT DETAILS
+ */
+c_C056
+:
+    d_3413?
+    (
+        COLON d_3412?
+    )?
+;
+
+/**
+ * C058 NAME AND ADDRESS
+ */
+c_C058
+:
+    d_3124
+    (
+        COLON d_3124?
+    )?
+    (
+        COLON d_3124?
+    )?
+    (
+        COLON d_3124?
+    )?
+    (
+        COLON d_3124?
+    )?
+;
+
+/**
+ * C059 STREET
+ */
+c_C059
+:
+    d_3042
+    (
+        COLON d_3042?
+    )?
+    (
+        COLON d_3042?
+    )?
+    (
+        COLON d_3042?
+    )?
+;
+
+/**
+ * C063 EVENT IDENTIFICATION
+ */
+c_C063
+:
+    d_9173?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_9172?
+    )?
+;
+
+/**
+ * C076 COMMUNICATION CONTACT
+ */
+c_C076
+:
+    d_3148 COLON d_3155
+;
+
+/**
+ * C077 FILE IDENTIFICATION
+ */
+c_C077
+:
+    d_1508?
+    (
+        COLON d_7008?
+    )?
+;
+
+/**
+ * C078 ACCOUNT HOLDER IDENTIFICATION
+ */
+c_C078
+:
+    d_3194?
+    (
+        COLON d_3192?
+    )?
+    (
+        COLON d_3192?
+    )?
+    (
+        COLON d_6345?
+    )?
+;
+
+/**
+ * C079 COMPUTER ENVIRONMENT IDENTIFICATION
+ */
+c_C079
+:
+    d_1511?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_1510?
+    )?
+    (
+        COLON d_1056?
+    )?
+    (
+        COLON d_1058?
+    )?
+    (
+        COLON d_7402?
+    )?
+;
+
+/**
+ * C080 PARTY NAME
+ */
+c_C080
+:
+    d_3036
+    (
+        COLON d_3036?
+    )?
+    (
+        COLON d_3036?
+    )?
+    (
+        COLON d_3036?
+    )?
+    (
+        COLON d_3036?
+    )?
+    (
+        COLON d_3045?
+    )?
+;
+
+/**
+ * C082 PARTY IDENTIFICATION DETAILS
+ */
+c_C082
+:
+    d_3039
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+;
+
+/**
+ * C085 MARITAL STATUS DETAILS
+ */
+c_C085
+:
+    d_3479
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_3478?
+    )?
+;
+
+/**
+ * C088 INSTITUTION IDENTIFICATION
+ */
+c_C088
+:
+    d_3433
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_3434?
+    )?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_3432?
+    )?
+    (
+        COLON d_3436?
+    )?
+;
+
+/**
+ * C090 ADDRESS DETAILS
+ */
+c_C090
+:
+    d_3477 COLON d_3286
+    (
+        COLON d_3286?
+    )?
+    (
+        COLON d_3286?
+    )?
+    (
+        COLON d_3286?
+    )?
+    (
+        COLON d_3286?
+    )?
+;
+
+/**
+ * C099 FILE DETAILS
+ */
+c_C099
+:
+    d_1516
+    (
+        COLON d_1056?
+    )?
+    (
+        COLON d_1503?
+    )?
+    (
+        COLON d_1502?
+    )?
+;
+
+/**
+ * C100 TERMS OF DELIVERY OR TRANSPORT
+ */
+c_C100
+:
+    d_4053?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_4052?
+    )?
+    (
+        COLON d_4052?
+    )?
 ;
 
 c106
 :
-	d_1004?
-	(
-		COLON d_1056?
-	)?
-	(
-		COLON d_1060?
-	)?
+    d_1004?
+    (
+        COLON d_1056?
+    )?
+    (
+        COLON d_1060?
+    )?
 ;
 
 c107
 :
-	d_4441
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
+    d_4441
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
 ;
 
 c108
 :
-	d_4440
-	(
-		COLON d_4440?
-	)?
-	(
-		COLON d_4440?
-	)?
-	(
-		COLON d_4440?
-	)?
-	(
-		COLON d_4440?
-	)?
+    d_4440
+    (
+        COLON d_4440?
+    )?
+    (
+        COLON d_4440?
+    )?
+    (
+        COLON d_4440?
+    )?
+    (
+        COLON d_4440?
+    )?
 ;
 
 c174
 :
-	d_6411
-	(
-		COLON d_6314?
-	)?
-	(
-		COLON d_6162?
-	)?
-	(
-		COLON d_6152?
-	)?
-	(
-		COLON d_6432?
-	)?
+    d_6411
+    (
+        COLON d_6314?
+    )?
+    (
+        COLON d_6162?
+    )?
+    (
+        COLON d_6152?
+    )?
+    (
+        COLON d_6432?
+    )?
 ;
 
 c186
 :
-	d_6063 COLON d_6060
-	(
-		COLON d_6411?
-	)?
+    d_6063 COLON d_6060
+    (
+        COLON d_6411?
+    )?
 ;
 
 c200
 :
-	f8023?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
-	(
-		COLON f8022?
-	)?
-	(
-		COLON d_4237?
-	)?
-	(
-		COLON f7140?
-	)?
+    d_8023?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_8022?
+    )?
+    (
+        COLON d_4237?
+    )?
+    (
+        COLON d_7140?
+    )?
 ;
 
 c203
 :
-	d_5243
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
-	(
-		COLON d_5242?
-	)?
-	(
-		COLON d_5275?
-	)?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
-	(
-		COLON d_5275?
-	)?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
+    d_5243
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_5242?
+    )?
+    (
+        COLON d_5275?
+    )?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_5275?
+    )?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
 ;
 
 c205
 :
-	f8351
-	(
-		COLON f8078?
-	)?
-	(
-		COLON f8092?
-	)?
+    d_8351
+    (
+        COLON d_8078?
+    )?
+    (
+        COLON d_8092?
+    )?
 ;
 
 c208
 :
-	f7402
-	(
-		COLON f7402?
-	)?
+    d_7402
+    (
+        COLON d_7402?
+    )?
 ;
 
 c210
 :
-	f7102
-	(
-		COLON f7102?
-	)?
-	(
-		COLON f7102?
-	)?
-	(
-		COLON f7102?
-	)?
-	(
-		COLON f7102?
-	)?
-	(
-		COLON f7102?
-	)?
-	(
-		COLON f7102?
-	)?
-	(
-		COLON f7102?
-	)?
-	(
-		COLON f7102?
-	)?
-	(
-		COLON f7102?
-	)?
+    d_7102
+    (
+        COLON d_7102?
+    )?
+    (
+        COLON d_7102?
+    )?
+    (
+        COLON d_7102?
+    )?
+    (
+        COLON d_7102?
+    )?
+    (
+        COLON d_7102?
+    )?
+    (
+        COLON d_7102?
+    )?
+    (
+        COLON d_7102?
+    )?
+    (
+        COLON d_7102?
+    )?
+    (
+        COLON d_7102?
+    )?
 ;
 
 c211
 :
-	d_6411
-	(
-		COLON d_6168?
-	)?
-	(
-		COLON d_6140?
-	)?
-	(
-		COLON d_6008?
-	)?
-	(
-		COLON d_6182?
-	)?
+    d_6411
+    (
+        COLON d_6168?
+    )?
+    (
+        COLON d_6140?
+    )?
+    (
+        COLON d_6008?
+    )?
+    (
+        COLON d_6182?
+    )?
 ;
 
 c212
 :
-	f7140?
-	(
-		COLON f7143?
-	)?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
+    d_7140?
+    (
+        COLON d_7143?
+    )?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
 ;
 
 c213
 :
-	f7224?
-	(
-		COLON f7065?
-	)?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
-	(
-		COLON f7064?
-	)?
-	(
-		COLON f7233?
-	)?
+    d_7224?
+    (
+        COLON d_7065?
+    )?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_7064?
+    )?
+    (
+        COLON d_7233?
+    )?
 ;
 
 c215
 :
-	f9303?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
-	(
-		COLON f9302?
-	)?
+    d_9303?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_9302?
+    )?
 ;
 
 c218
 :
-	f7419?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
-	(
-		COLON f7418?
-	)?
+    d_7419?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_7418?
+    )?
 ;
 
 c219
 :
-	f8335?
-	(
-		COLON f8334?
-	)?
+    d_8335?
+    (
+        COLON d_8334?
+    )?
 ;
 
 c220
 :
-	f8067?
-	(
-		COLON f8066?
-	)?
+    d_8067?
+    (
+        COLON d_8066?
+    )?
 ;
 
 c222
 :
-	f8213?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
-	(
-		COLON f8212?
-	)?
-	(
-		COLON f8453?
-	)?
+    d_8213?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_8212?
+    )?
+    (
+        COLON d_8453?
+    )?
 ;
 
 c223
 :
-	f7106?
-	(
-		COLON d_6411?
-	)?
+    d_7106?
+    (
+        COLON d_6411?
+    )?
 ;
 
 c224
 :
-	f8155?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
-	(
-		COLON f8154?
-	)?
+    d_8155?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_8154?
+    )?
 ;
 
 c229
 :
-	d_5237
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
+    d_5237
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
 ;
 
 c231
 :
-	d_4215
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
+    d_4215
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
 ;
 
 c232
 :
-	f9415?
-	(
-		COLON f9411?
-	)?
-	(
-		COLON f9417?
-	)?
-	(
-		COLON f9353?
-	)?
+    d_9415?
+    (
+        COLON d_9411?
+    )?
+    (
+        COLON d_9417?
+    )?
+    (
+        COLON d_9353?
+    )?
 ;
 
 c233
 :
-	f7273
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
-	(
-		COLON f7273?
-	)?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
+    d_7273
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_7273?
+    )?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
 ;
 
 c234
 :
-	f7124?
-	(
-		COLON f7088?
-	)?
+    d_7124?
+    (
+        COLON d_7088?
+    )?
 ;
 
 c235
 :
-	f8158?
-	(
-		COLON f8186?
-	)?
+    d_8158?
+    (
+        COLON d_8186?
+    )?
 ;
 
 c236
 :
-	f8246?
-	(
-		COLON f8246?
-	)?
-	(
-		COLON f8246?
-	)?
-	(
-		COLON f8246?
-	)?
+    d_8246?
+    (
+        COLON d_8246?
+    )?
+    (
+        COLON d_8246?
+    )?
+    (
+        COLON d_8246?
+    )?
 ;
 
 c237
 :
-	f8260?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
-	(
-		COLON d_3207?
-	)?
+    d_8260?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_3207?
+    )?
 ;
 
 c239
 :
-	d_6246?
-	(
-		COLON d_6411?
-	)?
+    d_6246?
+    (
+        COLON d_6411?
+    )?
 ;
 
 c270
 :
-	d_6069 COLON d_6066
-	(
-		COLON d_6411?
-	)?
+    d_6069 COLON d_6066
+    (
+        COLON d_6411?
+    )?
 ;
 
 c280
 :
-	d_6411
-	(
-		COLON d_6162?
-	)?
-	(
-		COLON d_6152?
-	)?
+    d_6411
+    (
+        COLON d_6162?
+    )?
+    (
+        COLON d_6152?
+    )?
 ;
 
 c286
 :
-	d_1050
-	(
-		COLON d_1159?
-	)?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
+    d_1050
+    (
+        COLON d_1159?
+    )?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
 ;
 
 c288
 :
-	d_5389?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
-	(
-		COLON d_5388?
-	)?
+    d_5389?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_5388?
+    )?
 ;
 
 c289
 :
-	f8461?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
+    d_8461?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
 ;
 
 c329
 :
-	d_2013?
-	(
-		COLON d_2015?
-	)?
-	(
-		COLON d_2017?
-	)?
+    d_2013?
+    (
+        COLON d_2015?
+    )?
+    (
+        COLON d_2017?
+    )?
 ;
 
 c330
 :
-	d_4497
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
+    d_4497
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
 ;
 
 c331
 :
-	d_4495?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
-	(
-		COLON d_4494?
-	)?
-	(
-		COLON d_4494?
-	)?
+    d_4495?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_4494?
+    )?
+    (
+        COLON d_4494?
+    )?
 ;
 
 c401
 :
-	f8457 COLON f8459
-	(
-		COLON f7130?
-	)?
+    d_8457 COLON d_8459
+    (
+        COLON d_7130?
+    )?
 ;
 
 c501
 :
-	d_5245
-	(
-		COLON d_5482?
-	)?
-	(
-		COLON d_5249?
-	)?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
+    d_5245
+    (
+        COLON d_5482?
+    )?
+    (
+        COLON d_5249?
+    )?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
 ;
 
 c502
 :
-	d_6313?
-	(
-		COLON d_6321?
-	)?
-	(
-		COLON d_6155?
-	)?
-	(
-		COLON d_6154?
-	)?
+    d_6313?
+    (
+        COLON d_6321?
+    )?
+    (
+        COLON d_6155?
+    )?
+    (
+        COLON d_6154?
+    )?
 ;
 
 c503
 :
-	d_1004?
-	(
-		COLON d_1373?
-	)?
-	(
-		COLON d_1366?
-	)?
-	(
-		COLON d_3453?
-	)?
-	(
-		COLON d_1056?
-	)?
-	(
-		COLON d_1060?
-	)?
+    d_1004?
+    (
+        COLON d_1373?
+    )?
+    (
+        COLON d_1366?
+    )?
+    (
+        COLON d_3453?
+    )?
+    (
+        COLON d_1056?
+    )?
+    (
+        COLON d_1060?
+    )?
 ;
 
 c504
 :
-	d_6347
-	(
-		COLON d_6345?
-	)?
-	(
-		COLON d_6343?
-	)?
-	(
-		COLON d_6348?
-	)?
+    d_6347
+    (
+        COLON d_6345?
+    )?
+    (
+        COLON d_6343?
+    )?
+    (
+        COLON d_6348?
+    )?
 ;
 
 c506
 :
-	d_1153
-	(
-		COLON d_1154?
-	)?
-	(
-		COLON d_1156?
-	)?
-	(
-		COLON d_1056?
-	)?
-	(
-		COLON d_1060?
-	)?
+    d_1153
+    (
+        COLON d_1154?
+    )?
+    (
+        COLON d_1156?
+    )?
+    (
+        COLON d_1056?
+    )?
+    (
+        COLON d_1060?
+    )?
 ;
 
 c507
 :
-	d_2005
-	(
-		COLON d_2380?
-	)?
-	(
-		COLON d_2379?
-	)?
+    d_2005
+    (
+        COLON d_2380?
+    )?
+    (
+        COLON d_2379?
+    )?
 ;
 
 c509
 :
-	d_5125
-	(
-		COLON d_5118?
-	)?
-	(
-		COLON d_5375?
-	)?
-	(
-		COLON d_5387?
-	)?
-	(
-		COLON d_5284?
-	)?
-	(
-		COLON d_6411?
-	)?
+    d_5125
+    (
+        COLON d_5118?
+    )?
+    (
+        COLON d_5375?
+    )?
+    (
+        COLON d_5387?
+    )?
+    (
+        COLON d_5284?
+    )?
+    (
+        COLON d_6411?
+    )?
 ;
 
 c516
 :
-	d_5025
-	(
-		COLON d_5004?
-	)?
-	(
-		COLON d_6345?
-	)?
-	(
-		COLON d_6343?
-	)?
-	(
-		COLON d_4405?
-	)?
+    d_5025
+    (
+        COLON d_5004?
+    )?
+    (
+        COLON d_6345?
+    )?
+    (
+        COLON d_6343?
+    )?
+    (
+        COLON d_4405?
+    )?
 ;
 
 c517
 :
-	d_3225?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
-	(
-		COLON d_3224?
-	)?
+    d_3225?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_3224?
+    )?
 ;
 
 c519
 :
-	d_3223?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
-	(
-		COLON d_3222?
-	)?
+    d_3223?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_3222?
+    )?
 ;
 
 c523
 :
-	d_6350?
-	(
-		COLON d_6353?
-	)?
+    d_6350?
+    (
+        COLON d_6353?
+    )?
 ;
 
 c524
 :
-	d_4079?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
-	(
-		COLON d_4078?
-	)?
+    d_4079?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_4078?
+    )?
 ;
 
 c525
 :
-	f8025?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
-	(
-		COLON f8024?
-	)?
+    d_8025?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_8024?
+    )?
 ;
 
 c528
 :
-	f7357?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
+    d_7357?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
 ;
 
 c536
 :
-	d_4065
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
+    d_4065
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
 ;
 
 c537
 :
-	d_4219
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
+    d_4219
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
 ;
 
 c553
 :
-	d_3233?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
-	(
-		COLON d_3232?
-	)?
+    d_3233?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_3232?
+    )?
 ;
 
 c554
 :
-	d_5243?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
+    d_5243?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
 ;
 
 c703
 :
-	f7085
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
+    d_7085
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
 ;
 
 c819
 :
-	d_3229?
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
-	(
-		COLON d_3228?
-	)?
+    d_3229?
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
+    (
+        COLON d_3228?
+    )?
 ;
 
 c827
 :
-	f7511
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
+    d_7511
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
 ;
 
 c901
 :
-	f9321
-	(
-		COLON d_1131?
-	)?
-	(
-		COLON d_3055?
-	)?
+    d_9321
+    (
+        COLON d_1131?
+    )?
+    (
+        COLON d_3055?
+    )?
 ;
 
 s009
 :
-	f0065 COLON f0052 COLON f0054 COLON f0051
-	(
-		COLON f0057?
-	)?
-	(
-		COLON f0110?
-	)?
-	(
-		COLON f0113?
-	)?
+    f0065 COLON f0052 COLON f0054 COLON f0051
+    (
+        COLON f0057?
+    )?
+    (
+        COLON f0110?
+    )?
+    (
+        COLON f0113?
+    )?
 ;
 
 s010
 :
-	f0070
-	(
-		COLON f0073?
-	)?
+    f0070
+    (
+        COLON f0073?
+    )?
 ;
 
 s016
 :
-	f0115
-	(
-		COLON f0116?
-	)?
-	(
-		COLON f0118?
-	)?
-	(
-		COLON f0051?
-	)?
+    f0115
+    (
+        COLON f0116?
+    )?
+    (
+        COLON f0118?
+    )?
+    (
+        COLON f0051?
+    )?
 ;
 
 s017
 :
-	f0121
-	(
-		COLON f0122?
-	)?
-	(
-		COLON f0124?
-	)?
-	(
-		COLON f0051?
-	)?
+    f0121
+    (
+        COLON f0122?
+    )?
+    (
+        COLON f0124?
+    )?
+    (
+        COLON f0051?
+    )?
 ;
 
 s018
 :
-	f0127
-	(
-		COLON f0128?
-	)?
-	(
-		COLON f0130?
-	)?
-	(
-		COLON f0051?
-	)?
+    f0127
+    (
+        COLON f0128?
+    )?
+    (
+        COLON f0130?
+    )?
+    (
+        COLON f0051?
+    )?
 ;
