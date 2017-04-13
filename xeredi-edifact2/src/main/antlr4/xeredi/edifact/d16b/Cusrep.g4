@@ -4,7 +4,7 @@ import edifact_d16b_segments, edifact_d16b_components, edifact_d16b_fields;
 
 cusrep
 :
-	s_UNH s_BGM s_DTM* s_QTY* s_POC* s_FTX* s_MEA* s_GEI* s_GPO? s_STS* gr_1* gr_2* gr_3* gr_4* gr_5* gr_6* gr_9* gr_11* gr_12* s_UNT
+	s_UNH["CUSREP"] s_BGM s_DTM* s_QTY* s_POC* s_FTX* s_MEA* s_GEI* s_GPO? s_STS* gr_1* gr_2* gr_3* gr_4* gr_5* gr_6* gr_9* gr_11* gr_12* s_UNT
 ;
 
 gr_1

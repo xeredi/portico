@@ -4,7 +4,7 @@ import edifact_d16b_segments, edifact_d16b_components, edifact_d16b_fields;
 
 berman
 :
-	s_UNH s_BGM s_DTM* s_FTX* s_RFF* s_QTY* gr_1* gr_3* gr_7* s_UNT
+	s_UNH["BERMAN"] s_BGM s_DTM* s_FTX* s_RFF* s_QTY* gr_1* gr_3* gr_7* s_UNT
 ;
 
 gr_1

@@ -10,7 +10,7 @@ import edifact_d16b_segments, edifact_d16b_components, edifact_d16b_fields;
 
  ifcsum
  :
- 	s_UNH s_BGM s_DTM* s_MOA* s_FTX* s_CNT* s_PCD? s_GDS* gr_1* gr_2* gr_4* gr_7* gr_8* gr_9* gr_23*
+ 	s_UNH["IFCSUM"] s_BGM s_DTM* s_MOA* s_FTX* s_CNT* s_PCD? s_GDS* gr_1* gr_2* gr_4* gr_7* gr_8* gr_9* gr_23*
  	gr_27* s_UNT
  ;
 

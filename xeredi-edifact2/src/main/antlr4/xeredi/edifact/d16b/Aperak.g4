@@ -4,7 +4,7 @@ import edifact_d16b_segments;
 
 aperak
 :
-	s_UNH s_BGM s_DTM* s_FTX* s_CNT* gr_1* gr_2* gr_3* gr_4* s_UNT
+	s_UNH["APERAK"] s_BGM s_DTM* s_FTX* s_CNT* gr_1* gr_2* gr_3* gr_4* s_UNT
 ;
 
 gr_1

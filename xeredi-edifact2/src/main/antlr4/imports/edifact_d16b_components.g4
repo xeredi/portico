@@ -1,4 +1,4 @@
-parser grammar edifact_d16b_components;
+grammar edifact_d16b_components;
 
 import edifact_d16b_fields, edifact_common;
 
@@ -3062,9 +3062,9 @@ c_C977
     )?
 ;
 
-s009
+s009 [String msgType]
 :
-    d_0065 COLON d_0052 COLON d_0054 COLON d_0051
+    d_0065[$msgType] COLON d_0052 COLON d_0054 COLON d_0051
     (
         COLON d_0057?
     )?

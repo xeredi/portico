@@ -4,7 +4,7 @@ import edifact_d16b_segments;
 
 balanc
 :
-    s_UNH s_BGM s_DTM+ s_RFF* s_CUX* s_FTX? gr_1* gr_3* gr_4* gr_7* gr_8* s_UNT
+    s_UNH["BALANC"] s_BGM s_DTM+ s_RFF* s_CUX* s_FTX? gr_1* gr_3* gr_4* gr_7* gr_8* s_UNT
 ;
 
 gr_1

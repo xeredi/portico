@@ -4,7 +4,7 @@ import edifact_d16b_segments;
 
 author
 :
-    s_UNH s_BGM s_DTM* s_BUS* gr_1* gr_2* gr_3* gr_4* s_CNT* gr_9* s_UNT
+    s_UNH["AUTHOR"] s_BGM s_DTM* s_BUS* gr_1* gr_2* gr_3* gr_4* s_CNT* gr_9* s_UNT
 ;
 
 gr_1
