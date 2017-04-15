@@ -1,4 +1,4 @@
-grammar edifact_d16b_fields;
+parser grammar edifact_d16b_fields;
 
 import edifact_common;
 
@@ -3996,4 +3996,18 @@ d_0128
 d_0130
 :
 	alphanumeric [3]
+;
+
+alphanumeric [int maxLength]
+:
+	ALPHANUMERIC
+	{$ALPHANUMERIC.text.length() <= $maxLength}?
+
+;
+
+numeric [int maxLength]
+:
+	ALPHANUMERIC
+	{$ALPHANUMERIC.text.length() <= $maxLength}?
+
 ;

@@ -1,11 +1,11 @@
-grammar edifact_d16b_segments;
+parser grammar edifact_d16b_segments;
 
 import edifact_d16b_components, edifact_d16b_fields, edifact_common;
 
 /** ADR  ADDRESS. FIXME Revisar.*/
 s_ADR
 :
-	'ADR'
+	K_ADR
 	(
 		PLUS c_C817
 	)?
@@ -32,7 +32,7 @@ s_ADR
 /** AGR  AGREEMENT IDENTIFICATION. */
 s_AGR
 :
-	'AGR'
+	K_AGR
 	(
 		PLUS c_C543
 	)?
@@ -44,7 +44,7 @@ s_AGR
 /** AJT  ADJUSTMENT DETAILS. */
 s_AJT
 :
-	'AJT' PLUS d_4465
+	K_AJT PLUS d_4465
 	(
 		PLUS d_1082
 	)? EOL
@@ -53,7 +53,7 @@ s_AJT
 /** ALC  ALLOWANCE OR CHARGE. */
 s_ALC
 :
-	'ALC' PLUS d_5463
+	K_ALC PLUS d_5463
 	(
 		PLUS c_C552
 	)?
@@ -71,7 +71,7 @@ s_ALC
 /** ALI  ADDITIONAL INFORMATION. */
 s_ALI
 :
-	'ALI'
+	K_ALI
 	(
 		PLUS d_3239
 	)?
@@ -98,7 +98,7 @@ s_ALI
 /** APR  ADDITIONAL PRICE INFORMATION. */
 s_APR
 :
-	'APR'
+	K_APR
 	(
 		PLUS d_4043
 	)?
@@ -113,7 +113,7 @@ s_APR
 /** ARD  MONETARY AMOUNT FUNCTION. */
 s_ARD
 :
-	'ARD'
+	K_ARD
 	(
 		PLUS c_C549
 	)?
@@ -125,7 +125,7 @@ s_ARD
 /** ARR  ARRAY INFORMATION. */
 s_ARR
 :
-	'ARR'
+	K_ARR
 	(
 		PLUS c_C778
 	)?
@@ -137,7 +137,7 @@ s_ARR
 /** ASI  ARRAY STRUCTURE IDENTIFICATION. */
 s_ASI
 :
-	'ASI' PLUS c_C779
+	K_ASI PLUS c_C779
 	(
 		PLUS c_C082
 	)?
@@ -152,7 +152,7 @@ s_ASI
 /** ATT  ATTRIBUTE. */
 s_ATT
 :
-	'ATT' PLUS d_9017
+	K_ATT PLUS d_9017
 	(
 		PLUS c_C955
 	)?
@@ -164,7 +164,7 @@ s_ATT
 /** AUT  AUTHENTICATION RESULT. */
 s_AUT
 :
-	'AUT' PLUS d_9280
+	K_AUT PLUS d_9280
 	(
 		PLUS d_9282
 	)? EOL
@@ -173,7 +173,7 @@ s_AUT
 /** BAS  BASIS. */
 s_BAS
 :
-	'BAS' PLUS d_9045 PLUS c_C974 EOL
+	K_BAS PLUS d_9045 PLUS c_C974 EOL
 ;
 
 /** BGM  BEGINNING OF MESSAGE. */
@@ -359,10 +359,7 @@ s_CMP
 /** CNI  CONSIGNMENT INFORMATION. */
 s_CNI
 :
-	'CNI'
-	(
-		PLUS d_1490
-	)?
+	'CNI+' d_1490?
 	(
 		PLUS c_C503
 	)?
@@ -374,16 +371,13 @@ s_CNI
 /** CNT  CONTROL TOTAL. */
 s_CNT
 :
-	'CNT' PLUS c_C270 EOL
+	'CNT+' c_C270 EOL
 ;
 
 /** COD  COMPONENT DETAILS. */
 s_COD
 :
-	'COD'
-	(
-		PLUS c_C823
-	)?
+	'COD+' c_C823?
 	(
 		PLUS c_C824
 	)? EOL
@@ -392,13 +386,13 @@ s_COD
 /** COM  COMMUNICATION CONTACT. */
 s_COM
 :
-	'COM' PLUS c_C076 EOL
+	'COM+' c_C076 EOL
 ;
 
 /** COT  CONTRIBUTION DETAILS. */
 s_COT
 :
-	'COT' PLUS d_5047
+	'COT+' d_5047
 	(
 		PLUS c_C953
 	)?
@@ -416,10 +410,7 @@ s_COT
 /** CPI  CHARGE PAYMENT INSTRUCTIONS. */
 s_CPI
 :
-	'CPI'
-	(
-		PLUS c_C229
-	)?
+	'CPI+' c_C229?
 	(
 		PLUS c_C231
 	)?
@@ -431,7 +422,7 @@ s_CPI
 /** CPS  CONSIGNMENT PACKING SEQUENCE. */
 s_CPS
 :
-	'CPS' PLUS d_7164
+	'CPS+' d_7164
 	(
 		PLUS d_7166
 	)?
@@ -443,16 +434,13 @@ s_CPS
 /** CPT  ACCOUNT IDENTIFICATION. */
 s_CPT
 :
-	'CPT' PLUS d_4437 PLUS c_C593 EOL
+	'CPT+' d_4437 PLUS c_C593 EOL
 ;
 
 /** CST  CUSTOMS STATUS OF GOODS. */
 s_CST
 :
-	'CST'
-	(
-		PLUS d_1496
-	)?
+	'CST+' d_1496?
 	(
 		PLUS c_C246
 	)?
@@ -473,10 +461,7 @@ s_CST
 /** CTA  CONTACT INFORMATION. */
 s_CTA
 :
-	'CTA'
-	(
-		PLUS d_3139
-	)?
+	'CTA+' d_3139?
 	(
 		PLUS c_C056
 	)? EOL
@@ -485,7 +470,7 @@ s_CTA
 /** CUX  CURRENCIES. */
 s_CUX
 :
-	'CUX' PLUS c_C504
+	'CUX+' c_C504
 	(
 		PLUS c_C504?
 	)?
@@ -500,7 +485,7 @@ s_CUX
 /** DAM  DAMAGE. */
 s_DAM
 :
-	'DAM' PLUS d_7493
+	'DAM+' d_7493
 	(
 		PLUS c_C821
 	)?
@@ -518,7 +503,7 @@ s_DAM
 /** DFN  DEFINITION FUNCTION. */
 s_DFN
 :
-	'DFN' PLUS d_9023
+	'DFN+' d_9023
 	(
 		PLUS d_9025
 	)?
@@ -530,10 +515,7 @@ s_DFN
 /** DGS  DANGEROUS GOODS. */
 s_DGS
 :
-	'DGS'
-	(
-		PLUS d_8273
-	)?
+	'DGS+' d_8273?
 	(
 		PLUS c_C205
 	)?
@@ -578,7 +560,7 @@ s_DGS
 /** DII  DIRECTORY IDENTIFICATION. */
 s_DII
 :
-	'DII' PLUS d_1056 PLUS d_1058
+	'DII+' d_1056 PLUS d_1058
 	(
 		PLUS d_9148
 	)?
@@ -596,22 +578,19 @@ s_DII
 /** DIM  DIMENSIONS. */
 s_DIM
 :
-	'DIM' PLUS d_6145 PLUS c_C211 EOL
+	'DIM+' d_6145 PLUS c_C211 EOL
 ;
 
 /** DLI  DOCUMENT LINE IDENTIFICATION. */
 s_DLI
 :
-	'DLI' PLUS d_1073 PLUS d_1082 EOL
+	'DLI+' d_1073 PLUS d_1082 EOL
 ;
 
 /** DLM  DELIVERY LIMITATIONS. */
 s_DLM
 :
-	'DLM'
-	(
-		PLUS d_4455
-	)?
+	'DLM+' d_4455?
 	(
 		PLUS c_C522
 	)?
@@ -626,10 +605,7 @@ s_DLM
 /** DMS  DOCUMENT/MESSAGE SUMMARY. */
 s_DMS
 :
-	'DMS'
-	(
-		PLUS c_C106
-	)?
+	'DMS+' c_C106
 	(
 		PLUS c_C002
 	)?
@@ -641,7 +617,7 @@ s_DMS
 /** DOC  DOCUMENT/MESSAGE DETAILS. */
 s_DOC
 :
-	'DOC' PLUS c_C002
+	'DOC+' c_C002
 	(
 		PLUS c_C503
 	)?
@@ -659,10 +635,7 @@ s_DOC
 /** DRD  DATA REPRESENTATION DETAILS. */
 s_DRD
 :
-	'DRD'
-	(
-		PLUS d_7512
-	)?
+	'DRD+' d_7512?
 	(
 		PLUS d_7515
 	)?
@@ -677,7 +650,7 @@ s_DRD
 /** DSG  DOSAGE ADMINISTRATION. */
 s_DSG
 :
-	'DSG' PLUS d_6085
+	'DSG+' d_6085
 	(
 		PLUS c_C838
 	)? EOL
@@ -686,7 +659,7 @@ s_DSG
 /** DSI  DATA SET IDENTIFICATION. */
 s_DSI
 :
-	'DSI' PLUS c_C782
+	'DSI+' c_C782
 	(
 		PLUS c_C082
 	)?
@@ -704,16 +677,13 @@ s_DSI
 /** DTM  DATE/TIME/PERIOD. */
 s_DTM
 :
-	'DTM' PLUS c_C507 EOL
+	'DTM+' c_C507 EOL
 ;
 
 /** EDT  EDITING DETAILS. */
 s_EDT
 :
-	'EDT'
-	(
-		PLUS d_6178
-	)?
+	'EDT+' d_6178?
 	(
 		PLUS d_9026
 	)?
@@ -728,7 +698,7 @@ s_EDT
 /** EFI  EXTERNAL FILE LINK IDENTIFICATION. */
 s_EFI
 :
-	'EFI' PLUS c_C077
+	'EFI+' c_C077
 	(
 		PLUS c_C099
 	)?
@@ -743,7 +713,7 @@ s_EFI
 /** ELM  SIMPLE DATA ELEMENT DETAILS. */
 s_ELM
 :
-	'ELM' PLUS d_9150
+	'ELM+' d_9150
 	(
 		PLUS d_9153
 	)?
@@ -773,7 +743,7 @@ s_ELM
 /** ELU  DATA ELEMENT USAGE DETAILS. */
 s_ELU
 :
-	'ELU' PLUS d_9162
+	'ELU+' d_9162
 	(
 		PLUS d_7299
 	)?
@@ -800,7 +770,7 @@ s_ELU
 /** ELV  ELEMENT VALUE DEFINITION. */
 s_ELV
 :
-	'ELV' PLUS d_9029
+	'ELV+' d_9029
 	(
 		PLUS d_9422
 	)?
@@ -815,7 +785,7 @@ s_ELV
 /** EMP  EMPLOYMENT DETAILS. */
 s_EMP
 :
-	'EMP' PLUS d_9003
+	'EMP+' d_9003
 	(
 		PLUS c_C948
 	)?
@@ -836,7 +806,7 @@ s_EMP
 /** EQA  ATTACHED EQUIPMENT. */
 s_EQA
 :
-	'EQA' PLUS d_8053
+	'EQA+' d_8053
 	(
 		PLUS c_C237
 	)? EOL
@@ -845,7 +815,7 @@ s_EQA
 /** EQD  EQUIPMENT DETAILS. */
 s_EQD
 :
-	'EQD' PLUS d_8053
+	'EQD+' d_8053
 	(
 		PLUS c_C237
 	)?

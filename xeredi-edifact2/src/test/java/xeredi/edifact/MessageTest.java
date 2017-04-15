@@ -11,6 +11,10 @@ import org.junit.Test;
 import xeredi.edifact.d16b.MessageLexer;
 import xeredi.edifact.d16b.MessageParser;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MessageTest.
+ */
 public final class MessageTest {
 	/**
 	 * Test file.
@@ -44,6 +48,10 @@ public final class MessageTest {
 		try {
 			for (int i = 0; i < 100; i++) {
 				final MessageTest test = new MessageTest();
+
+				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/aperak/aperak1.itc");
+				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/aperak/aperak2.itc");
+				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/aperak/aperak3.itc");
 
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/author/author1.itc");
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/author/author2.itc");

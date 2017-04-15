@@ -1,4 +1,4 @@
-grammar edifact_d16b_components;
+parser grammar edifact_d16b_components;
 
 import edifact_d16b_fields, edifact_common;
 
