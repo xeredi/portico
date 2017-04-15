@@ -9,7 +9,9 @@ message
 		| s_UNH ["AUTHOR"] author
 		| s_UNH ["BALANC"] balanc
 		| s_UNH ["BANSTA"] bansta
+		| s_UNH ["BAPLIE"] baplie
 		| s_UNH ["BERMAN"] berman
+		| s_UNH ["BMISRM"] bmisrm
 		| s_UNH ["CUSREP"] cusrep
 		| s_UNH ["IFCSUM"] ifcsum
 	) s_UNT
@@ -214,6 +216,77 @@ gr_bansta_9
 	s_AUT s_DTM?
 ;
 
+/* ------------------- BAPLIE ------------------- */
+/* ------------------- BAPLIE ------------------- */
+/* ------------------- BAPLIE ------------------- */
+/* ------------------- BAPLIE ------------------- */
+/* ------------------- BAPLIE ------------------- */
+baplie
+:
+	s_BGM s_DTM* gr_baplie_1* gr_baplie_2* gr_baplie_4* s_UNS gr_baplie_6*
+;
+
+gr_baplie_1
+:
+	s_RFF s_DTM*
+;
+
+gr_baplie_2
+:
+	s_NAD gr_baplie_3*
+;
+
+gr_baplie_3
+:
+	s_CTA s_COM*
+;
+
+gr_baplie_4
+:
+	s_TDT s_RFF* s_FTX* gr_baplie_5*
+;
+
+gr_baplie_5
+:
+	s_LOC s_DTM*
+;
+
+gr_baplie_6
+:
+	s_LOC s_FTX* s_RFF* gr_baplie_7* s_CNT
+;
+
+gr_baplie_7
+:
+	s_EQD s_NAD* s_MEA* s_HAN* s_DIM* s_RFF* s_GDS* s_FTX* gr_baplie_8*
+	gr_baplie_9* gr_baplie_10* gr_baplie_11*
+;
+
+gr_baplie_8
+:
+	s_LOC s_TSR? s_TDT?
+;
+
+gr_baplie_9
+:
+	s_TMP s_RNG? s_DTM?
+;
+
+gr_baplie_10
+:
+	s_EQA s_NAD?
+;
+
+gr_baplie_11
+:
+	s_DGS s_ATT* s_MEA* s_FTX* gr_baplie_12*
+;
+
+gr_baplie_12
+:
+	s_CTA s_COM*
+;
+
 /* ------------------- BERMAN ------------------- */
 /* ------------------- BERMAN ------------------- */
 /* ------------------- BERMAN ------------------- */
@@ -276,6 +349,61 @@ gr_berman_9
 gr_berman_10
 :
 	s_GDS s_FTX* s_MEA* s_EQN* s_DGS*
+;
+
+/* ------------------- BMISRM ------------------- */
+/* ------------------- BMISRM ------------------- */
+/* ------------------- BMISRM ------------------- */
+/* ------------------- BMISRM ------------------- */
+/* ------------------- BMISRM ------------------- */
+bmisrm
+:
+	s_BGM s_DTM s_RFF+ s_LOC+ s_FTX* gr_bmisrm_1+ gr_bmisrm_3* gr_bmisrm_4+
+;
+
+gr_bmisrm_1
+:
+	s_PNA s_ADR? s_RFF? gr_bmisrm_2*
+;
+
+gr_bmisrm_2
+:
+	s_CTA s_COM*
+;
+
+gr_bmisrm_3
+:
+	s_DTM s_STS? s_FTX*
+;
+
+gr_bmisrm_4
+:
+	s_LIN s_QTY? s_FTX* gr_bmisrm_5* gr_bmisrm_7*
+;
+
+gr_bmisrm_5
+:
+	s_PNA s_ADR? s_RFF? gr_bmisrm_6*
+;
+
+gr_bmisrm_6
+:
+	s_CTA s_COM*
+;
+
+gr_bmisrm_7
+:
+	s_TDT s_EQD? s_RFF* s_QTY? s_MEA* s_PCD* gr_bmisrm_8*
+;
+
+gr_bmisrm_8
+:
+	s_PSD s_LOC* gr_bmisrm_9*
+;
+
+gr_bmisrm_9
+:
+	s_TEM s_MEA* s_PCD* s_DTM* s_FTX*
 ;
 
 /* ------------------- CUSREP ------------------- */

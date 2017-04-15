@@ -2353,6 +2353,11 @@ s_UNH [String msgType]
 	)? EOL
 ;
 
+s_UNS
+:
+	'UNS' PLUS d_0081 EOL
+;
+
 s_UNT
 :
 	'UNT' PLUS d_0074 PLUS d_0062 EOL

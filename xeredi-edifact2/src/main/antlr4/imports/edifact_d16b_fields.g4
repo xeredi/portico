@@ -3938,6 +3938,11 @@ d_0074
 	numeric [10]
 ;
 
+d_0081
+:
+	alphanumeric [1]
+;
+
 d_0110
 :
 	alphanumeric [6]
