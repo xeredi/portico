@@ -8,15 +8,10 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Test;
 
-import xeredi.edifact.d16b.AuthorLexer;
-import xeredi.edifact.d16b.AuthorParser;
+import xeredi.edifact.d16b.MessageLexer;
+import xeredi.edifact.d16b.MessageParser;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class Test.
- */
-public final class AuthorTest {
-
+public final class MessageTest {
 	/**
 	 * Test file.
 	 *
@@ -27,18 +22,18 @@ public final class AuthorTest {
 	 */
 	private void testFile(final String filename) throws IOException {
 		final CharStream charStream = CharStreams.fromFileName(filename);
-		final AuthorLexer lexer = new AuthorLexer(charStream);
+		final MessageLexer lexer = new MessageLexer(charStream);
 
 		lexer.removeErrorListeners();
 		lexer.addErrorListener(new DescriptiveErrorListener());
 
 		final CommonTokenStream tokens = new CommonTokenStream(lexer);
-		final AuthorParser parser = new AuthorParser(tokens);
+		final MessageParser parser = new MessageParser(tokens);
 
 		parser.removeErrorListeners();
 		parser.addErrorListener(new DescriptiveErrorListener());
 
-		final ParseTree tree = parser.author();
+		final ParseTree tree = parser.message();
 	}
 
 	/**
@@ -48,14 +43,20 @@ public final class AuthorTest {
 	public void test() {
 		try {
 			for (int i = 0; i < 100; i++) {
-				final AuthorTest test = new AuthorTest();
+				final MessageTest test = new MessageTest();
 
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/author/author1.itc");
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/author/author2.itc");
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/author/author3.itc");
+
+				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/ifcsum/ifcsum1.itc");
+				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/ifcsum/ifcsum2.itc");
+				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/ifcsum/ifcsum3.itc");
+				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/ifcsum/ifcsum4.itc");
 			}
 		} catch (final IOException ex) {
 			ex.printStackTrace(System.err);
 		}
 	}
+
 }

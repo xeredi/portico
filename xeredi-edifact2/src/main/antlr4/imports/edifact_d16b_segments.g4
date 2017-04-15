@@ -1006,19 +1006,19 @@ s_FTX
 :
 	'FTX' PLUS d_4451
 	(
-		PLUS d_4453
+		PLUS d_4453?
 	)?
 	(
-		PLUS c_C107
+		PLUS c_C107?
 	)?
 	(
-		PLUS c_C108
+		PLUS c_C108?
 	)?
 	(
-		PLUS d_3453
+		PLUS d_3453?
 	)?
 	(
-		PLUS d_4447
+		PLUS d_4447?
 	)? EOL
 ;
 
@@ -1465,28 +1465,28 @@ s_NAD
 :
 	'NAD' PLUS d_3035
 	(
-		PLUS c_C082
+		PLUS c_C082?
 	)?
 	(
-		PLUS c_C058
+		PLUS c_C058?
 	)?
 	(
-		PLUS c_C080
+		PLUS c_C080?
 	)?
 	(
-		PLUS c_C059
+		PLUS c_C059?
 	)?
 	(
-		PLUS d_3164
+		PLUS d_3164?
 	)?
 	(
 		PLUS c_C819
 	)?
 	(
-		PLUS d_3251
+		PLUS d_3251?
 	)?
 	(
-		PLUS d_3207
+		PLUS d_3207?
 	)? EOL
 ;
 
@@ -1805,6 +1805,15 @@ s_QVR
 	)? EOL
 ;
 
+/** QUA  QUALIFICATION. */
+s_QUA
+:
+	'QUA' PLUS d_9037
+	(
+		PLUS c_C950
+	)? EOL
+;
+
 /** RCS  REQUIREMENTS AND CONDITIONS. */
 s_RCS
 :
@@ -1820,20 +1829,34 @@ s_RCS
 	)? EOL
 ;
 
-/** QUA  QUALIFICATION. */
-s_QUA
+/** REL  RELATIONSHIP. */
+s_REL
 :
-	'QUA' PLUS d_9037
+	'REL' PLUS d_9141
 	(
-		PLUS c_C950
+		PLUS c_C941
 	)? EOL
 ;
 
+/** RFF  REFERENCE. */
 s_RFF
 :
 	'RFF' PLUS c_C506 EOL
 ;
 
+/** RJL  ACCOUNTING JOURNAL IDENTIFICATION. */
+s_RJL
+:
+	'RJL'
+	(
+		PLUS c_C595
+	)?
+	(
+		PLUS c_C596
+	)? EOL
+;
+
+/** RNG  RANGE DETAILS. */
 s_RNG
 :
 	'RNG' PLUS d_6167
@@ -1842,6 +1865,58 @@ s_RNG
 	)? EOL
 ;
 
+/** ROD  RISK OBJECT TYPE. */
+s_ROD
+:
+	'ROD'
+	(
+		PLUS c_C851
+	)?
+	(
+		PLUS c_C852
+	)? EOL
+;
+
+/** RSL  RESULT. */
+s_RSL
+:
+	'RSL' PLUS d_6087
+	(
+		PLUS d_6077
+	)?
+	(
+		PLUS c_C831
+	)?
+	(
+		PLUS c_C831
+	)?
+	(
+		PLUS c_C848
+	)?
+	(
+		PLUS d_6079
+	)? EOL
+;
+
+/** RTE  RATE DETAILS. */
+s_RTE
+:
+	'RTE' PLUS c_C128
+	(
+		PLUS d_4405
+	)? EOL
+;
+
+/** SAL  REMUNERATION TYPE IDENTIFICATION. */
+s_SAL
+:
+	'SAL'
+	(
+		PLUS c_C049
+	)? EOL
+;
+
+/** SCC  SCHEDULING CONDITIONS. */
 s_SCC
 :
 	'SCC' PLUS d_4017
@@ -1853,6 +1928,43 @@ s_SCC
 	)? EOL
 ;
 
+/** SCD  STRUCTURE COMPONENT DEFINITION. */
+s_SCD
+:
+	'SCD' PLUS d_7497
+	(
+		PLUS c_C786
+	)?
+	(
+		PLUS c_C082
+	)?
+	(
+		PLUS d_4405
+	)?
+	(
+		PLUS d_1222
+	)?
+	(
+		PLUS c_C778
+	)?
+	(
+		PLUS c_C240
+	)? EOL
+;
+
+/** SEG  SEGMENT IDENTIFICATION. */
+s_SEG
+:
+	'SEG' PLUS d_9166
+	(
+		PLUS d_1507
+	)?
+	(
+		PLUS d_4513
+	)? EOL
+;
+
+/** SEL  SEAL NUMBER. */
 s_SEL
 :
 	'SEL'
@@ -1873,6 +1985,7 @@ s_SEL
 	)? EOL
 ;
 
+/** SEQ  SEQUENCE DETAILS. */
 s_SEQ
 :
 	'SEQ'
@@ -1884,6 +1997,22 @@ s_SEQ
 	)? EOL
 ;
 
+/** SFI  SAFETY INFORMATION. */
+s_SFI
+:
+	'SFI' PLUS d_7164
+	(
+		PLUS c_C814
+	)?
+	(
+		PLUS c_C815
+	)?
+	(
+		PLUS d_4513
+	)? EOL
+;
+
+/** SGP  SPLIT GOODS PLACEMENT. */
 s_SGP
 :
 	'SGP' PLUS c_C237
@@ -1892,16 +2021,163 @@ s_SGP
 	)? EOL
 ;
 
+/** SGU  SEGMENT USAGE DETAILS. */
+s_SGU
+:
+	'SGU' PLUS d_9166
+	(
+		PLUS d_7299
+	)?
+	(
+		PLUS d_6176
+	)?
+	(
+		PLUS d_7168
+	)?
+	(
+		PLUS d_1050
+	)?
+	(
+		PLUS d_1049
+	)?
+	(
+		PLUS d_4513
+	)? EOL
+;
+
+/** SPR  ORGANISATION CLASSIFICATION DETAILS. */
+s_SPR
+:
+	'SPR' PLUS d_7293
+	(
+		PLUS d_3079
+	)?
+	(
+		PLUS c_C844
+	)? EOL
+;
+
+/** SPS  SAMPLING PARAMETERS FOR SUMMARY STATISTICS. */
+s_SPS
+:
+	'SPS'
+	(
+		PLUS c_C526
+	)?
+	(
+		PLUS d_6074
+	)?
+	(
+		PLUS c_C512
+	)?
+	(
+		PLUS c_C512
+	)?
+	(
+		PLUS c_C512
+	)?
+	(
+		PLUS c_C512
+	)?
+	(
+		PLUS c_C512
+	)? EOL
+;
+
+/** STA  STATISTICS. */
+s_STA
+:
+	'STA' PLUS d_6331
+	(
+		PLUS c_C527
+	)? EOL
+;
+
+/** STC  STATISTICAL CONCEPT. */
+s_STC
+:
+	'STC' PLUS c_C785
+	(
+		PLUS c_C082
+	)?
+	(
+		PLUS d_4405
+	)?
+	(
+		PLUS d_4513
+	)? EOL
+;
+
+/** STG  STAGES. */
+s_STG
+:
+	'STG' PLUS d_9421
+	(
+		PLUS d_6426
+	)?
+	(
+		PLUS d_6428
+	)? EOL
+;
+
+/** STS  STATUS. */
 s_STS
 :
-	'STS+' EOL
+	'STS'
+	(
+		PLUS c_C601
+	)?
+	(
+		PLUS c_C555
+	)?
+	(
+		PLUS c_C556
+	)?
+	(
+		PLUS c_C556
+	)?
+	(
+		PLUS c_C556
+	)?
+	(
+		PLUS c_C556
+	)?
+	(
+		PLUS c_C556
+	)? EOL
 ;
 
+/** TAX  DUTY/TAX/FEE DETAILS. */
 s_TAX
 :
-	'TAX+' EOL
+	'TAX' PLUS d_5283
+	(
+		PLUS c_C241
+	)?
+	(
+		PLUS c_C533
+	)?
+	(
+		PLUS d_5286
+	)?
+	(
+		PLUS c_C243
+	)?
+	(
+		PLUS d_5305
+	)?
+	(
+		PLUS d_3446
+	)?
+	(
+		PLUS d_1227
+	)?
+	(
+		PLUS d_5307
+	)? EOL
 ;
 
+/** TCC  CHARGE/RATE CALCULATIONS. */
 s_TCC
 :
 	'TCC'
@@ -1919,6 +2195,7 @@ s_TCC
 	)? EOL
 ;
 
+/** TDT  TRANSPORT INFORMATION. */
 s_TDT
 :
 	'TDT' PLUS d_8051
@@ -1951,6 +2228,31 @@ s_TDT
 	)? EOL
 ;
 
+/** TEM  TEST METHOD. */
+s_TEM
+:
+	'TEM'
+	(
+		PLUS c_C244
+	)?
+	(
+		PLUS d_4419
+	)?
+	(
+		PLUS d_3077
+	)?
+	(
+		PLUS d_6311
+	)?
+	(
+		PLUS d_7188
+	)?
+	(
+		PLUS c_C515
+	)? EOL
+;
+
+/** TMD  TRANSPORT MOVEMENT DETAILS. */
 s_TMD
 :
 	'TMD'
@@ -1965,6 +2267,7 @@ s_TMD
 	)? EOL
 ;
 
+/** TMP  TEMPERATURE. */
 s_TMP
 :
 	'TMP' PLUS d_6245
@@ -1973,39 +2276,60 @@ s_TMP
 	)? EOL
 ;
 
+/** TOD  TERMS OF DELIVERY OR TRANSPORT. */
 s_TOD
 :
 	'TOD'
 	(
-		PLUS d_4055
+		PLUS d_4055?
 	)?
 	(
-		PLUS d_4215
+		PLUS d_4215?
 	)?
 	(
 		PLUS c_C100
 	)? EOL
 ;
 
+/** TPL  TRANSPORT PLACEMENT. */
 s_TPL
 :
 	'TPL' PLUS c_C222 EOL
 ;
 
+/** TRU  TECHNICAL RULES. */
+s_TRU
+:
+	'TRU' PLUS d_7402
+	(
+		PLUS d_1056
+	)?
+	(
+		PLUS d_1058
+	)?
+	(
+		PLUS d_7175
+	)?
+	(
+		PLUS d_3055
+	)? EOL
+;
+
+/** TSR  TRANSPORT SERVICE REQUIREMENTS. */
 s_TSR
 :
 	'TSR'
 	(
-		PLUS c_C536
+		PLUS c_C536?
 	)?
 	(
-		PLUS c_C233
+		PLUS c_C233?
 	)?
 	(
-		PLUS c_C537
+		PLUS c_C537?
 	)?
 	(
-		PLUS c_C703
+		PLUS c_C703?
 	)? EOL
 ;
 
@@ -2032,4 +2356,28 @@ s_UNH [String msgType]
 s_UNT
 :
 	'UNT' PLUS d_0074 PLUS d_0062 EOL
+;
+
+/** VLI  VALUE LIST IDENTIFICATION. */
+s_VLI
+:
+	'VLI' PLUS c_C780
+	(
+		PLUS c_C082
+	)?
+	(
+		PLUS d_4405
+	)?
+	(
+		PLUS d_1514
+	)?
+	(
+		PLUS d_1507
+	)?
+	(
+		PLUS d_1505
+	)?
+	(
+		PLUS c_C240
+	)? EOL
 ;
