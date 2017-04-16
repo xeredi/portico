@@ -5,10 +5,7 @@ import edifact_d16b_components, edifact_d16b_fields, edifact_common;
 /** ADR  ADDRESS. FIXME Revisar.*/
 s_ADR
 :
-	K_ADR
-	(
-		PLUS c_C817
-	)?
+	'ADR+' c_C817
 	(
 		PLUS c_C090
 	)?
@@ -32,10 +29,7 @@ s_ADR
 /** AGR  AGREEMENT IDENTIFICATION. */
 s_AGR
 :
-	K_AGR
-	(
-		PLUS c_C543
-	)?
+	'AGR+' c_C543?
 	(
 		PLUS d_9419
 	)? EOL
@@ -44,7 +38,7 @@ s_AGR
 /** AJT  ADJUSTMENT DETAILS. */
 s_AJT
 :
-	K_AJT PLUS d_4465
+	'AJT+' d_4465
 	(
 		PLUS d_1082
 	)? EOL
@@ -53,7 +47,7 @@ s_AJT
 /** ALC  ALLOWANCE OR CHARGE. */
 s_ALC
 :
-	K_ALC PLUS d_5463
+	'ALC+' d_5463
 	(
 		PLUS c_C552
 	)?
@@ -71,10 +65,7 @@ s_ALC
 /** ALI  ADDITIONAL INFORMATION. */
 s_ALI
 :
-	K_ALI
-	(
-		PLUS d_3239
-	)?
+	'ALI+' d_3239?
 	(
 		PLUS d_9213
 	)?
@@ -98,10 +89,7 @@ s_ALI
 /** APR  ADDITIONAL PRICE INFORMATION. */
 s_APR
 :
-	K_APR
-	(
-		PLUS d_4043
-	)?
+	'APR+' d_4043?
 	(
 		PLUS c_C138
 	)?
@@ -113,10 +101,7 @@ s_APR
 /** ARD  MONETARY AMOUNT FUNCTION. */
 s_ARD
 :
-	K_ARD
-	(
-		PLUS c_C549
-	)?
+	'ARD+' c_C549
 	(
 		PLUS c_C008
 	)? EOL
@@ -125,10 +110,7 @@ s_ARD
 /** ARR  ARRAY INFORMATION. */
 s_ARR
 :
-	K_ARR
-	(
-		PLUS c_C778
-	)?
+	'ARR+' c_C778
 	(
 		PLUS c_C770
 	)? EOL
@@ -137,7 +119,7 @@ s_ARR
 /** ASI  ARRAY STRUCTURE IDENTIFICATION. */
 s_ASI
 :
-	K_ASI PLUS c_C779
+	'ASI+' c_C779
 	(
 		PLUS c_C082
 	)?
@@ -152,7 +134,7 @@ s_ASI
 /** ATT  ATTRIBUTE. */
 s_ATT
 :
-	K_ATT PLUS d_9017
+	'ATT+' d_9017
 	(
 		PLUS c_C955
 	)?
@@ -164,7 +146,7 @@ s_ATT
 /** AUT  AUTHENTICATION RESULT. */
 s_AUT
 :
-	K_AUT PLUS d_9280
+	'AUT+' d_9280
 	(
 		PLUS d_9282
 	)? EOL
@@ -173,16 +155,13 @@ s_AUT
 /** BAS  BASIS. */
 s_BAS
 :
-	K_BAS PLUS d_9045 PLUS c_C974 EOL
+	'BAS+' d_9045 PLUS c_C974 EOL
 ;
 
 /** BGM  BEGINNING OF MESSAGE. */
 s_BGM
 :
-	'BGM'
-	(
-		PLUS c_C002
-	)?
+	'BGM+' c_C002
 	(
 		PLUS c_C106
 	)?
@@ -203,7 +182,7 @@ s_BGM
 /** BII  STRUCTURE IDENTIFICATION. */
 s_BII
 :
-	'BII' PLUS d_7429 PLUS c_C045
+	'BII+' d_7429 PLUS c_C045
 	(
 		PLUS d_7140
 	)? EOL
@@ -212,10 +191,7 @@ s_BII
 /** BUS  BUSINESS FUNCTION. */
 s_BUS
 :
-	'BUS'
-	(
-		PLUS c_C521?
-	)?
+	'BUS+' c_C521?
 	(
 		PLUS d_3279?
 	)?
@@ -233,16 +209,13 @@ s_BUS
 /** CAV  CHARACTERISTIC VALUE. */
 s_CAV
 :
-	'CAV' PLUS c_C889 EOL
+	'CAV+' c_C889 EOL
 ;
 
 /** CCD  CREDIT COVER DETAILS. */
 s_CCD
 :
-	'CCD'
-	(
-		PLUS d_4505
-	)?
+	'CCD+' d_4505?
 	(
 		PLUS d_4507
 	)?
@@ -254,10 +227,7 @@ s_CCD
 /** CCI  CHARACTERISTIC/CLASS ID. */
 s_CCI
 :
-	'CCI'
-	(
-		PLUS d_7059
-	)?
+	'CCI+' d_7059?
 	(
 		PLUS c_C502
 	)?
@@ -272,13 +242,13 @@ s_CCI
 /** CDI  PHYSICAL OR LOGICAL STATE. */
 s_CDI
 :
-	'CDI' PLUS d_7001 PLUS c_C564 EOL
+	'CDI+' d_7001 PLUS c_C564 EOL
 ;
 
 /** CDS  CODE SET IDENTIFICATION. */
 s_CDS
 :
-	'CDS' PLUS c_C702
+	'CDS+' c_C702
 	(
 		PLUS d_1507
 	)?
@@ -290,7 +260,7 @@ s_CDS
 /** CDV  CODE VALUE DEFINITION. */
 s_CDV
 :
-	'CDV' PLUS d_9426
+	'CDV+' d_9426
 	(
 		PLUS d_9434
 	)?
@@ -308,7 +278,7 @@ s_CDV
 /** CED  COMPUTER ENVIRONMENT DETAILS. */
 s_CED
 :
-	'CED' PLUS d_1501 PLUS c_C079
+	'CED+' d_1501 PLUS c_C079
 	(
 		PLUS d_9448
 	)? EOL
@@ -317,7 +287,7 @@ s_CED
 /** CIN  CLINICAL INFORMATION. */
 s_CIN
 :
-	'CIN' PLUS d_6415
+	'CIN+' d_6415
 	(
 		PLUS c_C836
 	)?
@@ -329,7 +299,7 @@ s_CIN
 /** CLA  CLAUSE IDENTIFICATION. */
 s_CLA
 :
-	'CLA' PLUS d_4059
+	'CLA+' d_4059
 	(
 		PLUS c_C970
 	)? EOL
@@ -338,7 +308,7 @@ s_CLA
 /** CLI  CLINICAL INTERVENTION. */
 s_CLI
 :
-	'CLI' PLUS d_9441
+	'CLI+' d_9441
 	(
 		PLUS c_C828
 	)? EOL
@@ -347,7 +317,7 @@ s_CLI
 /** CMP  COMPOSITE DATA ELEMENT IDENTIFICATION. */
 s_CMP
 :
-	'CMP' PLUS d_9146
+	'CMP+' d_9146
 	(
 		PLUS d_1507
 	)?
@@ -377,7 +347,7 @@ s_CNT
 /** COD  COMPONENT DETAILS. */
 s_COD
 :
-	'COD+' c_C823?
+	'COD+' c_C823
 	(
 		PLUS c_C824
 	)? EOL
@@ -839,22 +809,19 @@ s_EQD
 /** EQN  NUMBER OF UNITS. */
 s_EQN
 :
-	'EQN' PLUS c_C523 EOL
+	'EQN+' c_C523 EOL
 ;
 
 /** ERC  APPLICATION ERROR INFORMATION. */
 s_ERC
 :
-	'ERC' PLUS c_C901 EOL
+	'ERC+' c_C901 EOL
 ;
 
 /** ERP  ERROR POINT DETAILS. */
 s_ERP
 :
-	'ERP'
-	(
-		PLUS c_C701
-	)?
+	'ERP+' c_C701
 	(
 		PLUS c_C853
 	)? EOL
@@ -863,10 +830,7 @@ s_ERP
 /** EVE  EVENT. */
 s_EVE
 :
-	'EVE'
-	(
-		PLUS d_9635
-	)?
+	'EVE+' d_9635?
 	(
 		PLUS c_C004
 	)?
@@ -884,7 +848,7 @@ s_EVE
 /** FCA  FINANCIAL CHARGES ALLOCATION. */
 s_FCA
 :
-	'FCA' PLUS d_4471
+	'FCA+' d_4471
 	(
 		PLUS c_C878
 	)? EOL
@@ -893,7 +857,7 @@ s_FCA
 /** FII  FINANCIAL INSTITUTION INFORMATION. */
 s_FII
 :
-	'FII' PLUS d_3035
+	'FII+' d_3035
 	(
 		PLUS c_C078
 	)?
@@ -908,7 +872,7 @@ s_FII
 /** FNS  FOOTNOTE SET. */
 s_FNS
 :
-	'FNS' PLUS c_C783
+	'FNS+' c_C783
 	(
 		PLUS c_C082
 	)?
@@ -923,7 +887,7 @@ s_FNS
 /** FNT  FOOTNOTE. */
 s_FNT
 :
-	'FNT' PLUS c_C784
+	'FNT+' c_C784
 	(
 		PLUS c_C082
 	)?
@@ -938,7 +902,7 @@ s_FNT
 /** FOR  FORMULA. */
 s_FOR
 :
-	'FOR' PLUS d_9501
+	'FOR+' d_9501
 	(
 		PLUS d_7402
 	)?
@@ -956,7 +920,7 @@ s_FOR
 /** FSQ  FORMULA SEQUENCE. */
 s_FSQ
 :
-	'FSQ' PLUS d_9507
+	'FSQ+' d_9507
 	(
 		PLUS d_9509
 	)?
@@ -974,7 +938,7 @@ s_FSQ
 /** FTX  FREE TEXT. */
 s_FTX
 :
-	'FTX' PLUS d_4451
+	'FTX+' d_4451
 	(
 		PLUS d_4453?
 	)?
@@ -995,10 +959,7 @@ s_FTX
 /** GDS  NATURE OF CARGO. */
 s_GDS
 :
-	'GDS'
-	(
-		PLUS c_C703
-	)?
+	'GDS+' c_C703?
 	(
 		PLUS c_C288
 	)? EOL
@@ -1007,7 +968,7 @@ s_GDS
 /** GEI  PROCESSING INFORMATION. */
 s_GEI
 :
-	'GEI' PLUS d_9649
+	'GEI+' d_9649
 	(
 		PLUS c_C012
 	)?
@@ -1019,10 +980,7 @@ s_GEI
 /** GID  GOODS ITEM DETAILS. */
 s_GID
 :
-	'GID'
-	(
-		PLUS d_1496
-	)?
+	'GID+' d_1496?
 	(
 		PLUS c_C213
 	)?
@@ -1043,7 +1001,7 @@ s_GID
 /** GIN  GOODS IDENTITY NUMBER. */
 s_GIN
 :
-	'GIN' PLUS d_7405 PLUS c_C208
+	'GIN+' d_7405 PLUS c_C208
 	(
 		PLUS c_C208
 	)?
@@ -1061,7 +1019,7 @@ s_GIN
 /** GIR  RELATED IDENTIFICATION NUMBERS. */
 s_GIR
 :
-	'GIR' PLUS d_7297 PLUS c_C206
+	'GIR+' d_7297 PLUS c_C206
 	(
 		PLUS c_C206
 	)?
@@ -1079,10 +1037,7 @@ s_GIR
 /** GOR  GOVERNMENTAL REQUIREMENTS. */
 s_GOR
 :
-	'GOR'
-	(
-		PLUS d_8323
-	)?
+	'GOR+' d_8323?
 	(
 		PLUS c_C232
 	)?
@@ -1100,7 +1055,7 @@ s_GOR
 /** GPO  GEOGRAPHICAL POSITION. */
 s_GPO
 :
-	'GPO' PLUS d_6029
+	'GPO+' d_6029
 	(
 		PLUS d_6000
 	)?
@@ -1115,7 +1070,7 @@ s_GPO
 /** GRU  SEGMENT GROUP USAGE DETAILS. */
 s_GRU
 :
-	'GRU' PLUS d_9164
+	'GRU+' d_9164
 	(
 		PLUS d_7299
 	)?
@@ -1133,10 +1088,7 @@ s_GRU
 /** HAN  HANDLING INSTRUCTIONS. */
 s_HAN
 :
-	'HAN'
-	(
-		PLUS c_C524
-	)?
+	'HAN+' c_C524
 	(
 		PLUS c_C218
 	)? EOL
@@ -1145,7 +1097,7 @@ s_HAN
 /** HYN  HIERARCHY INFORMATION. */
 s_HYN
 :
-	'HYN' PLUS d_7173
+	'HYN+' d_7173
 	(
 		PLUS d_7171
 	)?
@@ -1163,13 +1115,13 @@ s_HYN
 /** ICD  INSURANCE COVER DESCRIPTION. */
 s_ICD
 :
-	'ICD' PLUS c_C330 PLUS c_C331 EOL
+	'ICD+' c_C330 PLUS c_C331 EOL
 ;
 
 /** IDE  IDENTITY. */
 s_IDE
 :
-	'IDE' PLUS d_7495
+	'IDE+' d_7495
 	(
 		PLUS c_C206
 	)?
@@ -1193,10 +1145,7 @@ s_IDE
 /** IFD  INFORMATION DETAIL. */
 s_IFD
 :
-	'IFD'
-	(
-		PLUS d_4153
-	)?
+	'IFD+' d_4153?
 	(
 		PLUS c_C009
 	)?
@@ -1214,7 +1163,7 @@ s_IFD
 /** IHC  PERSON CHARACTERISTIC. */
 s_IHC
 :
-	'IHC' PLUS d_3289
+	'IHC+' d_3289
 	(
 		PLUS c_C818
 	)? EOL
@@ -1223,10 +1172,7 @@ s_IHC
 /** IMD  ITEM DESCRIPTION. */
 s_IMD
 :
-	'IMD'
-	(
-		PLUS d_7077
-	)?
+	'IMD+' d_7077?
 	(
 		PLUS c_C272
 	)?
@@ -1241,10 +1187,7 @@ s_IMD
 /** IND  INDEX DETAILS. */
 s_IND
 :
-	'IND'
-	(
-		PLUS c_C545
-	)?
+	'IND+' c_C545?
 	(
 		PLUS c_C546
 	)? EOL
@@ -1253,10 +1196,7 @@ s_IND
 /** INP  PARTIES AND INSTRUCTION. */
 s_INP
 :
-	'INP'
-	(
-		PLUS c_C849
-	)?
+	'INP+' c_C849?
 	(
 		PLUS c_C522
 	)?
@@ -1271,10 +1211,7 @@ s_INP
 /** INV  INVENTORY MANAGEMENT RELATED DETAILS. */
 s_INV
 :
-	'INV'
-	(
-		PLUS d_4501
-	)?
+	'INV+' d_4501?
 	(
 		PLUS d_7491
 	)?
@@ -1292,13 +1229,13 @@ s_INV
 /** IRQ  INFORMATION REQUIRED. */
 s_IRQ
 :
-	'IRQ' PLUS c_C333 EOL
+	'IRQ+' c_C333 EOL
 ;
 
 /** LAN  LANGUAGE. */
 s_LAN
 :
-	'LAN' PLUS d_3455
+	'LAN+' d_3455
 	(
 		PLUS c_C508
 	)? EOL
@@ -1307,10 +1244,7 @@ s_LAN
 /** LIN  LINE ITEM. */
 s_LIN
 :
-	'LIN'
-	(
-		PLUS d_1082
-	)?
+	'LIN+' d_1082?
 	(
 		PLUS d_1229
 	)?
@@ -1331,7 +1265,7 @@ s_LIN
 /** LOC  PLACE/LOCATION IDENTIFICATION. */
 s_LOC
 :
-	'LOC' PLUS d_3227
+	'LOC+' d_3227
 	(
 		PLUS c_C517
 	)?
@@ -1349,7 +1283,7 @@ s_LOC
 /** MEA  MEASUREMENTS. */
 s_MEA
 :
-	'MEA' PLUS d_6311
+	'MEA+' d_6311
 	(
 		PLUS c_C502
 	)?
@@ -1364,7 +1298,7 @@ s_MEA
 /** MEM  MEMBERSHIP DETAILS. */
 s_MEM
 :
-	'MEM' PLUS d_7449
+	'MEM+' d_7449
 	(
 		PLUS c_C942
 	)?
@@ -1385,7 +1319,7 @@ s_MEM
 /** MKS  MARKET/SALES CHANNEL INFORMATION. */
 s_MKS
 :
-	'MKS' PLUS d_7293
+	'MKS+' d_7293
 	(
 		PLUS c_C332
 	)?
@@ -1397,13 +1331,13 @@ s_MKS
 /** MOA  MONETARY AMOUNT. */
 s_MOA
 :
-	'MOA' PLUS c_C516 EOL
+	'MOA+' c_C516 EOL
 ;
 
 /** MSG  MESSAGE TYPE IDENTIFICATION. */
 s_MSG
 :
-	'MSG' PLUS c_C709
+	'MSG+' c_C709
 	(
 		PLUS d_1507
 	)?
@@ -1418,7 +1352,7 @@ s_MSG
 /** MTD  MAINTENANCE OPERATION DETAILS. */
 s_MTD
 :
-	'MTD' PLUS d_7495
+	'MTD+' d_7495
 	(
 		PLUS d_4513
 	)?
@@ -1433,7 +1367,7 @@ s_MTD
 /** NAD  NAME AND ADDRESS. */
 s_NAD
 :
-	'NAD' PLUS d_3035
+	'NAD+' d_3035
 	(
 		PLUS c_C082?
 	)?
@@ -1463,7 +1397,7 @@ s_NAD
 /** NAT  NATIONALITY. */
 s_NAT
 :
-	'NAT' PLUS d_3493
+	'NAT+' d_3493
 	(
 		PLUS c_C042
 	)? EOL
@@ -1472,10 +1406,7 @@ s_NAT
 /** PAC  PACKAGE. */
 s_PAC
 :
-	'PAC'
-	(
-		PLUS d_7224
-	)?
+	'PAC+' d_7224?
 	(
 		PLUS c_C531
 	)?
@@ -1493,13 +1424,13 @@ s_PAC
 /** PAI  PAYMENT INSTRUCTIONS. */
 s_PAI
 :
-	'PAI' PLUS c_C534 EOL
+	'PAI+' c_C534 EOL
 ;
 
 /** PAS  ATTENDANCE. */
 s_PAS
 :
-	'PAS' PLUS d_9443
+	'PAS+' d_9443
 	(
 		PLUS c_C839
 	)?
@@ -1514,10 +1445,7 @@ s_PAS
 /** PCC  PREMIUM CALCULATION COMPONENT DETAILS. */
 s_PCC
 :
-	'PCC'
-	(
-		PLUS c_C820
-	)?
+	'PCC+' c_C820
 	(
 		PLUS d_4522
 	)? EOL
@@ -1526,7 +1454,7 @@ s_PCC
 /** PCD  PERCENTAGE DETAILS. */
 s_PCD
 :
-	'PCD' PLUS c_C501
+	'PCD+' c_C501
 	(
 		PLUS d_4405
 	)? EOL
@@ -1535,10 +1463,7 @@ s_PCD
 /** PCI  PACKAGE IDENTIFICATION. */
 s_PCI
 :
-	'PCI'
-	(
-		PLUS d_4233
-	)?
+	'PCI+' d_4233?
 	(
 		PLUS c_C210
 	)?
@@ -1553,10 +1478,7 @@ s_PCI
 /** PDI  PERSON DEMOGRAPHIC INFORMATION. */
 s_PDI
 :
-	'PDI'
-	(
-		PLUS d_3499
-	)?
+	'PDI+' d_3499?
 	(
 		PLUS c_C085
 	)?
@@ -1568,10 +1490,7 @@ s_PDI
 /** PER  PERIOD RELATED DETAILS. */
 s_PER
 :
-	'PER'
-	(
-		PLUS d_2023
-	)?
+	'PER+' d_2023?
 	(
 		PLUS c_C977
 	)? EOL
@@ -1580,7 +1499,7 @@ s_PER
 /** PGI  PRODUCT GROUP INFORMATION. */
 s_PGI
 :
-	'PGI' PLUS d_5379
+	'PGI+' d_5379
 	(
 		PLUS c_C288
 	)? EOL
@@ -1589,7 +1508,7 @@ s_PGI
 /** PIA  ADDITIONAL PRODUCT ID. */
 s_PIA
 :
-	'PIA' PLUS d_4347 PLUS c_C212
+	'PIA+' d_4347 PLUS c_C212
 	(
 		PLUS c_C212
 	)?
@@ -1607,7 +1526,7 @@ s_PIA
 /** PNA  PARTY IDENTIFICATION. */
 s_PNA
 :
-	'PNA' PLUS d_3035
+	'PNA+' d_3035
 	(
 		PLUS c_C206
 	)?
@@ -1643,16 +1562,13 @@ s_PNA
 /** POC  PURPOSE OF CONVEYANCE CALL. */
 s_POC
 :
-	'POC' PLUS c_C525 EOL
+	'POC+' c_C525 EOL
 ;
 
 /** PRC  PROCESS IDENTIFICATION. */
 s_PRC
 :
-	'PRC'
-	(
-		PLUS c_C242
-	)?
+	'PRC+' c_C242?
 	(
 		PLUS c_C830
 	)? EOL
@@ -1661,10 +1577,7 @@ s_PRC
 /** PRI  PRICE DETAILS. */
 s_PRI
 :
-	'PRI'
-	(
-		PLUS c_C509
-	)?
+	'PRI+' c_C509?
 	(
 		PLUS d_5213
 	)? EOL
@@ -1673,7 +1586,7 @@ s_PRI
 /** PRV  PROVISO DETAILS. */
 s_PRV
 :
-	'PRV' PLUS d_4071
+	'PRV+' d_4071
 	(
 		PLUS c_C971
 	)?
@@ -1685,10 +1598,7 @@ s_PRV
 /** PSD  PHYSICAL SAMPLE DESCRIPTION. */
 s_PSD
 :
-	'PSD'
-	(
-		PLUS d_4407
-	)?
+	'PSD+' d_4407?
 	(
 		PLUS d_7039
 	)?
@@ -1715,7 +1625,7 @@ s_PSD
 /** PTY  PRIORITY. */
 s_PTY
 :
-	'PTY' PLUS d_4035
+	'PTY+' d_4035
 	(
 		PLUS c_C585
 	)? EOL
@@ -1724,7 +1634,7 @@ s_PTY
 /** PYT  PAYMENT TERMS. */
 s_PYT
 :
-	'PYT' PLUS d_4279
+	'PYT+' d_4279
 	(
 		PLUS c_C019
 	)?
@@ -1745,7 +1655,7 @@ s_PYT
 /** QRS  QUERY AND RESPONSE. */
 s_QRS
 :
-	'QRS' PLUS d_7293
+	'QRS+' d_7293
 	(
 		PLUS c_C811
 	)?
@@ -1757,16 +1667,13 @@ s_QRS
 /** QTY  QUANTITY. */
 s_QTY
 :
-	'QTY' PLUS c_C186 EOL
+	'QTY+' c_C186 EOL
 ;
 
 /** QVR  QUANTITY VARIANCES. */
 s_QVR
 :
-	'QVR'
-	(
-		PLUS c_C279
-	)?
+	'QVR+' c_C279?
 	(
 		PLUS d_4221
 	)?
@@ -1778,7 +1685,7 @@ s_QVR
 /** QUA  QUALIFICATION. */
 s_QUA
 :
-	'QUA' PLUS d_9037
+	'QUA+' d_9037
 	(
 		PLUS c_C950
 	)? EOL
@@ -1787,7 +1694,7 @@ s_QUA
 /** RCS  REQUIREMENTS AND CONDITIONS. */
 s_RCS
 :
-	'RCS' PLUS d_7293
+	'RCS+' d_7293
 	(
 		PLUS c_C550
 	)?
@@ -1802,7 +1709,7 @@ s_RCS
 /** REL  RELATIONSHIP. */
 s_REL
 :
-	'REL' PLUS d_9141
+	'REL+' d_9141
 	(
 		PLUS c_C941
 	)? EOL
@@ -1811,16 +1718,13 @@ s_REL
 /** RFF  REFERENCE. */
 s_RFF
 :
-	'RFF' PLUS c_C506 EOL
+	'RFF+' c_C506 EOL
 ;
 
 /** RJL  ACCOUNTING JOURNAL IDENTIFICATION. */
 s_RJL
 :
-	'RJL'
-	(
-		PLUS c_C595
-	)?
+	'RJL+' c_C595?
 	(
 		PLUS c_C596
 	)? EOL
@@ -1829,7 +1733,7 @@ s_RJL
 /** RNG  RANGE DETAILS. */
 s_RNG
 :
-	'RNG' PLUS d_6167
+	'RNG+' d_6167
 	(
 		PLUS c_C280
 	)? EOL
@@ -1838,10 +1742,7 @@ s_RNG
 /** ROD  RISK OBJECT TYPE. */
 s_ROD
 :
-	'ROD'
-	(
-		PLUS c_C851
-	)?
+	'ROD+' c_C851
 	(
 		PLUS c_C852
 	)? EOL
@@ -1850,7 +1751,7 @@ s_ROD
 /** RSL  RESULT. */
 s_RSL
 :
-	'RSL' PLUS d_6087
+	'RSL+' d_6087
 	(
 		PLUS d_6077
 	)?
@@ -1871,7 +1772,7 @@ s_RSL
 /** RTE  RATE DETAILS. */
 s_RTE
 :
-	'RTE' PLUS c_C128
+	'RTE+' c_C128
 	(
 		PLUS d_4405
 	)? EOL
@@ -1880,16 +1781,13 @@ s_RTE
 /** SAL  REMUNERATION TYPE IDENTIFICATION. */
 s_SAL
 :
-	'SAL'
-	(
-		PLUS c_C049
-	)? EOL
+	'SAL+' c_C049 EOL
 ;
 
 /** SCC  SCHEDULING CONDITIONS. */
 s_SCC
 :
-	'SCC' PLUS d_4017
+	'SCC+' d_4017
 	(
 		PLUS d_4493
 	)?
@@ -1901,7 +1799,7 @@ s_SCC
 /** SCD  STRUCTURE COMPONENT DEFINITION. */
 s_SCD
 :
-	'SCD' PLUS d_7497
+	'SCD+' d_7497
 	(
 		PLUS c_C786
 	)?
@@ -1925,7 +1823,7 @@ s_SCD
 /** SEG  SEGMENT IDENTIFICATION. */
 s_SEG
 :
-	'SEG' PLUS d_9166
+	'SEG+' d_9166
 	(
 		PLUS d_1507
 	)?
@@ -1937,10 +1835,7 @@ s_SEG
 /** SEL  SEAL NUMBER. */
 s_SEL
 :
-	'SEL'
-	(
-		PLUS d_9308
-	)?
+	'SEL+' d_9308?
 	(
 		PLUS c_C215
 	)?
@@ -1958,10 +1853,7 @@ s_SEL
 /** SEQ  SEQUENCE DETAILS. */
 s_SEQ
 :
-	'SEQ'
-	(
-		PLUS d_1229
-	)?
+	'SEQ+' d_1229?
 	(
 		PLUS c_C286
 	)? EOL
@@ -1970,7 +1862,7 @@ s_SEQ
 /** SFI  SAFETY INFORMATION. */
 s_SFI
 :
-	'SFI' PLUS d_7164
+	'SFI+' d_7164
 	(
 		PLUS c_C814
 	)?
@@ -1985,7 +1877,7 @@ s_SFI
 /** SGP  SPLIT GOODS PLACEMENT. */
 s_SGP
 :
-	'SGP' PLUS c_C237
+	'SGP+' c_C237
 	(
 		PLUS d_7224
 	)? EOL
@@ -1994,7 +1886,7 @@ s_SGP
 /** SGU  SEGMENT USAGE DETAILS. */
 s_SGU
 :
-	'SGU' PLUS d_9166
+	'SGU+' d_9166
 	(
 		PLUS d_7299
 	)?
@@ -2018,7 +1910,7 @@ s_SGU
 /** SPR  ORGANISATION CLASSIFICATION DETAILS. */
 s_SPR
 :
-	'SPR' PLUS d_7293
+	'SPR+' d_7293
 	(
 		PLUS d_3079
 	)?
@@ -2030,10 +1922,7 @@ s_SPR
 /** SPS  SAMPLING PARAMETERS FOR SUMMARY STATISTICS. */
 s_SPS
 :
-	'SPS'
-	(
-		PLUS c_C526
-	)?
+	'SPS+' c_C526?
 	(
 		PLUS d_6074
 	)?
@@ -2057,7 +1946,7 @@ s_SPS
 /** STA  STATISTICS. */
 s_STA
 :
-	'STA' PLUS d_6331
+	'STA+' d_6331
 	(
 		PLUS c_C527
 	)? EOL
@@ -2066,7 +1955,7 @@ s_STA
 /** STC  STATISTICAL CONCEPT. */
 s_STC
 :
-	'STC' PLUS c_C785
+	'STC+' c_C785
 	(
 		PLUS c_C082
 	)?
@@ -2081,7 +1970,7 @@ s_STC
 /** STG  STAGES. */
 s_STG
 :
-	'STG' PLUS d_9421
+	'STG+' d_9421
 	(
 		PLUS d_6426
 	)?
@@ -2093,10 +1982,7 @@ s_STG
 /** STS  STATUS. */
 s_STS
 :
-	'STS'
-	(
-		PLUS c_C601
-	)?
+	'STS+' c_C601?
 	(
 		PLUS c_C555
 	)?
@@ -2120,7 +2006,7 @@ s_STS
 /** TAX  DUTY/TAX/FEE DETAILS. */
 s_TAX
 :
-	'TAX' PLUS d_5283
+	'TAX+' d_5283
 	(
 		PLUS c_C241
 	)?
@@ -2150,10 +2036,7 @@ s_TAX
 /** TCC  CHARGE/RATE CALCULATIONS. */
 s_TCC
 :
-	'TCC'
-	(
-		PLUS c_C200
-	)?
+	'TCC+' c_C200
 	(
 		PLUS c_C203
 	)?
@@ -2168,7 +2051,7 @@ s_TCC
 /** TDT  TRANSPORT INFORMATION. */
 s_TDT
 :
-	'TDT' PLUS d_8051
+	'TDT+' d_8051
 	(
 		PLUS d_8028
 	)?
@@ -2201,10 +2084,7 @@ s_TDT
 /** TEM  TEST METHOD. */
 s_TEM
 :
-	'TEM'
-	(
-		PLUS c_C244
-	)?
+	'TEM+' c_C244
 	(
 		PLUS d_4419
 	)?
@@ -2225,10 +2105,7 @@ s_TEM
 /** TMD  TRANSPORT MOVEMENT DETAILS. */
 s_TMD
 :
-	'TMD'
-	(
-		PLUS c_C219
-	)?
+	'TMD+' c_C219
 	(
 		PLUS d_8332
 	)?
@@ -2240,7 +2117,7 @@ s_TMD
 /** TMP  TEMPERATURE. */
 s_TMP
 :
-	'TMP' PLUS d_6245
+	'TMP+' d_6245
 	(
 		PLUS c_C239
 	)? EOL
@@ -2249,10 +2126,7 @@ s_TMP
 /** TOD  TERMS OF DELIVERY OR TRANSPORT. */
 s_TOD
 :
-	'TOD'
-	(
-		PLUS d_4055?
-	)?
+	'TOD+' d_4055?
 	(
 		PLUS d_4215?
 	)?
@@ -2264,13 +2138,13 @@ s_TOD
 /** TPL  TRANSPORT PLACEMENT. */
 s_TPL
 :
-	'TPL' PLUS c_C222 EOL
+	'TPL+' c_C222 EOL
 ;
 
 /** TRU  TECHNICAL RULES. */
 s_TRU
 :
-	'TRU' PLUS d_7402
+	'TRU+' d_7402
 	(
 		PLUS d_1056
 	)?
@@ -2288,10 +2162,7 @@ s_TRU
 /** TSR  TRANSPORT SERVICE REQUIREMENTS. */
 s_TSR
 :
-	'TSR'
-	(
-		PLUS c_C536?
-	)?
+	'TSR+' c_C536?
 	(
 		PLUS c_C233?
 	)?
@@ -2305,7 +2176,7 @@ s_TSR
 
 s_UNH [String msgType]
 :
-	'UNH' PLUS d_0062 PLUS s009 [$msgType]
+	'UNH+' d_0062 PLUS s009 [$msgType]
 	(
 		PLUS d_0068
 	)?
@@ -2325,18 +2196,18 @@ s_UNH [String msgType]
 
 s_UNS
 :
-	'UNS' PLUS d_0081 EOL
+	'UNS+' d_0081 EOL
 ;
 
 s_UNT
 :
-	'UNT' PLUS d_0074 PLUS d_0062 EOL
+	'UNT+' d_0074 PLUS d_0062 EOL
 ;
 
 /** VLI  VALUE LIST IDENTIFICATION. */
 s_VLI
 :
-	'VLI' PLUS c_C780
+	'VLI+' c_C780
 	(
 		PLUS c_C082
 	)?
