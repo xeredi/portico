@@ -12,6 +12,8 @@ message
 		| s_UNH ["BAPLIE"] baplie
 		| s_UNH ["BERMAN"] berman
 		| s_UNH ["BMISRM"] bmisrm
+		| s_UNH ["BOPBNK"] bopbnk
+		| s_UNH ["CODECO"] codeco
 		| s_UNH ["CUSREP"] cusrep
 		| s_UNH ["IFCSUM"] ifcsum
 	) s_UNT
@@ -404,6 +406,143 @@ gr_bmisrm_8
 gr_bmisrm_9
 :
 	s_TEM s_MEA* s_PCD* s_DTM* s_FTX*
+;
+
+/* ------------------- BOPBNK ------------------- */
+/* ------------------- BOPBNK ------------------- */
+/* ------------------- BOPBNK ------------------- */
+/* ------------------- BOPBNK ------------------- */
+/* ------------------- BOPBNK ------------------- */
+bopbnk
+:
+	s_BGM s_DTM+ gr_bopbnk_1* gr_bopbnk_2+ gr_bopbnk_3+ s_CNT*
+;
+
+gr_bopbnk_1
+:
+	s_RFF s_DTM?
+;
+
+gr_bopbnk_2
+:
+	s_NAD s_CTA? s_COM* s_FTX*
+;
+
+gr_bopbnk_3
+:
+	s_RFF s_CUX? s_MOA* s_LOC? gr_bopbnk_4+
+;
+
+gr_bopbnk_4
+:
+	s_RCS s_FTX? gr_bopbnk_5+
+;
+
+gr_bopbnk_5
+:
+	s_MOA s_ATT? s_NAD? gr_bopbnk_6? gr_bopbnk_7? s_LOC+
+;
+
+gr_bopbnk_6
+:
+	s_GIR s_QTY? s_PRI?
+;
+
+gr_bopbnk_7
+:
+	s_RFF s_DTM?
+;
+
+/* ------------------- CODECO ------------------- */
+/* ------------------- CODECO ------------------- */
+/* ------------------- CODECO ------------------- */
+/* ------------------- CODECO ------------------- */
+/* ------------------- CODECO ------------------- */
+codeco
+:
+	s_BGM s_DTM* s_FTX* gr_codeco_1* gr_codeco_2? gr_codeco_4+ gr_codeco_6*
+	gr_codeco_10+ s_CNT?
+;
+
+gr_codeco_1
+:
+	s_RFF s_DTM*
+;
+
+gr_codeco_2
+:
+	s_TDT s_DTM* s_RFF* gr_codeco_3*
+;
+
+gr_codeco_3
+:
+	s_LOC s_DTM*
+;
+
+gr_codeco_4
+:
+	s_NAD gr_codeco_5*
+;
+
+gr_codeco_5
+:
+	s_CTA s_COM*
+;
+
+gr_codeco_6
+:
+	s_GID s_HAN* s_FTX* s_PIA* s_MEA* gr_codeco_7* s_SGP* gr_codeco_8*
+;
+
+gr_codeco_7
+:
+	s_TMP s_RNG?
+;
+
+gr_codeco_8
+:
+	s_DGS s_FTX* s_MEA* gr_codeco_9*
+;
+
+gr_codeco_9
+:
+	s_CTA s_COM*
+;
+
+gr_codeco_10
+:
+	s_EQD s_RFF* s_TMD* s_DTM* s_LOC* s_MEA* s_DIM* s_SEL* s_FTX* s_PCD* s_EQA*
+	s_COD? s_HAN* gr_codeco_11* gr_codeco_12* s_NAD* gr_codeco_14* gr_codeco_16*
+;
+
+gr_codeco_11
+:
+	s_DAM s_COD?
+;
+
+gr_codeco_12
+:
+	s_TDT s_DTM* s_RFF* gr_codeco_13*
+;
+
+gr_codeco_13
+:
+	s_LOC s_DTM*
+;
+
+gr_codeco_14
+:
+	s_DGS s_FTX* s_MEA* gr_codeco_15*
+;
+
+gr_codeco_15
+:
+	s_CTA s_COM*
+;
+
+gr_codeco_16
+:
+	s_TMP s_RNG?
 ;
 
 /* ------------------- CUSREP ------------------- */
