@@ -16,6 +16,8 @@ message
 		| s_UNH ["CODECO"] codeco
 		| s_UNH ["CUSREP"] cusrep
 		| s_UNH ["IFCSUM"] ifcsum
+		| s_UNH ["INVOIC"] invoic
+		| s_UNH ["ORDERS"] orders
 	) s_UNT
 ;
 
@@ -801,7 +803,7 @@ gr_ifcsum_54
 	s_NAD s_DTM? s_GDS*
 ;
 
-// Marcas y etiquetas de partida 
+// Marcas y etiquetas de partida
 
 gr_ifcsum_58
 :
@@ -839,4 +841,634 @@ gr_ifcsum_75
 gr_ifcsum_77
 :
 	s_DGS s_FTX* gr_ifcsum_5*
+;
+
+/* ------------------- INVOIC ------------------- */
+/* ------------------- INVOIC ------------------- */
+/* ------------------- INVOIC ------------------- */
+/* ------------------- INVOIC ------------------- */
+/* ------------------- INVOIC ------------------- */
+invoic
+:
+	s_BGM s_DTM+ s_PAI? s_ALI* s_IMD? s_FTX* s_LOC* s_GEI* s_DGS? s_GIR*
+	gr_invoic_1* gr_invoic_2* gr_invoic_6* gr_invoic_7* gr_invoic_8* gr_invoic_9*
+	gr_invoic_12* gr_invoic_13* gr_invoic_14* gr_invoic_16* gr_invoic_23*
+	gr_invoic_24? gr_invoic_25? gr_invoic_26* gr_invoic_27* s_UNS s_CNT*
+	gr_invoic_52+ gr_invoic_54* gr_invoic_55*
+;
+
+gr_invoic_1
+:
+	s_RFF s_DTM* s_GIR* s_LOC* s_MEA* s_QTY* s_FTX* s_MOA* s_RTE*
+;
+
+gr_invoic_2
+:
+	s_NAD s_LOC* s_FII* s_MOA* gr_invoic_3* gr_invoic_4* gr_invoic_5*
+;
+
+gr_invoic_3
+:
+	s_RFF s_DTM*
+;
+
+gr_invoic_4
+:
+	s_DOC s_DTM*
+;
+
+gr_invoic_5
+:
+	s_CTA s_COM*
+;
+
+gr_invoic_6
+:
+	s_TAX s_MOA? s_LOC*
+;
+
+gr_invoic_7
+:
+	s_CUX s_DTM*
+;
+
+gr_invoic_8
+:
+	s_PYT s_DTM* s_PCD? s_MOA? s_PAI? s_FII?
+;
+
+gr_invoic_9
+:
+	s_TDT s_TSR? gr_invoic_10* gr_invoic_11*
+;
+
+gr_invoic_10
+:
+	s_LOC s_DTM*
+;
+
+gr_invoic_11
+:
+	s_RFF s_DTM*
+;
+
+gr_invoic_12
+:
+	s_TOD s_LOC*
+;
+
+gr_invoic_13
+:
+	s_EQD s_SEL*
+;
+
+gr_invoic_14
+:
+	s_PAC s_MEA* s_EQD* gr_invoic_15*
+;
+
+gr_invoic_15
+:
+	s_PCI s_RFF? s_DTM* s_GIN*
+;
+
+gr_invoic_16
+:
+	s_ALC s_ALI* s_FTX? gr_invoic_17* gr_invoic_18? gr_invoic_19? gr_invoic_20*
+	gr_invoic_21? gr_invoic_22*
+;
+
+gr_invoic_17
+:
+	s_RFF s_DTM*
+;
+
+gr_invoic_18
+:
+	s_QTY s_RNG?
+;
+
+gr_invoic_19
+:
+	s_PCD s_RNG?
+;
+
+gr_invoic_20
+:
+	s_MOA s_RNG? s_CUX? s_DTM?
+;
+
+gr_invoic_21
+:
+	s_RTE s_RNG?
+;
+
+gr_invoic_22
+:
+	s_TAX s_MOA?
+;
+
+gr_invoic_23
+:
+	s_RCS s_RFF* s_DTM* s_FTX*
+;
+
+gr_invoic_24
+:
+	s_AJT s_FTX*
+;
+
+gr_invoic_25
+:
+	s_INP s_FTX*
+;
+
+gr_invoic_26
+:
+	s_EFI s_CED* s_COM* s_RFF* s_DTM* s_QTY*
+;
+
+gr_invoic_27
+:
+	s_LIN s_PIA* s_PGI* s_IMD* s_MEA* s_QTY* s_PCD? s_ALI* s_DTM* s_GIN* s_GIR*
+	s_QVR? s_EQD? s_FTX* s_DGS? gr_invoic_28* gr_invoic_29* gr_invoic_30*
+	gr_invoic_31* gr_invoic_32* gr_invoic_34* gr_invoic_35* gr_invoic_36*
+	gr_invoic_40* gr_invoic_46* gr_invoic_48* gr_invoic_49* gr_invoic_50*
+	gr_invoic_51*
+;
+
+gr_invoic_28
+:
+	s_MOA s_CUX?
+;
+
+gr_invoic_29
+:
+	s_PYT s_DTM* s_PCD* s_MOA?
+;
+
+gr_invoic_30
+:
+	s_PRI s_CUX? s_APR? s_RNG? s_DTM*
+;
+
+gr_invoic_31
+:
+	s_RFF s_DTM*
+;
+
+gr_invoic_32
+:
+	s_PAC s_MEA* s_EQD? gr_invoic_33*
+;
+
+gr_invoic_33
+:
+	s_PCI s_RFF? s_DTM* s_GIN*
+;
+
+gr_invoic_34
+:
+	s_LOC s_QTY* s_DTM*
+;
+
+gr_invoic_35
+:
+	s_TAX s_MOA* s_LOC*
+;
+
+gr_invoic_36
+:
+	s_NAD s_LOC* s_FII* gr_invoic_37* gr_invoic_38* gr_invoic_39*
+;
+
+gr_invoic_37
+:
+	s_RFF s_DTM*
+;
+
+gr_invoic_38
+:
+	s_DOC s_DTM*
+;
+
+gr_invoic_39
+:
+	s_CTA s_COM*
+;
+
+gr_invoic_40
+:
+	s_ALC s_ALI* s_DTM* s_FTX? gr_invoic_41? gr_invoic_42? gr_invoic_43*
+	gr_invoic_44? gr_invoic_45*
+;
+
+gr_invoic_41
+:
+	s_QTY s_RNG?
+;
+
+gr_invoic_42
+:
+	s_PCD s_RNG?
+;
+
+gr_invoic_43
+:
+	s_MOA s_RNG? s_CUX? s_DTM?
+;
+
+gr_invoic_44
+:
+	s_RTE s_RNG?
+;
+
+gr_invoic_45
+:
+	s_TAX s_MOA*
+;
+
+gr_invoic_46
+:
+	s_TDT gr_invoic_47*
+;
+
+gr_invoic_47
+:
+	s_LOC s_DTM*
+;
+
+gr_invoic_48
+:
+	s_TOD s_LOC*
+;
+
+gr_invoic_49
+:
+	s_RCS s_RFF* s_DTM* s_FTX*
+;
+
+gr_invoic_50
+:
+	s_GEI s_RFF* s_IMD* s_DTM* s_GIR* s_LOC* s_MEA* s_QTY* s_FTX* s_MOA*
+;
+
+gr_invoic_51
+:
+	s_EFI s_CED* s_COM* s_RFF* s_DTM* s_QTY*
+;
+
+gr_invoic_52
+:
+	s_MOA gr_invoic_53?
+;
+
+gr_invoic_53
+:
+	s_RFF s_DTM*
+;
+
+gr_invoic_54
+:
+	s_TAX s_MOA*
+;
+
+gr_invoic_55
+:
+	s_ALC s_ALI? s_MOA* s_FTX?
+;
+
+/* ------------------- ORDERS ------------------- */
+/* ------------------- ORDERS ------------------- */
+/* ------------------- ORDERS ------------------- */
+/* ------------------- ORDERS ------------------- */
+/* ------------------- ORDERS ------------------- */
+orders
+:
+	s_BGM s_DTM+ s_PAI? s_ALI* s_IMD* s_FTX* s_GIR* gr_orders_1* gr_orders_2*
+	gr_orders_6* gr_orders_7* gr_orders_8* gr_orders_10* gr_orders_12*
+	gr_orders_13* gr_orders_15* gr_orders_16* gr_orders_18* gr_orders_19*
+	gr_orders_25* gr_orders_26* gr_orders_28* gr_orders_29* s_UNS s_MOA* s_CNT*
+	gr_orders_63*
+;
+
+gr_orders_1
+:
+	s_RFF s_DTM*
+;
+
+gr_orders_2
+:
+	s_NAD s_LOC* s_FII* gr_orders_3* gr_orders_4* gr_orders_5*
+;
+
+gr_orders_3
+:
+	s_RFF s_DTM*
+;
+
+gr_orders_4
+:
+	s_DOC s_DTM*
+;
+
+gr_orders_5
+:
+	s_CTA s_COM*
+;
+
+gr_orders_6
+:
+	s_TAX s_MOA? s_LOC*
+;
+
+gr_orders_7
+:
+	s_CUX s_PCD* s_DTM*
+;
+
+gr_orders_8
+:
+	s_PYT s_DTM* s_PCD? gr_orders_9*
+;
+
+gr_orders_9
+:
+	s_MOA s_GIR* s_RJL*
+;
+
+gr_orders_10
+:
+	s_TDT gr_orders_11*
+;
+
+gr_orders_11
+:
+	s_LOC s_DTM*
+;
+
+gr_orders_12
+:
+	s_TOD s_LOC*
+;
+
+gr_orders_13
+:
+	s_PAC s_MEA* gr_orders_14*
+;
+
+gr_orders_14
+:
+	s_PCI s_RFF? s_DTM* s_GIN*
+;
+
+gr_orders_15
+:
+	s_EQD s_HAN* s_MEA* s_FTX*
+;
+
+gr_orders_16
+:
+	s_SCC s_FTX* s_RFF* gr_orders_17*
+;
+
+gr_orders_17
+:
+	s_QTY s_DTM*
+;
+
+gr_orders_18
+:
+	s_APR s_DTM* s_RNG?
+;
+
+gr_orders_19
+:
+	s_ALC s_ALI* s_DTM* gr_orders_20? gr_orders_21? gr_orders_22* gr_orders_23?
+	gr_orders_24*
+;
+
+gr_orders_20
+:
+	s_QTY s_RNG?
+;
+
+gr_orders_21
+:
+	s_PCD s_RNG?
+;
+
+gr_orders_22
+:
+	s_MOA s_RNG?
+;
+
+gr_orders_23
+:
+	s_RTE s_RNG?
+;
+
+gr_orders_24
+:
+	s_TAX s_MOA?
+;
+
+gr_orders_25
+:
+	s_RCS s_RFF* s_DTM* s_FTX*
+;
+
+gr_orders_26
+:
+	s_DGS s_FTX* gr_orders_27*
+;
+
+gr_orders_27
+:
+	s_CTA s_COM*
+;
+
+gr_orders_28
+:
+	s_EFI s_CED* s_COM* s_RFF* s_DTM* s_QTY*
+;
+
+gr_orders_29
+:
+	s_LIN s_PIA* s_IMD* s_MEA* s_QTY* s_PCD* s_ALI* s_DTM* s_MOA* s_GEI* s_GIN*
+	s_GIR* s_QVR? s_DOC* s_PAI? s_MTD* s_FTX* gr_orders_30* gr_orders_31*
+	gr_orders_33* gr_orders_34* gr_orders_35* gr_orders_38* gr_orders_40*
+	gr_orders_41* gr_orders_45* gr_orders_51* gr_orders_53* gr_orders_54*
+	gr_orders_55* gr_orders_57* gr_orders_58* gr_orders_60* gr_orders_62*
+;
+
+gr_orders_30
+:
+	s_CCI s_CAV* s_MEA*
+;
+
+gr_orders_31
+:
+	s_PYT s_DTM* s_PCD? gr_orders_32*
+;
+
+gr_orders_32
+:
+	s_MOA s_GIR*
+;
+
+gr_orders_33
+:
+	s_PRI s_CUX? s_APR* s_RNG? s_DTM*
+;
+
+gr_orders_34
+:
+	s_RFF s_DTM* s_GEI* s_MOA*
+;
+
+gr_orders_35
+:
+	s_PAC s_MEA* s_QTY* s_DTM* gr_orders_36? gr_orders_37*
+;
+
+gr_orders_36
+:
+	s_RFF s_DTM*
+;
+
+gr_orders_37
+:
+	s_PCI s_RFF? s_DTM* s_GIN*
+;
+
+gr_orders_38
+:
+	s_LOC s_PCD? s_DTM* gr_orders_39*
+;
+
+gr_orders_39
+:
+	s_QTY s_STS*
+;
+
+gr_orders_40
+:
+	s_TAX s_MOA? s_LOC*
+;
+
+gr_orders_41
+:
+	s_NAD s_LOC* s_FII* gr_orders_42* gr_orders_43* gr_orders_44*
+;
+
+gr_orders_42
+:
+	s_RFF s_DTM*
+;
+
+gr_orders_43
+:
+	s_DOC s_DTM*
+;
+
+gr_orders_44
+:
+	s_CTA s_COM*
+;
+
+gr_orders_45
+:
+	s_ALC s_ALI* s_DTM* gr_orders_46? gr_orders_47? gr_orders_48* gr_orders_49?
+	gr_orders_50*
+;
+
+gr_orders_46
+:
+	s_QTY s_RNG?
+;
+
+gr_orders_47
+:
+	s_PCD s_RNG?
+;
+
+gr_orders_48
+:
+	s_MOA s_RNG?
+;
+
+gr_orders_49
+:
+	s_RTE s_RNG?
+;
+
+gr_orders_50
+:
+	s_TAX s_MOA?
+;
+
+gr_orders_51
+:
+	s_TDT gr_orders_52*
+;
+
+gr_orders_52
+:
+	s_LOC s_DTM*
+;
+
+gr_orders_53
+:
+	s_TOD s_LOC*
+;
+
+gr_orders_54
+:
+	s_EQD s_HAN* s_MEA* s_FTX*
+;
+
+gr_orders_55
+:
+	s_SCC s_FTX* s_RFF* gr_orders_56*
+;
+
+gr_orders_56
+:
+	s_QTY s_DTM*
+;
+
+gr_orders_57
+:
+	s_RCS s_RFF* s_DTM* s_FTX*
+;
+
+gr_orders_58
+:
+	s_STG gr_orders_59*
+;
+
+gr_orders_59
+:
+	s_QTY s_MOA?
+;
+
+gr_orders_60
+:
+	s_DGS s_FTX* gr_orders_61*
+;
+
+gr_orders_61
+:
+	s_CTA s_COM*
+;
+
+gr_orders_62
+:
+	s_EFI s_CED* s_COM* s_RFF* s_DTM* s_QTY*
+;
+
+gr_orders_63
+:
+	s_ALC s_ALI? s_MOA*
 ;

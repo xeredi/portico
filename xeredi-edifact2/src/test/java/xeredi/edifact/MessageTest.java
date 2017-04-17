@@ -57,6 +57,8 @@ public final class MessageTest {
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/author/author2.itc");
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/author/author3.itc");
 
+				// test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/berman/berman1.itc");
+
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/codeco/codeco1.itc");
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/codeco/codeco2.itc");
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/codeco/codeco3.itc");
@@ -67,6 +69,11 @@ public final class MessageTest {
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/ifcsum/ifcsum2.itc");
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/ifcsum/ifcsum3.itc");
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/ifcsum/ifcsum4.itc");
+
+				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/invoic/invoic1.itc");
+				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/invoic/invoic2.itc");
+
+				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/orders/orders1.itc");
 			}
 		} catch (final IOException ex) {
 			ex.printStackTrace(System.err);
