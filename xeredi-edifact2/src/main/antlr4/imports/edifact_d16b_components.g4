@@ -3074,6 +3074,8 @@ s009 [String msgType]
 	(
 		COLON d_0113?
 	)?
+	{$msgType.equals($d_0065.text.toString())}?
+
 ;
 
 s010

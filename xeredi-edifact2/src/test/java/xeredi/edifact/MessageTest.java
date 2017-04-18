@@ -46,9 +46,9 @@ public final class MessageTest {
 	@Test
 	public void test() {
 		try {
-			for (int i = 0; i < 100; i++) {
-				final MessageTest test = new MessageTest();
+			final MessageTest test = new MessageTest();
 
+			for (int i = 0; i < 100; i++) {
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/aperak/aperak1.itc");
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/aperak/aperak2.itc");
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/aperak/aperak3.itc");
@@ -57,6 +57,9 @@ public final class MessageTest {
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/author/author2.itc");
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/author/author3.itc");
 
+				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/bansta/bansta1.itc");
+				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/bansta/bansta2.itc");
+
 				// test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/berman/berman1.itc");
 
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/codeco/codeco1.itc");
@@ -64,6 +67,11 @@ public final class MessageTest {
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/codeco/codeco3.itc");
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/codeco/codeco4.itc");
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/codeco/codeco5.itc");
+
+				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/cremul/cremul1.itc");
+				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/cremul/cremul2.itc");
+
+				// test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/fincan/fincan1.itc");
 
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/ifcsum/ifcsum1.itc");
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/ifcsum/ifcsum2.itc");
@@ -74,6 +82,10 @@ public final class MessageTest {
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/invoic/invoic2.itc");
 
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/orders/orders1.itc");
+
+				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/paymul/paymul1.itc");
+				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/paymul/paymul2.itc");
+				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/paymul/paymul3.itc");
 			}
 		} catch (final IOException ex) {
 			ex.printStackTrace(System.err);

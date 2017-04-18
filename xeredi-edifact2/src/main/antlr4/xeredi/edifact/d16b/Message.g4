@@ -5,19 +5,22 @@ import edifact_d16b_segments;
 message
 :
 	(
-		s_UNH ["APERAK"] aperak
-		| s_UNH ["AUTHOR"] author
-		| s_UNH ["BALANC"] balanc
-		| s_UNH ["BANSTA"] bansta
-		| s_UNH ["BAPLIE"] baplie
-		| s_UNH ["BERMAN"] berman
-		| s_UNH ["BMISRM"] bmisrm
-		| s_UNH ["BOPBNK"] bopbnk
-		| s_UNH ["CODECO"] codeco
-		| s_UNH ["CUSREP"] cusrep
-		| s_UNH ["IFCSUM"] ifcsum
-		| s_UNH ["INVOIC"] invoic
-		| s_UNH ["ORDERS"] orders
+		s_UNH ["APERAK"] m_aperak
+		| s_UNH ["AUTHOR"] m_author
+		| s_UNH ["BALANC"] m_balanc
+		| s_UNH ["BANSTA"] m_bansta
+		| s_UNH ["BAPLIE"] m_baplie
+		| s_UNH ["BERMAN"] m_berman
+		| s_UNH ["BMISRM"] m_bmisrm
+		| s_UNH ["BOPBNK"] m_bopbnk
+		| s_UNH ["CODECO"] m_codeco
+		| s_UNH ["CREMUL"] m_cremul
+		| s_UNH ["CUSREP"] m_cusrep
+		| s_UNH ["FINCAN"] m_fincan
+		| s_UNH ["IFCSUM"] m_ifcsum
+		| s_UNH ["INVOIC"] m_invoic
+		| s_UNH ["ORDERS"] m_orders
+		| s_UNH ["PAYMUL"] m_paymul
 	) s_UNT
 ;
 
@@ -26,7 +29,7 @@ message
 /* ------------------- APERAK ------------------- */
 /* ------------------- APERAK ------------------- */
 /* ------------------- APERAK ------------------- */
-aperak
+m_aperak
 :
 	s_BGM s_DTM* s_FTX* s_CNT* gr_aperak_1* gr_aperak_2* gr_aperak_3* gr_aperak_4*
 ;
@@ -61,7 +64,7 @@ gr_aperak_5
 /* ------------------- AUTHOR ------------------- */
 /* ------------------- AUTHOR ------------------- */
 /* ------------------- AUTHOR ------------------- */
-author
+m_author
 :
 	s_BGM s_DTM* s_BUS* gr_author_1* gr_author_2* gr_author_3* gr_author_4* s_CNT*
 	gr_author_9*
@@ -117,7 +120,7 @@ gr_author_9
 /* ------------------- BALANC ------------------- */
 /* ------------------- BALANC ------------------- */
 /* ------------------- BALANC ------------------- */
-balanc
+m_balanc
 :
 	s_BGM s_DTM+ s_RFF* s_CUX* s_FTX? gr_balanc_1* gr_balanc_3* gr_balanc_4*
 	gr_balanc_7* gr_balanc_8*
@@ -168,9 +171,9 @@ gr_balanc_8
 /* ------------------- BANSTA ------------------- */
 /* ------------------- BANSTA ------------------- */
 /* ------------------- BANSTA ------------------- */
-bansta
+m_bansta
 :
-	s_BGM s_DTM s_BUS? gr_bansta_1* gr_bansta_2* gr_bansta_3* gr_bansta_4* s_CNT*
+	s_BGM s_DTM s_BUS? gr_bansta_1* gr_bansta_2* gr_bansta_3* gr_bansta_4+ s_CNT*
 	gr_bansta_9*
 ;
 
@@ -225,7 +228,7 @@ gr_bansta_9
 /* ------------------- BAPLIE ------------------- */
 /* ------------------- BAPLIE ------------------- */
 /* ------------------- BAPLIE ------------------- */
-baplie
+m_baplie
 :
 	s_BGM s_DTM* gr_baplie_1* gr_baplie_2* gr_baplie_4* s_UNS gr_baplie_6*
 ;
@@ -296,7 +299,7 @@ gr_baplie_12
 /* ------------------- BERMAN ------------------- */
 /* ------------------- BERMAN ------------------- */
 /* ------------------- BERMAN ------------------- */
-berman
+m_berman
 :
 	s_BGM s_DTM* s_FTX* s_RFF* s_QTY* gr_berman_1* gr_berman_3* gr_berman_7*
 ;
@@ -360,7 +363,7 @@ gr_berman_10
 /* ------------------- BMISRM ------------------- */
 /* ------------------- BMISRM ------------------- */
 /* ------------------- BMISRM ------------------- */
-bmisrm
+m_bmisrm
 :
 	s_BGM s_DTM s_RFF+ s_LOC+ s_FTX* gr_bmisrm_1+ gr_bmisrm_3* gr_bmisrm_4+
 ;
@@ -415,7 +418,7 @@ gr_bmisrm_9
 /* ------------------- BOPBNK ------------------- */
 /* ------------------- BOPBNK ------------------- */
 /* ------------------- BOPBNK ------------------- */
-bopbnk
+m_bopbnk
 :
 	s_BGM s_DTM+ gr_bopbnk_1* gr_bopbnk_2+ gr_bopbnk_3+ s_CNT*
 ;
@@ -460,7 +463,7 @@ gr_bopbnk_7
 /* ------------------- CODECO ------------------- */
 /* ------------------- CODECO ------------------- */
 /* ------------------- CODECO ------------------- */
-codeco
+m_codeco
 :
 	s_BGM s_DTM* s_FTX* gr_codeco_1* gr_codeco_2? gr_codeco_4+ gr_codeco_6*
 	gr_codeco_10+ s_CNT?
@@ -547,12 +550,164 @@ gr_codeco_16
 	s_TMP s_RNG?
 ;
 
+/* ------------------- CREMUL ------------------- */
+/* ------------------- CREMUL ------------------- */
+/* ------------------- CREMUL ------------------- */
+/* ------------------- CREMUL ------------------- */
+/* ------------------- CREMUL ------------------- */
+m_cremul
+:
+	s_BGM s_DTM? s_BUS? gr_cremul_1* gr_cremul_2* gr_cremul_3* gr_cremul_4+ s_CNT*
+	gr_cremul_28*
+;
+
+gr_cremul_1
+:
+	s_RFF s_DTM?
+;
+
+gr_cremul_2
+:
+	s_FII s_CTA? s_COM*
+;
+
+gr_cremul_3
+:
+	s_NAD s_CTA? s_COM*
+;
+
+gr_cremul_4
+:
+	s_LIN s_DTM* s_BUS? s_MOA+ gr_cremul_5+ gr_cremul_6 gr_cremul_7* gr_cremul_10+
+;
+
+gr_cremul_5
+:
+	s_RFF s_DTM?
+;
+
+gr_cremul_6
+:
+	s_FII s_CTA? s_COM*
+;
+
+gr_cremul_7
+:
+	s_FCA s_MOA* gr_cremul_8*
+;
+
+gr_cremul_8
+:
+	s_ALC s_PCD? s_MOA* s_CUX? s_DTM? gr_cremul_9*
+;
+
+gr_cremul_9
+:
+	s_TAX s_MOA* s_CUX? s_DTM?
+;
+
+gr_cremul_10
+:
+	s_SEQ s_DTM* s_BUS? s_FII+ gr_cremul_11* gr_cremul_12? gr_cremul_13*
+	gr_cremul_14* gr_cremul_15* gr_cremul_16* gr_cremul_17* gr_cremul_20?
+;
+
+gr_cremul_11
+:
+	s_RFF s_DTM?
+;
+
+gr_cremul_12
+:
+	s_PAI s_FTX?
+;
+
+gr_cremul_13
+:
+	s_MOA s_CUX? s_DTM* s_RFF?
+;
+
+gr_cremul_14
+:
+	s_NAD s_CTA? s_COM*
+;
+
+gr_cremul_15
+:
+	s_INP s_FTX? s_DTM?
+;
+
+gr_cremul_16
+:
+	s_GEI s_MOA? s_LOC* s_NAD? s_RCS? s_FTX*
+;
+
+gr_cremul_17
+:
+	s_FCA s_MOA* gr_cremul_18*
+;
+
+gr_cremul_18
+:
+	s_ALC s_PCD? s_MOA* s_CUX? s_DTM* gr_cremul_19*
+;
+
+gr_cremul_19
+:
+	s_TAX s_MOA* s_CUX? s_DTM?
+;
+
+gr_cremul_20
+:
+	s_PRC s_FTX* gr_cremul_21* gr_cremul_27?
+;
+
+gr_cremul_21
+:
+	s_DOC s_MOA* s_DTM* s_RFF* s_NAD* gr_cremul_22* gr_cremul_23* gr_cremul_24*
+;
+
+gr_cremul_22
+:
+	s_CUX s_DTM?
+;
+
+gr_cremul_23
+:
+	s_AJT s_MOA? s_RFF? s_FTX*
+;
+
+gr_cremul_24
+:
+	s_DLI s_MOA* s_PIA* s_DTM* gr_cremul_25* gr_cremul_26*
+;
+
+gr_cremul_25
+:
+	s_CUX s_DTM?
+;
+
+gr_cremul_26
+:
+	s_AJT s_MOA? s_RFF? s_FTX*
+;
+
+gr_cremul_27
+:
+	s_GEI s_MOA*
+;
+
+gr_cremul_28
+:
+	s_AUT s_DTM?
+;
+
 /* ------------------- CUSREP ------------------- */
 /* ------------------- CUSREP ------------------- */
 /* ------------------- CUSREP ------------------- */
 /* ------------------- CUSREP ------------------- */
 /* ------------------- CUSREP ------------------- */
-cusrep
+m_cusrep
 :
 	s_BGM s_DTM* s_QTY* s_POC* s_FTX* s_MEA* s_GEI* s_GPO? s_STS* gr_cusrep_1*
 	gr_cusrep_2* gr_cusrep_3* gr_cusrep_4* gr_cusrep_5* gr_cusrep_6* gr_cusrep_9*
@@ -619,12 +774,53 @@ gr_cusrep_12
 	s_AUT s_DTM?
 ;
 
+/* ------------------- FINCAN ------------------- */
+/* ------------------- FINCAN ------------------- */
+/* ------------------- FINCAN ------------------- */
+/* ------------------- FINCAN ------------------- */
+/* ------------------- FINCAN ------------------- */
+m_fincan
+:
+	s_BGM s_DTM s_BUS? gr_fincan_1* gr_fincan_2* gr_fincan_3* gr_fincan_4+ s_CNT*
+	gr_fincan_6*
+;
+
+gr_fincan_1
+:
+	s_RFF s_DTM?
+;
+
+gr_fincan_2
+:
+	s_FII s_CTA? s_COM*
+;
+
+gr_fincan_3
+:
+	s_NAD s_CTA? s_COM*
+;
+
+gr_fincan_4
+:
+	s_LIN gr_fincan_5*
+;
+
+gr_fincan_5
+:
+	s_RFF s_DTM?
+;
+
+gr_fincan_6
+:
+	s_AUT s_DTM?
+;
+
 /* ------------------- IFCSUM ------------------- */
 /* ------------------- IFCSUM ------------------- */
 /* ------------------- IFCSUM ------------------- */
 /* ------------------- IFCSUM ------------------- */
 /* ------------------- IFCSUM ------------------- */
-ifcsum
+m_ifcsum
 :
 	s_BGM s_DTM* s_MOA* s_FTX* s_CNT* s_PCD? s_GDS* gr_ifcsum_1* gr_ifcsum_2*
 	gr_ifcsum_4* gr_ifcsum_7* gr_ifcsum_8* gr_ifcsum_9* gr_ifcsum_23*
@@ -848,7 +1044,7 @@ gr_ifcsum_77
 /* ------------------- INVOIC ------------------- */
 /* ------------------- INVOIC ------------------- */
 /* ------------------- INVOIC ------------------- */
-invoic
+m_invoic
 :
 	s_BGM s_DTM+ s_PAI? s_ALI* s_IMD? s_FTX* s_LOC* s_GEI* s_DGS? s_GIR*
 	gr_invoic_1* gr_invoic_2* gr_invoic_6* gr_invoic_7* gr_invoic_8* gr_invoic_9*
@@ -1143,7 +1339,7 @@ gr_invoic_55
 /* ------------------- ORDERS ------------------- */
 /* ------------------- ORDERS ------------------- */
 /* ------------------- ORDERS ------------------- */
-orders
+m_orders
 :
 	s_BGM s_DTM+ s_PAI? s_ALI* s_IMD* s_FTX* s_GIR* gr_orders_1* gr_orders_2*
 	gr_orders_6* gr_orders_7* gr_orders_8* gr_orders_10* gr_orders_12*
@@ -1471,4 +1667,137 @@ gr_orders_62
 gr_orders_63
 :
 	s_ALC s_ALI? s_MOA*
+;
+
+/* ------------------- PAYMUL ------------------- */
+/* ------------------- PAYMUL ------------------- */
+/* ------------------- PAYMUL ------------------- */
+/* ------------------- PAYMUL ------------------- */
+/* ------------------- PAYMUL ------------------- */
+m_paymul
+:
+	s_BGM s_DTM s_BUS? gr_paymul_1* gr_paymul_2* gr_paymul_3* gr_paymul_4* s_CNT*
+	gr_paymul_24*
+;
+
+gr_paymul_1
+:
+	s_RFF s_DTM?
+;
+
+gr_paymul_2
+:
+	s_FII s_CTA? s_COM*
+;
+
+gr_paymul_3
+:
+	s_NAD s_CTA? s_COM*
+;
+
+gr_paymul_4
+:
+	s_LIN s_DTM* s_RFF* s_BUS? s_FCA? gr_paymul_5? gr_paymul_6* gr_paymul_7*
+	gr_paymul_8? gr_paymul_9* gr_paymul_10? gr_paymul_11*
+;
+
+gr_paymul_5
+:
+	s_MOA s_CUX? s_DTM* s_RFF?
+;
+
+gr_paymul_6
+:
+	s_FII s_CTA? s_COM*
+;
+
+gr_paymul_7
+:
+	s_NAD s_CTA? s_COM*
+;
+
+gr_paymul_8
+:
+	s_INP s_FTX? s_DTM*
+;
+
+gr_paymul_9
+:
+	s_GEI s_MOA? s_LOC* s_NAD? s_RCS? s_FTX*
+;
+
+gr_paymul_10
+:
+	s_PRC s_FTX
+;
+
+gr_paymul_11
+:
+	s_SEQ s_MOA s_DTM? s_BUS? s_RFF* s_PAI? s_FCA? gr_paymul_12* gr_paymul_13*
+	gr_paymul_14* gr_paymul_15* gr_paymul_16?
+;
+
+gr_paymul_12
+:
+	s_FII s_CTA? s_COM*
+;
+
+gr_paymul_13
+:
+	s_NAD s_CTA? s_COM*
+;
+
+gr_paymul_14
+:
+	s_INP s_FTX? s_DTM*
+;
+
+gr_paymul_15
+:
+	s_GEI s_MOA? s_LOC* s_NAD? s_RCS? s_FTX*
+;
+
+gr_paymul_16
+:
+	s_PRC s_FTX* gr_paymul_17* gr_paymul_23?
+;
+
+gr_paymul_17
+:
+	s_DOC s_MOA* s_DTM* s_RFF* s_NAD* gr_paymul_18* gr_paymul_19* gr_paymul_20*
+;
+
+gr_paymul_18
+:
+	s_CUX s_DTM?
+;
+
+gr_paymul_19
+:
+	s_AJT s_MOA s_RFF? s_FTX*
+;
+
+gr_paymul_20
+:
+	s_DLI s_MOA+ s_PIA* s_DTM* gr_paymul_21* gr_paymul_22*
+;
+
+gr_paymul_21
+:
+	s_CUX s_DTM?
+;
+
+gr_paymul_22
+:
+	s_AJT s_MOA s_RFF? s_FTX*
+;
+
+gr_paymul_23
+:
+	s_GEI s_MOA*
+;
+
+gr_paymul_24
+:
+	s_AUT s_DTM?
 ;

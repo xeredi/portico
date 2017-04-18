@@ -1,5 +1,19 @@
 lexer grammar edifact_common;
 
+EOL
+:
+	'\'' [ \t]*
+	(
+		(
+			'\r'? '\n'
+		)* EOF
+		|
+		(
+			'\r'? '\n'
+		)+
+	)
+;
+
 ALPHANUMERIC
 :
 	(
@@ -11,6 +25,9 @@ ALPHANUMERIC
 		| '-'
 		| '?'
 		| '%'
+		| '#'
+		| '\'\''
+		| '\n'
 	)+
 ;
 
@@ -31,6 +48,12 @@ PLUS
 	'+'
 ;
 
+WS
+:
+	[ \t]+ -> skip
+;
+
+/*
 EOL
 :
 	'\'' ' '* '\n'*
@@ -40,4 +63,4 @@ WS
 :
 	[ \r\n\t]+ -> skip
 ;
-
+ */

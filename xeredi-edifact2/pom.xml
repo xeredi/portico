@@ -50,9 +50,9 @@
 					</execution>
 				</executions>
 				<configuration>
-					<forceATN>true</forceATN>
+					<forceATN>false</forceATN>
 					<visitor>true</visitor>
-					<listener>false</listener>
+					<listener>true</listener>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -62,9 +62,9 @@
 			</plugin>
 		</plugins>
 
-		<!-- <pluginManagement> <plugins> <plugin> <artifactId>maven-site-plugin</artifactId> 
-			<configuration> <reportPlugins> <plugins> <plugin> <groupId>de.flashpixx</groupId> 
-			<artifactId>rrd-antlr4</artifactId> <version>0.0.1</version> </plugin> </plugins> 
+		<!-- <pluginManagement> <plugins> <plugin> <artifactId>maven-site-plugin</artifactId>
+			<configuration> <reportPlugins> <plugins> <plugin> <groupId>de.flashpixx</groupId>
+			<artifactId>rrd-antlr4</artifactId> <version>0.0.1</version> </plugin> </plugins>
 			</reportPlugins> </configuration> </plugin> </plugins> </pluginManagement> -->
 	</build>
 
@@ -74,7 +74,7 @@
 			<artifactId>antlr4</artifactId>
 			<version>4.7</version>
 		</dependency>
-		<!-- <dependency> <groupId>de.flashpixx</groupId> <artifactId>rrd-antlr4</artifactId> 
+		<!-- <dependency> <groupId>de.flashpixx</groupId> <artifactId>rrd-antlr4</artifactId>
 			<version>0.0.1</version> </dependency> -->
 		<dependency>
 			<groupId>junit</groupId>
