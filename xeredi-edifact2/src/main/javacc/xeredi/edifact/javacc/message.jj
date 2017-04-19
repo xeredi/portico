@@ -1,0 +1,15458 @@
+/* message.jj Edifact message */
+options
+{
+  STATIC = false;
+}
+
+PARSER_BEGIN(Message)
+package xeredi.edifact.javacc;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+public class Message
+{
+  public static void main(String [] args)
+  throws ParseException, TokenMgrError, IOException
+  {
+    Message parser = new Message(new FileInputStream("/home/xeredi/git/portico/xeredi-edifact2/samples/aperak/aperak1.itc"));
+    parser.message();
+  }
+}
+
+PARSER_END(Message)
+
+SKIP :
+{
+  "\n"
+| "\r"
+| "\r\n"
+| "\t"
+| " "
+}
+
+TOKEN :
+{
+  < PLUS : "+" >
+}
+
+TOKEN :
+{
+  < COLON : ":" >
+}
+
+TOKEN :
+{
+  < ALPHANUMERIC :
+    (
+      [ "A"-"Z" ]
+    | [ "a"-"z" ]
+    | [ "\u00f1" ]
+    | [ "\u00d1" ]
+    | [ "0"-"9" ]
+    | " "
+    | "/"
+    | ","
+    | "."
+    | "-"
+    | "?"
+    | "%"
+    | "#"
+    )+ >
+}
+
+TOKEN :
+{
+  < INTEGER : ([ "0"-"9" ])+ >
+}
+
+TOKEN :
+{
+  < EOL :
+    "\'"
+    (
+      " "
+    | "\t"
+    )*
+    (
+      (
+        (
+        "\r")? "\n"
+      )*
+    |
+      (
+        (
+        "\r")? "\n"
+      )+
+    ) >
+}
+
+/************************************************ MESSAGES *********************************************************/
+/************************************************ MESSAGES *********************************************************/
+/************************************************ MESSAGES *********************************************************/
+/************************************************ MESSAGES *********************************************************/
+/************************************************ MESSAGES *********************************************************/
+
+void message() :
+{}
+{
+  (
+//    LOOKAHEAD(3)
+//    s_UNH("APERAK") m_aperak()
+//  |
+  s_UNH("IFCSUM") m_ifcsum()
+  )
+  s_UNT()
+}
+
+/** APERAK */
+void m_aperak() :
+{}
+{
+  s_BGM()
+  (
+    s_DTM()
+  )*
+  (
+    s_FTX()
+  )*
+  (
+    s_CNT()
+  )*
+  (
+    gr_aperak_1()
+  )*
+  (
+    gr_aperak_2()
+  )*
+  (
+    gr_aperak_3()
+  )*
+  (
+    gr_aperak_4()
+  )*
+}
+
+void gr_aperak_1() :
+{}
+{
+  s_DOC()
+  (
+    s_DTM()
+  )*
+}
+
+void gr_aperak_2() :
+{}
+{
+  s_RFF()
+  (
+    s_DTM()
+  )*
+}
+
+void gr_aperak_3() :
+{}
+{
+  s_NAD()
+  (
+    s_CTA()
+  )*
+  (
+    s_COM()
+  )*
+}
+
+void gr_aperak_4() :
+{}
+{
+  s_ERC()
+  (
+    s_FTX()
+  )*
+  (
+    gr_aperak_5()
+  )*
+}
+
+void gr_aperak_5() :
+{}
+{
+  s_RFF()
+  (
+    s_FTX()
+  )*
+}
+
+/** IFCSUM. */
+void m_ifcsum() :
+{}
+{
+  s_BGM()
+  (
+    s_DTM()
+  )*
+  (
+    s_MOA()
+  )*
+  (
+    s_FTX()
+  )*
+  (
+    s_CNT()
+  )*
+  (
+    s_PCD()
+  )?
+  (
+    s_GDS()
+  )*
+  (
+    gr_ifcsum_1()
+  )*
+  (
+    gr_ifcsum_2()
+  )*
+  (
+    gr_ifcsum_4()
+  )*
+  (
+    gr_ifcsum_7()
+  )*
+  (
+    gr_ifcsum_8()
+  )*
+  (
+    gr_ifcsum_9()
+  )*
+  (
+    gr_ifcsum_23()
+  )*
+  (
+    gr_ifcsum_27()
+  )*
+}
+
+void gr_ifcsum_1() :
+{}
+{
+  s_RFF()
+  (
+    s_DTM()
+  )*
+}
+
+void gr_ifcsum_2() :
+{}
+{
+  s_GOR()
+  (
+    s_DTM()
+  )*
+  (
+    s_LOC()
+  )*
+  (
+    s_SEL()
+  )*
+  (
+    s_FTX()
+  )*
+  (
+    gr_ifcsum_3()
+  )*
+}
+
+void gr_ifcsum_3() :
+{}
+{
+  s_DOC()
+  (
+    s_DTM()
+  )?
+}
+
+// Consignatario Mercancia
+void gr_ifcsum_4() :
+{}
+{
+  s_NAD()
+  (
+    gr_ifcsum_5()
+  )*
+  (
+    gr_ifcsum_1()
+  )*
+}
+
+void gr_ifcsum_5() :
+{}
+{
+  s_CTA()
+  (
+    s_COM()
+  )*
+}
+
+void gr_ifcsum_7() :
+{}
+{
+  s_TCC()
+  (
+    s_CUX()
+  )?
+  (
+    s_PRI()
+  )?
+  (
+    s_EQN()
+  )?
+  (
+    s_PCD()
+  )?
+  (
+    s_MOA()
+  )*
+  (
+    s_QTY()
+  )*
+  (
+    s_LOC()
+  )*
+}
+
+void gr_ifcsum_8() :
+{}
+{
+  s_ICD()
+  (
+    s_DTM()
+  )?
+  (
+    s_FTX()
+  )*
+}
+
+void gr_ifcsum_9() :
+{}
+{
+  s_TDT()
+  (
+    s_DTM()
+  )*
+  (
+    gr_ifcsum_10()
+  )*
+  (
+    gr_ifcsum_11()
+  )*
+  (
+    s_SEL()
+  )*
+  (
+    s_FTX()
+  )*
+  (
+    gr_ifcsum_12()
+  )*
+  (
+    gr_ifcsum_13()
+  )*
+  (
+    gr_ifcsum_5()
+  )*
+  (
+    gr_ifcsum_15()
+  )*
+  (
+    gr_ifcsum_8()
+  )*
+  (
+    gr_ifcsum_1()
+  )*
+  (
+    gr_ifcsum_18()
+  )*
+}
+
+void gr_ifcsum_10() :
+{}
+{
+  s_TSR()
+  (
+    s_SCC()
+  )*
+}
+
+void gr_ifcsum_11() :
+{}
+{
+  s_LOC()
+  (
+    s_DTM()
+  )*
+}
+
+void gr_ifcsum_12() :
+{}
+{
+  s_MEA()
+  (
+    s_EQN()
+  )?
+}
+
+void gr_ifcsum_13() :
+{}
+{
+  s_DIM()
+  (
+    s_EQN()
+  )?
+}
+
+void gr_ifcsum_15() :
+{}
+{
+  s_TCC()
+  (
+    s_MOA()
+  )*
+  (
+    s_PCD()
+  )?
+}
+
+void gr_ifcsum_18() :
+{}
+{
+  s_NAD()
+  (
+    s_LOC()
+  )*
+  (
+    gr_ifcsum_5()
+  )*
+  (
+    gr_ifcsum_3()
+  )*
+  (
+    gr_ifcsum_21()
+  )*
+  (
+    gr_ifcsum_1()
+  )*
+}
+
+void gr_ifcsum_21() :
+{}
+{
+  s_TCC()
+  (
+    s_CUX()
+  )?
+  (
+    s_PRI()
+  )?
+  (
+    s_EQN()
+  )?
+  (
+    s_PCD()
+  )?
+  (
+    s_MOA()
+  )*
+  (
+    s_QTY()
+  )*
+}
+
+void gr_ifcsum_23() :
+{}
+{
+  s_EQD()
+  (
+    s_EQN()
+  )?
+  (
+    s_TPL()
+  )?
+  (
+    s_TMD()
+  )?
+  (
+    s_MEA()
+  )*
+  (
+    s_DIM()
+  )*
+  (
+    s_SEL()
+  )*
+  (
+    s_NAD()
+  )*
+  (
+    s_LOC()
+  )*
+  (
+    s_HAN()
+  )?
+  (
+    s_TMP()
+  )?
+  (
+    s_FTX()
+  )*
+  (
+    s_RFF()
+  )*
+  (
+    s_PCD()
+  )*
+  (
+    gr_ifcsum_24()
+  )*
+  (
+    gr_ifcsum_25()
+  )*
+  (
+    gr_ifcsum_5()
+  )*
+}
+
+void gr_ifcsum_24() :
+{}
+{
+  s_EQA()
+  (
+    s_EQN()
+  )?
+}
+
+void gr_ifcsum_25() :
+{}
+{
+  s_DGS()
+  (
+    s_FTX()
+  )*
+}
+
+// BL
+void gr_ifcsum_27() :
+{}
+{
+  s_CNI()
+  (
+    gr_ifcsum_28()
+  )*
+  (
+    gr_ifcsum_30()
+  )*
+  (
+    s_CTA()
+  )?
+  (
+    s_COM()
+  )*
+  (
+    s_DTM()
+  )*
+  (
+    s_CNT()
+  )*
+  (
+    s_TSR()
+  )*
+  (
+    s_CUX()
+  )*
+  (
+    s_PCD()
+  )*
+  (
+    s_MOA()
+  )*
+  (
+    s_FTX()
+  )*
+  (
+    s_GDS()
+  )*
+  (
+    gr_ifcsum_11()
+  )*
+  (
+    gr_ifcsum_33()
+  )*
+  (
+    gr_ifcsum_1()
+  )*
+  (
+    gr_ifcsum_2()
+  )*
+  (
+    gr_ifcsum_37()
+  )*
+  (
+    gr_ifcsum_38()
+  )*
+  (
+    gr_ifcsum_8()
+  )*
+  (
+    gr_ifcsum_40()
+  )*
+  (
+    gr_ifcsum_46()
+  )*
+  (
+    gr_ifcsum_53()
+  )*
+  (
+    gr_ifcsum_73()
+  )*
+}
+
+void gr_ifcsum_28() :
+{}
+{
+  s_SGP()
+  (
+    gr_ifcsum_12()
+  )*
+}
+
+void gr_ifcsum_30() :
+{}
+{
+  s_TPL()
+  (
+    gr_ifcsum_12()
+  )*
+}
+
+void gr_ifcsum_33() :
+{}
+{
+  s_TOD()
+  (
+    s_LOC()
+  )*
+}
+
+void gr_ifcsum_37() :
+{}
+{
+  s_CPI()
+  (
+    s_RFF()
+  )*
+  (
+    s_CUX()
+  )?
+  (
+    s_LOC()
+  )*
+  (
+    s_MOA()
+  )*
+}
+
+void gr_ifcsum_38() :
+{}
+{
+  s_TCC()
+  (
+    s_LOC()
+  )?
+  (
+    s_FTX()
+  )?
+  (
+    s_CUX()
+  )?
+  (
+    s_PRI()
+  )?
+  (
+    s_EQN()
+  )?
+  (
+    s_PCD()
+  )?
+  (
+    s_MOA()
+  )*
+  (
+    s_QTY()
+  )*
+}
+
+void gr_ifcsum_40() :
+{}
+{
+  s_TDT()
+  (
+    s_DTM()
+  )*
+  (
+    gr_ifcsum_10()
+  )*
+  (
+    gr_ifcsum_11()
+  )*
+  (
+    gr_ifcsum_43()
+  )*
+  (
+    gr_ifcsum_44()
+  )*
+  (
+    gr_ifcsum_8()
+  )*
+}
+
+void gr_ifcsum_43() :
+{}
+{
+  s_RFF()
+  (
+    s_DTM()
+  )?
+}
+
+void gr_ifcsum_44() :
+{}
+{
+  s_TCC()
+  (
+    s_MOA()
+  )*
+  (
+    s_PCD()
+  )?
+}
+
+void gr_ifcsum_46() :
+{}
+{
+  s_NAD()
+  (
+    s_LOC()
+  )*
+  (
+    s_MOA()
+  )*
+  (
+    gr_ifcsum_5()
+  )*
+  (
+    gr_ifcsum_3()
+  )*
+  (
+    gr_ifcsum_21()
+  )*
+  (
+    gr_ifcsum_1()
+  )*
+  (
+    gr_ifcsum_37()
+  )*
+  (
+    gr_ifcsum_52()
+  )*
+}
+
+void gr_ifcsum_52() :
+{}
+{
+  s_TSR()
+  (
+    s_RFF()
+  )?
+  (
+    s_LOC()
+  )?
+  (
+    s_TPL()
+  )?
+  (
+    s_FTX()
+  )*
+}
+
+// Partida
+void gr_ifcsum_53() :
+{}
+{
+  s_GID()
+  (
+    s_HAN()
+  )?
+  (
+    s_TMP()
+  )?
+  (
+    s_RNG()
+  )?
+  (
+    s_TMD()
+  )?
+  (
+    s_LOC()
+  )*
+  (
+    s_MOA()
+  )*
+  (
+    s_PIA()
+  )*
+  (
+    s_GIN()
+  )*
+  (
+    s_FTX()
+  )*
+  (
+    gr_ifcsum_54()
+  )*
+  (
+    gr_ifcsum_12()
+  )*
+  (
+    gr_ifcsum_13()
+  )*
+  (
+    gr_ifcsum_1()
+  )*
+  (
+    gr_ifcsum_58()
+  )*
+  (
+    gr_ifcsum_59()
+  )*
+  (
+    gr_ifcsum_2()
+  )*
+  (
+    gr_ifcsum_30()
+  )*
+  (
+    gr_ifcsum_64()
+  )*
+  (
+    gr_ifcsum_7()
+  )*
+  (
+    gr_ifcsum_8()
+  )*
+}
+
+void gr_ifcsum_54() :
+{}
+{
+  s_NAD()
+  (
+    s_DTM()
+  )?
+  (
+    s_GDS()
+  )*
+}
+
+// Marcas y etiquetas de partida
+void gr_ifcsum_58() :
+{}
+{
+  s_PCI()
+  (
+    s_RFF()
+  )?
+  (
+    s_DTM()
+  )?
+  (
+    s_GIN()
+  )*
+  (
+    s_MEA()
+  )*
+  (
+    s_DIM()
+  )?
+  (
+    s_FTX()
+  )*
+}
+
+// Documentos de la partida
+void gr_ifcsum_59() :
+{}
+{
+  s_DOC()
+  (
+    s_DTM()
+  )*
+}
+
+void gr_ifcsum_64() :
+{}
+{
+  s_SGP()
+  (
+    s_SEQ()
+  )?
+  (
+    gr_ifcsum_12()
+  )*
+}
+
+void gr_ifcsum_68() :
+{}
+{
+  s_DGS()
+  (
+    s_FTX()
+  )*
+  (
+    gr_ifcsum_5()
+  )*
+  (
+    gr_ifcsum_12()
+  )*
+  (
+    gr_ifcsum_28()
+  )*
+}
+
+void gr_ifcsum_73() :
+{}
+{
+  s_EQD()
+  (
+    s_EQN()
+  )?
+  (
+    s_TMD()
+  )?
+  (
+    s_MEA()
+  )*
+  (
+    s_DIM()
+  )*
+  (
+    s_SEL()
+  )*
+  (
+    s_TPL()
+  )*
+  (
+    s_HAN()
+  )?
+  (
+    s_TMP()
+  )?
+  (
+    s_FTX()
+  )*
+  (
+    s_PCD()
+  )*
+  (
+    gr_ifcsum_21()
+  )*
+  (
+    gr_ifcsum_75()
+  )*
+  (
+    gr_ifcsum_24()
+  )*
+  (
+    gr_ifcsum_77()
+  )*
+}
+
+void gr_ifcsum_75() :
+{}
+{
+  s_NAD()
+  (
+    s_DTM()
+  )?
+}
+
+void gr_ifcsum_77() :
+{}
+{
+  s_DGS()
+  (
+    s_FTX()
+  )*
+  (
+    gr_ifcsum_5()
+  )*
+}
+
+/************************************************ SEGMENTS *********************************************************/
+/************************************************ SEGMENTS *********************************************************/
+/************************************************ SEGMENTS *********************************************************/
+/************************************************ SEGMENTS *********************************************************/
+/************************************************ SEGMENTS *********************************************************/
+
+/** ADR  ADDRESS. FIXME Revisar.*/
+void s_ADR() :
+{}
+{
+  "ADR+" c_C817()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C090()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_3164()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_3251()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_3207()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C819()
+  )?
+  (
+    < PLUS > c_C517()
+  )?
+  < EOL >
+}
+
+/** AGR  AGREEMENT IDENTIFICATION. */
+void s_AGR() :
+{}
+{
+  "AGR+"
+  (
+    c_C543()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_9419()
+    )?
+  )?
+  < EOL >
+}
+
+/** AJT  ADJUSTMENT DETAILS. */
+void s_AJT() :
+{}
+{
+  "AJT+" d_4465()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1082()
+    )?
+  )?
+  < EOL >
+}
+
+/** ALC  ALLOWANCE OR CHARGE. */
+void s_ALC() :
+{}
+{
+  "ALC+" d_5463()
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C552()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4471()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1227()
+    )?
+  )?
+  (
+    < PLUS > c_C214()
+  )?
+  < EOL >
+}
+
+/** ALI  ADDITIONAL INFORMATION. */
+void s_ALI() :
+{}
+{
+  "ALI+"
+  (
+    d_3239()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_9213()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4183()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4183()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4183()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4183()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4183()
+    )?
+  )?
+  < EOL >
+}
+
+/** APR  ADDITIONAL PRICE INFORMATION. */
+void s_APR() :
+{}
+{
+  "APR+"
+  (
+    d_4043()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C138()
+    )?
+  )?
+  (
+    < PLUS > c_C960()
+  )?
+  < EOL >
+}
+
+/** ARD  MONETARY AMOUNT FUNCTION. */
+void s_ARD() :
+{}
+{
+  "ARD+" c_C549()
+  (
+    < PLUS > c_C008()
+  )?
+  < EOL >
+}
+
+/** ARR  ARRAY INFORMATION. */
+void s_ARR() :
+{}
+{
+  "ARR+" c_C778()
+  (
+    < PLUS > c_C770()
+  )?
+  < EOL >
+}
+
+/** ASI  ARRAY STRUCTURE IDENTIFICATION. */
+void s_ASI() :
+{}
+{
+  "ASI+" c_C779()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C082()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4405()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4513()
+    )?
+  )?
+  < EOL >
+}
+
+/** ATT  ATTRIBUTE. */
+void s_ATT() :
+{}
+{
+  "ATT+" d_9017()
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C955()
+  )?
+  (
+    < PLUS > c_C956()
+  )?
+  < EOL >
+}
+
+/** AUT  AUTHENTICATION RESULT. */
+void s_AUT() :
+{}
+{
+  "AUT+" d_9280()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_9282()
+    )?
+  )?
+  < EOL >
+}
+
+/** BAS  BASIS. */
+void s_BAS() :
+{}
+{
+  "BAS+" d_9045() < PLUS > c_C974() < EOL >
+}
+
+/** BGM  BEGINNING OF MESSAGE. */
+void s_BGM() :
+{}
+{
+  "BGM+" c_C002()
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C106()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1225()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4343()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1373()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_3453()
+    )?
+  )?
+  < EOL >
+}
+
+/** BII  STRUCTURE IDENTIFICATION. */
+void s_BII() :
+{}
+{
+  "BII+" d_7429() < PLUS > c_C045()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_7140()
+    )?
+  )?
+  < EOL >
+}
+
+/** BUS  BUSINESS FUNCTION. */
+void s_BUS() :
+{}
+{
+  "BUS+"
+  (
+    c_C521()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_3279()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4487()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C551()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4463()
+    )?
+  )?
+  < EOL >
+}
+
+/** CAV  CHARACTERISTIC VALUE. */
+void s_CAV() :
+{}
+{
+  "CAV+" c_C889() < EOL >
+}
+
+/** CCD  CREDIT COVER DETAILS. */
+void s_CCD() :
+{}
+{
+  "CCD+"
+  (
+    d_4505()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4507()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4509()
+    )?
+  )?
+  < EOL >
+}
+
+/** CCI  CHARACTERISTIC/CLASS ID. */
+void s_CCI() :
+{}
+{
+  "CCI+"
+  (
+    d_7059()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C502()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C240()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4051()
+    )?
+  )?
+  < EOL >
+}
+
+/** CDI  PHYSICAL OR LOGICAL STATE. */
+void s_CDI() :
+{}
+{
+  "CDI+" d_7001() < PLUS > c_C564() < EOL >
+}
+
+/** CDS  CODE SET IDENTIFICATION. */
+void s_CDS() :
+{}
+{
+  "CDS+" c_C702()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1507()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4513()
+    )?
+  )?
+  < EOL >
+}
+
+/** CDV  CODE VALUE DEFINITION. */
+void s_CDV() :
+{}
+{
+  "CDV+" d_9426()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_9434()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4513()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_9453()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_7299()
+    )?
+  )?
+  < EOL >
+}
+
+/** CED  COMPUTER ENVIRONMENT DETAILS. */
+void s_CED() :
+{}
+{
+  "CED+" d_1501() < PLUS > c_C079()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_9448()
+    )?
+  )?
+  < EOL >
+}
+
+/** CIN  CLINICAL INFORMATION. */
+void s_CIN() :
+{}
+{
+  "CIN+" d_6415()
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C836()
+  )?
+  (
+    < PLUS > c_C837()
+  )?
+  < EOL >
+}
+
+/** CLA  CLAUSE IDENTIFICATION. */
+void s_CLA() :
+{}
+{
+  "CLA+" d_4059()
+  (
+    < PLUS > c_C970()
+  )?
+  < EOL >
+}
+
+/** CLI  CLINICAL INTERVENTION. */
+void s_CLI() :
+{}
+{
+  "CLI+" d_9441()
+  (
+    < PLUS > c_C828()
+  )?
+  < EOL >
+}
+
+/** CMP  COMPOSITE DATA ELEMENT IDENTIFICATION. */
+void s_CMP() :
+{}
+{
+  "CMP+" d_9146()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1507()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4513()
+    )?
+  )?
+  < EOL >
+}
+
+/** CNI  CONSIGNMENT INFORMATION. */
+void s_CNI() :
+{}
+{
+  "CNI+"
+  (
+    d_1490()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C503()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1312()
+    )?
+  )?
+  < EOL >
+}
+
+/** CNT  CONTROL TOTAL. */
+void s_CNT() :
+{}
+{
+  "CNT+" c_C270() < EOL >
+}
+
+/** COD  COMPONENT DETAILS. */
+void s_COD() :
+{}
+{
+  "COD+" c_C823()
+  (
+    < PLUS > c_C824()
+  )?
+  < EOL >
+}
+
+/** COM  COMMUNICATION CONTACT. */
+void s_COM() :
+{}
+{
+  "COM+" c_C076() < EOL >
+}
+
+/** COT  CONTRIBUTION DETAILS. */
+void s_COT() :
+{}
+{
+  "COT+" d_5047()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C953()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C522()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C203()
+    )?
+  )?
+  (
+    < PLUS > c_C960()
+  )?
+  < EOL >
+}
+
+/** CPI  CHARGE PAYMENT INSTRUCTIONS. */
+void s_CPI() :
+{}
+{
+  "CPI+"
+  (
+    c_C229()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C231()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4237()
+    )?
+  )?
+  < EOL >
+}
+
+/** CPS  CONSIGNMENT PACKING SEQUENCE. */
+void s_CPS() :
+{}
+{
+  "CPS+" d_7164()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_7166()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_7075()
+    )?
+  )?
+  < EOL >
+}
+
+/** CPT  ACCOUNT IDENTIFICATION. */
+void s_CPT() :
+{}
+{
+  "CPT+" d_4437() < PLUS > c_C593() < EOL >
+}
+
+/** CST  CUSTOMS STATUS OF GOODS. */
+void s_CST() :
+{}
+{
+  "CST+"
+  (
+    d_1496()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C246()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C246()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C246()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C246()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C246()
+    )?
+  )?
+  < EOL >
+}
+
+/** CTA  CONTACT INFORMATION. */
+void s_CTA() :
+{}
+{
+  "CTA+"
+  (
+    d_3139()
+  )?
+  (
+    < PLUS > c_C056()
+  )?
+  < EOL >
+}
+
+/** CUX  CURRENCIES. */
+void s_CUX() :
+{}
+{
+  "CUX+" c_C504()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C504()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_5402()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_6341()
+    )?
+  )?
+  < EOL >
+}
+
+/** DAM  DAMAGE. */
+void s_DAM() :
+{}
+{
+  "DAM+" d_7493()
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C821()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C822()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C825()
+  )?
+  (
+    < PLUS > c_C826()
+  )?
+  < EOL >
+}
+
+/** DFN  DEFINITION FUNCTION. */
+void s_DFN() :
+{}
+{
+  "DFN+" d_9023()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_9025()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4519()
+    )?
+  )?
+  < EOL >
+}
+
+/** DGS  DANGEROUS GOODS. */
+void s_DGS() :
+{}
+{
+  "DGS+"
+  (
+    d_8273()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C205()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C234()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C223()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_8339()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_8364()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_8410()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_8126()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C235()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C236()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_8255()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_8179()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_8211()
+    )?
+  )?
+  (
+    < PLUS > c_C289()
+  )?
+  < EOL >
+}
+
+/** DII  DIRECTORY IDENTIFICATION. */
+void s_DII() :
+{}
+{
+  "DII+" d_1056() < PLUS > d_1058()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_9148()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1476()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_3453()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4513()
+    )?
+  )?
+  < EOL >
+}
+
+/** DIM  DIMENSIONS. */
+void s_DIM() :
+{}
+{
+  "DIM+" d_6145() < PLUS > c_C211() < EOL >
+}
+
+/** DLI  DOCUMENT LINE IDENTIFICATION. */
+void s_DLI() :
+{}
+{
+  "DLI+" d_1073() < PLUS > d_1082() < EOL >
+}
+
+/** DLM  DELIVERY LIMITATIONS. */
+void s_DLM() :
+{}
+{
+  "DLM+"
+  (
+    d_4455()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C522()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C214()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4457()
+    )?
+  )?
+  < EOL >
+}
+
+/** DMS  DOCUMENT/MESSAGE SUMMARY. */
+void s_DMS() :
+{}
+{
+  "DMS+" c_C106()
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C002()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_7240()
+    )?
+  )?
+  < EOL >
+}
+
+/** DOC  DOCUMENT/MESSAGE DETAILS. */
+void s_DOC() :
+{}
+{
+  "DOC+" c_C002()
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C503()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_3153()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1220()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1218()
+    )?
+  )?
+  < EOL >
+}
+
+/** DRD  DATA REPRESENTATION DETAILS. */
+void s_DRD() :
+{}
+{
+  "DRD+"
+  (
+    d_7512()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_7515()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_9169()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_6174()
+    )?
+  )?
+  < EOL >
+}
+
+/** DSG  DOSAGE ADMINISTRATION. */
+void s_DSG() :
+{}
+{
+  "DSG+" d_6085()
+  (
+    < PLUS > c_C838()
+  )?
+  < EOL >
+}
+
+/** DSI  DATA SET IDENTIFICATION. */
+void s_DSI() :
+{}
+{
+  "DSI+" c_C782()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C082()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4405()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C286()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1060()
+    )?
+  )?
+  < EOL >
+}
+
+/** DTM  DATE/TIME/PERIOD. */
+void s_DTM() :
+{}
+{
+  "DTM+" c_C507() < EOL >
+}
+
+/** EDT  EDITING DETAILS. */
+void s_EDT() :
+{}
+{
+  "EDT+"
+  (
+    d_6178()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_9026()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_9031()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4447()
+    )?
+  )?
+  < EOL >
+}
+
+/** EFI  EXTERNAL FILE LINK IDENTIFICATION. */
+void s_EFI() :
+{}
+{
+  "EFI+" c_C077()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C099()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1050()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_9450()
+    )?
+  )?
+  < EOL >
+}
+
+/** ELM  SIMPLE DATA ELEMENT DETAILS. */
+void s_ELM() :
+{}
+{
+  "ELM+" d_9150()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_9153()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_6113()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_9156()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_9158()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_9161()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1507()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4513()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_6432()
+    )?
+  )?
+  < EOL >
+}
+
+/** ELU  DATA ELEMENT USAGE DETAILS. */
+void s_ELU() :
+{}
+{
+  "ELU+" d_9162()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_7299()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1050()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4513()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_6176()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_9453()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_9285()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_9175()
+    )?
+  )?
+  < EOL >
+}
+
+/** ELV  ELEMENT VALUE DEFINITION. */
+void s_ELV() :
+{}
+{
+  "ELV+" d_9029()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_9422()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_7299()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4513()
+    )?
+  )?
+  < EOL >
+}
+
+/** EMP  EMPLOYMENT DETAILS. */
+void s_EMP() :
+{}
+{
+  "EMP+" d_9003()
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C948()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C951()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C950()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_3480()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_9035()
+    )?
+  )?
+  < EOL >
+}
+
+/** EQA  ATTACHED EQUIPMENT. */
+void s_EQA() :
+{}
+{
+  "EQA+" d_8053()
+  (
+    < PLUS > c_C237()
+  )?
+  < EOL >
+}
+
+/** EQD  EQUIPMENT DETAILS. */
+void s_EQD() :
+{}
+{
+  "EQD+" d_8053()
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C237()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C224()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_8077()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_8249()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_8169()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4233()
+    )?
+  )?
+  < EOL >
+}
+
+/** EQN  NUMBER OF UNITS. */
+void s_EQN() :
+{}
+{
+  "EQN+" c_C523() < EOL >
+}
+
+/** ERC  APPLICATION ERROR INFORMATION. */
+void s_ERC() :
+{}
+{
+  "ERC+" c_C901() < EOL >
+}
+
+/** ERP  ERROR POINT DETAILS. */
+void s_ERP() :
+{}
+{
+  "ERP+" c_C701()
+  (
+    < PLUS > c_C853()
+  )?
+  < EOL >
+}
+
+/** EVE  EVENT. */
+void s_EVE() :
+{}
+{
+  "EVE+"
+  (
+    d_9635()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C004()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C030()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C063()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1229()
+    )?
+  )?
+  < EOL >
+}
+
+/** FCA  FINANCIAL CHARGES ALLOCATION. */
+void s_FCA() :
+{}
+{
+  "FCA+" d_4471()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C878()
+    )?
+  )?
+  < EOL >
+}
+
+/** FII  FINANCIAL INSTITUTION INFORMATION. */
+void s_FII() :
+{}
+{
+  "FII+" d_3035()
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C078()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C088()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_3207()
+    )?
+  )?
+  < EOL >
+}
+
+/** FNS  FOOTNOTE SET. */
+void s_FNS() :
+{}
+{
+  "FNS+" c_C783()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C082()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4405()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4513()
+    )?
+  )?
+  < EOL >
+}
+
+/** FNT  FOOTNOTE. */
+void s_FNT() :
+{}
+{
+  "FNT+" c_C784()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C082()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4405()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4513()
+    )?
+  )?
+  < EOL >
+}
+
+/** FOR  FORMULA. */
+void s_FOR() :
+{}
+{
+  "FOR+" d_9501()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_7402()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_9502()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4440()
+    )?
+  )?
+  (
+    < PLUS > c_C961()
+  )?
+  < EOL >
+}
+
+/** FSQ  FORMULA SEQUENCE. */
+void s_FSQ() :
+{}
+{
+  "FSQ+" d_9507()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_9509()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1050()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_9510()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4440()
+    )?
+  )?
+  < EOL >
+}
+
+/** FTX  FREE TEXT. */
+void s_FTX() :
+{}
+{
+  "FTX+" d_4451()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4453()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C107()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C108()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_3453()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4447()
+    )?
+  )?
+  < EOL >
+}
+
+/** GDS  NATURE OF CARGO. */
+void s_GDS() :
+{}
+{
+  "GDS+"
+  (
+    c_C703()
+  )?
+  (
+    < PLUS > c_C288()
+  )?
+  < EOL >
+}
+
+/** GEI  PROCESSING INFORMATION. */
+void s_GEI() :
+{}
+{
+  "GEI+" d_9649()
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C012()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_7187()
+    )?
+  )?
+  < EOL >
+}
+
+/** GID  GOODS ITEM DETAILS. */
+void s_GID() :
+{}
+{
+  "GID+"
+  (
+    d_1496()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C213()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C213()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C213()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C213()
+  )?
+  (
+    < PLUS > c_C213()
+  )?
+  < EOL >
+}
+
+/** GIN  GOODS IDENTITY NUMBER. */
+void s_GIN() :
+{}
+{
+  "GIN+" d_7405() < PLUS > c_C208()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C208()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C208()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C208()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C208()
+    )?
+  )?
+  < EOL >
+}
+
+/** GIR  RELATED IDENTIFICATION NUMBERS. */
+void s_GIR() :
+{}
+{
+  "GIR+" d_7297() < PLUS > c_C206()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C206()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C206()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C206()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C206()
+    )?
+  )?
+  < EOL >
+}
+
+/** GOR  GOVERNMENTAL REQUIREMENTS. */
+void s_GOR() :
+{}
+{
+  "GOR+"
+  (
+    d_8323()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C232()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C232()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C232()
+  )?
+  (
+    < PLUS > c_C232()
+  )?
+  < EOL >
+}
+
+/** GPO  GEOGRAPHICAL POSITION. */
+void s_GPO() :
+{}
+{
+  "GPO+" d_6029()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_6000()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_6002()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_6096()
+    )?
+  )?
+  < EOL >
+}
+
+/** GRU  SEGMENT GROUP USAGE DETAILS. */
+void s_GRU() :
+{}
+{
+  "GRU+" d_9164()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_7299()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_6176()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4513()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1050()
+    )?
+  )?
+  < EOL >
+}
+
+/** HAN  HANDLING INSTRUCTIONS. */
+void s_HAN() :
+{}
+{
+  "HAN+" c_C524()
+  (
+    < PLUS > c_C218()
+  )?
+  < EOL >
+}
+
+/** HYN  HIERARCHY INFORMATION. */
+void s_HYN() :
+{}
+{
+  "HYN+" d_7173()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_7171()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1229()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C212()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_7166()
+    )?
+  )?
+  < EOL >
+}
+
+/** ICD  INSURANCE COVER DESCRIPTION. */
+void s_ICD() :
+{}
+{
+  "ICD+" c_C330() < PLUS > c_C331() < EOL >
+}
+
+/** IDE  IDENTITY. */
+void s_IDE() :
+{}
+{
+  "IDE+" d_7495()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C206()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C082()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4405()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1222()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C778()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C240()
+    )?
+  )?
+  < EOL >
+}
+
+/** IFD  INFORMATION DETAIL. */
+void s_IFD() :
+{}
+{
+  "IFD+"
+  (
+    d_4153()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C009()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C010()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C011()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4405()
+    )?
+  )?
+  < EOL >
+}
+
+/** IHC  PERSON CHARACTERISTIC. */
+void s_IHC() :
+{}
+{
+  "IHC+" d_3289()
+  (
+    < PLUS > c_C818()
+  )?
+  < EOL >
+}
+
+/** IMD  ITEM DESCRIPTION. */
+void s_IMD() :
+{}
+{
+  "IMD+"
+  (
+    d_7077()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C272()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C273()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_7383()
+    )?
+  )?
+  < EOL >
+}
+
+/** IND  INDEX DETAILS. */
+void s_IND() :
+{}
+{
+  "IND+"
+  (
+    c_C545()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C546()
+    )?
+  )?
+  < EOL >
+}
+
+/** INP  PARTIES AND INSTRUCTION. */
+void s_INP() :
+{}
+{
+  "INP+"
+  (
+    c_C849()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C522()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C850()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1229()
+    )?
+  )?
+  < EOL >
+}
+
+/** INV  INVENTORY MANAGEMENT RELATED DETAILS. */
+void s_INV() :
+{}
+{
+  "INV+"
+  (
+    d_4501()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_7491()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4499()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4503()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C522()
+    )?
+  )?
+  < EOL >
+}
+
+/** IRQ  INFORMATION REQUIRED. */
+void s_IRQ() :
+{}
+{
+  "IRQ+" c_C333() < EOL >
+}
+
+/** LAN  LANGUAGE. */
+void s_LAN() :
+{}
+{
+  "LAN+" d_3455()
+  (
+    < PLUS > c_C508()
+  )?
+  < EOL >
+}
+
+/** LIN  LINE ITEM. */
+void s_LIN() :
+{}
+{
+  "LIN+"
+  (
+    d_1082()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1229()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C212()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C829()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1222()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_7083()
+    )?
+  )?
+  < EOL >
+}
+
+/** LOC  PLACE/LOCATION IDENTIFICATION. */
+void s_LOC() :
+{}
+{
+  "LOC+" d_3227()
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C517()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C519()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C553()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_5479()
+    )?
+  )?
+  < EOL >
+}
+
+/** MEA  MEASUREMENTS. */
+void s_MEA() :
+{}
+{
+  "MEA+" d_6311()
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C502()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C174()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_7383()
+    )?
+  )?
+  < EOL >
+}
+
+/** MEM  MEMBERSHIP DETAILS. */
+void s_MEM() :
+{}
+{
+  "MEM+" d_7449()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C942()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C944()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C945()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C203()
+    )?
+  )?
+  (
+    < PLUS > c_C960()
+  )?
+  < EOL >
+}
+
+/** MKS  MARKET/SALES CHANNEL INFORMATION. */
+void s_MKS() :
+{}
+{
+  "MKS+" d_7293()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C332()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1229()
+    )?
+  )?
+  < EOL >
+}
+
+/** MOA  MONETARY AMOUNT. */
+void s_MOA() :
+{}
+{
+  "MOA+" c_C516() < EOL >
+}
+
+/** MSG  MESSAGE TYPE IDENTIFICATION. */
+void s_MSG() :
+{}
+{
+  "MSG+" c_C709()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1507()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4513()
+    )?
+  )?
+  (
+    < PLUS > c_C941()
+  )?
+  < EOL >
+}
+
+/** MTD  MAINTENANCE OPERATION DETAILS. */
+void s_MTD() :
+{}
+{
+  "MTD+" d_7495()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4513()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_3005()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_3009()
+    )?
+  )?
+  < EOL >
+}
+
+/** NAD  NAME AND ADDRESS. */
+void s_NAD() :
+{}
+{
+  "NAD+" d_3035()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C082()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C058()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C080()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C059()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_3164()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C819()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_3251()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_3207()
+    )?
+  )?
+  < EOL >
+}
+
+/** NAT  NATIONALITY. */
+void s_NAT() :
+{}
+{
+  "NAT+" d_3493()
+  (
+    < PLUS > c_C042()
+  )?
+  < EOL >
+}
+
+/** PAC  PACKAGE. */
+void s_PAC() :
+{}
+{
+  "PAC+"
+  (
+    d_7224()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C531()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C202()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C402()
+    )?
+  )?
+  (
+    < PLUS > c_C532()
+  )?
+  < EOL >
+}
+
+/** PAI  PAYMENT INSTRUCTIONS. */
+void s_PAI() :
+{}
+{
+  "PAI+" c_C534() < EOL >
+}
+
+/** PAS  ATTENDANCE. */
+void s_PAS() :
+{}
+{
+  "PAS+" d_9443()
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C839()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C840()
+  )?
+  (
+    < PLUS > c_C841()
+  )?
+  < EOL >
+}
+
+/** PCC  PREMIUM CALCULATION COMPONENT DETAILS. */
+void s_PCC() :
+{}
+{
+  "PCC+" c_C820()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4522()
+    )?
+  )?
+  < EOL >
+}
+
+/** PCD  PERCENTAGE DETAILS. */
+void s_PCD() :
+{}
+{
+  "PCD+" c_C501()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4405()
+    )?
+  )?
+  < EOL >
+}
+
+/** PCI  PACKAGE IDENTIFICATION. */
+void s_PCI() :
+{}
+{
+  "PCI+"
+  (
+    d_4233()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C210()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_8169()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C827()
+    )?
+  )?
+  < EOL >
+}
+
+/** PDI  PERSON DEMOGRAPHIC INFORMATION. */
+void s_PDI() :
+{}
+{
+  "PDI+"
+  (
+    d_3499()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C085()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C101()
+    )?
+  )?
+  < EOL >
+}
+
+/** PER  PERIOD RELATED DETAILS. */
+void s_PER() :
+{}
+{
+  "PER+"
+  (
+    d_2023()
+  )?
+  (
+    < PLUS > c_C977()
+  )?
+  < EOL >
+}
+
+/** PGI  PRODUCT GROUP INFORMATION. */
+void s_PGI() :
+{}
+{
+  "PGI+" d_5379()
+  (
+    < PLUS > c_C288()
+  )?
+  < EOL >
+}
+
+/** PIA  ADDITIONAL PRODUCT ID. */
+void s_PIA() :
+{}
+{
+  "PIA+" d_4347() < PLUS > c_C212()
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C212()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C212()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C212()
+  )?
+  (
+    < PLUS > c_C212()
+  )?
+  < EOL >
+}
+
+/** PNA  PARTY IDENTIFICATION. */
+void s_PNA() :
+{}
+{
+  "PNA+" d_3035()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C206()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C082()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_3403()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_3397()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C816()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C816()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C816()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C816()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C816()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1229()
+    )?
+  )?
+  < EOL >
+}
+
+/** POC  PURPOSE OF CONVEYANCE CALL. */
+void s_POC() :
+{}
+{
+  "POC+" c_C525() < EOL >
+}
+
+/** PRC  PROCESS IDENTIFICATION. */
+void s_PRC() :
+{}
+{
+  "PRC+"
+  (
+    c_C242()
+  )?
+  (
+    < PLUS > c_C830()
+  )?
+  < EOL >
+}
+
+/** PRI  PRICE DETAILS. */
+void s_PRI() :
+{}
+{
+  "PRI+"
+  (
+    c_C509()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_5213()
+    )?
+  )?
+  < EOL >
+}
+
+/** PRV  PROVISO DETAILS. */
+void s_PRV() :
+{}
+{
+  "PRV+" d_4071()
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C971()
+  )?
+  (
+    < PLUS > c_C972()
+  )?
+  < EOL >
+}
+
+/** PSD  PHYSICAL SAMPLE DESCRIPTION. */
+void s_PSD() :
+{}
+{
+  "PSD+"
+  (
+    d_4407()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_7039()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C526()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_7045()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_7047()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C514()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C514()
+  )?
+  (
+    < PLUS > c_C514()
+  )?
+  < EOL >
+}
+
+/** PTY  PRIORITY. */
+void s_PTY() :
+{}
+{
+  "PTY+" d_4035()
+  (
+    < PLUS > c_C585()
+  )?
+  < EOL >
+}
+
+/** PYT  PAYMENT TERMS. */
+void s_PYT() :
+{}
+{
+  "PYT+" d_4279()
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C019()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_2475()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_2009()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_2151()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_2152()
+    )?
+  )?
+  < EOL >
+}
+
+/** QRS  QUERY AND RESPONSE. */
+void s_QRS() :
+{}
+{
+  "QRS+" d_7293()
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C811()
+  )?
+  (
+    < PLUS > c_C812()
+  )?
+  < EOL >
+}
+
+/** QTY  QUANTITY. */
+void s_QTY() :
+{}
+{
+  "QTY+" c_C186() < EOL >
+}
+
+/** QVR  QUANTITY VARIANCES. */
+void s_QVR() :
+{}
+{
+  "QVR+"
+  (
+    c_C279()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4221()
+    )?
+  )?
+  (
+    < PLUS > c_C960()
+  )?
+  < EOL >
+}
+
+/** QUA  QUALIFICATION. */
+void s_QUA() :
+{}
+{
+  "QUA+" d_9037()
+  (
+    < PLUS > c_C950()
+  )?
+  < EOL >
+}
+
+/** RCS  REQUIREMENTS AND CONDITIONS. */
+void s_RCS() :
+{}
+{
+  "RCS+" d_7293()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C550()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1229()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_3207()
+    )?
+  )?
+  < EOL >
+}
+
+/** REL  RELATIONSHIP. */
+void s_REL() :
+{}
+{
+  "REL+" d_9141()
+  (
+    < PLUS > c_C941()
+  )?
+  < EOL >
+}
+
+/** RFF  REFERENCE. */
+void s_RFF() :
+{}
+{
+  "RFF+" c_C506() < EOL >
+}
+
+/** RJL  ACCOUNTING JOURNAL IDENTIFICATION. */
+void s_RJL() :
+{}
+{
+  "RJL+"
+  (
+    c_C595()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C596()
+    )?
+  )?
+  < EOL >
+}
+
+/** RNG  RANGE DETAILS. */
+void s_RNG() :
+{}
+{
+  "RNG+" d_6167()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C280()
+    )?
+  )?
+  < EOL >
+}
+
+/** ROD  RISK OBJECT TYPE. */
+void s_ROD() :
+{}
+{
+  "ROD+" c_C851()
+  (
+    < PLUS > c_C852()
+  )?
+  < EOL >
+}
+
+/** RSL  RESULT. */
+void s_RSL() :
+{}
+{
+  "RSL+" d_6087()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_6077()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C831()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C831()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C848()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_6079()
+    )?
+  )?
+  < EOL >
+}
+
+/** RTE  RATE DETAILS. */
+void s_RTE() :
+{}
+{
+  "RTE+" c_C128()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4405()
+    )?
+  )?
+  < EOL >
+}
+
+/** SAL  REMUNERATION TYPE IDENTIFICATION. */
+void s_SAL() :
+{}
+{
+  "SAL+" c_C049() < EOL >
+}
+
+/** SCC  SCHEDULING CONDITIONS. */
+void s_SCC() :
+{}
+{
+  "SCC+" d_4017()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4493()
+    )?
+  )?
+  (
+    < PLUS > c_C329()
+  )?
+  < EOL >
+}
+
+/** SCD  STRUCTURE COMPONENT DEFINITION. */
+void s_SCD() :
+{}
+{
+  "SCD+" d_7497()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C786()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C082()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4405()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1222()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C778()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C240()
+    )?
+  )?
+  < EOL >
+}
+
+/** SEG  SEGMENT IDENTIFICATION. */
+void s_SEG() :
+{}
+{
+  "SEG+" d_9166()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1507()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4513()
+    )?
+  )?
+  < EOL >
+}
+
+/** SEL  SEAL NUMBER. */
+void s_SEL() :
+{}
+{
+  "SEL+"
+  (
+    d_9308()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C215()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4517()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C208()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4525()
+    )?
+  )?
+  < EOL >
+}
+
+/** SEQ  SEQUENCE DETAILS. */
+void s_SEQ() :
+{}
+{
+  "SEQ+"
+  (
+    d_1229()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C286()
+    )?
+  )?
+  < EOL >
+}
+
+/** SFI  SAFETY INFORMATION. */
+void s_SFI() :
+{}
+{
+  "SFI+" d_7164()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C814()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C815()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4513()
+    )?
+  )?
+  < EOL >
+}
+
+/** SGP  SPLIT GOODS PLACEMENT. */
+void s_SGP() :
+{}
+{
+  "SGP+" c_C237()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_7224()
+    )?
+  )?
+  < EOL >
+}
+
+/** SGU  SEGMENT USAGE DETAILS. */
+void s_SGU() :
+{}
+{
+  "SGU+" d_9166()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_7299()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_6176()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_7168()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1050()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1049()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4513()
+    )?
+  )?
+  < EOL >
+}
+
+/** SPR  ORGANISATION CLASSIFICATION DETAILS. */
+void s_SPR() :
+{}
+{
+  "SPR+" d_7293()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_3079()
+    )?
+  )?
+  (
+    < PLUS > c_C844()
+  )?
+  < EOL >
+}
+
+/** SPS  SAMPLING PARAMETERS FOR SUMMARY STATISTICS. */
+void s_SPS() :
+{}
+{
+  "SPS+"
+  (
+    c_C526()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_6074()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C512()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C512()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C512()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C512()
+  )?
+  (
+    < PLUS > c_C512()
+  )?
+  < EOL >
+}
+
+/** STA  STATISTICS. */
+void s_STA() :
+{}
+{
+  "STA+" d_6331()
+  (
+    < PLUS > c_C527()
+  )?
+  < EOL >
+}
+
+/** STC  STATISTICAL CONCEPT. */
+void s_STC() :
+{}
+{
+  "STC+" c_C785()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C082()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4405()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4513()
+    )?
+  )?
+  < EOL >
+}
+
+/** STG  STAGES. */
+void s_STG() :
+{}
+{
+  "STG+" d_9421()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_6426()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_6428()
+    )?
+  )?
+  < EOL >
+}
+
+/** STS  STATUS. */
+void s_STS() :
+{}
+{
+  "STS+"
+  (
+    c_C601()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C555()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C556()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C556()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C556()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C556()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C556()
+    )?
+  )?
+  < EOL >
+}
+
+/** TAX  DUTY/TAX/FEE DETAILS. */
+void s_TAX() :
+{}
+{
+  "TAX+" d_5283()
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C241()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C533()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_5286()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C243()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_5305()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_3446()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1227()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_5307()
+    )?
+  )?
+  < EOL >
+}
+
+/** TCC  CHARGE/RATE CALCULATIONS. */
+void s_TCC() :
+{}
+{
+  "TCC+" c_C200()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C203()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C528()
+  )?
+  (
+    < PLUS > c_C554()
+  )?
+  < EOL >
+}
+
+/** TDT  TRANSPORT INFORMATION. */
+void s_TDT() :
+{}
+{
+  "TDT+" d_8051()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_8028()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C220()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C001()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C040()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_8101()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C401()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS > c_C222()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_8281()
+    )?
+  )?
+  (
+    < PLUS > c_C003()
+  )?
+  < EOL >
+}
+
+/** TEM  TEST METHOD. */
+void s_TEM() :
+{}
+{
+  "TEM+" c_C244()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4419()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_3077()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_6311()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_7188()
+    )?
+  )?
+  (
+    < PLUS > c_C515()
+  )?
+  < EOL >
+}
+
+/** TMD  TRANSPORT MOVEMENT DETAILS. */
+void s_TMD() :
+{}
+{
+  "TMD+" c_C219()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_8332()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_8341()
+    )?
+  )?
+  < EOL >
+}
+
+/** TMP  TEMPERATURE. */
+void s_TMP() :
+{}
+{
+  "TMP+" d_6245()
+  (
+    < PLUS > c_C239()
+  )?
+  < EOL >
+}
+
+/** TOD  TERMS OF DELIVERY OR TRANSPORT. */
+void s_TOD() :
+{}
+{
+  "TOD+"
+  (
+    d_4055()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4215()
+    )?
+  )?
+  (
+    < PLUS > c_C100()
+  )?
+  < EOL >
+}
+
+/** TPL  TRANSPORT PLACEMENT. */
+void s_TPL() :
+{}
+{
+  "TPL+" c_C222() < EOL >
+}
+
+/** TRU  TECHNICAL RULES. */
+void s_TRU() :
+{}
+{
+  "TRU+" d_7402()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1056()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1058()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_7175()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_3055()
+    )?
+  )?
+  < EOL >
+}
+
+/** TSR  TRANSPORT SERVICE REQUIREMENTS. */
+void s_TSR() :
+{}
+{
+  "TSR+"
+  (
+    c_C536()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C233()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C537()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C703()
+    )?
+  )?
+  < EOL >
+}
+
+void s_UNH(String msgType) :
+{}
+{
+  "UNH+" d_0062() < PLUS > s009(msgType)
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_0068()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      s010()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      s016()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      s017()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      s018()
+    )?
+  )?
+  < EOL >
+}
+
+void s_UNS() :
+{}
+{
+  "UNS+" d_0081() < EOL >
+}
+
+void s_UNT() :
+{}
+{
+  "UNT+" d_0074() < PLUS > d_0062() < EOL >
+}
+
+/** VLI  VALUE LIST IDENTIFICATION. */
+void s_VLI() :
+{}
+{
+  "VLI+" c_C780()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C082()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4405()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1514()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1507()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1505()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C240()
+    )?
+  )?
+  < EOL >
+}
+
+/************************************************ COMPONENTS *********************************************************/
+/************************************************ COMPONENTS *********************************************************/
+/************************************************ COMPONENTS *********************************************************/
+/************************************************ COMPONENTS *********************************************************/
+/************************************************ COMPONENTS *********************************************************/
+
+
+/** C001 Transport means */
+void c_C001() :
+{}
+{
+  (
+    d_8179()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_8178()
+    )?
+  )?
+}
+
+/** C002 Document/message name */
+void c_C002() :
+{}
+{
+  (
+    d_1001()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1000()
+    )?
+  )?
+}
+
+/** C003 Power type */
+void c_C003() :
+{}
+{
+  (
+    d_7041()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7040()
+    )?
+  )?
+}
+
+/** C004 EVENT CATEGORY */
+void c_C004() :
+{}
+{
+  (
+    d_9637()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_9636()
+    )?
+  )?
+}
+
+/** C008 MONETARY AMOUNT FUNCTION DETAIL */
+void c_C008() :
+{}
+{
+  (
+    d_5105()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_5104()
+    )?
+  )?
+}
+
+/** C009 INFORMATION CATEGORY */
+void c_C009() :
+{}
+{
+  (
+    d_4149()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4148()
+    )?
+  )?
+}
+
+/** C010 INFORMATION TYPE */
+void c_C010() :
+{}
+{
+  (
+    d_4473()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4472()
+    )?
+  )?
+}
+
+/** C011 INFORMATION DETAIL */
+void c_C011() :
+{}
+{
+  (
+    d_4151()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4150()
+    )?
+  )?
+}
+
+/** C012 PROCESSING INDICATOR */
+void c_C012() :
+{}
+{
+  (
+    d_7365()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7364()
+    )?
+  )?
+}
+
+/**
+ * C019 PAYMENT TERMS
+ */
+void c_C019() :
+{}
+{
+  (
+    d_4277()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4276()
+    )?
+  )?
+}
+
+/**
+ * C030 EVENT TYPE
+ */
+void c_C030() :
+{}
+{
+  (
+    d_9171()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_9170()
+    )?
+  )?
+}
+
+/**
+ * C040 CARRIER
+ */
+void c_C040() :
+{}
+{
+  (
+    d_3127()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3126()
+    )?
+  )?
+}
+
+/**
+ * C042 NATIONALITY DETAILS
+ */
+void c_C042() :
+{}
+{
+  (
+    d_3293()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3292()
+    )?
+  )?
+}
+
+/**
+ * C045 BILL LEVEL IDENTIFICATION
+ */
+void c_C045() :
+{}
+{
+  (
+    d_7436()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7438()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7440()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7442()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7444()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7446()
+    )?
+  )?
+}
+
+/**
+ * C049 REMUNERATION TYPE IDENTIFICATION
+ */
+void c_C049() :
+{}
+{
+  (
+    d_5315()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_5314()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_5314()
+    )?
+  )?
+}
+
+/**
+ * C056 CONTACT DETAILS
+ */
+void c_C056() :
+{}
+{
+  (
+    d_3413()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3412()
+    )?
+  )?
+}
+
+/**
+ * C058 NAME AND ADDRESS
+ */
+void c_C058() :
+{}
+{
+  d_3124()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3124()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3124()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3124()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3124()
+    )?
+  )?
+}
+
+/**
+ * C059 STREET
+ */
+void c_C059() :
+{}
+{
+  d_3042()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3042()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3042()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3042()
+    )?
+  )?
+}
+
+/**
+ * C063 EVENT IDENTIFICATION
+ */
+void c_C063() :
+{}
+{
+  (
+    d_9173()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_9172()
+    )?
+  )?
+}
+
+/**
+ * C076 COMMUNICATION CONTACT
+ */
+void c_C076() :
+{}
+{
+  d_3148() < COLON > d_3155()
+}
+
+/**
+ * C077 FILE IDENTIFICATION
+ */
+void c_C077() :
+{}
+{
+  (
+    d_1508()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7008()
+    )?
+  )?
+}
+
+/**
+ * C078 ACCOUNT HOLDER IDENTIFICATION
+ */
+void c_C078() :
+{}
+{
+  (
+    d_3194()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3192()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3192()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6345()
+    )?
+  )?
+}
+
+/**
+ * C079 COMPUTER ENVIRONMENT IDENTIFICATION
+ */
+void c_C079() :
+{}
+{
+  (
+    d_1511()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1510()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1056()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1058()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7402()
+    )?
+  )?
+}
+
+/**
+ * C080 PARTY NAME
+ */
+void c_C080() :
+{}
+{
+  d_3036()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3036()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3036()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3036()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3036()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3045()
+    )?
+  )?
+}
+
+/**
+ * C082 PARTY IDENTIFICATION DETAILS
+ */
+void c_C082() :
+{}
+{
+  d_3039()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/**
+ * C085 MARITAL STATUS DETAILS
+ */
+void c_C085() :
+{}
+{
+  d_3479()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3478()
+    )?
+  )?
+}
+
+/**
+ * C088 INSTITUTION IDENTIFICATION
+ */
+void c_C088() :
+{}
+{
+  d_3433()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3434()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3432()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3436()
+    )?
+  )?
+}
+
+/**
+ * C090 ADDRESS DETAILS
+ */
+void c_C090() :
+{}
+{
+  d_3477() < COLON > d_3286()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3286()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3286()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3286()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3286()
+    )?
+  )?
+}
+
+/**
+ * C099 FILE DETAILS
+ */
+void c_C099() :
+{}
+{
+  d_1516()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1056()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1503()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1502()
+    )?
+  )?
+}
+
+/**
+ * C100 TERMS OF DELIVERY OR TRANSPORT
+ */
+void c_C100() :
+{}
+{
+  (
+    d_4053()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4052()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4052()
+    )?
+  )?
+}
+
+/**
+ * C101 RELIGION DETAILS
+ */
+void c_C101() :
+{}
+{
+  d_3483()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3482()
+    )?
+  )?
+}
+
+/**
+ * C106 DOCUMENT/MESSAGE IDENTIFICATION
+ */
+void c_C106() :
+{}
+{
+  (
+    d_1004()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1056()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1060()
+    )?
+  )?
+}
+
+/**
+ * C107 TEXT REFERENCE
+ */
+void c_C107() :
+{}
+{
+  d_4441()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/**
+ * C108 TEXT LITERAL
+ */
+void c_C108() :
+{}
+{
+  d_4440()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4440()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4440()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4440()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4440()
+    )?
+  )?
+}
+
+/**
+ * C128 RATE DETAILS
+ */
+void c_C128() :
+{}
+{
+  d_5419() < COLON > d_5420()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_5284()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6411()
+    )?
+  )?
+}
+
+/**
+ * C138 PRICE MULTIPLIER INFORMATION
+ */
+void c_C138() :
+{}
+{
+  d_5394()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_5393()
+    )?
+  )?
+}
+
+/**
+ * C174 VALUE/RANGE
+ */
+void c_C174() :
+{}
+{
+  d_6411()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6314()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6162()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6152()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6432()
+    )?
+  )?
+}
+
+/**
+ * C186 QUANTITY DETAILS
+ */
+void c_C186() :
+{}
+{
+  d_6063() < COLON > d_6060()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6411()
+    )?
+  )?
+}
+
+/**
+ * C200 CHARGE
+ */
+void c_C200() :
+{}
+{
+  (
+    d_8023()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_8022()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4237()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7140()
+    )?
+  )?
+}
+
+/**
+ * C202 PACKAGE TYPE
+ */
+void c_C202() :
+{}
+{
+  d_7065()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7064()
+    )?
+  )?
+}
+
+/**
+ * C203 RATE/TARIFF CLASS
+ */
+void c_C203() :
+{}
+{
+  d_5243()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_5242()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_5275()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_5275()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/**
+ * C205 HAZARD CODE
+ */
+void c_C205() :
+{}
+{
+  d_8351()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_8078()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_8092()
+    )?
+  )?
+}
+
+/**
+ * C206 IDENTIFICATION NUMBER
+ */
+void c_C206() :
+{}
+{
+  d_7402()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7405()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4405()
+    )?
+  )?
+}
+
+/**
+ * C208 IDENTITY NUMBER RANGE
+ */
+void c_C208() :
+{}
+{
+  d_7402()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7402()
+    )?
+  )?
+}
+
+/**
+ * C210 MARKS & LABELS
+ */
+void c_C210() :
+{}
+{
+  d_7102()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7102()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7102()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7102()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7102()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7102()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7102()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7102()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7102()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7102()
+    )?
+  )?
+}
+
+/**
+ * C211 DIMENSIONS
+ */
+void c_C211() :
+{}
+{
+  d_6411()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6168()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6140()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6008()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6182()
+    )?
+  )?
+}
+
+/**
+ * C212 ITEM NUMBER IDENTIFICATION
+ */
+void c_C212() :
+{}
+{
+  (
+    d_7140()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7143()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/**
+ * C213 NUMBER AND TYPE OF PACKAGES
+ */
+void c_C213() :
+{}
+{
+  (
+    d_7224()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7065()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7064()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7233()
+    )?
+  )?
+}
+
+/**
+ * C214 SPECIAL SERVICES IDENTIFICATION
+ */
+void c_C214() :
+{}
+{
+  (
+    d_7161()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7160()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7160()
+    )?
+  )?
+}
+
+/**
+ * C215 SEAL ISSUER
+ */
+void c_C215() :
+{}
+{
+  (
+    d_9303()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_9302()
+    )?
+  )?
+}
+
+/**
+ * C218 HAZARDOUS MATERIAL
+ */
+void c_C218() :
+{}
+{
+  (
+    d_7419()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7418()
+    )?
+  )?
+}
+
+/**
+ * C219 MOVEMENT TYPE
+ */
+void c_C219() :
+{}
+{
+  (
+    d_8335()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_8334()
+    )?
+  )?
+}
+
+/**
+ * C220 MODE OF TRANSPORT
+ */
+void c_C220() :
+{}
+{
+  (
+    d_8067()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_8066()
+    )?
+  )?
+}
+
+/**
+ * C222 TRANSPORT IDENTIFICATION
+ */
+void c_C222() :
+{}
+{
+  (
+    d_8213()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_8212()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_8453()
+    )?
+  )?
+}
+
+/**
+ * C223 DANGEROUS GOODS SHIPMENT FLASHPOINT
+ */
+void c_C223() :
+{}
+{
+  (
+    d_7106()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6411()
+    )?
+  )?
+}
+
+/**
+ * C224 EQUIPMENT SIZE AND TYPE
+ */
+void c_C224() :
+{}
+{
+  (
+    d_8155()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_8154()
+    )?
+  )?
+}
+
+/**
+ * C229 CHARGE CATEGORY
+ */
+void c_C229() :
+{}
+{
+  d_5237()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/**
+ * C231 METHOD OF PAYMENT
+ */
+void c_C231() :
+{}
+{
+  d_4215()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/**
+ * C232 GOVERNMENT ACTION
+ */
+void c_C232() :
+{}
+{
+  (
+    d_9415()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_9411()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_9417()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_9353()
+    )?
+  )?
+}
+
+/**
+ * C233 SERVICE
+ */
+void c_C233() :
+{}
+{
+  d_7273()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7273()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/**
+ * C234 UNDG INFORMATION
+ */
+void c_C234() :
+{}
+{
+  (
+    d_7124()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7088()
+    )?
+  )?
+}
+
+/**
+ * C235 HAZARD IDENTIFICATION PLACARD DETAILS
+ */
+void c_C235() :
+{}
+{
+  (
+    d_8158()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_8186()
+    )?
+  )?
+}
+
+/**
+ * C236 DANGEROUS GOODS LABEL
+ */
+void c_C236() :
+{}
+{
+  (
+    d_8246()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_8246()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_8246()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_8246()
+    )?
+  )?
+}
+
+/**
+ * C237 EQUIPMENT IDENTIFICATION
+ */
+void c_C237() :
+{}
+{
+  (
+    d_8260()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3207()
+    )?
+  )?
+}
+
+/**
+ * C239 TEMPERATURE SETTING
+ */
+void c_C239() :
+{}
+{
+  (
+    d_6246()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6411()
+    )?
+  )?
+}
+
+/**
+ * C240 CHARACTERISTIC DESCRIPTION
+ */
+void c_C240() :
+{}
+{
+  d_7037()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7036()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7036()
+    )?
+  )?
+}
+
+/**
+ * C241 DUTY/TAX/FEE TYPE
+ */
+void c_C241() :
+{}
+{
+  (
+    d_5153()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_5152()
+    )?
+  )?
+}
+
+/**
+ * C242 PROCESS TYPE AND DESCRIPTION
+ */
+void c_C242() :
+{}
+{
+  d_7187()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7186()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7186()
+    )?
+  )?
+}
+
+/**
+ * C243 DUTY/TAX/FEE DETAIL
+ */
+void c_C243() :
+{}
+{
+  (
+    d_5279()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_5278()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_5273()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/**
+ * C244 TEST METHOD
+ */
+void c_C244() :
+{}
+{
+  (
+    d_4415()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4416()
+    )?
+  )?
+}
+
+/**
+ * C246 CUSTOMS IDENTITY CODES
+ */
+void c_C246() :
+{}
+{
+  d_7361()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/**
+ * C270 CONTROL
+ */
+void c_C270() :
+{}
+{
+  d_6069() < COLON > d_6066()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6411()
+    )?
+  )?
+}
+
+/**
+ * C272 ITEM CHARACTERISTIC
+ */
+void c_C272() :
+{}
+{
+  (
+    d_7081()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/**
+ * C273 ITEM DESCRIPTION
+ */
+void c_C273() :
+{}
+{
+  (
+    d_7009()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7008()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7008()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3453()
+    )?
+  )?
+}
+
+/**
+ * C279 QUANTITY DIFFERENCE INFORMATION
+ */
+void c_C279() :
+{}
+{
+  d_6064()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6063()
+    )?
+  )?
+}
+
+/**
+ * C280 RANGE
+ */
+void c_C280() :
+{}
+{
+  d_6411()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6162()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6152()
+    )?
+  )?
+}
+
+/**
+ * C286 SEQUENCE INFORMATION
+ */
+void c_C286() :
+{}
+{
+  d_1050()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1159()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/**
+ * C288 PRODUCT GROUP
+ */
+void c_C288() :
+{}
+{
+  (
+    d_5389()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_5388()
+    )?
+  )?
+}
+
+/**
+ * C289 TUNNEL RESTRICTION
+ */
+void c_C289() :
+{}
+{
+  (
+    d_8461()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/**
+ * C329 PATTERN DESCRIPTION
+ */
+void c_C329() :
+{}
+{
+  (
+    d_2013()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_2015()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_2017()
+    )?
+  )?
+}
+
+/**
+ * C330 INSURANCE COVER TYPE
+ */
+void c_C330() :
+{}
+{
+  d_4497()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/**
+ * C331 INSURANCE COVER DETAILS
+ */
+void c_C331() :
+{}
+{
+  (
+    d_4495()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4494()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4494()
+    )?
+  )?
+}
+
+/**
+ * C332 SALES CHANNEL IDENTIFICATION
+ */
+void c_C332() :
+{}
+{
+  d_3496()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/**
+ * C333 INFORMATION REQUEST
+ */
+void c_C333() :
+{}
+{
+  (
+    d_4511()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4510()
+    )?
+  )?
+}
+
+/**
+ * C401 EXCESS TRANSPORTATION INFORMATION
+ */
+void c_C401() :
+{}
+{
+  d_8457() < COLON > d_8459()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7130()
+    )?
+  )?
+}
+
+/**
+ * C402 PACKAGE TYPE IDENTIFICATION
+ */
+void c_C402() :
+{}
+{
+  d_7077() < COLON > d_7064()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7143()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7064()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7143()
+    )?
+  )?
+}
+
+/**
+ * C501 PERCENTAGE DETAILS
+ */
+void c_C501() :
+{}
+{
+  d_5245()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_5482()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_5249()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/**
+ * C502 MEASUREMENT DETAILS
+ */
+void c_C502() :
+{}
+{
+  (
+    d_6313()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6321()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6155()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6154()
+    )?
+  )?
+}
+
+/**
+ * C503 DOCUMENT/MESSAGE DETAILS
+ */
+void c_C503() :
+{}
+{
+  (
+    d_1004()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1373()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1366()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3453()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1056()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1060()
+    )?
+  )?
+}
+
+/**
+ * C504 CURRENCY DETAILS
+ */
+void c_C504() :
+{}
+{
+  d_6347()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6345()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6343()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6348()
+    )?
+  )?
+}
+
+/**
+ * C506 REFERENCE
+ */
+void c_C506() :
+{}
+{
+  d_1153()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1154()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1156()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1056()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1060()
+    )?
+  )?
+}
+
+/**
+ * C507 DATE/TIME/PERIOD
+ */
+void c_C507() :
+{}
+{
+  d_2005()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_2380()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_2379()
+    )?
+  )?
+}
+
+/**
+ * C508 LANGUAGE DETAILS
+ */
+void c_C508() :
+{}
+{
+  (
+    d_3453()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3452()
+    )?
+  )?
+}
+
+/**
+ * C509 PRICE INFORMATION
+ */
+void c_C509() :
+{}
+{
+  d_5125()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_5118()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_5375()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_5387()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_5284()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6411()
+    )?
+  )?
+}
+
+/**
+ * C512 SIZE DETAILS
+ */
+void c_C512() :
+{}
+{
+  (
+    d_6173()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6174()
+    )?
+  )?
+}
+
+/**
+ * C514 SAMPLE LOCATION DETAILS
+ */
+void c_C514() :
+{}
+{
+  (
+    d_3237()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3236()
+    )?
+  )?
+}
+
+/**
+ * C515 TEST REASON
+ */
+void c_C515() :
+{}
+{
+  (
+    d_4425()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4424()
+    )?
+  )?
+}
+
+/**
+ * C516 MONETARY AMOUNT
+ */
+void c_C516() :
+{}
+{
+  d_5025()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_5004()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6345()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6343()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4405()
+    )?
+  )?
+}
+
+/**
+ * C517 LOCATION IDENTIFICATION
+ */
+void c_C517() :
+{}
+{
+  (
+    d_3225()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3224()
+    )?
+  )?
+}
+
+/**
+ * C519 RELATED LOCATION ONE IDENTIFICATION
+ */
+void c_C519() :
+{}
+{
+  (
+    d_3223()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3222()
+    )?
+  )?
+}
+
+/**
+ * C521 BUSINESS FUNCTION
+ */
+void c_C521() :
+{}
+{
+  d_4027() < COLON > d_4025()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4022()
+    )?
+  )?
+}
+
+/**
+ * C522 INSTRUCTION
+ */
+void c_C522() :
+{}
+{
+  d_4403()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4401()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4400()
+    )?
+  )?
+}
+
+/**
+ * C523 NUMBER OF UNIT DETAILS
+ */
+void c_C523() :
+{}
+{
+  (
+    d_6350()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6353()
+    )?
+  )?
+}
+
+/**
+ * C524 HANDLING INSTRUCTIONS
+ */
+void c_C524() :
+{}
+{
+  (
+    d_4079()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4078()
+    )?
+  )?
+}
+
+/**
+ * C525 PURPOSE OF CONVEYANCE CALL
+ */
+void c_C525() :
+{}
+{
+  (
+    d_8025()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_8024()
+    )?
+  )?
+}
+
+/**
+ * C526 FREQUENCY DETAILS
+ */
+void c_C526() :
+{}
+{
+  d_6071()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6072()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6411()
+    )?
+  )?
+}
+
+/**
+ * C527 STATISTICAL DETAILS
+ */
+void c_C527() :
+{}
+{
+  (
+    d_6314()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6411()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6313()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6321()
+    )?
+  )?
+}
+
+/**
+ * C528 COMMODITY/RATE DETAIL
+ */
+void c_C528() :
+{}
+{
+  (
+    d_7357()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/**
+ * C531 PACKAGING DETAILS
+ */
+void c_C531() :
+{}
+{
+  (
+    d_7075()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7233()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7073()
+    )?
+  )?
+}
+
+/**
+ * C532 RETURNABLE PACKAGE DETAILS
+ */
+void c_C532() :
+{}
+{
+  (
+    d_8395()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_8393()
+    )?
+  )?
+}
+
+/**
+ * C533 DUTY/TAX/FEE ACCOUNT DETAIL
+ */
+void c_C533() :
+{}
+{
+  d_5289()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/** C534 PAYMENT INSTRUCTION DETAILS. */
+void c_C534() :
+{}
+{
+  (
+    d_4439()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4431()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4461()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4435()
+    )?
+  )?
+}
+
+/** C536 CONTRACT AND CARRIAGE CONDITION. */
+void c_C536() :
+{}
+{
+  d_4065()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/** C537 TRANSPORT PRIORITY. */
+void c_C537() :
+{}
+{
+  d_4219()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/** C543 AGREEMENT TYPE IDENTIFICATION. */
+void c_C543() :
+{}
+{
+  d_7431()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7433()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7434()
+    )?
+  )?
+}
+
+/** C545 INDEX IDENTIFICATION */
+void c_C545() :
+{}
+{
+  d_5013()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_5027()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/** C546 INDEX VALUE */
+void c_C546() :
+{}
+{
+  d_5030()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_5039()
+    )?
+  )?
+}
+
+/** C549 MONETARY AMOUNT FUNCTION */
+void c_C549() :
+{}
+{
+  (
+    d_5007()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_5006()
+    )?
+  )?
+}
+
+/** C550 REQUIREMENT/CONDITION IDENTIFICATION */
+void c_C550() :
+{}
+{
+  d_7295()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7294()
+    )?
+  )?
+}
+
+/** C551 BANK OPERATION */
+void c_C551() :
+{}
+{
+  d_4383()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/** C552 ALLOWANCE/CHARGE INFORMATION */
+void c_C552() :
+{}
+{
+  (
+    d_1230()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_5189()
+    )?
+  )?
+}
+
+/** C553 RELATED LOCATION TWO IDENTIFICATION */
+void c_C553() :
+{}
+{
+  (
+    d_3233()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3232()
+    )?
+  )?
+}
+
+/** C554 RATE/TARIFF CLASS DETAIL */
+void c_C554() :
+{}
+{
+  (
+    d_5243()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/** C555 STATUS */
+void c_C555() :
+{}
+{
+  d_4405()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4404()
+    )?
+  )?
+}
+
+/** C556 STATUS REASON */
+void c_C556() :
+{}
+{
+  d_9013()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_9012()
+    )?
+  )?
+}
+
+/** C564 PHYSICAL OR LOGICAL STATE INFORMATION */
+void c_C564() :
+{}
+{
+  (
+    d_7007()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7006()
+    )?
+  )?
+}
+
+/** C585 PRIORITY DETAILS */
+void c_C585() :
+{}
+{
+  (
+    d_4037()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4036()
+    )?
+  )?
+}
+
+/** C593 ACCOUNT IDENTIFICATION */
+void c_C593() :
+{}
+{
+  d_1147()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1148()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1146()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1146()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6345()
+    )?
+  )?
+}
+
+/** C595 ACCOUNTING JOURNAL IDENTIFICATION */
+void c_C595() :
+{}
+{
+  d_1171()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1170()
+    )?
+  )?
+}
+
+/** C596 ACCOUNTING ENTRY TYPE DETAILS */
+void c_C596() :
+{}
+{
+  d_4475()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4474()
+    )?
+  )?
+}
+
+/** C601 STATUS CATEGORY. */
+void c_C601() :
+{}
+{
+  d_9015()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/** C701 ERROR POINT DETAILS. */
+void c_C701() :
+{}
+{
+  (
+    d_1049()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1052()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1054()
+    )?
+  )?
+}
+
+/** C702 CODE SET IDENTIFICATION. */
+void c_C702() :
+{}
+{
+  (
+    d_9150()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/** C703 NATURE OF CARGO.  */
+void c_C703() :
+{}
+{
+  d_7085()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/** C709 MESSAGE IDENTIFIER.  */
+void c_C709() :
+{}
+{
+  d_1003()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1056()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1058()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1476()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1523()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1060()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1373()
+    )?
+  )?
+}
+
+/** C770 ARRAY CELL DETAILS.  */
+void c_C770() :
+{}
+{
+  (
+    d_9424()
+  )?
+}
+
+/** C778 POSITION IDENTIFICATION.  */
+void c_C778() :
+{}
+{
+  (
+    d_7164()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1050()
+    )?
+  )?
+}
+
+/** C779 ARRAY STRUCTURE IDENTIFICATION.  */
+void c_C779() :
+{}
+{
+  d_9428()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7405()
+    )?
+  )?
+}
+
+/** C780 VALUE LIST IDENTIFICATION.  */
+void c_C780() :
+{}
+{
+  d_1518()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7405()
+    )?
+  )?
+}
+
+/** C782 DATA SET IDENTIFICATION.  */
+void c_C782() :
+{}
+{
+  d_1520()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7405()
+    )?
+  )?
+}
+
+/** C783 FOOTNOTE SET IDENTIFICATION.  */
+void c_C783() :
+{}
+{
+  d_9430()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7405()
+    )?
+  )?
+}
+
+/** C784 FOOTNOTE IDENTIFICATION.  */
+void c_C784() :
+{}
+{
+  d_9432()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7405()
+    )?
+  )?
+}
+
+/** C785 STATISTICAL CONCEPT IDENTIFICATION.  */
+void c_C785() :
+{}
+{
+  d_6434()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7405()
+    )?
+  )?
+}
+
+/** C786 STRUCTURE COMPONENT IDENTIFICATION.  */
+void c_C786() :
+{}
+{
+  d_7512()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7405()
+    )?
+  )?
+}
+
+/** C811 QUESTION DETAILS.  */
+void c_C811() :
+{}
+{
+  (
+    d_4057()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4056()
+    )?
+  )?
+}
+
+/** C812 RESPONSE DETAILS.  */
+void c_C812() :
+{}
+{
+  (
+    d_4345()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4344()
+    )?
+  )?
+}
+
+/** C814 SAFETY SECTION.  */
+void c_C814() :
+{}
+{
+  d_4046()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4044()
+    )?
+  )?
+}
+
+/** C815 ADDITIONAL SAFETY INFORMATION.  */
+void c_C815() :
+{}
+{
+  d_4039()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4038()
+    )?
+  )?
+}
+
+/** C816 NAME COMPONENT DETAILS.  */
+void c_C816() :
+{}
+{
+  d_3405()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3398()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3401()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3295()
+    )?
+  )?
+}
+
+/** C817 ADDRESS USAGE.  */
+void c_C817() :
+{}
+{
+  (
+    d_3299()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3475()
+    )?
+  )?
+}
+
+/** C818 PERSON INHERITED CHARACTERISTIC DETAILS.  */
+void c_C818() :
+{}
+{
+  (
+    d_3311()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3310()
+    )?
+  )?
+}
+
+/** C819 COUNTRY SUBDIVISION DETAILS. */
+void c_C819() :
+{}
+{
+  (
+    d_3229()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3228()
+    )?
+  )?
+}
+
+/** C820 PREMIUM CALCULATION COMPONENT. */
+void c_C820() :
+{}
+{
+  (
+    d_4521()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/** C821 TYPE OF DAMAGE. */
+void c_C821() :
+{}
+{
+  (
+    d_7501()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7500()
+    )?
+  )?
+}
+
+/** C822 DAMAGE AREA. */
+void c_C822() :
+{}
+{
+  (
+    d_7503()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7502()
+    )?
+  )?
+}
+
+/** C823 TYPE OF UNIT/COMPONENT. */
+void c_C823() :
+{}
+{
+  (
+    d_7505()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7504()
+    )?
+  )?
+}
+
+/** C824 COMPONENT MATERIAL. */
+void c_C824() :
+{}
+{
+  (
+    d_7507()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7506()
+    )?
+  )?
+}
+
+/** C825 DAMAGE SEVERITY. */
+void c_C825() :
+{}
+{
+  (
+    d_7509()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7508()
+    )?
+  )?
+}
+
+/** C826 ACTION. */
+void c_C826() :
+{}
+{
+  (
+    d_1229()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1228()
+    )?
+  )?
+}
+
+/** C827 TYPE OF MARKING. */
+void c_C827() :
+{}
+{
+  d_7511()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/** C828 CLINICAL INTERVENTION DETAILS. */
+void c_C828() :
+{}
+{
+  (
+    d_9437()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_9436()
+    )?
+  )?
+}
+
+/** C829 SUB-LINE INFORMATION. */
+void c_C829() :
+{}
+{
+  (
+    d_5495()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1082()
+    )?
+  )?
+}
+
+/** C830 PROCESS IDENTIFICATION DETAILS. */
+void c_C830() :
+{}
+{
+  (
+    d_7191()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7190()
+    )?
+  )?
+}
+
+/** C831 RESULT DETAILS. */
+void c_C831() :
+{}
+{
+  (
+    d_6314()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6321()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6155()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6154()
+    )?
+  )?
+}
+
+/** C836 CLINICAL INFORMATION DETAILS. */
+void c_C836() :
+{}
+{
+  (
+    d_6413()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6412()
+    )?
+  )?
+}
+
+/** C837 CERTAINTY DETAILS. */
+void c_C837() :
+{}
+{
+  (
+    d_4049()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4048()
+    )?
+  )?
+}
+
+/** C838 DOSAGE DETAILS. */
+void c_C838() :
+{}
+{
+  (
+    d_6083()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6082()
+    )?
+  )?
+}
+
+/** C839 ATTENDEE CATEGORY. */
+void c_C839() :
+{}
+{
+  (
+    d_7459()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7458()
+    )?
+  )?
+}
+
+/** C840 ATTENDANCE ADMISSION DETAILS. */
+void c_C840() :
+{}
+{
+  (
+    d_9445()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_9444()
+    )?
+  )?
+}
+
+/** C841 ATTENDANCE DISCHARGE DETAILS. */
+void c_C841() :
+{}
+{
+  (
+    d_9447()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_9446()
+    )?
+  )?
+}
+
+/** C844 ORGANISATION CLASSIFICATION DETAIL. */
+void c_C844() :
+{}
+{
+  (
+    d_3083()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3082()
+    )?
+  )?
+}
+
+/** C848 MEASUREMENT UNIT DETAILS. */
+void c_C848() :
+{}
+{
+  (
+    d_6411()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6410()
+    )?
+  )?
+}
+
+/** C849 PARTIES TO INSTRUCTION. */
+void c_C849() :
+{}
+{
+  d_3301()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3285()
+    )?
+  )?
+}
+
+/** C850 STATUS OF INSTRUCTION. */
+void c_C850() :
+{}
+{
+  d_4405()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3036()
+    )?
+  )?
+}
+
+/** C851 RISK OBJECT TYPE. */
+void c_C851() :
+{}
+{
+  (
+    d_7179()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/** C852 RISK OBJECT SUB-TYPE. */
+void c_C852() :
+{}
+{
+  (
+    d_7177()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7176()
+    )?
+  )?
+}
+
+/** C853 ERROR SEGMENT POINT DETAILS. */
+void c_C853() :
+{}
+{
+  (
+    d_9166()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1050()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1159()
+    )?
+  )?
+}
+
+/** C878 CHARGE/ALLOWANCE ACCOUNT. */
+void c_C878() :
+{}
+{
+  d_3434()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3194()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6345()
+    )?
+  )?
+}
+
+/** C889 CHARACTERISTIC VALUE. */
+void c_C889() :
+{}
+{
+  (
+    d_7111()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7110()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7110()
+    )?
+  )?
+}
+
+/** C901 APPLICATION ERROR DETAIL. */
+void c_C901() :
+{}
+{
+  d_9321()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/** C941 RELATIONSHIP. */
+void c_C941() :
+{}
+{
+  (
+    d_9143()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_9142()
+    )?
+  )?
+}
+
+/** C942 MEMBERSHIP CATEGORY. */
+void c_C942() :
+{}
+{
+  d_7451()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7450()
+    )?
+  )?
+}
+
+/** C944 MEMBERSHIP STATUS. */
+void c_C944() :
+{}
+{
+  (
+    d_7453()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7452()
+    )?
+  )?
+}
+
+/** C945 MEMBERSHIP LEVEL. */
+void c_C945() :
+{}
+{
+  d_7455()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7457()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7456()
+    )?
+  )?
+}
+
+/** C948 EMPLOYMENT CATEGORY. */
+void c_C948() :
+{}
+{
+  (
+    d_9005()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_9004()
+    )?
+  )?
+}
+
+/** C950 QUALIFICATION CLASSIFICATION. */
+void c_C950() :
+{}
+{
+  (
+    d_9007()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_9006()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_9006()
+    )?
+  )?
+}
+
+/** C951 OCCUPATION. */
+void c_C951() :
+{}
+{
+  (
+    d_9009()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_9008()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_9008()
+    )?
+  )?
+}
+
+/** C953 CONTRIBUTION TYPE. */
+void c_C953() :
+{}
+{
+  d_5049()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_5048()
+    )?
+  )?
+}
+
+/** C955 ATTRIBUTE TYPE. */
+void c_C955() :
+{}
+{
+  (
+    d_9021()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_9020()
+    )?
+  )?
+}
+
+/** C956 ATTRIBUTE DETAIL. */
+void c_C956() :
+{}
+{
+  (
+    d_9019()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_9018()
+    )?
+  )?
+}
+
+/** C960 REASON FOR CHANGE. */
+void c_C960() :
+{}
+{
+  (
+    d_4295()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4294()
+    )?
+  )?
+}
+
+/** C961 FORMULA COMPLEXITY. */
+void c_C961() :
+{}
+{
+  (
+    d_9505()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+/** C970 CLAUSE NAME. */
+void c_C970() :
+{}
+{
+  (
+    d_4069()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4068()
+    )?
+  )?
+}
+
+/** C971 PROVISO TYPE. */
+void c_C971() :
+{}
+{
+  (
+    d_4073()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4072()
+    )?
+  )?
+}
+
+/** C972 PROVISO CALCULATION. */
+void c_C972() :
+{}
+{
+  (
+    d_4075()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_4074()
+    )?
+  )?
+}
+
+/** C973 APPLICABILITY TYPE. */
+void c_C973() :
+{}
+{
+  (
+    d_9049()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_9048()
+    )?
+  )?
+}
+
+/** C974 BASIS TYPE. */
+void c_C974() :
+{}
+{
+  (
+    d_9047()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_9046()
+    )?
+  )?
+}
+
+/** C977 PERIOD DETAIL. */
+void c_C977() :
+{}
+{
+  (
+    d_2119()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+}
+
+void s009(String msgType) :
+{}
+{
+  d_0065(msgType) < COLON > d_0052() < COLON > d_0054() < COLON > d_0051()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_0057()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_0110()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_0113()
+    )?
+  )?
+  // {$msgType.equals($d_0065.text.toString())}?
+}
+
+void s010() :
+{}
+{
+  d_0070()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_0073()
+    )?
+  )?
+}
+
+void s016() :
+{}
+{
+  d_0115()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_0116()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_0118()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_0051()
+    )?
+  )?
+}
+
+void s017() :
+{}
+{
+  d_0121()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_0122()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_0124()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_0051()
+    )?
+  )?
+}
+
+void s018() :
+{}
+{
+  d_0127()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_0128()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_0130()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_0051()
+    )?
+  )?
+}
+
+/************************************************ FIELDS *********************************************************/
+/************************************************ FIELDS *********************************************************/
+/************************************************ FIELDS *********************************************************/
+/************************************************ FIELDS *********************************************************/
+/************************************************ FIELDS *********************************************************/
+
+/** 1000  Document name. */
+void d_1000() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 1001  Document name code. */
+void d_1001() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 1003  Message type code. */
+void d_1003() :
+{}
+{
+  alphanumeric(6)
+}
+
+/** 1004  Document identifier. */
+void d_1004() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 1049  Message section code. */
+void d_1049() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 1050  Sequence position identifier. */
+void d_1050() :
+{}
+{
+  alphanumeric(10)
+}
+
+/** 1052  Message item identifier. */
+void d_1052() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 1054  Message sub-item identifier. */
+void d_1054() :
+{}
+{
+  numeric(6)
+}
+
+/** 1056  Version identifier. */
+void d_1056() :
+{}
+{
+  alphanumeric(9)
+}
+
+/** 1058  Release identifier */
+void d_1058() :
+{}
+{
+  alphanumeric(9)
+}
+
+/** 1060  Revision identifier . */
+void d_1060() :
+{}
+{
+  alphanumeric(6)
+}
+
+/** 1073  Document line action code  . */
+void d_1073() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 1082  Line item identifier   . */
+void d_1082() :
+{}
+{
+  alphanumeric(6)
+}
+
+/** 1131  Code list identification code. */
+void d_1131() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 1145  Traveller reference identifier. */
+void d_1145() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 1146  Account name. */
+void d_1146() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 1147  Account identifier */
+void d_1147() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 1148  Account abbreviated name   . */
+void d_1148() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 1153  Reference code qualifier    . */
+void d_1153() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 1154  Reference identifier   . */
+void d_1154() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 1156  Document line identifier    . */
+void d_1156() :
+{}
+{
+  alphanumeric(6)
+}
+
+/** 1159  Sequence identifier source code. */
+void d_1159() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 1170  Accounting journal name. */
+void d_1170() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 1171  Accounting journal identifier  . */
+void d_1171() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 1218  Document originals required quantity. */
+void d_1218() :
+{}
+{
+  numeric(2)
+}
+
+/** 1220  Document copies required quantity   . */
+void d_1220() :
+{}
+{
+  numeric(2)
+}
+
+/** 1222  Configuration level number . */
+void d_1222() :
+{}
+{
+  numeric(2)
+}
+
+/** 1225  Message function code  . */
+void d_1225() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 1227  Calculation sequence code  . */
+void d_1227() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 1228  Action description */
+void d_1228() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 1229  Action code    */
+void d_1229() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 1230  Allowance or charge identifier . */
+void d_1230() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 1312  Consignment load sequence identifier. */
+void d_1312() :
+{}
+{
+  numeric(4)
+}
+
+/** 1366  Document source description. */
+void d_1366() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 1373  Document status code. */
+void d_1373() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 1476  Controlling agency identifier  . */
+void d_1476() :
+{}
+{
+  alphanumeric(2)
+}
+
+/** 1490  Consolidation item number  . */
+void d_1490() :
+{}
+{
+  numeric(5)
+}
+
+/** 1496  Goods item number  */
+void d_1496() :
+{}
+{
+  alphanumeric(6)
+}
+
+/** 1501  Computer environment details code qualifier. */
+void d_1501() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 1502  Data format description. */
+void d_1502() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 1503  Data format description code. */
+void d_1503() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 1505  Value list type code. */
+void d_1505() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 1507  Designated class code  . */
+void d_1507() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 1508  File name*/
+void d_1508() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 1510  Computer environment name  . */
+void d_1510() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 1511  Computer environment name code . */
+void d_1511() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 1514  Value list name    */
+void d_1514() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 1516  File format name   */
+void d_1516() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 1518  Value list identifier  . */
+void d_1518() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 1520  Data set identifier . */
+void d_1520() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 1523  Message implementation identification code . */
+void d_1523() :
+{}
+{
+  alphanumeric(6)
+}
+
+/** 2000  Date . */
+void d_2000() :
+{}
+{
+  alphanumeric(14)
+}
+
+/** 2002  Time . */
+void d_2002() :
+{}
+{
+  numeric(4)
+}
+
+/** 2005  Date or time or period function code qualifier. */
+void d_2005() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 2009  Terms time relation code   . */
+void d_2009() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 2013  Frequency code */
+void d_2013() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 2015  Despatch pattern code  . */
+void d_2015() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 2017  Despatch pattern timing code. */
+void d_2017() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 2018  Age  . */
+void d_2018() :
+{}
+{
+  numeric(3)
+}
+
+/** 2023  Period type code qualifier . */
+void d_2023() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 2029  Time zone identifier.	 */
+void d_2029() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 2031  Time variation quantity  .	 */
+void d_2031() :
+{}
+{
+  numeric(3)
+}
+
+/** 2116  Time zone difference quantity .	 */
+void d_2116() :
+{}
+{
+  numeric(4)
+}
+
+/** 2118  Period detail description  .	 */
+void d_2118() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 2119  Period detail description code. */
+void d_2119() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 2148  Date variation number    .	 */
+void d_2148() :
+{}
+{
+  numeric(3)
+}
+
+/** 2151  Period type code   	 */
+void d_2151() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 2152  Period count quantity  .	 */
+void d_2152() :
+{}
+{
+  numeric(3)
+}
+
+/** 2155  Charge period type code  .	 */
+void d_2155() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 2156  Check-in time  .	 */
+void d_2156() :
+{}
+{
+  alphanumeric(10)
+}
+
+/** 2160  Days of week set identifier   .	 */
+void d_2160() :
+{}
+{
+  alphanumeric(7)
+}
+
+/** 2162  Journey leg duration quantity .	 */
+void d_2162() :
+{}
+{
+  alphanumeric(6)
+}
+
+/** 2164  Millisecond time    .	 */
+void d_2164() :
+{}
+{
+  numeric(9)
+}
+
+/** 2379  Date or time or period format code   . */
+void d_2379() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 2380  Date or time or period text .	 */
+void d_2380() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 2475  Event time reference code  .	 */
+void d_2475() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3005  Maintenance operation operator code  . */
+void d_3005() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3009  Maintenance operation payer code. */
+void d_3009() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3035  Party function code qualifier.	 */
+void d_3035() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3036  Party name    	 */
+void d_3036() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 3039  Party identifier   	 */
+void d_3039() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 3042  Street and number or post office box identifier. */
+void d_3042() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 3045  Party name format code .	 */
+void d_3045() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3055  Code list responsible agency code    . */
+void d_3055() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3077  Test medium code  	 */
+void d_3077() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3079  Organisation classification code. */
+void d_3079() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3082  Organisational class name  .	 */
+void d_3082() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 3083  Organisational class name code. */
+void d_3083() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 3124  Name and address description.	 */
+void d_3124() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 3126  Carrier name 	 */
+void d_3126() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 3127  Carrier identifier	 */
+void d_3127() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 3131  Address type code  	 */
+void d_3131() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3139  Contact function code  .	 */
+void d_3139() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3148  Communication address identifier. */
+void d_3148() :
+{}
+{
+  alphanumeric(512)
+}
+
+/** 3153  Communication medium type code  . */
+void d_3153() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3155  Communication means type code . */
+void d_3155() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3164  City name	 */
+void d_3164() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 3192  Account holder name .	 */
+void d_3192() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 3194  Account holder identifier  .	 */
+void d_3194() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 3197  Agent identifier    .	 */
+void d_3197() :
+{}
+{
+  alphanumeric(9)
+}
+
+/** 3207  Country identifier 	 */
+void d_3207() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3222  First related location name.	 */
+void d_3222() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 3223  First related location identifier    . */
+void d_3223() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 3224  Location name 	 */
+void d_3224() :
+{}
+{
+  alphanumeric(256)
+}
+
+/** 3225  Location identifier	 */
+void d_3225() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 3227  Location function code qualifier. */
+void d_3227() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3228  Country subdivision name    .	 */
+void d_3228() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 3229  Country subdivision identifier  . */
+void d_3229() :
+{}
+{
+  alphanumeric(9)
+}
+
+/** 3232  Second related location name  . */
+void d_3232() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 3233  Second related location identifier   . */
+void d_3233() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 3236  Sample location description.	 */
+void d_3236() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 3237  Sample location description code. */
+void d_3237() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3239  Country of origin identifier  . */
+void d_3239() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3251  Postal identification code  .	 */
+void d_3251() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 3279  Geographic area code.	 */
+void d_3279() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3285  Instruction receiving party identifier    . */
+void d_3285() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 3286  Address component description.	 */
+void d_3286() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 3289  Person characteristic code qualifier . */
+void d_3289() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3292  Nationality name  	 */
+void d_3292() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 3293  Nationality name code  .	 */
+void d_3293() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3295  Name original alphabet code.	 */
+void d_3295() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3299  Address purpose code   .	 */
+void d_3299() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3301  Enacting party identifier  .	 */
+void d_3301() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 3310  Inherited characteristic description . */
+void d_3310() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 3311  Inherited characteristic description code . */
+void d_3311() :
+{}
+{
+  alphanumeric(8)
+}
+
+/** 3397  Name status code   	 */
+void d_3397() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3398  Name component description .	 */
+void d_3398() :
+{}
+{
+  alphanumeric(256)
+}
+
+/** 3401  Name component usage code  .	 */
+void d_3401() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3403  Name type code    	 */
+void d_3403() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3405  Name component type code qualifier   . */
+void d_3405() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3412  Contact name 	 */
+void d_3412() :
+{}
+{
+  alphanumeric(256)
+}
+
+/** 3413  Contact identifier 	 */
+void d_3413() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 3432  Institution name  	 */
+void d_3432() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 3433  Institution name code  .	 */
+void d_3433() :
+{}
+{
+  alphanumeric(11)
+}
+
+/** 3434  Institution branch identifier . */
+void d_3434() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 3436  Institution branch location name. */
+void d_3436() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 3446  Party tax identifier.	 */
+void d_3446() :
+{}
+{
+  alphanumeric(20)
+}
+
+/** 3449  Bank identifier.	 */
+void d_3449() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 3452  Language name 	 */
+void d_3452() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 3453  Language name code 	 */
+void d_3453() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3455  Language code qualifier.	 */
+void d_3455() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3457  Originator type code.	 */
+void d_3457() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3459  Frequent traveller identifier .	 */
+void d_3459() :
+{}
+{
+  alphanumeric(25)
+}
+
+/** 3460  Given name.	 */
+void d_3460() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 3463  Gate identifier.	 */
+void d_3463() :
+{}
+{
+  alphanumeric(6)
+}
+
+/** 3465  In-house identifier .	 */
+void d_3465() :
+{}
+{
+  alphanumeric(9)
+}
+
+/** 3475  Address status code	 */
+void d_3475() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3477  Address format code	 */
+void d_3477() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3478  Marital status description .	 */
+void d_3478() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 3479  Marital status description code . */
+void d_3479() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3480  Person job title  	 */
+void d_3480() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 3482  Religion name	 */
+void d_3482() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 3483  Religion name code	 */
+void d_3483() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3493  Nationality code qualifier .	 */
+void d_3493() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3496  Sales channel identifier   .	 */
+void d_3496() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 3499  Gender code   	 */
+void d_3499() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 3500  Family name    .	 */
+void d_3500() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 3503  Access authorisation identifier.  */
+void d_3503() :
+{}
+{
+  alphanumeric(9)
+}
+
+/** 3504  Given name title description  .	 */
+void d_3504() :
+{}
+{
+  alphanumeric(9)
+}
+
+/** 3507  Benefit coverage constituents code. */
+void d_3507() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4009  Option code    .	 */
+void d_4009() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4017  Delivery plan commitment level code  . */
+void d_4017() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4018  Related information description.  */
+void d_4018() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 4022  Business description.	 */
+void d_4022() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 4025  Business function code .	 */
+void d_4025() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4027  Business function type code qualifier. */
+void d_4027() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4035  Priority type code qualifier  . */
+void d_4035() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4036  Priority description.	 */
+void d_4036() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 4037  Priority description code  .	 */
+void d_4037() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4038  Additional safety information description . */
+void d_4038() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 4039  Additional safety information description code. */
+void d_4039() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4043  Trade class code  	 */
+void d_4043() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4044  Safety section name .	 */
+void d_4044() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 4046  Safety section number  .	 */
+void d_4046() :
+{}
+{
+  numeric(2)
+}
+
+/** 4048  Certainty description  .	 */
+void d_4048() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 4049  Certainty description code  .	 */
+void d_4049() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4051  Characteristic relevance code . */
+void d_4051() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4052  Delivery or transport terms description   . */
+void d_4052() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 4053  Delivery or transport terms description code  . */
+void d_4053() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4055  Delivery or transport terms function code . */
+void d_4055() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4056  Question description.	 */
+void d_4056() :
+{}
+{
+  alphanumeric(256)
+}
+
+/** 4057  Question description code  .	 */
+void d_4057() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4059  Clause code qualifier  .	 */
+void d_4059() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4065  Contract and carriage condition code . */
+void d_4065() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4068  Clause name  	 */
+void d_4068() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 4069  Clause name code  	 */
+void d_4069() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 4071  Proviso code qualifier .	 */
+void d_4071() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4072  Proviso type description   .	 */
+void d_4072() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 4073  Proviso type description code . */
+void d_4073() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4074  Proviso calculation description . */
+void d_4074() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 4075  Proviso calculation description code . */
+void d_4075() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4078  Handling instruction description. */
+void d_4078() :
+{}
+{
+  alphanumeric(512)
+}
+
+/** 4079  Handling instruction description code. */
+void d_4079() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4148  Information category description. */
+void d_4148() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 4149  Information category description code. */
+void d_4149() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4150  Information detail description. */
+void d_4150() :
+{}
+{
+  alphanumeric(256)
+}
+
+/** 4151  Information detail description code  . */
+void d_4151() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 4153  Information details code qualifier. */
+void d_4153() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4183  Special condition code .	 */
+void d_4183() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4184  Special requirement description.  */
+void d_4184() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 4187  Special requirement type code .	 */
+void d_4187() :
+{}
+{
+  alphanumeric(4)
+}
+
+/** 4215  Transport charges payment method code. */
+void d_4215() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4219  Transport service priority code . */
+void d_4219() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4221  Discrepancy nature identification code    . */
+void d_4221() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4233  Marking instructions code  .	 */
+void d_4233() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4237  Payment arrangement code   .	 */
+void d_4237() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4276  Payment terms description  .	 */
+void d_4276() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 4277  Payment terms description identifier . */
+void d_4277() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 4279  Payment terms type code qualifier    . */
+void d_4279() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4294  Change reason description  .	 */
+void d_4294() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 4295  Change reason description code. */
+void d_4295() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4343  Response type code 	 */
+void d_4343() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4344  Response description.	 */
+void d_4344() :
+{}
+{
+  alphanumeric(256)
+}
+
+/** 4345  Response description code  .	 */
+void d_4345() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4347  Product identifier code qualifier    . */
+void d_4347() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4383  Bank operation code .	 */
+void d_4383() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4400  Instruction description.	 */
+void d_4400() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 4401  Instruction description code.	 */
+void d_4401() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4403  Instruction type code qualifier . */
+void d_4403() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4404  Status description	 */
+void d_4404() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 4405  Status description code.	 */
+void d_4405() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4407  Sample process step code   .	 */
+void d_4407() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4415  Test method identifier .	 */
+void d_4415() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 4416  Test description  	 */
+void d_4416() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 4419  Test administration method code . */
+void d_4419() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4424  Test reason name  	 */
+void d_4424() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 4425  Test reason name code  .	 */
+void d_4425() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 4431  Payment guarantee means code  . */
+void d_4431() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4435  Payment channel code.	 */
+void d_4435() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4437  Account type code qualifier.	 */
+void d_4437() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4439  Payment conditions code.	 */
+void d_4439() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4440  Free text	 */
+void d_4440() :
+{}
+{
+  alphanumeric(512)
+}
+
+/** 4441  Free text description code .	 */
+void d_4441() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 4447  Free text format code  .	 */
+void d_4447() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4451  Text subject code qualifier .	 */
+void d_4451() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4453  Free text function code.	 */
+void d_4453() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4455  Back order arrangement type code. */
+void d_4455() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4457  Substitution condition code.	 */
+void d_4457() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4461  Payment means code	 */
+void d_4461() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4463  Intra-company payment indicator code . */
+void d_4463() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4465  Adjustment reason description code   . */
+void d_4465() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4467  Payment method code .	 */
+void d_4467() :
+{}
+{
+  alphanumeric(4)
+}
+
+/** 4469  Payment purpose code.	 */
+void d_4469() :
+{}
+{
+  alphanumeric(4)
+}
+
+/** 4471  Settlement means code  .	 */
+void d_4471() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4472  Information type  	 */
+void d_4472() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 4473  Information type code  .	 */
+void d_4473() :
+{}
+{
+  alphanumeric(4)
+}
+
+/** 4474  Accounting entry type name .	 */
+void d_4474() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 4475  Accounting entry type name code . */
+void d_4475() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 4487  Financial transaction type code . */
+void d_4487() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4493  Delivery instruction code  .	 */
+void d_4493() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4494  Insurance cover description.	 */
+void d_4494() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 4495  Insurance cover description code. */
+void d_4495() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 4497  Insurance cover type code   .	 */
+void d_4497() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4499  Inventory movement reason code. */
+void d_4499() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4501  Inventory movement direction code    . */
+void d_4501() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4503  Inventory balance method code . */
+void d_4503() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4505  Credit cover request type code. */
+void d_4505() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4507  Credit cover response type code . */
+void d_4507() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4509  Credit cover response reason code    . */
+void d_4509() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4510  Requested information description    . */
+void d_4510() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 4511  Requested information description code    . */
+void d_4511() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4513  Maintenance operation code  .	 */
+void d_4513() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4517  Seal condition code .	 */
+void d_4517() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 4519  Definition identifier  .	 */
+void d_4519() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 4521  Premium calculation component identifier  . */
+void d_4521() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 4522  Premium calculation component value category identifier. */
+void d_4522() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 4525  Seal type code    	 */
+void d_4525() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5004  Monetary amount    	 */
+void d_5004() :
+{}
+{
+  numeric(35)
+}
+
+/** 5006  Monetary amount function description . */
+void d_5006() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 5007  Monetary amount function description code . */
+void d_5007() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5013  Index code qualifier.	 */
+void d_5013() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5025  Monetary amount type code qualifier  . */
+void d_5025() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5027  Index type identifier  .	 */
+void d_5027() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 5030  Index text    	 */
+void d_5030() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 5039  Index representation code  .	 */
+void d_5039() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5047  Contribution code qualifier.	 */
+void d_5047() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5048  Contribution type description . */
+void d_5048() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 5049  Contribution type description code   . */
+void d_5049() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5104  Monetary amount function detail description   . */
+void d_5104() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 5105  Monetary amount function detail description code. */
+void d_5105() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 5118  Price amount	 */
+void d_5118() :
+{}
+{
+  numeric(15)
+}
+
+/** 5125  Price code qualifier .	 */
+void d_5125() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5152  Duty or tax or fee type name  . */
+void d_5152() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 5153  Duty or tax or fee type name code. */
+void d_5153() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5160  Total monetary amount  .	 */
+void d_5160() :
+{}
+{
+  numeric(20)
+}
+
+/** 5189  Allowance or charge identification code   . */
+void d_5189() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5213  Sub-line item price change operation code . */
+void d_5213() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5237  Charge category code.	 */
+void d_5237() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5242  Rate or tariff class description   . */
+void d_5242() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 5243  Rate or tariff class description code   . */
+void d_5243() :
+{}
+{
+  alphanumeric(9)
+}
+
+/** 5245  Percentage type code qualifier. */
+void d_5245() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5249  Percentage basis identification code . */
+void d_5249() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5261  Charge unit code.	 */
+void d_5261() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5263  Rate type identifier   .	 */
+void d_5263() :
+{}
+{
+  alphanumeric(20)
+}
+
+/** 5267  Service type code. */
+void d_5267() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5273  Duty or tax or fee rate basis code. */
+void d_5273() :
+{}
+{
+  alphanumeric(12)
+}
+
+/** 5275  Supplementary rate or tariff code. */
+void d_5275() :
+{}
+{
+  alphanumeric(6)
+}
+
+/** 5278  Duty or tax or fee rate. */
+void d_5278() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 5279  Duty or tax or fee rate code. */
+void d_5279() :
+{}
+{
+  alphanumeric(7)
+}
+
+/** 5283  Duty or tax or fee function code qualifier. */
+void d_5283() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5284  Unit price basis quantity  .	 */
+void d_5284() :
+{}
+{
+  numeric(9)
+}
+
+/** 5286  Duty or tax or fee assessment basis quantity  . */
+void d_5286() :
+{}
+{
+  alphanumeric(15)
+}
+
+/** 5289  Duty or tax or fee account code    . */
+void d_5289() :
+{}
+{
+  alphanumeric(6)
+}
+
+/** 5305  Duty or tax or fee category code   . */
+void d_5305() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5307  Tax or duty or fee payment due date code  . */
+void d_5307() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5314  Remuneration type name .	 */
+void d_5314() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 5315  Remuneration type name code.	 */
+void d_5315() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5375  Price type code. */
+void d_5375() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5377  Price change type code .	 */
+void d_5377() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5379  Product group type code    .	 */
+void d_5379() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5387  Price specification code   .	 */
+void d_5387() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5388  Product group name	 */
+void d_5388() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 5389  Product group name code.	 */
+void d_5389() :
+{}
+{
+  alphanumeric(25)
+}
+
+/** 5393  Price multiplier type code qualifier . */
+void d_5393() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5394  Price multiplier rate .	 */
+void d_5394() :
+{}
+{
+  numeric(12)
+}
+
+/** 5402  Currency exchange rate .	 */
+void d_5402() :
+{}
+{
+  numeric(12)
+}
+
+/** 5419  Rate type code qualifier   .	 */
+void d_5419() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5420  Unit price basis rate .	 */
+void d_5420() :
+{}
+{
+  numeric(15)
+}
+
+/** 5463  Allowance or charge code qualifier */
+void d_5463() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5479  Relation code */
+void d_5479() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5482  Percentage */
+void d_5482() :
+{}
+{
+  numeric(10)
+}
+
+/** 5495  Sub-line indicator code */
+void d_5495() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5501  Rate plan code */
+void d_5501() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 6000  Latitude degree */
+void d_6000() :
+{}
+{
+  alphanumeric(10)
+}
+
+/** 6002  Longitude degree */
+void d_6002() :
+{}
+{
+  alphanumeric(11)
+}
+
+/** 6008  Height measure */
+void d_6008() :
+{}
+{
+  numeric(15)
+}
+
+/** 6029  Geographical position code qualifier */
+void d_6029() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 6060  Quantity */
+void d_6060() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 6063  Quantity type code qualifier */
+void d_6063() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 6064  Variance quantity */
+void d_6064() :
+{}
+{
+  numeric(15)
+}
+
+/** 6066  Control total quantity    */
+void d_6066() :
+{}
+{
+  numeric(18)
+}
+
+/** 6069  Control total type code qualifier. */
+void d_6069() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 6071  Frequency code qualifier. */
+void d_6071() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 6072  Frequency rate. */
+void d_6072() :
+{}
+{
+  numeric(9)
+}
+
+/** 6074  Confidence percent. */
+void d_6074() :
+{}
+{
+  numeric(6)
+}
+
+/** 6077  Result representation code. */
+void d_6077() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 6079  Result normalcy code. */
+void d_6079() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 6082  Dosage description. */
+void d_6082() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 6083  Dosage description identifier. */
+void d_6083() :
+{}
+{
+  alphanumeric(8)
+}
+
+/** 6085  Dosage administration code qualifier. */
+void d_6085() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 6087  Result value type code qualifier. */
+void d_6087() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 6096  Altitude. */
+void d_6096() :
+{}
+{
+  numeric(18)
+}
+
+/** 6113  Length type code. */
+void d_6113() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 6140  Width measure. */
+void d_6140() :
+{}
+{
+  numeric(15)
+}
+
+/** 6145  Dimension type code qualifier. */
+void d_6145() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 6152  Range maximum quantity. */
+void d_6152() :
+{}
+{
+  numeric(18)
+}
+
+/** 6154  Non-discrete measurement name. */
+void d_6154() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 6155  Non-discrete measurement name code. */
+void d_6155() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 6162  Range minimum quantity. */
+void d_6162() :
+{}
+{
+  numeric(18)
+}
+
+/** 6167  Range type code qualifier. */
+void d_6167() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 6168  Length measure. */
+void d_6168() :
+{}
+{
+  numeric(15)
+}
+
+/** 6173  Size type code qualifier. */
+void d_6173() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 6174  Size measure. */
+void d_6174() :
+{}
+{
+  numeric(15)
+}
+
+/** 6176  Occurrences maximum number. */
+void d_6176() :
+{}
+{
+  numeric(7)
+}
+
+/** 6178  Edit field length measure. */
+void d_6178() :
+{}
+{
+  numeric(3)
+}
+
+/** 6182  Diameter measure. */
+void d_6182() :
+{}
+{
+  numeric(15)
+}
+
+/** 6245  Temperature type code qualifier. */
+void d_6245() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 6246  Temperature degree. */
+void d_6246() :
+{}
+{
+  numeric(15)
+}
+
+/** 6311  Measurement purpose code qualifier. */
+void d_6311() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 6313  Measured attribute code. */
+void d_6313() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 6314  Measure. */
+void d_6314() :
+{}
+{
+  alphanumeric(18)
+}
+
+/** 6321  Measurement significance code. */
+void d_6321() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 6331  Statistic type code qualifier. */
+void d_6331() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 6341  Exchange rate currency market identifier. */
+void d_6341() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 6343  Currency type code qualifier. */
+void d_6343() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 6345  Currency identification code. */
+void d_6345() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 6347  Currency usage code qualifier. */
+void d_6347() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 6348  Currency rate. */
+void d_6348() :
+{}
+{
+  numeric(4)
+}
+
+/** 6350  Units quantity. */
+void d_6350() :
+{}
+{
+  numeric(15)
+}
+
+/** 6353  Unit type code qualifier. */
+void d_6353() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 6410  Measurement unit name. */
+void d_6410() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 6411  Measurement unit code. */
+void d_6411() :
+{}
+{
+  alphanumeric(8)
+}
+
+/** 6412  Clinical information description. */
+void d_6412() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 6413  Clinical information description identifier. */
+void d_6413() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 6415  Clinical information type code qualifier. */
+void d_6415() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 6426  Process stages quantity. */
+void d_6426() :
+{}
+{
+  numeric(2)
+}
+
+/** 6428  Process stages actual quantity. */
+void d_6428() :
+{}
+{
+  numeric(2)
+}
+
+/** 6432  Significant digits quantity. */
+void d_6432() :
+{}
+{
+  numeric(2)
+}
+
+/** 6434  Statistical concept identifier. */
+void d_6434() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7001  Physical or logical state type code qualifier. */
+void d_7001() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7006  Physical or logical state description. */
+void d_7006() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 7007  Physical or logical state description code. */
+void d_7007() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7008  Item description. */
+void d_7008() :
+{}
+{
+  alphanumeric(256)
+}
+
+/** 7009  Item description code. */
+void d_7009() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 7011  Item availability code. */
+void d_7011() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7036  Characteristic description. */
+void d_7036() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7037  Characteristic description code. */
+void d_7037() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 7039  Sample selection method code. */
+void d_7039() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7040  Power type description. */
+void d_7040() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 7041  Power type code. */
+void d_7041() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7045  Sample state code. */
+void d_7045() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7047  Sample direction code. */
+void d_7047() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7059  Class type code. */
+void d_7059() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7064  Type of packages. */
+void d_7064() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7065  Package type description code. */
+void d_7065() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 7073  Packaging terms and conditions code. */
+void d_7073() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7075  Packaging level code. */
+void d_7075() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7077  Description format code. */
+void d_7077() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7081  Item characteristic code. */
+void d_7081() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7083  Configuration operation code. */
+void d_7083() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7085  Cargo type classification code. */
+void d_7085() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7088  Dangerous goods flashpoint description. */
+void d_7088() :
+{}
+{
+  alphanumeric(8)
+}
+
+/** 7102  Shipping marks description. */
+void d_7102() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7106  Shipment flashpoint degree. */
+void d_7106() :
+{}
+{
+  numeric(3)
+}
+
+/** 7110  Characteristic value description. */
+void d_7110() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7111  Characteristic value description code. */
+void d_7111() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7124  United Nations Dangerous Goods (UNDG) identifier. */
+void d_7124() :
+{}
+{
+  numeric(4)
+}
+
+/** 7130  Customer shipment authorisation identifier. */
+void d_7130() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 7133  Product details type code qualifier. */
+void d_7133() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7134  Product name. */
+void d_7134() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7135  Product identifier. */
+void d_7135() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7139  Product characteristic identification code. */
+void d_7139() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7140  Item identifier. */
+void d_7140() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7143  Item type identification code. */
+void d_7143() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7160  Special service description. */
+void d_7160() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7161  Special service description code. */
+void d_7161() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7164  Hierarchical structure level identifier. */
+void d_7164() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7166  Hierarchical structure parent identifier. */
+void d_7166() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7168  Level number. */
+void d_7168() :
+{}
+{
+  numeric(3)
+}
+
+/** 7171  Hierarchical structure relationship code. */
+void d_7171() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7173  Hierarchy object code qualifier. */
+void d_7173() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7175  Rule part identifier. */
+void d_7175() :
+{}
+{
+  alphanumeric(7)
+}
+
+/** 7176  Risk object sub-type description. */
+void d_7176() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 7177  Risk object sub-type description identifier. */
+void d_7177() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 7179  Risk object type identifier. */
+void d_7179() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 7186  Process type description. */
+void d_7186() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7187  Process type description code. */
+void d_7187() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 7188  Test method revision identifier. */
+void d_7188() :
+{}
+{
+  alphanumeric(30)
+}
+
+/** 7190  Process description. */
+void d_7190() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 7191  Process description code. */
+void d_7191() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 7224  Package quantity. */
+void d_7224() :
+{}
+{
+  numeric(8)
+}
+
+/** 7233  Packaging related description code. */
+void d_7233() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7240  Item total quantity. */
+void d_7240() :
+{}
+{
+  numeric(15)
+}
+
+/** 7273  Service requirement code. */
+void d_7273() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7293  Sector area identification code qualifier. */
+void d_7293() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7294  Requirement or condition description. */
+void d_7294() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7295  Requirement or condition description identifier. */
+void d_7295() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 7297  Set type code qualifier. */
+void d_7297() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7299  Requirement designator code. */
+void d_7299() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7357  Commodity identification code. */
+void d_7357() :
+{}
+{
+  alphanumeric(18)
+}
+
+/** 7361  Customs goods identifier. */
+void d_7361() :
+{}
+{
+  alphanumeric(18)
+}
+
+/** 7364  Processing indicator description. */
+void d_7364() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7365  Processing indicator description code. */
+void d_7365() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7383  Surface or layer code. */
+void d_7383() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7402  Object identifier. */
+void d_7402() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7405  Object identification code qualifier. */
+void d_7405() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7418  Hazardous material category name. */
+void d_7418() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7419  Hazardous material category name code. */
+void d_7419() :
+{}
+{
+  alphanumeric(7)
+}
+
+/** 7429  Indexing structure code qualifier. */
+void d_7429() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7431  Agreement type code qualifier. */
+void d_7431() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7433  Agreement type description code. */
+void d_7433() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7434  Agreement type description. */
+void d_7434() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 7436  Level one identifier. */
+void d_7436() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 7438  Level two identifier. */
+void d_7438() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 7440  Level three identifier. */
+void d_7440() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 7442  Level four identifier. */
+void d_7442() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 7444  Level five identifier. */
+void d_7444() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 7446  Level six identifier. */
+void d_7446() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 7449  Membership type code qualifier. */
+void d_7449() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7450  Membership category description. */
+void d_7450() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7451  Membership category description code. */
+void d_7451() :
+{}
+{
+  alphanumeric(4)
+}
+
+/** 7452  Membership status description. */
+void d_7452() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7453  Membership status description code. */
+void d_7453() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7455  Membership level code qualifier. */
+void d_7455() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7456  Membership level description. */
+void d_7456() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7457  Membership level description code. */
+void d_7457() :
+{}
+{
+  alphanumeric(9)
+}
+
+/** 7458  Attendee category description. */
+void d_7458() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7459  Attendee category description code. */
+void d_7459() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7491  Inventory type code. */
+void d_7491() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7493  Damage details code qualifier. */
+void d_7493() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7495  Object type code qualifier. */
+void d_7495() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7497  Structure component function code qualifier. */
+void d_7497() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7500  Damage type description. */
+void d_7500() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7501  Damage type description code. */
+void d_7501() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7502  Damage area description. */
+void d_7502() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7503  Damage area description code. */
+void d_7503() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7504  Unit or component type description. */
+void d_7504() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7505  Unit or component type description code. */
+void d_7505() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7506  Component material description. */
+void d_7506() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7507  Component material description code. */
+void d_7507() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7508  Damage severity description. */
+void d_7508() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7509  Damage severity description code. */
+void d_7509() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7511  Marking type code. */
+void d_7511() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7512  Structure component identifier. */
+void d_7512() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 7515  Structure type code. */
+void d_7515() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 7517  Benefit and coverage code. */
+void d_7517() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8015  Traffic restriction code. */
+void d_8015() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8017  Traffic restriction application code. */
+void d_8017() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8022  Freight and other charges description. */
+void d_8022() :
+{}
+{
+  alphanumeric(26)
+}
+
+/** 8023  Freight and other charges description identifier. */
+void d_8023() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 8024  Conveyance call purpose description. */
+void d_8024() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 8025  Conveyance call purpose description code. */
+void d_8025() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8028  Means of transport journey identifier. */
+void d_8028() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 8035  Traffic restriction type code qualifier. */
+void d_8035() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8051  Transport stage code qualifier. */
+void d_8051() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8053  Equipment type code qualifier. */
+void d_8053() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8066  Transport mode name. */
+void d_8066() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 8067  Transport mode name code. */
+void d_8067() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8077  Equipment supplier code. */
+void d_8077() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8078  Additional hazard classification identifier. */
+void d_8078() :
+{}
+{
+  alphanumeric(7)
+}
+
+/** 8092  Hazard code version identifier. */
+void d_8092() :
+{}
+{
+  alphanumeric(10)
+}
+
+/** 8101  Transit direction indicator code. */
+void d_8101() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8126  Transport emergency card identifier. */
+void d_8126() :
+{}
+{
+  alphanumeric(10)
+}
+
+/** 8154  Equipment size and type description. */
+void d_8154() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 8155  Equipment size and type description code. */
+void d_8155() :
+{}
+{
+  alphanumeric(10)
+}
+
+/** 8158  Orange hazard placard upper part identifier. */
+void d_8158() :
+{}
+{
+  alphanumeric(4)
+}
+
+/** 8169  Full or empty indicator code. */
+void d_8169() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8178  Transport means description. */
+void d_8178() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 8179  Transport means description code. */
+void d_8179() :
+{}
+{
+  alphanumeric(8)
+}
+
+/** 8186  Orange hazard placard lower part identifier. */
+void d_8186() :
+{}
+{
+  alphanumeric(4)
+}
+
+/** 8211  Hazardous cargo transport authorisation code. */
+void d_8211() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8212  Transport means identification name. */
+void d_8212() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 8213  Transport means identification name identifier. */
+void d_8213() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 8215  Transport means change indicator code. */
+void d_8215() :
+{}
+{
+  alphanumeric(1)
+}
+
+/** 8216  Journey stops quantity. */
+void d_8216() :
+{}
+{
+  numeric(3)
+}
+
+/** 8219  Traveller accompanied by infant indicator code. */
+void d_8219() :
+{}
+{
+  alphanumeric(1)
+}
+
+/** 8246  Dangerous goods marking identifier. */
+void d_8246() :
+{}
+{
+  alphanumeric(4)
+}
+
+/** 8249  Equipment status code. */
+void d_8249() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8255  Packing instruction type code. */
+void d_8255() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8260  Equipment identifier. */
+void d_8260() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 8273  Dangerous goods regulations code. */
+void d_8273() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8275  Container or package contents indicator code. */
+void d_8275() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8281  Transport means ownership indicator code. */
+void d_8281() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8323  Transport movement code. */
+void d_8323() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8332  Equipment plan description. */
+void d_8332() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 8334  Movement type description. */
+void d_8334() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 8335  Movement type description code. */
+void d_8335() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8339  Packaging danger level code. */
+void d_8339() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8341  Haulage arrangements code. */
+void d_8341() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8351  Hazard identification code. */
+void d_8351() :
+{}
+{
+  alphanumeric(7)
+}
+
+/** 8364  Emergency procedure for ships identifier. */
+void d_8364() :
+{}
+{
+  alphanumeric(8)
+}
+
+/** 8393  Returnable package load contents code. */
+void d_8393() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8395  Returnable package freight payment responsibility code. */
+void d_8395() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8410  Hazard medical first aid guide identifier. */
+void d_8410() :
+{}
+{
+  alphanumeric(4)
+}
+
+/** 8453  Transport means nationality code. */
+void d_8453() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8457  Excess transportation reason code. */
+void d_8457() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8459  Excess transportation responsibility code. */
+void d_8459() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 8461  Tunnel Restriction Code. */
+void d_8461() :
+{}
+{
+  alphanumeric(6)
+}
+
+/** 9003  Employment details code qualifier. */
+void d_9003() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9004  Employment category description. */
+void d_9004() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 9005  Employment category description code. */
+void d_9005() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9006  Qualification classification description. */
+void d_9006() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 9007  Qualification classification description code. */
+void d_9007() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9008  Occupation description. */
+void d_9008() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 9009  Occupation description code. */
+void d_9009() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9012  Status reason description. */
+void d_9012() :
+{}
+{
+  alphanumeric(256)
+}
+
+/** 9013  Status reason description code. */
+void d_9013() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9015  Status category code. */
+void d_9015() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9017  Attribute function code qualifier. */
+void d_9017() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9018  Attribute description. */
+void d_9018() :
+{}
+{
+  alphanumeric(256)
+}
+
+/** 9019  Attribute description code. */
+void d_9019() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 9020  Attribute type description. */
+void d_9020() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 9021  Attribute type description code. */
+void d_9021() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 9023  Definition function code. */
+void d_9023() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9025  Definition extent code. */
+void d_9025() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9026  Edit mask format identifier. */
+void d_9026() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 9029  Value definition code qualifier. */
+void d_9029() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9031  Edit mask representation code. */
+void d_9031() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9035  Qualification application area code. */
+void d_9035() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9037  Qualification type code qualifier. */
+void d_9037() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9038  Facility type description. */
+void d_9038() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 9039  Facility type description code. */
+void d_9039() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9040  Reservation identifier. */
+void d_9040() :
+{}
+{
+  alphanumeric(20)
+}
+
+/** 9043  Reservation identifier code qualifier. */
+void d_9043() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9045  Basis code qualifier. */
+void d_9045() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9046  Basis type description. */
+void d_9046() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 9047  Basis type description code. */
+void d_9047() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9048  Applicability type description. */
+void d_9048() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 9049  Applicability type description code. */
+void d_9049() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9051  Applicability code qualifier. */
+void d_9051() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9141  Relationship type code qualifier. */
+void d_9141() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9142  Relationship description. */
+void d_9142() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 9143  Relationship description code. */
+void d_9143() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9146  Composite data element tag identifier. */
+void d_9146() :
+{}
+{
+  alphanumeric(4)
+}
+
+/** 9148  Directory status identifier. */
+void d_9148() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9150  Simple data element tag identifier. */
+void d_9150() :
+{}
+{
+  alphanumeric(4)
+}
+
+/** 9153  Simple data element character representation code. */
+void d_9153() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9156  Simple data element maximum length measure. */
+void d_9156() :
+{}
+{
+  numeric(3)
+}
+
+/** 9158  Simple data element minimum length measure. */
+void d_9158() :
+{}
+{
+  numeric(3)
+}
+
+/** 9161  Code set indicator code. */
+void d_9161() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9162  Data element tag identifier. */
+void d_9162() :
+{}
+{
+  alphanumeric(4)
+}
+
+/** 9164  Group identifier. */
+void d_9164() :
+{}
+{
+  alphanumeric(4)
+}
+
+/** 9166  Segment tag identifier. */
+void d_9166() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9169  Data representation type code. */
+void d_9169() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9170  Event type description. */
+void d_9170() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 9171  Event type description code. */
+void d_9171() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9172  Event. */
+void d_9172() :
+{}
+{
+  alphanumeric(256)
+}
+
+/** 9173  Event description code. */
+void d_9173() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 9175  Data element usage type code. */
+void d_9175() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9213  Duty regime type code. */
+void d_9213() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9280  Validation result text. */
+void d_9280() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 9282  Validation key identifier. */
+void d_9282() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 9285  Validation criteria code. */
+void d_9285() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9302  Sealing party name. */
+void d_9302() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 9303  Sealing party name code. */
+void d_9303() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9308  Transport unit seal identifier. */
+void d_9308() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 9321  Application error code. */
+void d_9321() :
+{}
+{
+  alphanumeric(8)
+}
+
+/** 9353  Government procedure code. */
+void d_9353() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9411  Government involvement code. */
+void d_9411() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9415  Government agency identification code. */
+void d_9415() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9417  Government action code. */
+void d_9417() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9419  Service layer code. */
+void d_9419() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9421  Process stage code qualifier. */
+void d_9421() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9422  Value text. */
+void d_9422() :
+{}
+{
+  alphanumeric(512)
+}
+
+/** 9424  Array cell data description. */
+void d_9424() :
+{}
+{
+  alphanumeric(512)
+}
+
+/** 9426  Code value text. */
+void d_9426() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 9428  Array cell structure identifier. */
+void d_9428() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 9430  Footnote set identifier. */
+void d_9430() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 9432  Footnote identifier. */
+void d_9432() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 9434  Code name. */
+void d_9434() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 9436  Clinical intervention description. */
+void d_9436() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 9437  Clinical intervention description code. */
+void d_9437() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 9441  Clinical intervention type code qualifier. */
+void d_9441() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9443  Attendance type code qualifier. */
+void d_9443() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9444  Admission type description. */
+void d_9444() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 9445  Admission type description code. */
+void d_9445() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9446  Discharge type description. */
+void d_9446() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 9447  Discharge type description code. */
+void d_9447() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9448  File generation command name. */
+void d_9448() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 9450  File compression technique name. */
+void d_9450() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 9453  Code value source code. */
+void d_9453() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9501  Formula type code qualifier. */
+void d_9501() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9502  Formula name. */
+void d_9502() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 9505  Formula complexity code. */
+void d_9505() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9507  Formula sequence code qualifier. */
+void d_9507() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9509  Formula sequence operand code. */
+void d_9509() :
+{}
+{
+  alphanumeric(17)
+}
+
+/** 9510  Formula sequence name. */
+void d_9510() :
+{}
+{
+  alphanumeric(35)
+}
+
+/** 9601  Information category code. */
+void d_9601() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9605  Data code qualifier. */
+void d_9605() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9607  Yes or no indicator code. */
+void d_9607() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9619  Adjustment category code. */
+void d_9619() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9620  Policy limitation identifier. */
+void d_9620() :
+{}
+{
+  alphanumeric(10)
+}
+
+/** 9623  Diagnosis type code. */
+void d_9623() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9625  Related cause code. */
+void d_9625() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9627  Admission source code. */
+void d_9627() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9629  Procedure modification code. */
+void d_9629() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9631  Invoice type code. */
+void d_9631() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9635  Event details code qualifier. */
+void d_9635() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9636  Event category description. */
+void d_9636() :
+{}
+{
+  alphanumeric(70)
+}
+
+/** 9637  Event category description code. */
+void d_9637() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9639  Diagnosis category code. */
+void d_9639() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9641  Service basis code qualifier. */
+void d_9641() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9643  Supporting evidence type code qualifier. */
+void d_9643() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9645  Payer responsibility level code. */
+void d_9645() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9647  Cavity zone code. */
+void d_9647() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 9649  Processing information code qualifier. */
+void d_9649() :
+{}
+{
+  alphanumeric(3)
+}
+
+/*
+*/
+void d_0051() :
+{}
+{
+  alphanumeric(3)
+}
+
+void d_0052() :
+{}
+{
+  alphanumeric(3)
+}
+
+void d_0054() :
+{}
+{
+  alphanumeric(3)
+}
+
+void d_0057() :
+{}
+{
+  alphanumeric(6)
+}
+
+void d_0062() :
+{}
+{
+  alphanumeric(14)
+}
+
+void d_0065(String msgType) :
+{}
+{
+  alphanumeric(6)
+  //	{$msgType.equals($alphanumeric.text.toString())}?
+}
+
+void d_0068() :
+{}
+{
+  alphanumeric(35)
+}
+
+void d_0070() :
+{}
+{
+  numeric(2)
+}
+
+void d_0073() :
+{}
+{
+  alphanumeric(1)
+}
+
+void d_0074() :
+{}
+{
+  numeric(10)
+}
+
+void d_0081() :
+{}
+{
+  alphanumeric(1)
+}
+
+void d_0110() :
+{}
+{
+  alphanumeric(6)
+}
+
+void d_0113() :
+{}
+{
+  alphanumeric(6)
+}
+
+void d_0115() :
+{}
+{
+  alphanumeric(14)
+}
+
+void d_0116() :
+{}
+{
+  alphanumeric(3)
+}
+
+void d_0118() :
+{}
+{
+  alphanumeric(3)
+}
+
+void d_0121() :
+{}
+{
+  alphanumeric(14)
+}
+
+void d_0122() :
+{}
+{
+  alphanumeric(3)
+}
+
+void d_0124() :
+{}
+{
+  alphanumeric(3)
+}
+
+void d_0127() :
+{}
+{
+  alphanumeric(14)
+}
+
+void d_0128() :
+{}
+{
+  alphanumeric(3)
+}
+
+void d_0130() :
+{}
+{
+  alphanumeric(3)
+}
+
+void alphanumeric(int maxLength) :
+{
+  Token token;
+}
+{
+  token = < ALPHANUMERIC >
+  {
+    if (maxLength < token.image.length())
+    {
+      throw new ParseException("MaxLength exceeded: " + maxLength + " with '" + token.image + "' at (" + token.beginLine + ", " + token.beginColumn + ")");
+    }
+  }
+}
+
+void numeric(int maxLength) :
+{
+  Token token;
+}
+{
+  token = < ALPHANUMERIC >
+  {
+    if (maxLength < token.image.length())
+    {
+      throw new ParseException("MaxLength exceeded: " + maxLength + " with '" + token.image + "' at (" + token.beginLine + ", " + token.beginColumn + ")");
+    }
+  }
+}
