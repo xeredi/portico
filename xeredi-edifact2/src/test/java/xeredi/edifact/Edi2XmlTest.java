@@ -5,9 +5,15 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import xeredi.edifact.javacc.Message;
-import xeredi.edifact.javacc.ParseException;
+import xeredi.edifact.jjtree.Message;
+import xeredi.edifact.jjtree.MessageVisitor;
+import xeredi.edifact.jjtree.ParseException;
+import xeredi.edifact.jjtree.Node;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Edi2XmlTest.
+ */
 public final class Edi2XmlTest {
 
 	/**
@@ -21,11 +27,20 @@ public final class Edi2XmlTest {
 	 *             Signals that an I/O exception has occurred.
 	 */
 	private void testFile(final String filename) throws ParseException, IOException {
-		final Message parser = new Message(new FileInputStream(filename));
-		final Edi2Xml edi2Xml = new Edi2Xml();
+		try {
+			final Message parser = new Message(new FileInputStream(filename));
+			final Edi2Xml edi2Xml = new Edi2Xml();
 
-		parser.message();
-		edi2Xml.convert(parser);
+			final Node message = parser.message();
+
+			message.jjtAccept(edi2Xml, null);
+
+			// System.out.println("xml: " + edi2Xml.toString());
+		} catch (final ParseException ex) {
+			System.err.println("Error parsing: " + filename);
+
+			throw ex;
+		}
 	}
 
 	/**
@@ -36,11 +51,7 @@ public final class Edi2XmlTest {
 		final Edi2XmlTest test = new Edi2XmlTest();
 
 		try {
-			for (int i = 0; i < 1; i++) {
-				// test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/aperak/aperak1.itc");
-				// test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/aperak/aperak2.itc");
-				// test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/aperak/aperak3.itc");
-
+			for (int i = 0; i < 1000; i++) {
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/ifcsum/ifcsum1.itc");
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/ifcsum/ifcsum2.itc");
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/ifcsum/ifcsum3.itc");

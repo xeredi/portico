@@ -47,7 +47,7 @@ public final class IfcsumTest {
 	@Test
 	public void test() {
 		try {
-			for (int i = 0; i < 100; i++) {
+			for (int i = 0; i < 10; i++) {
 				final IfcsumTest test = new IfcsumTest();
 
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/ifcsum/ifcsum1.itc");

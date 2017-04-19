@@ -5,8 +5,8 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import xeredi.edifact.javacc.Message;
-import xeredi.edifact.javacc.ParseException;
+import xeredi.edifact.jjtree.Message;
+import xeredi.edifact.jjtree.ParseException;
 
 // TODO: Auto-generated Javadoc
 /**
