@@ -51,7 +51,7 @@ public final class Edi2XmlTest {
 		final Edi2XmlTest test = new Edi2XmlTest();
 
 		try {
-			for (int i = 0; i < 1000; i++) {
+			for (int i = 0; i < 2500; i++) {
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/ifcsum/ifcsum1.itc");
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/ifcsum/ifcsum2.itc");
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/ifcsum/ifcsum3.itc");

@@ -1,10 +1,8 @@
 package xeredi.edifact;
 
-import org.antlr.v4.runtime.RuleContext;
-
 import xeredi.edifact.jjtree.MessageDefaultVisitor;
-import xeredi.edifact.jjtree.MessageVisitor;
 import xeredi.edifact.jjtree.SimpleNode;
+import xeredi.edifact.jjtree.Token;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -12,8 +10,12 @@ import xeredi.edifact.jjtree.SimpleNode;
  */
 public final class Edi2Xml extends MessageDefaultVisitor {
 
+	/** The builder. */
 	private final StringBuilder builder = new StringBuilder();
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public String toString() {
 		return builder.toString();
 	}
@@ -31,7 +33,7 @@ public final class Edi2Xml extends MessageDefaultVisitor {
 		}
 
 		if (nodeName.startsWith("d_")) {
-			builder.append(node.jjtGetValue());
+			builder.append(node.jjtGetFirstToken().image);
 		}
 
 		// System.out.println("node: " + node.toString() + ", value: " + node.jjtGetValue() + ", data: " + data);

@@ -4,7 +4,7 @@ options
   STATIC = false;
   VISITOR = true;
   MULTI = false;
-  // TRACK_TOKENS = true;
+  TRACK_TOKENS = true;
   // NODE_DEFAULT_VOID = true;
   // NODE_EXTENDS = "BaseNode";
 }
@@ -4826,7 +4826,7 @@ void s_TSR() :
 void s_UNH(String msgType) :
 {}
 {
-  "UNH+" d_0062() < PLUS > s009(msgType)
+  "UNH+" d_0062() < PLUS > c_s009(msgType)
   (
     LOOKAHEAD(2)
     < PLUS >
@@ -4838,28 +4838,28 @@ void s_UNH(String msgType) :
     LOOKAHEAD(2)
     < PLUS >
     (
-      s010()
+      c_s010()
     )?
   )?
   (
     LOOKAHEAD(2)
     < PLUS >
     (
-      s016()
+      c_s016()
     )?
   )?
   (
     LOOKAHEAD(2)
     < PLUS >
     (
-      s017()
+      c_s017()
     )?
   )?
   (
     LOOKAHEAD(2)
     < PLUS >
     (
-      s018()
+      c_s018()
     )?
   )?
   < EOL >
@@ -10652,7 +10652,7 @@ void c_C977() :
   )?
 }
 
-void s009(String msgType) :
+void c_s009(String msgType) :
 {}
 {
   d_0065(msgType) < COLON > d_0052() < COLON > d_0054() < COLON > d_0051()
@@ -10680,7 +10680,7 @@ void s009(String msgType) :
   // {$msgType.equals($d_0065.text.toString())}?
 }
 
-void s010() :
+void c_s010() :
 {}
 {
   d_0070()
@@ -10693,7 +10693,7 @@ void s010() :
   )?
 }
 
-void s016() :
+void c_s016() :
 {}
 {
   d_0115()
@@ -10720,7 +10720,7 @@ void s016() :
   )?
 }
 
-void s017() :
+void c_s017() :
 {}
 {
   d_0121()
@@ -10747,7 +10747,7 @@ void s017() :
   )?
 }
 
-void s018() :
+void c_s018() :
 {}
 {
   d_0127()

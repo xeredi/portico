@@ -50,7 +50,7 @@ public final class EdifactToXmlConverterTest {
 		try {
 			final EdifactToXmlConverterTest test = new EdifactToXmlConverterTest();
 
-			for (int i = 0; i < 1; i++) {
+			for (int i = 0; i < 10; i++) {
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/aperak/aperak1.itc");
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/aperak/aperak2.itc");
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/aperak/aperak3.itc");
