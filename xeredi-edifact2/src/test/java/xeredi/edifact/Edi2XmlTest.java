@@ -6,9 +6,8 @@ import java.io.IOException;
 import org.junit.Test;
 
 import xeredi.edifact.jjtree.Message;
-import xeredi.edifact.jjtree.MessageVisitor;
-import xeredi.edifact.jjtree.ParseException;
 import xeredi.edifact.jjtree.Node;
+import xeredi.edifact.jjtree.ParseException;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -52,6 +51,10 @@ public final class Edi2XmlTest {
 
 		try {
 			for (int i = 0; i < 2500; i++) {
+				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/aperak/aperak1.itc");
+				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/aperak/aperak2.itc");
+				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/aperak/aperak3.itc");
+
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/ifcsum/ifcsum1.itc");
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/ifcsum/ifcsum2.itc");
 				test.testFile("/home/xeredi/git/portico/xeredi-edifact2/samples/ifcsum/ifcsum3.itc");

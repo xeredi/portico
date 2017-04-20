@@ -1,12 +1,9 @@
 /* message.jjt Edifact message */
 options
 {
-  STATIC = false;
-  VISITOR = true;
-  MULTI = false;
-  TRACK_TOKENS = true;
-  // NODE_DEFAULT_VOID = true;
-  // NODE_EXTENDS = "BaseNode";
+  STATIC = false; // (default true)
+  VISITOR = true; // (default false)
+  TRACK_TOKENS = true; // (default false)
 }
 
 PARSER_BEGIN(Message)
@@ -35,62 +32,6 @@ SKIP :
 | " "
 }
 
-TOKEN :
-{
-  < PLUS : "+" >
-}
-
-TOKEN :
-{
-  < COLON : ":" >
-}
-
-TOKEN :
-{
-  < ALPHANUMERIC :
-    (
-      [ "A"-"Z" ]
-    | [ "a"-"z" ]
-    | [ "\u00f1" ]
-    | [ "\u00d1" ]
-    | [ "0"-"9" ]
-    | " "
-    | "/"
-    | ","
-    | "."
-    | "-"
-    | "?"
-    | "%"
-    | "#"
-    )+ >
-}
-
-TOKEN :
-{
-  < INTEGER : ([ "0"-"9" ])+ >
-}
-
-TOKEN :
-{
-  < EOL :
-    "\'"
-    (
-      " "
-    | "\t"
-    )*
-    (
-      (
-        (
-        "\r")? "\n"
-      )*
-    |
-      (
-        (
-        "\r")? "\n"
-      )+
-    ) >
-}
-
 /************************************************ MESSAGES *********************************************************/
 /************************************************ MESSAGES *********************************************************/
 /************************************************ MESSAGES *********************************************************/
@@ -101,12 +42,13 @@ Node message() :
 {}
 {
   (
-    //    LOOKAHEAD(3)
-    //    s_UNH("APERAK") m_aperak()
-    //  |
-    s_UNH("IFCSUM") m_ifcsum()
+    // LOOKAHEAD({ m_aperak().s_UNH_aperak().c_s009_aperak().getToken(1).image == "APERAK" })
+    LOOKAHEAD({ getToken(4).image.equals("APERAK") })
+    m_aperak()
+  |
+    LOOKAHEAD({ getToken(4).image.equals("IFCSUM") })
+    m_ifcsum()
   )
-  s_UNT()
   {
     return jjtThis;
   }
@@ -116,7 +58,7 @@ Node message() :
 void m_aperak() :
 {}
 {
-  s_BGM()
+  s_UNH() s_BGM()
   (
     s_DTM()
   )*
@@ -138,6 +80,7 @@ void m_aperak() :
   (
     gr_aperak_4()
   )*
+  s_UNT()
 }
 
 void gr_aperak_1() :
@@ -195,7 +138,7 @@ void gr_aperak_5() :
 void m_ifcsum() :
 {}
 {
-  s_BGM()
+  s_UNH() s_BGM()
   (
     s_DTM()
   )*
@@ -238,6 +181,7 @@ void m_ifcsum() :
   (
     gr_ifcsum_27()
   )*
+  s_UNT()
 }
 
 void gr_ifcsum_1() :
@@ -4823,10 +4767,10 @@ void s_TSR() :
   < EOL >
 }
 
-void s_UNH(String msgType) :
+void s_UNH() :
 {}
 {
-  "UNH+" d_0062() < PLUS > c_s009(msgType)
+  "UNH+" d_0062() < PLUS > c_s009()
   (
     LOOKAHEAD(2)
     < PLUS >
@@ -10652,10 +10596,10 @@ void c_C977() :
   )?
 }
 
-void c_s009(String msgType) :
+void c_s009() :
 {}
 {
-  d_0065(msgType) < COLON > d_0052() < COLON > d_0054() < COLON > d_0051()
+  d_0065() < COLON > d_0052() < COLON > d_0054() < COLON > d_0051()
   (
     LOOKAHEAD(2)
     < COLON >
@@ -10677,7 +10621,6 @@ void c_s009(String msgType) :
       d_0113()
     )?
   )?
-  // {$msgType.equals($d_0065.text.toString())}?
 }
 
 void c_s010() :
@@ -15302,8 +15245,6 @@ void d_9649() :
   alphanumeric(3)
 }
 
-/*
-*/
 void d_0051() :
 {}
 {
@@ -15334,11 +15275,10 @@ void d_0062() :
   alphanumeric(14)
 }
 
-void d_0065(String msgType) :
+void d_0065() :
 {}
 {
-  alphanumeric(6)
-  //	{$msgType.equals($alphanumeric.text.toString())}?
+  < MESSAGE_TYPE >
 }
 
 void d_0068() :
@@ -15463,4 +15403,59 @@ void numeric(int maxLength) :
       throw new ParseException("MaxLength exceeded: " + maxLength + " with '" + token.image + "' at (" + token.beginLine + ", " + token.beginColumn + ")");
     }
   }
+}
+
+/************************************************ TOKENS *********************************************************/
+/************************************************ TOKENS *********************************************************/
+/************************************************ TOKENS *********************************************************/
+/************************************************ TOKENS *********************************************************/
+/************************************************ TOKENS *********************************************************/
+
+TOKEN :
+{
+  < PLUS : "+" >
+}
+
+TOKEN :
+{
+  < COLON : ":" >
+}
+
+TOKEN :
+{
+  < MESSAGE_TYPE : "APERAK" | "IFCSUM">
+}
+
+TOKEN :
+{
+  < ALPHANUMERIC :
+    (
+    [ "A"-"Z", "a"-"z", "0"-"9", "\u00f1", "\u00d1", " ", "/", ",", ".", "-", "?", "%", "#" ]
+    )+ >
+}
+
+TOKEN :
+{
+  < INTEGER : ([ "0"-"9" ])+ >
+}
+
+TOKEN :
+{
+  < EOL :
+    "\'"
+    (
+      " "
+    | "\t"
+    )*
+    (
+      (
+        (
+        "\r")? "\n"
+      )*
+    |
+      (
+        (
+        "\r")? "\n"
+      )+
+    ) >
 }

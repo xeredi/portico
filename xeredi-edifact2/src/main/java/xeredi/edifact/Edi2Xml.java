@@ -2,7 +2,6 @@ package xeredi.edifact;
 
 import xeredi.edifact.jjtree.MessageDefaultVisitor;
 import xeredi.edifact.jjtree.SimpleNode;
-import xeredi.edifact.jjtree.Token;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -38,14 +37,14 @@ public final class Edi2Xml extends MessageDefaultVisitor {
 
 		// System.out.println("node: " + node.toString() + ", value: " + node.jjtGetValue() + ", data: " + data);
 
-		data = node.childrenAccept(this, data);
+		node.childrenAccept(this, data);
 
 		if (nodeName.startsWith("s_") || nodeName.startsWith("c_") || nodeName.startsWith("d_")
 				|| nodeName.equals("message")) {
 			builder.append("</").append(nodeName).append('>');
 		}
 
-		return data;
+		return null;
 	}
 
 }
