@@ -3,6 +3,7 @@ options
 {
   STATIC = false; // (default true)
   VISITOR = true; // (default false)
+  MULTI = false; // (default false)
   TRACK_TOKENS = true; // (default false)
 }
 
@@ -25,11 +26,11 @@ PARSER_END(Message)
 
 SKIP :
 {
-  "\n"
-| "\r"
-| "\r\n"
-| "\t"
-| " "
+  < " "
+  | "\t"
+  | "\r"
+  | "\n"
+  | "\r\n" >
 }
 
 /************************************************ MESSAGES *********************************************************/
@@ -42,12 +43,35 @@ Node message() :
 {}
 {
   (
-    // LOOKAHEAD({ m_aperak().s_UNH_aperak().c_s009_aperak().getToken(1).image == "APERAK" })
     LOOKAHEAD({ getToken(4).image.equals("APERAK") })
     m_aperak()
   |
+    LOOKAHEAD({ getToken(4).image.equals("AUTHOR") })
+    m_author()
+  |
+    LOOKAHEAD({ getToken(4).image.equals("BANSTA") })
+    m_bansta()
+  |
+    LOOKAHEAD({ getToken(4).image.equals("BERMAN") })
+    m_berman()
+  |
+    LOOKAHEAD({ getToken(4).image.equals("CODECO") })
+    m_codeco()
+  |
+    LOOKAHEAD({ getToken(4).image.equals("CREMUL") })
+    m_cremul()
+  |
+    LOOKAHEAD({ getToken(4).image.equals("CUSCAR") })
+    m_cuscar()
+  |
+    LOOKAHEAD({ getToken(4).image.equals("CUSRES") })
+    m_cusres()
+  |
     LOOKAHEAD({ getToken(4).image.equals("IFCSUM") })
     m_ifcsum()
+  |
+    LOOKAHEAD({ getToken(4).image.equals("INVOIC") })
+    m_invoic()
   )
   {
     return jjtThis;
@@ -132,6 +156,1534 @@ void gr_aperak_5() :
   (
     s_FTX()
   )*
+}
+
+/** AUTHOR. */
+void m_author() :
+{}
+{
+  s_UNH() s_BGM()
+  (
+    s_DTM()
+  )*
+  (
+    s_BUS()
+  )*
+  (
+    gr_author_1()
+  )*
+  (
+    gr_author_2()
+  )*
+  (
+    gr_author_3()
+  )*
+  (
+    gr_author_4()
+  )*
+  (
+    s_CNT()
+  )*
+  (
+    gr_author_9()
+  )*
+  s_UNT()
+}
+
+void gr_author_1() :
+{}
+{
+  s_RFF()
+  (
+    s_DTM()
+  )?
+}
+
+void gr_author_2() :
+{}
+{
+  s_FII()
+  (
+    s_CTA()
+  )?
+  (
+    s_COM()
+  )*
+}
+
+void gr_author_3() :
+{}
+{
+  s_NAD()
+  (
+    s_CTA()
+  )?
+  (
+    s_COM()
+  )*
+}
+
+void gr_author_4() :
+{}
+{
+  s_LIN()
+  (
+    gr_author_5()
+  )*
+  (
+    gr_author_6()
+  )*
+  (
+    gr_author_7()
+  )*
+  (
+    gr_author_8()
+  )*
+}
+
+void gr_author_5() :
+{}
+{
+  s_RFF()
+  (
+    s_DTM()
+  )?
+}
+
+void gr_author_6() :
+{}
+{
+  s_SEQ() s_GEI()
+  (
+    s_DTM()
+  )*
+  (
+    s_MOA()
+  )?
+  (
+    s_DOC()
+  )*
+}
+
+void gr_author_7() :
+{}
+{
+  s_FII()
+  (
+    s_CTA()
+  )?
+  (
+    s_COM()
+  )*
+}
+
+void gr_author_8() :
+{}
+{
+  s_NAD()
+  (
+    s_CTA()
+  )?
+  (
+    s_COM()
+  )*
+}
+
+void gr_author_9() :
+{}
+{
+  s_AUT()
+  (
+    s_DTM()
+  )*
+}
+
+/** BANSTA. */
+void m_bansta() :
+{}
+{
+  s_UNH() s_BGM() s_DTM()
+  (
+    s_BUS()
+  )?
+  (
+    gr_bansta_1()
+  )*
+  (
+    gr_bansta_2()
+  )*
+  (
+    gr_bansta_3()
+  )*
+  (
+    gr_bansta_4()
+  )+
+  (
+    s_CNT()
+  )*
+  (
+    gr_bansta_9()
+  )*
+  s_UNT()
+}
+
+void gr_bansta_1() :
+{}
+{
+  s_RFF()
+  (
+    s_DTM()
+  )?
+}
+
+void gr_bansta_2() :
+{}
+{
+  s_FII()
+  (
+    s_CTA()
+  )?
+  (
+    s_COM()
+  )*
+}
+
+void gr_bansta_3() :
+{}
+{
+  s_NAD()
+  (
+    s_CTA()
+  )?
+  (
+    s_COM()
+  )*
+}
+
+void gr_bansta_4() :
+{}
+{
+  s_LIN()
+  (
+    gr_bansta_5()
+  )*
+  (
+    gr_bansta_6()
+  )*
+}
+
+void gr_bansta_5() :
+{}
+{
+  s_RFF()
+  (
+    s_DTM()
+  )?
+}
+
+void gr_bansta_6() :
+{}
+{
+  s_SEQ() s_GEI()
+  (
+    s_DTM()
+  )*
+  (
+    s_MOA()
+  )?
+  (
+    s_CUX()
+  )?
+  (
+    s_PCD()
+  )?
+  (
+    s_FTX()
+  )?
+  (
+    s_DOC()
+  )*
+  (
+    gr_bansta_7()
+  )?
+  (
+    gr_bansta_8()
+  )?
+}
+
+void gr_bansta_7() :
+{}
+{
+  s_FII()
+  (
+    s_CTA()
+  )?
+  (
+    s_COM()
+  )*
+}
+
+void gr_bansta_8() :
+{}
+{
+  s_NAD()
+  (
+    s_CTA()
+  )?
+  (
+    s_COM()
+  )*
+}
+
+void gr_bansta_9() :
+{}
+{
+  s_AUT()
+  (
+    s_DTM()
+  )?
+}
+
+/** BERMAN. */
+void m_berman() :
+{}
+{
+  s_UNH() s_BGM()
+  (
+    s_DTM()
+  )*
+  (
+    s_FTX()
+  )*
+  (
+    s_RFF()
+  )*
+  (
+    s_QTY()
+  )*
+  (
+    gr_berman_1()
+  )*
+  (
+    gr_berman_3()
+  )*
+  (
+    gr_berman_7()
+  )*
+  s_UNT()
+}
+
+void gr_berman_1() :
+{}
+{
+  s_NAD()
+  (
+    gr_berman_2()
+  )*
+}
+
+void gr_berman_2() :
+{}
+{
+  s_CTA()
+  (
+    s_COM()
+  )*
+}
+
+void gr_berman_3() :
+{}
+{
+  s_TDT()
+  (
+    s_RFF()
+  )*
+  (
+    s_DTM()
+  )*
+  (
+    s_MEA()
+  )*
+  (
+    s_FTX()
+  )*
+  (
+    s_COM()
+  )*
+  (
+    gr_berman_4()
+  )*
+  (
+    gr_berman_5()
+  )*
+}
+
+void gr_berman_4() :
+{}
+{
+  s_LOC()
+  (
+    s_DTM()
+  )*
+}
+
+void gr_berman_5() :
+{}
+{
+  s_GOR()
+  (
+    s_RFF()
+  )*
+  (
+    s_NAD()
+  )*
+  (
+    gr_berman_6()
+  )*
+}
+
+void gr_berman_6() :
+{}
+{
+  s_DOC()
+  (
+    s_DTM()
+  )*
+  (
+    s_LOC()
+  )*
+}
+
+// Atraque
+void gr_berman_7() :
+{}
+{
+  s_TSR()
+  (
+    s_QTY()
+  )*
+  (
+    s_FTX()
+  )*
+  (
+    gr_berman_8()
+  )*
+}
+
+void gr_berman_8() :
+{}
+{
+  s_LOC()
+  (
+    s_MEA()
+  )*
+  (
+    s_DTM()
+  )*
+  (
+    s_QTY()
+  )*
+  (
+    s_POC()
+  )*
+  (
+    s_FTX()
+  )*
+  (
+    gr_berman_9()
+  )*
+}
+
+// Operacion de Atraque
+void gr_berman_9() :
+{}
+{
+  s_HAN()
+  (
+    s_NAD()
+  )*
+  (
+    gr_berman_10()
+  )*
+}
+
+void gr_berman_10() :
+{}
+{
+  s_GDS()
+  (
+    s_FTX()
+  )*
+  (
+    s_MEA()
+  )*
+  (
+    s_EQN()
+  )*
+  (
+    s_DGS()
+  )*
+}
+
+/** CODECO. */
+void m_codeco() :
+{}
+{
+  s_UNH() s_BGM()
+  (
+    s_DTM()
+  )*
+  (
+    s_FTX()
+  )*
+  (
+    gr_codeco_1()
+  )*
+  (
+    gr_codeco_2()
+  )?
+  (
+    gr_codeco_4()
+  )+
+  (
+    gr_codeco_6()
+  )*
+  (
+    gr_codeco_10()
+  )+
+  (
+    s_CNT()
+  )?
+  s_UNT()
+}
+
+void gr_codeco_1() :
+{}
+{
+  s_RFF()
+  (
+    s_DTM()
+  )*
+}
+
+void gr_codeco_2() :
+{}
+{
+  s_TDT()
+  (
+    s_DTM()
+  )*
+  (
+    s_RFF()
+  )*
+  (
+    gr_codeco_3()
+  )*
+}
+
+void gr_codeco_3() :
+{}
+{
+  s_LOC()
+  (
+    s_DTM()
+  )*
+}
+
+void gr_codeco_4() :
+{}
+{
+  s_NAD()
+  (
+    gr_codeco_5()
+  )*
+}
+
+void gr_codeco_5() :
+{}
+{
+  s_CTA()
+  (
+    s_COM()
+  )*
+}
+
+void gr_codeco_6() :
+{}
+{
+  s_GID()
+  (
+    s_HAN()
+  )*
+  (
+    s_FTX()
+  )*
+  (
+    s_PIA()
+  )*
+  (
+    s_MEA()
+  )*
+  (
+    gr_codeco_7()
+  )*
+  (
+    s_SGP()
+  )*
+  (
+    gr_codeco_8()
+  )*
+}
+
+void gr_codeco_7() :
+{}
+{
+  s_TMP()
+  (
+    s_RNG()
+  )?
+}
+
+void gr_codeco_8() :
+{}
+{
+  s_DGS()
+  (
+    s_FTX()
+  )*
+  (
+    s_MEA()
+  )*
+  (
+    gr_codeco_9()
+  )*
+}
+
+void gr_codeco_9() :
+{}
+{
+  s_CTA()
+  (
+    s_COM()
+  )*
+}
+
+void gr_codeco_10() :
+{}
+{
+  s_EQD()
+  (
+    s_RFF()
+  )*
+  (
+    s_TMD()
+  )*
+  (
+    s_DTM()
+  )*
+  (
+    s_LOC()
+  )*
+  (
+    s_MEA()
+  )*
+  (
+    s_DIM()
+  )*
+  (
+    s_SEL()
+  )*
+  (
+    s_FTX()
+  )*
+  (
+    s_PCD()
+  )*
+  (
+    s_EQA()
+  )*
+  (
+    s_COD()
+  )?
+  (
+    s_HAN()
+  )*
+  (
+    gr_codeco_11()
+  )*
+  (
+    gr_codeco_12()
+  )*
+  (
+    s_NAD()
+  )*
+  (
+    gr_codeco_14()
+  )*
+  (
+    gr_codeco_16()
+  )*
+}
+
+void gr_codeco_11() :
+{}
+{
+  s_DAM()
+  (
+    s_COD()
+  )?
+}
+
+void gr_codeco_12() :
+{}
+{
+  s_TDT()
+  (
+    s_DTM()
+  )*
+  (
+    s_RFF()
+  )*
+  (
+    gr_codeco_13()
+  )*
+}
+
+void gr_codeco_13() :
+{}
+{
+  s_LOC()
+  (
+    s_DTM()
+  )*
+}
+
+void gr_codeco_14() :
+{}
+{
+  s_DGS()
+  (
+    s_FTX()
+  )*
+  (
+    s_MEA()
+  )*
+  (
+    gr_codeco_15()
+  )*
+}
+
+void gr_codeco_15() :
+{}
+{
+  s_CTA()
+  (
+    s_COM()
+  )*
+}
+
+void gr_codeco_16() :
+{}
+{
+  s_TMP()
+  (
+    s_RNG()
+  )?
+}
+
+/** CREMUL. */
+void m_cremul() :
+{}
+{
+  s_UNH() s_BGM()
+  (
+    s_DTM()
+  )?
+  (
+    s_BUS()
+  )?
+  (
+    gr_cremul_1()
+  )*
+  (
+    gr_cremul_2()
+  )*
+  (
+    gr_cremul_3()
+  )*
+  (
+    gr_cremul_4()
+  )+
+  (
+    s_CNT()
+  )*
+  (
+    gr_cremul_28()
+  )*
+  s_UNT()
+}
+
+void gr_cremul_1() :
+{}
+{
+  s_RFF()
+  (
+    s_DTM()
+  )?
+}
+
+void gr_cremul_2() :
+{}
+{
+  s_FII()
+  (
+    s_CTA()
+  )?
+  (
+    s_COM()
+  )*
+}
+
+void gr_cremul_3() :
+{}
+{
+  s_NAD()
+  (
+    s_CTA()
+  )?
+  (
+    s_COM()
+  )*
+}
+
+void gr_cremul_4() :
+{}
+{
+  s_LIN()
+  (
+    s_DTM()
+  )*
+  (
+    s_BUS()
+  )?
+  (
+    s_MOA()
+  )+
+  (
+    gr_cremul_5()
+  )+
+  gr_cremul_6()
+  (
+    gr_cremul_7()
+  )*
+  (
+    gr_cremul_10()
+  )+
+}
+
+void gr_cremul_5() :
+{}
+{
+  s_RFF()
+  (
+    s_DTM()
+  )?
+}
+
+void gr_cremul_6() :
+{}
+{
+  s_FII()
+  (
+    s_CTA()
+  )?
+  (
+    s_COM()
+  )*
+}
+
+void gr_cremul_7() :
+{}
+{
+  s_FCA()
+  (
+    s_MOA()
+  )*
+  (
+    gr_cremul_8()
+  )*
+}
+
+void gr_cremul_8() :
+{}
+{
+  s_ALC()
+  (
+    s_PCD()
+  )?
+  (
+    s_MOA()
+  )*
+  (
+    s_CUX()
+  )?
+  (
+    s_DTM()
+  )?
+  (
+    gr_cremul_9()
+  )*
+}
+
+void gr_cremul_9() :
+{}
+{
+  s_TAX()
+  (
+    s_MOA()
+  )*
+  (
+    s_CUX()
+  )?
+  (
+    s_DTM()
+  )?
+}
+
+void gr_cremul_10() :
+{}
+{
+  s_SEQ()
+  (
+    s_DTM()
+  )*
+  (
+    s_BUS()
+  )?
+  (
+    s_FII()
+  )+
+  (
+    gr_cremul_11()
+  )*
+  (
+    gr_cremul_12()
+  )?
+  (
+    gr_cremul_13()
+  )*
+  (
+    gr_cremul_14()
+  )*
+  (
+    gr_cremul_15()
+  )*
+  (
+    gr_cremul_16()
+  )*
+  (
+    gr_cremul_17()
+  )*
+  (
+    gr_cremul_20()
+  )?
+}
+
+void gr_cremul_11() :
+{}
+{
+  s_RFF()
+  (
+    s_DTM()
+  )?
+}
+
+void gr_cremul_12() :
+{}
+{
+  s_PAI()
+  (
+    s_FTX()
+  )?
+}
+
+void gr_cremul_13() :
+{}
+{
+  s_MOA()
+  (
+    s_CUX()
+  )?
+  (
+    s_DTM()
+  )*
+  (
+    s_RFF()
+  )?
+}
+
+void gr_cremul_14() :
+{}
+{
+  s_NAD()
+  (
+    s_CTA()
+  )?
+  (
+    s_COM()
+  )*
+}
+
+void gr_cremul_15() :
+{}
+{
+  s_INP()
+  (
+    s_FTX()
+  )?
+  (
+    s_DTM()
+  )?
+}
+
+void gr_cremul_16() :
+{}
+{
+  s_GEI()
+  (
+    s_MOA()
+  )?
+  (
+    s_LOC()
+  )*
+  (
+    s_NAD()
+  )?
+  (
+    s_RCS()
+  )?
+  (
+    s_FTX()
+  )*
+}
+
+void gr_cremul_17() :
+{}
+{
+  s_FCA()
+  (
+    s_MOA()
+  )*
+  (
+    gr_cremul_18()
+  )*
+}
+
+void gr_cremul_18() :
+{}
+{
+  s_ALC()
+  (
+    s_PCD()
+  )?
+  (
+    s_MOA()
+  )*
+  (
+    s_CUX()
+  )?
+  (
+    s_DTM()
+  )*
+  (
+    gr_cremul_19()
+  )*
+}
+
+void gr_cremul_19() :
+{}
+{
+  s_TAX()
+  (
+    s_MOA()
+  )*
+  (
+    s_CUX()
+  )?
+  (
+    s_DTM()
+  )?
+}
+
+void gr_cremul_20() :
+{}
+{
+  s_PRC()
+  (
+    s_FTX()
+  )*
+  (
+    gr_cremul_21()
+  )*
+  (
+    gr_cremul_27()
+  )?
+}
+
+void gr_cremul_21() :
+{}
+{
+  s_DOC()
+  (
+    s_MOA()
+  )*
+  (
+    s_DTM()
+  )*
+  (
+    s_RFF()
+  )*
+  (
+    s_NAD()
+  )*
+  (
+    gr_cremul_22()
+  )*
+  (
+    gr_cremul_23()
+  )*
+  (
+    gr_cremul_24()
+  )*
+}
+
+void gr_cremul_22() :
+{}
+{
+  s_CUX()
+  (
+    s_DTM()
+  )?
+}
+
+void gr_cremul_23() :
+{}
+{
+  s_AJT()
+  (
+    s_MOA()
+  )?
+  (
+    s_RFF()
+  )?
+  (
+    s_FTX()
+  )*
+}
+
+void gr_cremul_24() :
+{}
+{
+  s_DLI()
+  (
+    s_MOA()
+  )*
+  (
+    s_PIA()
+  )*
+  (
+    s_DTM()
+  )*
+  (
+    gr_cremul_25()
+  )*
+  (
+    gr_cremul_26()
+  )*
+}
+
+void gr_cremul_25() :
+{}
+{
+  s_CUX()
+  (
+    s_DTM()
+  )?
+}
+
+void gr_cremul_26() :
+{}
+{
+  s_AJT()
+  (
+    s_MOA()
+  )?
+  (
+    s_RFF()
+  )?
+  (
+    s_FTX()
+  )*
+}
+
+void gr_cremul_27() :
+{}
+{
+  s_GEI()
+  (
+    s_MOA()
+  )*
+}
+
+void gr_cremul_28() :
+{}
+{
+  s_AUT()
+  (
+    s_DTM()
+  )?
+}
+
+/** CUSCAR. */
+void m_cuscar() :
+{}
+{
+  s_UNH() s_BGM()
+  (
+    s_DTM()
+  )*
+  (
+    s_LOC()
+  )*
+  (
+    s_QTY()
+  )*
+  (
+    gr_cuscar_1()
+  )*
+  (
+    gr_cuscar_2()
+  )*
+  (
+    s_FTX()
+  )*
+  (
+    gr_cuscar_4()
+  )*
+  (
+    s_GEI()
+  )*
+  (
+    gr_cuscar_5()
+  )*
+  (
+    s_CNT()
+  )*
+  (
+    gr_cuscar_7()
+  )*
+  (
+    gr_cuscar_17()
+  )?
+  s_UNT()
+}
+
+void gr_cuscar_1() :
+{}
+{
+  s_RFF()
+  (
+    s_DTM()
+  )*
+}
+
+void gr_cuscar_2() :
+{}
+{
+  s_NAD()
+  (
+    s_DTM()
+  )?
+  (
+    gr_cuscar_3()
+  )*
+}
+
+void gr_cuscar_3() :
+{}
+{
+  s_CTA()
+  (
+    s_COM()
+  )*
+}
+
+void gr_cuscar_4() :
+{}
+{
+  s_TDT()
+  (
+    s_LOC()
+  )*
+  (
+    s_DTM()
+  )*
+}
+
+void gr_cuscar_5() :
+{}
+{
+  s_EQD()
+  (
+    s_TSR()
+  )*
+  (
+    s_MEA()
+  )*
+  (
+    s_DIM()
+  )*
+  (
+    s_SEL()
+  )*
+  (
+    s_NAD()
+  )*
+  (
+    s_GEI()
+  )*
+  (
+    s_LOC()
+  )?
+  (
+    gr_cuscar_6()
+  )*
+}
+
+void gr_cuscar_6() :
+{}
+{
+  s_TMP()
+  (
+    s_RNG()
+  )?
+}
+
+void gr_cuscar_7() :
+{}
+{
+  s_CNI()
+  (
+    s_CNT()
+  )*
+  (
+    gr_cuscar_8()
+  )*
+}
+
+void gr_cuscar_8() :
+{}
+{
+  s_RFF()
+  (
+    s_CNT()
+  )*
+  (
+    s_MOA()
+  )*
+  (
+    s_LOC()
+  )*
+  (
+    s_GEI()
+  )*
+  (
+    s_CUX()
+  )*
+  (
+    s_CPI()
+  )*
+  (
+    gr_cuscar_9()
+  )*
+  (
+    gr_cuscar_11()
+  )*
+  (
+    gr_cuscar_13()
+  )*
+  (
+    gr_cuscar_14()
+  )+
+}
+
+void gr_cuscar_9() :
+{}
+{
+  s_TDT()
+  (
+    s_LOC()
+  )*
+  (
+    s_DTM()
+  )*
+  (
+    s_MEA()
+  )*
+  (
+    gr_cuscar_10()
+  )*
+}
+
+void gr_cuscar_10() :
+{}
+{
+  s_RFF()
+  (
+    s_TSR()
+  )*
+}
+
+void gr_cuscar_11() :
+{}
+{
+  s_NAD()
+  (
+    s_DTM()
+  )*
+  (
+    s_RFF()
+  )*
+  (
+    gr_cuscar_12()
+  )*
+}
+
+void gr_cuscar_12() :
+{}
+{
+  s_CTA()
+  (
+    s_COM()
+  )*
+}
+
+void gr_cuscar_13() :
+{}
+{
+  s_QTY()
+  (
+    s_FTX()
+  )*
+}
+
+void gr_cuscar_14() :
+{}
+{
+  s_GID()
+  (
+    s_PAC()
+  )*
+  (
+    s_HAN()
+  )*
+  (
+    s_FTX()
+  )*
+  (
+    s_MEA()
+  )*
+  (
+    s_MOA()
+  )*
+  (
+    s_SGP()
+  )*
+  (
+    s_DGS()
+  )*
+  (
+    s_PCI()
+  )*
+  (
+    s_CST()
+  )?
+  (
+    s_LOC()
+  )*
+  (
+    s_TMD()
+  )*
+  (
+    gr_cuscar_15()
+  )*
+  (
+    gr_cuscar_16()
+  )*
+}
+
+void gr_cuscar_15() :
+{}
+{
+  s_GEI()
+  (
+    s_DTM()
+  )*
+  (
+    s_DOC()
+  )*
+  (
+    s_PAC()
+  )*
+  (
+    s_MEA()
+  )*
+}
+
+void gr_cuscar_16() :
+{}
+{
+  s_QTY()
+  (
+    s_FTX()
+  )?
+}
+
+void gr_cuscar_17() :
+{}
+{
+  s_AUT()
+  (
+    s_DTM()
+  )*
+  (
+    s_RFF()
+  )*
+}
+
+/*
+00020   BGM Beginning of message                     M   1
+00030   DTM Date/time/period                         C   9
+00040   LOC Place/location identification            C   9
+00050   QTY Quantity                                 C   9
+
+00060       ---- Segment group 1  ------------------ C   99---------------+
+00090       ---- Segment group 2  ------------------ C   99---------------+
+00150   FTX Free text                                C   9
+00160       ---- Segment group 4  ------------------ C   9----------------+
+00200   GEI Processing information                   C   9
+00210       ---- Segment group 5  ------------------ C   9999-------------+
+00330   CNT Control total                            C   9
+00340       ---- Segment group 7  ------------------ C   9999-------------+
+00850       ---- Segment group 17 ------------------ C   1----------------+
+*/
+
+
+/** CUSRES. */
+void m_cusres() :
+{}
+{
+  s_UNH() s_UNT()
 }
 
 /** IFCSUM. */
@@ -946,6 +2498,909 @@ void gr_ifcsum_77() :
   (
     gr_ifcsum_5()
   )*
+}
+
+/** INVOIC. */
+void m_invoic() :
+{}
+{
+  s_UNH() s_BGM()
+  (
+    s_DTM()
+  )+
+  (
+    s_PAI()
+  )?
+  (
+    s_ALI()
+  )*
+  (
+    s_IMD()
+  )?
+  (
+    s_FTX()
+  )*
+  (
+    s_LOC()
+  )*
+  (
+    s_GEI()
+  )*
+  (
+    s_DGS()
+  )?
+  (
+    s_GIR()
+  )*
+  (
+    gr_invoic_1()
+  )*
+  (
+    gr_invoic_2()
+  )*
+  (
+    gr_invoic_6()
+  )*
+  (
+    gr_invoic_7()
+  )*
+  (
+    gr_invoic_8()
+  )*
+  (
+    gr_invoic_9()
+  )*
+  (
+    gr_invoic_12()
+  )*
+  (
+    gr_invoic_13()
+  )*
+  (
+    gr_invoic_14()
+  )*
+  (
+    gr_invoic_16()
+  )*
+  (
+    gr_invoic_23()
+  )*
+  (
+    gr_invoic_24()
+  )?
+  (
+    gr_invoic_25()
+  )?
+  (
+    gr_invoic_26()
+  )*
+  (
+    gr_invoic_27()
+  )*
+  s_UNS()
+  (
+    s_CNT()
+  )*
+  (
+    gr_invoic_52()
+  )+
+  (
+    gr_invoic_54()
+  )*
+  (
+    gr_invoic_55()
+  )*
+  s_UNT()
+}
+
+void gr_invoic_1() :
+{}
+{
+  s_RFF()
+  (
+    s_DTM()
+  )*
+  (
+    s_GIR()
+  )*
+  (
+    s_LOC()
+  )*
+  (
+    s_MEA()
+  )*
+  (
+    s_QTY()
+  )*
+  (
+    s_FTX()
+  )*
+  (
+    s_MOA()
+  )*
+  (
+    s_RTE()
+  )*
+}
+
+void gr_invoic_2() :
+{}
+{
+  s_NAD()
+  (
+    s_LOC()
+  )*
+  (
+    s_FII()
+  )*
+  (
+    s_MOA()
+  )*
+  (
+    gr_invoic_3()
+  )*
+  (
+    gr_invoic_4()
+  )*
+  (
+    gr_invoic_5()
+  )*
+}
+
+void gr_invoic_3() :
+{}
+{
+  s_RFF()
+  (
+    s_DTM()
+  )*
+}
+
+void gr_invoic_4() :
+{}
+{
+  s_DOC()
+  (
+    s_DTM()
+  )*
+}
+
+void gr_invoic_5() :
+{}
+{
+  s_CTA()
+  (
+    s_COM()
+  )*
+}
+
+void gr_invoic_6() :
+{}
+{
+  s_TAX()
+  (
+    s_MOA()
+  )?
+  (
+    s_LOC()
+  )*
+}
+
+void gr_invoic_7() :
+{}
+{
+  s_CUX()
+  (
+    s_DTM()
+  )*
+}
+
+void gr_invoic_8() :
+{}
+{
+  s_PYT()
+  (
+    s_DTM()
+  )*
+  (
+    s_PCD()
+  )?
+  (
+    s_MOA()
+  )?
+  (
+    s_PAI()
+  )?
+  (
+    s_FII()
+  )?
+}
+
+void gr_invoic_9() :
+{}
+{
+  s_TDT()
+  (
+    s_TSR()
+  )?
+  (
+    gr_invoic_10()
+  )*
+  (
+    gr_invoic_11()
+  )*
+}
+
+void gr_invoic_10() :
+{}
+{
+  s_LOC()
+  (
+    s_DTM()
+  )*
+}
+
+void gr_invoic_11() :
+{}
+{
+  s_RFF()
+  (
+    s_DTM()
+  )*
+}
+
+void gr_invoic_12() :
+{}
+{
+  s_TOD()
+  (
+    s_LOC()
+  )*
+}
+
+void gr_invoic_13() :
+{}
+{
+  s_EQD()
+  (
+    s_SEL()
+  )*
+}
+
+void gr_invoic_14() :
+{}
+{
+  s_PAC()
+  (
+    s_MEA()
+  )*
+  (
+    s_EQD()
+  )*
+  (
+    gr_invoic_15()
+  )*
+}
+
+void gr_invoic_15() :
+{}
+{
+  s_PCI()
+  (
+    s_RFF()
+  )?
+  (
+    s_DTM()
+  )*
+  (
+    s_GIN()
+  )*
+}
+
+void gr_invoic_16() :
+{}
+{
+  s_ALC()
+  (
+    s_ALI()
+  )*
+  (
+    s_FTX()
+  )?
+  (
+    gr_invoic_17()
+  )*
+  (
+    gr_invoic_18()
+  )?
+  (
+    gr_invoic_19()
+  )?
+  (
+    gr_invoic_20()
+  )*
+  (
+    gr_invoic_21()
+  )?
+  (
+    gr_invoic_22()
+  )*
+}
+
+void gr_invoic_17() :
+{}
+{
+  s_RFF()
+  (
+    s_DTM()
+  )*
+}
+
+void gr_invoic_18() :
+{}
+{
+  s_QTY()
+  (
+    s_RNG()
+  )?
+}
+
+void gr_invoic_19() :
+{}
+{
+  s_PCD()
+  (
+    s_RNG()
+  )?
+}
+
+void gr_invoic_20() :
+{}
+{
+  s_MOA()
+  (
+    s_RNG()
+  )?
+  (
+    s_CUX()
+  )?
+  (
+    s_DTM()
+  )?
+}
+
+void gr_invoic_21() :
+{}
+{
+  s_RTE()
+  (
+    s_RNG()
+  )?
+}
+
+void gr_invoic_22() :
+{}
+{
+  s_TAX()
+  (
+    s_MOA()
+  )?
+}
+
+void gr_invoic_23() :
+{}
+{
+  s_RCS()
+  (
+    s_RFF()
+  )*
+  (
+    s_DTM()
+  )*
+  (
+    s_FTX()
+  )*
+}
+
+void gr_invoic_24() :
+{}
+{
+  s_AJT()
+  (
+    s_FTX()
+  )*
+}
+
+void gr_invoic_25() :
+{}
+{
+  s_INP()
+  (
+    s_FTX()
+  )*
+}
+
+void gr_invoic_26() :
+{}
+{
+  s_EFI()
+  (
+    s_CED()
+  )*
+  (
+    s_COM()
+  )*
+  (
+    s_RFF()
+  )*
+  (
+    s_DTM()
+  )*
+  (
+    s_QTY()
+  )*
+}
+
+void gr_invoic_27() :
+{}
+{
+  s_LIN()
+  (
+    s_PIA()
+  )*
+  (
+    s_PGI()
+  )*
+  (
+    s_IMD()
+  )*
+  (
+    s_MEA()
+  )*
+  (
+    s_QTY()
+  )*
+  (
+    s_PCD()
+  )?
+  (
+    s_ALI()
+  )*
+  (
+    s_DTM()
+  )*
+  (
+    s_GIN()
+  )*
+  (
+    s_GIR()
+  )*
+  (
+    s_QVR()
+  )?
+  (
+    s_EQD()
+  )?
+  (
+    s_FTX()
+  )*
+  (
+    s_DGS()
+  )?
+  (
+    gr_invoic_28()
+  )*
+  (
+    gr_invoic_29()
+  )*
+  (
+    gr_invoic_30()
+  )*
+  (
+    gr_invoic_31()
+  )*
+  (
+    gr_invoic_32()
+  )*
+  (
+    gr_invoic_34()
+  )*
+  (
+    gr_invoic_35()
+  )*
+  (
+    gr_invoic_36()
+  )*
+  (
+    gr_invoic_40()
+  )*
+  (
+    gr_invoic_46()
+  )*
+  (
+    gr_invoic_48()
+  )*
+  (
+    gr_invoic_49()
+  )*
+  (
+    gr_invoic_50()
+  )*
+  (
+    gr_invoic_51()
+  )*
+}
+
+void gr_invoic_28() :
+{}
+{
+  s_MOA()
+  (
+    s_CUX()
+  )?
+}
+
+void gr_invoic_29() :
+{}
+{
+  s_PYT()
+  (
+    s_DTM()
+  )*
+  (
+    s_PCD()
+  )*
+  (
+    s_MOA()
+  )?
+}
+
+void gr_invoic_30() :
+{}
+{
+  s_PRI()
+  (
+    s_CUX()
+  )?
+  (
+    s_APR()
+  )?
+  (
+    s_RNG()
+  )?
+  (
+    s_DTM()
+  )*
+}
+
+void gr_invoic_31() :
+{}
+{
+  s_RFF()
+  (
+    s_DTM()
+  )*
+}
+
+void gr_invoic_32() :
+{}
+{
+  s_PAC()
+  (
+    s_MEA()
+  )*
+  (
+    s_EQD()
+  )?
+  (
+    gr_invoic_33()
+  )*
+}
+
+void gr_invoic_33() :
+{}
+{
+  s_PCI()
+  (
+    s_RFF()
+  )?
+  (
+    s_DTM()
+  )*
+  (
+    s_GIN()
+  )*
+}
+
+void gr_invoic_34() :
+{}
+{
+  s_LOC()
+  (
+    s_QTY()
+  )*
+  (
+    s_DTM()
+  )*
+}
+
+void gr_invoic_35() :
+{}
+{
+  s_TAX()
+  (
+    s_MOA()
+  )*
+  (
+    s_LOC()
+  )*
+}
+
+void gr_invoic_36() :
+{}
+{
+  s_NAD()
+  (
+    s_LOC()
+  )*
+  (
+    s_FII()
+  )*
+  (
+    gr_invoic_37()
+  )*
+  (
+    gr_invoic_38()
+  )*
+  (
+    gr_invoic_39()
+  )*
+}
+
+void gr_invoic_37() :
+{}
+{
+  s_RFF()
+  (
+    s_DTM()
+  )*
+}
+
+void gr_invoic_38() :
+{}
+{
+  s_DOC()
+  (
+    s_DTM()
+  )*
+}
+
+void gr_invoic_39() :
+{}
+{
+  s_CTA()
+  (
+    s_COM()
+  )*
+}
+
+void gr_invoic_40() :
+{}
+{
+  s_ALC()
+  (
+    s_ALI()
+  )*
+  (
+    s_DTM()
+  )*
+  (
+    s_FTX()
+  )?
+  (
+    gr_invoic_41()
+  )?
+  (
+    gr_invoic_42()
+  )?
+  (
+    gr_invoic_43()
+  )*
+  (
+    gr_invoic_44()
+  )?
+  (
+    gr_invoic_45()
+  )*
+}
+
+void gr_invoic_41() :
+{}
+{
+  s_QTY()
+  (
+    s_RNG()
+  )?
+}
+
+void gr_invoic_42() :
+{}
+{
+  s_PCD()
+  (
+    s_RNG()
+  )?
+}
+
+void gr_invoic_43() :
+{}
+{
+  s_MOA()
+  (
+    s_RNG()
+  )?
+  (
+    s_CUX()
+  )?
+  (
+    s_DTM()
+  )?
+}
+
+void gr_invoic_44() :
+{}
+{
+  s_RTE()
+  (
+    s_RNG()
+  )?
+}
+
+void gr_invoic_45() :
+{}
+{
+  s_TAX()
+  (
+    s_MOA()
+  )*
+}
+
+void gr_invoic_46() :
+{}
+{
+  s_TDT()
+  (
+    gr_invoic_47()
+  )*
+}
+
+void gr_invoic_47() :
+{}
+{
+  s_LOC()
+  (
+    s_DTM()
+  )*
+}
+
+void gr_invoic_48() :
+{}
+{
+  s_TOD()
+  (
+    s_LOC()
+  )*
+}
+
+void gr_invoic_49() :
+{}
+{
+  s_RCS()
+  (
+    s_RFF()
+  )*
+  (
+    s_DTM()
+  )*
+  (
+    s_FTX()
+  )*
+}
+
+void gr_invoic_50() :
+{}
+{
+  s_GEI()
+  (
+    s_RFF()
+  )*
+  (
+    s_IMD()
+  )*
+  (
+    s_DTM()
+  )*
+  (
+    s_GIR()
+  )*
+  (
+    s_LOC()
+  )*
+  (
+    s_MEA()
+  )*
+  (
+    s_QTY()
+  )*
+  (
+    s_FTX()
+  )*
+  (
+    s_MOA()
+  )*
+}
+
+void gr_invoic_51() :
+{}
+{
+  s_EFI()
+  (
+    s_CED()
+  )*
+  (
+    s_COM()
+  )*
+  (
+    s_RFF()
+  )*
+  (
+    s_DTM()
+  )*
+  (
+    s_QTY()
+  )*
+}
+
+void gr_invoic_52() :
+{}
+{
+  s_MOA()
+  (
+    gr_invoic_53()
+  )?
+}
+
+void gr_invoic_53() :
+{}
+{
+  s_RFF()
+  (
+    s_DTM()
+  )*
+}
+
+void gr_invoic_54() :
+{}
+{
+  s_TAX()
+  (
+    s_MOA()
+  )*
+}
+
+void gr_invoic_55() :
+{}
+{
+  s_ALC()
+  (
+    s_ALI()
+  )?
+  (
+    s_MOA()
+  )*
+  (
+    s_FTX()
+  )?
 }
 
 /************************************************ SEGMENTS *********************************************************/
@@ -15423,7 +17878,25 @@ TOKEN :
 
 TOKEN :
 {
-  < MESSAGE_TYPE : "APERAK" | "IFCSUM">
+  < EOL :
+    "\'"
+  >
+}
+
+TOKEN :
+{
+  < MESSAGE_TYPE :
+    "APERAK"
+  | "AUTHOR"
+  | "BANSTA"
+  | "BERMAN"
+  | "CODECO"
+  | "CREMUL"
+  | "CUSCAR"
+  | "CUSRES"
+  | "IFCSUM"
+  | "INVOIC"
+  >
 }
 
 TOKEN :
@@ -15437,25 +17910,4 @@ TOKEN :
 TOKEN :
 {
   < INTEGER : ([ "0"-"9" ])+ >
-}
-
-TOKEN :
-{
-  < EOL :
-    "\'"
-    (
-      " "
-    | "\t"
-    )*
-    (
-      (
-        (
-        "\r")? "\n"
-      )*
-    |
-      (
-        (
-        "\r")? "\n"
-      )+
-    ) >
 }
