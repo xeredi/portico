@@ -4,15 +4,16 @@ import java.io.ByteArrayInputStream;
 
 import org.junit.Test;
 
+import xeredi.edifact.composer.CompositeData;
+import xeredi.edifact.composer.EdifactMessage;
+import xeredi.edifact.composer.MessageType;
+import xeredi.edifact.composer.SegmentType;
+import xeredi.edifact.composer.SimpleData;
+import xeredi.edifact.composer.SimpleSegment;
 import xeredi.edifact.jjtree.Message;
 import xeredi.edifact.jjtree.Node;
 import xeredi.edifact.jjtree.ParseException;
-import xeredi.edifact.model.CompositeData;
-import xeredi.edifact.model.EdifactMessage;
-import xeredi.edifact.model.MessageType;
-import xeredi.edifact.model.SegmentType;
-import xeredi.edifact.model.SimpleData;
-import xeredi.edifact.model.SimpleSegment;
+import xeredi.edifact.xml.Edi2Xml;
 
 // TODO: Auto-generated Javadoc
 /**

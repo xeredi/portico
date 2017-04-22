@@ -1,4 +1,4 @@
-package xeredi.edifact.model;
+package xeredi.edifact.composer;
 
 import java.util.ArrayList;
 import java.util.Arrays;

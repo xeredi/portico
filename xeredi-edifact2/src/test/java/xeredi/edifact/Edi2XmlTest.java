@@ -9,6 +9,7 @@ import org.junit.Test;
 import xeredi.edifact.jjtree.Message;
 import xeredi.edifact.jjtree.Node;
 import xeredi.edifact.jjtree.ParseException;
+import xeredi.edifact.xml.Edi2Xml;
 
 // TODO: Auto-generated Javadoc
 /**

@@ -1,4 +1,4 @@
-package xeredi.edifact.model;
+package xeredi.edifact.composer;
 
 // TODO: Auto-generated Javadoc
 /**

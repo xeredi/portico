@@ -1,4 +1,4 @@
-package xeredi.edifact;
+package xeredi.edifact.xml;
 
 import xeredi.edifact.jjtree.MessageDefaultVisitor;
 import xeredi.edifact.jjtree.SimpleNode;
