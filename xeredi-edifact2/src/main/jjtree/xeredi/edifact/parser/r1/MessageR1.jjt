@@ -18,6 +18,500 @@ public class MessageR1
 
 PARSER_END(MessageR1)
 
+/************************************************ SEGMENTS *********************************************************/
+/************************************************ SEGMENTS *********************************************************/
+/************************************************ SEGMENTS *********************************************************/
+/************************************************ SEGMENTS *********************************************************/
+/************************************************ SEGMENTS *********************************************************/
+
+/** ACA  ALTERNATIVE CURRENCY AMOUNT. */
+void s_ACA() :
+{}
+{
+  "ACA+"
+  (
+    c_C275()
+  )?
+  < PLUS >
+  d_6345()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_6343()
+    )?
+  )?
+  < PLUS >
+  d_5004()
+}
+
+/** ACT  ALTERNATIVE CURRENCY TOTAL AMOUNT. */
+void s_ACT() :
+{}
+{
+  "ACT+"
+  (
+    c_C275()
+  )?
+  < PLUS >
+  d_6345()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_6343()
+    )?
+  )?
+  < PLUS >
+  d_5354()
+}
+
+/** ALC  ALLOWANCES AND CHARGES. */
+void s_ALC() :
+{}
+{
+  "ALC+" d_5463()
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4471()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1230()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_1227()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C214()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C128()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_5422()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      c_C140()
+    )?
+  )?
+  (
+    < PLUS >
+    (
+      c_C178()
+    )?
+  )?
+}
+
+/** ALI  ADDITIONAL INFORMATION. */
+void s_ALI() :
+{}
+{
+  "ALI+"
+  (
+    d_3239()
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_9213()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4183()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4183()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4183()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < PLUS >
+    (
+      d_4183()
+    )?
+  )?
+  (
+    < PLUS >
+    (
+      d_4183()
+    )?
+  )?
+}
+
+//---------------------------------------------------------------------
+//  API  ADDITIONAL PRICE INFORMATION                                  88.1
+//    4043  CLASS OF TRADE, CODED                       C  an2
+//    C118  UNIT PRICE INFORMATION                      C
+//    C138  PRICE MULTIPLIER INFORMATION                C
+//    C280  QUANTITY/RANGE                              C
+//    C282  PERIOD                                      C
+//    C284  AMOUNT/RANGE                                C
+//---------------------------------------------------------------------
+//  BGM  BEGINNING OF MESSAGE                                          88.1
+//
+//    C002  DOCUMENT                                    M
+//    1004  DOCUMENT NUMBER                             M  an..35
+//    C031  DATE/TIME OF DOCUMENT.                      M
+//    1225  MESSAGE FUNCTION, CODED                     C  n..2
+//    C008  PRIMARY REFERENCE                           C
+//    C033  DATE/TIME OF REFERENCE                      C
+//---------------------------------------------------------------------
+//  CNT  CONTROL TOTALS                                                 88.1
+//
+//    C270  CONTROL                                     M
+//    C270  CONTROL                                     C
+//    C270  CONTROL                                     C
+//    C270  CONTROL                                     C
+//    C270  CONTROL                                     C
+//---------------------------------------------------------------------
+//  CTA  CONTACT SEGMENT                                               88.1
+//
+//    3139  CONTACT FUNCTION, CODED                     M  an2
+//    C056  DEPARTMENT OR EMPLOYEE IDENTIFICATION       C
+//    C076  COMMUNICATION CONTACTS                      C
+//    C076  COMMUNICATION CONTACTS                      C
+//    C076  COMMUNICATION CONTACTS                      C
+//    C076  COMMUNICATION CONTACTS                      C
+//    C076  COMMUNICATION CONTACTS                      C
+//---------------------------------------------------------------------
+//  CUX  CURRENCIES                                                    88.1
+//
+//    C180  REFERENCE CURRENCY                          M
+//    C182  TARGET CURRENCY                             C
+//    5402  RATE OF EXCHANGE                            C  n..12
+//    6341  CURRENCY MARKET EXCHANGE, CODED             C  an3
+//    C034  DATE/TIME OF RATE                           C
+//---------------------------------------------------------------------
+//  DOC  DOCUMENTS REQUIRED                                            88.1
+//
+//    C002  DOCUMENT                                    M
+//    3153  COMMUNICATION CHANNEL IDENTIFIER            C  an..3
+//    1220  NUMBER OF COPIES REQUIRED                   C  n..2
+//---------------------------------------------------------------------
+//  DTM  DATE/TIME REFERENCE                                           88.1
+//
+//    2005  DATE/TIME QUALIFIER                         M  an..3
+//    2001  DATE, CODED                                 C  n6
+//    2002  TIME                                        C  n4
+//    2461  TIME ZONE SPECIFIER, CODED                  C  an3
+//----------------------------------------------------------------------
+//  FII  FINANCIAL INSTITUTION INFORMATION                             88.1
+//
+//    3035  PARTY QUALIFIER                             M  an..3
+//    C078  ACCOUNT IDENTIFICATION                      C
+//    C088  FINANCIAL INSTITUTION IDENTIFICATION        C
+//---------------------------------------------------------------------
+//  FTX  FREE TEXT                                                     88.1
+//
+//    4451  TEXT SUBJECT, CODED                         M  an..3
+//    4453  TEXT FUNCTION, CODED                        C  an..2
+//    C107  TEXT REFERENCE                              C
+//    C108  TEXT LITERAL                                C
+//---------------------------------------------------------------------
+//  GIN  GOODS IDENTITY NUMBER                                         88.1
+//
+//    7405  IDENTITY NUMBER QUALIFIER                   C  an..3
+//    C208  IDENTITY NUMBER RANGE                       M
+//    C208  IDENTITY NUMBER RANGE                       C
+//    C208  IDENTITY NUMBER RANGE                       C
+//    C208  IDENTITY NUMBER RANGE                       C
+//    C208  IDENTITY NUMBER RANGE                       C
+//---------------------------------------------------------------------
+//  GIR  GOODS IDENTIFICATION RELATED NUMBERS                          88.1
+//
+//    C206  GOODS RELATED ID. NUMBERS                   M
+//    C206  GOODS RELATED ID. NUMBERS                   C
+//    C206  GOODS RELATED ID. NUMBERS                   C
+//    C206  GOODS RELATED ID. NUMBERS                   C
+//    C206  GOODS RELATED ID. NUMBERS                   C
+//    C206  GOODS RELATED ID. NUMBERS                   C
+//    C206  GOODS RELATED ID. NUMBERS                   C
+//    C206  GOODS RELATED ID. NUMBERS                   C
+//    C206  GOODS RELATED ID. NUMBERS                   C
+//    C206  GOODS RELATED ID. NUMBERS                   C
+//---------------------------------------------------------------------
+//  IMD  ITEM DESCRIPTION                                              88.1
+//
+//    7077  ITEM DESCRIPTION TYPE, CODED                C  an..3
+//    7081  ITEM CHARACTERISTIC, CODED                  C  an..3
+//    C273  ITEM DESCRIPTION, CODED                     C
+//    C196  ITEM DESCRIPTION                            C
+//    7383  SURFACE/LAYER INDICATOR, CODED              C  an2
+//---------------------------------------------------------------------
+//  LIN  LINE ITEM                                                     88.1
+//
+//    1082  LINE ITEM NUMBER                            C  n..6
+//    1229  ACTION REQUEST, CODED                       C  n..2
+//    C198  PRODUCT IDENTIFICATION                      C
+//    C198  PRODUCT IDENTIFICATION                      C
+//    C186  QUANTITY INFORMATION                        C
+//    C118  UNIT PRICE INFORMATION                      C
+//    6170  NUMBER OF PRICING UNITS                     C  n..9
+//    5116  ITEM AMOUNT                                 C  n..15
+//    C134  REFERENCE PRICE INFORMATION                 C
+//    6318  QUALITY/YIELD PERCENTAGE                    C  n..7
+//---------------------------------------------------------------------
+//  LOC  LOCATION IDENTIFICATION                                       88.1
+//
+//    3227  PLACE / LOCATION QUALIFIER                  M  an..3
+//    C087  LOCATION IDENTIFICATION                     M
+//---------------------------------------------------------------------
+//  MEA  MEASUREMENTS                                                  88.1
+//
+//    6311  MEASUREMENT APPLICATION QUALIFIER           M  an..3
+//    6313  MEASUREMENT DIMENSION IDENTIFIER            C  an..3
+//    C174  VALUE/RANGE                                 M
+//    6321  MEASUREMENT SIGNIFICANCE, CODED             C  an2
+//    6155  MEASUREMENT ATTRIBUTE, CODED                C  an2
+//---------------------------------------------------------------------
+//  NAD  NAME AND ADDRESS                                              88.1
+//
+//    3035  PARTY QUALIFIER                             M  an..3
+//    C082  PARTY IDENTIFICATION                        C
+//    C058  NAME & ADDRESS                              C
+//    C080  PARTY NAME                                  C
+//    C059  STREET                                      C
+//    3164  CITY NAME                                   C  an..35
+//    3229  COUNTRY SUB-ENTITY, CODED                   C  an..9
+//    3251  POSTAL CODE, CODED                          C  an..9
+//    3207  COUNTRY, CODED                              C  a2
+//---------------------------------------------------------------------
+//  PAC  PACKAGE                                                       88.1
+//
+//    7224  NUMBER OF PACKAGES                          C  n..6
+//    7075  PACKAGING LEVEL, CODED                      C  n2
+//    C202  PACKAGE TYPE                                M
+//    7233  PACKAGING RELATED INFORMATIONS, CODED       C  an..3
+//    7073  PACKAGING TERMS & CONDITIONS, CODED         C  an2
+//---------------------------------------------------------------------
+//  PAI  PAYMENT INSTRUCTIONS                                          88.1
+//
+//    4439  PAYMENT CONDITIONS, CODED                   C  an..3
+//    4431  PAYMENT GUARANTEE, CODED                    C  an2
+//    4461  PAYMENT MEANS, CODED                        C  an2
+//    4435  PAYMENT CHANNEL, CODED                      C  an2
+//---------------------------------------------------------------------
+//  PAT  PAYMENT TERMS BASIS                                           88.1
+//
+//    4279  PAYMENT TERMS TYPE, CODED                   M  an2
+//    C110  PAYTERMS IDENTIFICATION                     C
+//    C012  PAYMENT TERMS DATE                          C
+//    C112  TERMS TIME INFORMATION                      C
+//    C142  TERMS DISCOUNT/PENALTY                      C
+//    5306  MINIMUM AMOUNT DUE                          C  n..15
+//    5484  PERCENT OF INVOICE PAYABLE                  C  n..7
+//    C104  TERMS OF PAYMENT INFORMATION                C
+//---------------------------------------------------------------------
+//  PCI  PACKAGE IDENTIFICATION                                        88.1
+//
+//    4233  MARKING INSTRUCTION, CODED                  C  an..2
+//    C210  MARKS & LABELS                              C
+//    C008  PRIMARY REFERENCE                           C
+//    C276  DATE                                        C
+//---------------------------------------------------------------------
+//  PIA  ADDITIONAL PRODUCT IDENTIFICATION	                            88.1
+//
+//    C198  PRODUCT IDENTIFICATION                      M
+//    C198  PRODUCT IDENTIFICATION                      C
+//    C198  PRODUCT IDENTIFICATION                      C
+//    C198  PRODUCT IDENTIFICATION                      C
+//    C198  PRODUCT IDENTIFICATION                      C
+//---------------------------------------------------------------------
+//  PRP  PRE PAYMEMT                                                   88.1
+//
+//    5302  PREPAID AMOUNT                              M  n..15
+//    5338  AMOUNT SUBJECT TO TAX                       C  n..15
+//---------------------------------------------------------------------
+//  QVA  QUANTITY VARIANCES                                            88.1
+//
+//  C186 QUANTITY INFORMATION                           M
+//  4221   SHIPMENT/ORDER DISCREPANCY, CODED            C  an..2
+//  6064   QUANTITY DIFFERENCE                          C  n..15
+//  C262 REASON FOR CHANGE                              C
+//---------------------------------------------------------------------
+//  RFF  REFERENCES                                                    88.1
+//
+//    1153  REFERENCE QUALIFIER                         M  an..3
+//    C274  REFERENCE                                   M
+//    C033  DATE/TIME OF REFERENCE                      C
+//---------------------------------------------------------------------
+//  SDQ  DESTINATION QUANTITY                                          88.1
+//
+//    6410  MEASURE UNIT SPECIFIER                      C  an..3
+//    3227  PLACE/LOCATION QUALIFIER                    C  an..3
+//    C264  DESTINATION - QUANTITY                      M
+//    C264  DESTINATION - QUANTITY                      C
+//    C264  DESTINATION - QUANTITY                      C
+//    C264  DESTINATION - QUANTITY                      C
+//    C264  DESTINATION - QUANTITY                      C
+//    C264  DESTINATION - QUANTITY                      C
+//    C264  DESTINATION - QUANTITY                      C
+//    C264  DESTINATION - QUANTITY                      C
+//    C264  DESTINATION - QUANTITY                      C
+//    C264  DESTINATION - QUANTITY                      C
+//---------------------------------------------------------------------
+//  SID  SUB-LINE ITEM DETAILS (CONFIGURATION)                         88.1
+//
+//    1082  LINE ITEM NUMBER                            C  n..6
+//    1229  ACTION REQUEST, CODED                       C  n..2
+//    C198  PRODUCT IDENTIFICATION                      C
+//    C198  PRODUCT IDENTIFICATION                      C
+//    C186  QUANTITY INFORMATION                        C
+//    C118  UNIT PRICE INFORMATION                      C
+//    6170  NUMBER OF PRICING UNITS                     C  n..9
+//    5116  ITEM AMOUNT                                 C  n..15
+//    C134  REFERENCE PRICE INFORMATION                 C
+//    6318  QUALITY/YIELD PERCENTAGE                    C  n..7
+//    1222  CONFIGURATION LEVEL                         C  n..2
+//    7083  CONFIGURATION, CODED                        C  an1
+//    5213  SUBLINE PRICE CHANGE, CODED                 C  an1
+//---------------------------------------------------------------------
+//  TDT  DETAILS OF TRANSPORT                                          88.1
+//
+//    8051  TRANSPORT LEG QUALIFIER                     C  an..3
+//    8028  CONVEYANCE REFERENCE NUMBER                 C  an..17
+//    C220  MODE OF TRANSPORT                           C
+//    8212  IDENTIFICATION OF MEANS OF TRANSPORT        C  an..17
+//    C228  TRANSPORT MEANS                             C
+//    C040  CARRIER                                     C
+//---------------------------------------------------------------------
+//  TMA  TOTAL MESSAGE AMOUNTS                                         88.1
+//
+//    5356  MESSAGE MONETARY AMOUNT                     C  n..15
+//    5360  MESSAGE LINE ITEM TOTAL MONETARY AMOUNT     C  n..15
+//    5348  AMOUNT SUBJECT TO PAYMENT DISCOUNT          C  n..15
+//    5338  AMOUNT SUBJECT TO TAX                       C  n..15
+//    5358  MESSAGE ADDITIONAL MONETARY AMOUNT          C  n..15
+//    5492  TAX AMOUNT                                  C  n..15
+//    5384  TOTAL AMOUNT PREPAID                        C  n..15
+//---------------------------------------------------------------------
+//  TOD  TERMS OF DELIVERY                                             88.1
+//
+//    4055  TERMS OF DELIVERY FUNCTION, CODED           C  an2
+//    4215  TRANSPORT CHARGES METHOD OF PAYMENT, CODED  C  an2
+//    C100  TERMS OF DELIVERY, CODED.                   C
+//    C084  TERMS OF DELIVERY LOCATION.                 C
+//    C084  TERMS OF DELIVERY LOCATION.                 C
+//    C098  TERMS OF DELIVERY                           C
+//---------------------------------------------------------------------
+//  TRI  TAX RELATED INFORMATION                                       88.1
+//
+//    C241  TAX TYPE                                    C
+//    5305  DUTY/TAX CATEGORY CODE                      C  an..3
+//    5278  DUTY/TAX RATE                               C  an..17
+//    5492  TAX AMOUNT                                  C  n..15
+//    3446  PARTY TAX IDENTIFICATION NUMBER             C  an..20
+//---------------------------------------------------------------------
+//  TXS  TAX SUBTOTALS                                                 88.1
+//
+//    C241  TAX TYPE                                    C
+//    5305  DUTY/TAX CATEGORY CODE                      C  an..3
+//    5278  DUTY/TAX RATE                               C  an..17
+//    5338  AMOUNT SUBJECT TO TAX                       C  n..15
+//    5492  TAX AMOUNT                                  C  n..15
+//---------------------------------------------------------------------
+//  TXT  TEXT                                                          88.1
+//
+//    0077  TEXT REFERENCE CODE                         C  an3
+//    0078  FREE FORM TEXT                              M  an..70
+//---------------------------------------------------------------------
+//  UNB  INTERCHANGE HEADER                                            88.1
+//
+//    S001  SYNTAX IDENTIFIER                           M
+//    S002  INTERCHANGE SENDER                          M
+//    S003  INTERCHANGE RECIPIENT                       M
+//    S004  DATE/TIME OF PREPARATION                    M
+//    0020  INTERCHANGE CONTROL REFERENCE               M  an..14
+//    S005  RECIPIENTS REFERENCE PASSWORD               C
+//    0026  APPLICATION REFERENCE                       C  an..14
+//    0029  PROCESSING PRIORITY, CODE                   C  a1
+//    0031  ACKNOWLEDGEMENT REQUEST                     C  n1
+//    0032  COMMUNICATIONS AGREEMENT IDENTIFIER         C  an..35
+//    0035  TEST INDICATOR                              C  n1
+//---------------------------------------------------------------------
+//  UNE  FUNCTIONAL GROUP TRAILER                                      88.1
+//
+//    0060  NUMBER OF MESSAGES                          M  n..6
+//    0048  FUNCTIONAL GROUP REFERENCE NUMBER           M  an..14
+//---------------------------------------------------------------------
+//  UNG  FUNCTIONAL GROUP HEADER                                       88.1
+//
+//    0038  FUNCTIONAL GROUP IDENTIFICATION             M  an..6
+//    S006  APPLICATION SENDER'S IDENTIFICATION         M
+//    S007  APPLICATION RECIPIENTS IDENTIFICATION       M
+//    S004  DATE/TIME OF PREPARATION                    M
+//    0048  FUNCTIONAL GROUP REFERENCE NUMBER           M  an..14
+//    0051  CONTROLLING AGENCY, CODED                   M  an..2
+//    S008  MESSAGE VERSION                             M
+//    0058  APPLICATION PASSWORD                        C  an..14
+//---------------------------------------------------------------------
+//  UNH  MESSAGE HEADER                                                88.1
+//
+//    0062  MESSAGE REFERENCE NUMBER                    M  an..14
+//    S009  MESSAGE IDENTIFIER                          M
+//    0068  COMMON ACCESS REFERENCE                     C  an..35
+//    S010  STATUS OF THE TRANSFER                      C
+//---------------------------------------------------------------------
+//  UNS  SECTION CONTROL                                               88.1
+//
+//    0081  SECTION IDENTIFICATION, CODED               M  a1
+//---------------------------------------------------------------------
+//  UNT  MESSAGE TRAILER                                               88.1
+//
+//    0074  NUMBER OF SEGMENTS IN A MESSAGE             M  n..6
+//    0062  MESSAGE REFERENCE NUMBER                    M  an..14
+//---------------------------------------------------------------------
+//  UNZ  INTERCHANGE TRAILER                                           88.1
+//
+//    0036  INTERCHANGE CONTROL COUNT                   M  n..6
+//    0020  INTERCHANGE CONTROL REFERENCE               M  an..14
+//---------------------------------------------------------------------
+//  VAL  VALUATION                                                     88.1
+//
+//    5297  VALUATION PURPOSE, CODED                    M  an..3
+//    C136  STATED VALUE                                M
+//---------------------------------------------------------------------
 /************************************************ COMPONENTS *********************************************************/
 /************************************************ COMPONENTS *********************************************************/
 /************************************************ COMPONENTS *********************************************************/
@@ -843,189 +1337,488 @@ void c_C206() :
   )?
 }
 
-//  C208  IDENTITY NUMBER RANGE                                        88.1
-//        Desc: Goods item identification numbers, start and
-//              end of consecutively numbered range
-//        Comp: 7402  Identity number                          M  an..35
-//              7402  Identity number                          C  an..35
-//----------------------------------------------------------------------
-//  C210  MARKS & LABELS                                               88.1
-//        Desc: Shipping marks on packages, one to ten lines
-//        Comp: 7102  Shipping marks                           M  an..45
-//              7102  Shipping marks                           C  an..45
-//              7102  Shipping marks                           C  an..45
-//              7102  Shipping marks                           C  an..45
-//              7102  Shipping marks                           C  an..45
-//              7102  Shipping marks                           C  an..45
-//              7102  Shipping marks                           C  an..45
-//              7102  Shipping marks                           C  an..45
-//              7102  Shipping marks                           C  an..45
-//              7102  Shipping marks                           C  an..45
-//----------------------------------------------------------------------
-//  C214  SPECIAL SERVICES IDENTIFICATION                              88.1
-//        Desc: Identification of a special service by
-//              a code from a specified source.
-//        Comp: 7161  Special services, coded                  M  an..6
-//              3055  Code list responsible agency, coded      C  an2
-//              1131  Code list identifier, coded              C  an2
-//----------------------------------------------------------------------
-//  C220  MODE OF TRANSPORT                                            88.1
-//        Desc: Method of transport code or name, code preferred
-//        Comp: 8067  Mode of transport, coded                 C  an..3
-//              8066  Mode of transport                        C  an..17
-//----------------------------------------------------------------------
-//  C224  EQUIPMENT SIZE AND TYPE                                      88.1
-//        Desc: Code and/or name identifying size and type of
-//              equipment used in transport, code preferred
-//        Comp: 8155  Transport equipment size and type, coded C  n4
-//              8154  Transport equipment size and type        C  an..35
-//----------------------------------------------------------------------
-//  C228  TRANSPORT MEANS                                              88.1
-//        Desc: Code and/or name identifying the inactive means
-//              of transport, code preferred
-//        Comp: 8265  Means of transport, coded                C  an..5
-//              8264  Means of transport                       C  an..35
-//----------------------------------------------------------------------
-//  C241  TAX TYPE                                                     88.1
-//
-//
-//        Desc: Code and/or name identifying duty or tax
-//        Comp: 5153  Duty/tax/fee type, coded                 C  an..3
-//              5152  Duty/tax/fee type                        C  an..35
-//----------------------------------------------------------------------
-//  C264  DESTINATION - QUANTITY                                       88.1
-//        Desc: Quantity to be delivered at an identified place
-//        Comp: 3225  Place / location, coded                  M  an..25
-//              6060  Quantity                                 M  n..15
-//----------------------------------------------------------------------
-//  C270  CONTROL                                                      88.1
-//        Desc: Control total for checking integrity of a
-//              message or part of a message
-//        Comp: 6069  Control qualifier                        M  an..3
-//              6066  Control value                            M  n..15
-//              6410  Measure unit specifier                   C  an..3
-//----------------------------------------------------------------------
-//  C271  EQUIPMENT                                                    88.1
-//        Desc: Transport equipment identification
-//        Comp: 8114  Transp. equipm. identif. prefix number   C  an..4
-//              8260  Unit load device identification number   C  an..17
-//                   (includes container identification)
-//----------------------------------------------------------------------
-//  C273  ITEM DESCRIPTION, CODED                                      88.1
-//        Desc: Code of a standard article description from
-//              a specified source
-//        Comp: 7009  Article description, coded               M  an..7
-//              3055  Code list responsible agency, coded      M  an2
-//----------------------------------------------------------------------
-//  C274  REFERENCE                                                    88.1
-//        Desc: Identification numbers used in referencing
-//        Comp: 1154  Reference number                         C  an..35
-//              1156  Line number                              C  an..6
-//----------------------------------------------------------------------
-//  C275  ALTERNATIVE CURRENCY                                         88.1
-//        Desc: Alternative currency used for a specified
-//              purpose in a transaction
-//        Comp: 6345  Currency, coded                          M  a3
-//              6343  Currency qualifier                       C  an..3
-//----------------------------------------------------------------------
-//  C276  DATE                                                         88.1
-//        Desc: Identification of a calendar date
-//        Comp: 2001  Date, coded                              M  n6
-//              2005  Date/time qualifier                      C  an..3
-//---------------------------------------------------------------------
-//  C280  QUANTITY/RANGE                                               88.1
-//        Desc: Quantity/range minimum and maximum limits
-//              in that order
-//        Comp: 6060  Quantity                                 M  n..15
-//              6060  Quantity                                 C  n..15
-//              6410  Measure unit specifier                   C  an..3
-//----------------------------------------------------------------------
-//  C282  PERIOD                                                       88.1
-//        Desc: Start and end dates of a period
-//        Comp: 2001  Date, coded                              M  n6
-//              2001  Date, coded                              C  n6
-//----------------------------------------------------------------------
-//  C284  AMOUNT/RANGE                                                 88.1
-//        Desc: A specified type of monetary amount or
-//               minimum and maximum limits in that order
-//        Comp: 5383  Amount type, coded                       C  an..3
-//              5004  Monetary amount                          M  n..5
-//              5004  Monetary amount                          C  n..5
-//----------------------------------------------------------------------
-//  C329  PATTERN DESCRIPTION                                          88.1
-//        Desc: Shipment, delivery or production interval
-//              pattern and timing
-//        Comp: 2013  Frequency, coded                         C  an..2
-//              2015  Dispatch pattern, coded                  C  an..2
-//              2017  Dispatch pattern timing, coded           C  an1
-//----------------------------------------------------------------------
-//  S001  SYNTAX IDENTIFIER                                            88.1
-//        Desc: Identification of the agency controlling
-//              the syntax and indication of syntax level
-//        Comp: 0001  Syntax identifier                        M  a4
-//              0002  Syntax version number                    M  n1
-// ---------------------------------------------------------------------
-//  S002  INTERCHANGE SENDER                                           88.1
-//        Desc: Identification of the sender of the interchange
-//        Comp: 0004  Sender identification                    M  an..35
-//              0007  Partner identification code qualifier    C  an..4
-//              0008  Address for reverse routing              C  an..14
-//----------------------------------------------------------------------
-//  S003  INTERCHANGE RECIPIENT                                        88.1
-//        Desc: Identification of the recipient of the interchange
-//        Comp: 0010  Recipient Identification                 M  an..35
-//              0007  Partner identification code qualifier    C  an..4
-//              0014  Routing address                          C  an..14
-//----------------------------------------------------------------------
-//  S004  DATE/TIME OF PREPARATION                                     88.1
-//        Desc: Date/time of preparation of the interchange
-//        Comp: 0017  Date of preparation                      M  n6
-//              0019  Time of preparation                      M  n4
-//----------------------------------------------------------------------
-//  S005  RECIPIENT'S REFERENCE PASSWORD                               88.1
-//        Desc: Reference or password as agreed between the
-//              communicating partners.
-//        Comp: 0022  Recipient's reference/password           M  an..14
-//              0025  Recipient's reference/password qualifier C  an2
-//
-//
-//----------------------------------------------------------------------
-//  S006  APPLICATION SENDER'S IDENTIFICATION                          88.1
-//        Desc: Identification of the sender's division, depart-
-//              ment etc. from which a group of message is sent
-//        Comp: 0040  Application sender's identification      M  an..35
-//              0007  Partner identification code qualifier    C  an..4
-//----------------------------------------------------------------------
-//  S007  APPLICATION RECIPIENT'S IDENTIFICATION                       88.1
-//        Desc: Identification of the recipient's division,
-//              department etc. for which a group of messages
-//              is intended
-//        Comp: 0044  Application recipient's identification   M  an..35
-//              0007  Partner identification code qualifier    C  an..4
-//----------------------------------------------------------------------
-//  S008  MESSAGE VERSION                                              88.1
-//        Desc: Specification of the type of messages in the
-//              functional group.
-//        Comp: 0052  Message type version number              M  n..3
-//              0054  Message type release number              C  n..3
-//              0057  Association assigned code                C  an..6
-//----------------------------------------------------------------------
-//  S009  MESSAGE IDENTIFIER                                           88.1
-//        Desc: Identification of the type, version etc. of
-//              the message being interchanged
-//        Comp: 0065  Message type identifier                  M  an..6
-//              0052  Message type version number              M  n..3
-//              0054  Message type release number              C  n..3
-//              0051  Controlling agency, coded                C  an..2
-//              0057  Association assigned code                C  an..6
-//----------------------------------------------------------------------
-//  S010  STATUS OF THE TRANSFER                                       88.1
-//        Desc: Statement that the message is one in a sequence
-//              of transfers relating to the same topic
-//        Comp: 0070  Sequence message transfer number         M  n..2
-//              0073  First/last sequence message transfer     C  a1
-//                    indication
-//----------------------------------------------------------------------
+/** C208  IDENTITY NUMBER RANGE */
+void c_C208() :
+{}
+{
+  d_7402()
+  (
+    < COLON >
+    (
+      d_7402()
+    )?
+  )?
+}
+
+/** C210  MARKS & LABELS */
+void c_C210() :
+{}
+{
+  d_7102()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7102()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7102()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7102()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7102()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7102()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7102()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7102()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_7102()
+    )?
+  )?
+  (
+    < COLON >
+    (
+      d_7102()
+    )?
+  )?
+}
+
+/** C214  SPECIAL SERVICES IDENTIFICATION */
+void c_C214() :
+{}
+{
+  d_7161()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_3055()
+    )?
+  )?
+  (
+    < COLON >
+    (
+      d_1131()
+    )?
+  )?
+}
+
+/** C220  MODE OF TRANSPORT */
+void c_C220() :
+{}
+{
+  (
+    d_8067()
+  )?
+  (
+    < COLON >
+    (
+      d_8066()
+    )?
+  )?
+}
+
+/** C224  EQUIPMENT SIZE AND TYPE */
+void c_C224() :
+{}
+{
+  (
+    d_8155()
+  )?
+  (
+    < COLON >
+    (
+      d_8154()
+    )?
+  )?
+}
+
+/** C228  TRANSPORT MEANS */
+void c_C228() :
+{}
+{
+  (
+    d_8265()
+  )?
+  (
+    < COLON >
+    (
+      d_8264()
+    )?
+  )?
+}
+
+/** C241  TAX TYPE */
+void c_C241() :
+{}
+{
+  (
+    d_5153()
+  )?
+  (
+    < COLON >
+    (
+      d_5152()
+    )?
+  )?
+}
+
+/** C264  DESTINATION - QUANTITY */
+void c_C264() :
+{}
+{
+  d_3225()
+  < COLON >
+  d_6060()
+}
+
+/** C270  CONTROL */
+void c_C270() :
+{}
+{
+  d_6069()
+  < COLON >
+  d_6066()
+  (
+    < COLON >
+    (
+      d_6410()
+    )?
+  )?
+}
+
+/** C271  EQUIPMENT */
+void c_C271() :
+{}
+{
+  (
+    d_8114()
+  )?
+  (
+    < COLON >
+    (
+      d_8260()
+    )?
+  )?
+}
+
+/** C273  ITEM DESCRIPTION, CODED */
+void c_C273() :
+{}
+{
+  d_7009()
+  < COLON >
+  d_3055()
+}
+
+/** C274  REFERENCE */
+void c_C274() :
+{}
+{
+  (
+    d_1154()
+  )?
+  (
+    < COLON >
+    (
+      d_1156()
+    )?
+  )?
+}
+
+/** C275  ALTERNATIVE CURRENCY */
+void c_C275() :
+{}
+{
+  d_6345()
+  (
+    < COLON >
+    (
+      d_6343()
+    )?
+  )?
+}
+
+/** C276  DATE */
+void c_C276() :
+{}
+{
+  d_2001()
+  (
+    < COLON >
+    (
+      d_2005()
+    )?
+  )?
+}
+
+/** C280  QUANTITY/RANGE */
+void c_C280() :
+{}
+{
+  d_6060()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_6060()
+    )?
+  )?
+  (
+    < COLON >
+    (
+      d_6410()
+    )?
+  )?
+}
+
+/** C282  PERIOD */
+void c_C282() :
+{}
+{
+  d_2001()
+  (
+    < COLON >
+    (
+      d_2001()
+    )?
+  )?
+}
+
+/** C284  AMOUNT/RANGE */
+void c_C284() :
+{}
+{
+  (
+    d_5383()
+  )?
+  < COLON >
+  d_5004()
+  (
+    < COLON >
+    (
+      d_5004()
+    )?
+  )?
+}
+
+/** C329  PATTERN DESCRIPTION */
+void c_C329() :
+{}
+{
+  (
+    d_2013()
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_2015()
+    )?
+  )?
+  (
+    < COLON >
+    (
+      d_2017()
+    )?
+  )?
+}
+
+/** S001  SYNTAX IDENTIFIER */
+void c_S001() :
+{}
+{
+  d_0001()
+  < COLON >
+  d_0002()
+}
+
+/** S002  INTERCHANGE SENDER */
+void c_S002() :
+{}
+{
+  d_0004()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_0007()
+    )?
+  )?
+  (
+    < COLON >
+    (
+      d_0008()
+    )?
+  )?
+}
+
+/** S003  INTERCHANGE RECIPIENT */
+void c_S003() :
+{}
+{
+  d_0010()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_0007()
+    )?
+  )?
+  (
+    < COLON >
+    (
+      d_0014()
+    )?
+  )?
+}
+
+/** S004  DATE/TIME OF PREPARATION */
+void c_S004() :
+{}
+{
+  d_0017()
+  < COLON >
+  d_0019()
+}
+
+/** S005  RECIPIENT'S REFERENCE PASSWORD */
+void c_S005() :
+{}
+{
+  d_0022()
+  (
+    < COLON >
+    (
+      d_0025()
+    )?
+  )?
+}
+
+/** S006  APPLICATION SENDER'S IDENTIFICATION */
+void c_S006() :
+{}
+{
+  d_0040()
+  (
+    < COLON >
+    (
+      d_0007()
+    )?
+  )?
+}
+
+/** S007  APPLICATION RECIPIENT'S IDENTIFICATION */
+void c_S007() :
+{}
+{
+  d_0044()
+  (
+    < COLON >
+    (
+      d_0007()
+    )?
+  )?
+}
+
+/** S008  MESSAGE VERSION */
+void c_S008() :
+{}
+{
+  d_0052()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_0054()
+    )?
+  )?
+  (
+    < COLON >
+    (
+      d_0057()
+    )?
+  )?
+}
+
+/** S009  MESSAGE IDENTIFIER */
+void c_S009() :
+{}
+{
+  d_0065()
+  < COLON >
+  d_0052()
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_0054()
+    )?
+  )?
+  (
+    LOOKAHEAD(2)
+    < COLON >
+    (
+      d_0051()
+    )?
+  )?
+  (
+    < COLON >
+    (
+      d_0057()
+    )?
+  )?
+}
+
+/** S010  STATUS OF THE TRANSFER */
+void c_S010() :
+{}
+{
+  d_0070()
+  (
+    < COLON >
+    (
+      d_0073()
+    )?
+  )?
+}
+
 /************************************************ FIELDS *********************************************************/
 /************************************************ FIELDS *********************************************************/
 /************************************************ FIELDS *********************************************************/
@@ -2007,6 +2800,13 @@ void d_5424() :
 
 /** 5426  Allowance/charge percent basis qualifier */
 void d_5426() :
+{}
+{
+  alphanumeric(3)
+}
+
+/** 5427    Allowance/charge percent basis qualifier. */
+void d_5427() :
 {}
 {
   alphanumeric(3)

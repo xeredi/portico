@@ -1,0 +1,27 @@
+D.16B
+-----
+
+- Data
+	NO CHANGES
+
+
+D.16A
+-----
+
+- Data
+	NO CHANGES
+- Batch Composite Data
+       C174 VALUE/RANGE
+
+	       Desc: Measurement value and relevant minimum and maximum
+	             values of the measurement range.
+
+			010 *  6411  Measurement unit code                     C      an..8
+			020    6314  Measure                                   C      an..18
+			030    6162  Range minimum quantity                    C      n..18
+			040    6152  Range maximum quantity                    C      n..18
+			050    6432  Significant digits quantity               C      n..2
+	X  C228 TRANSPORT MEANS (Note: This composite data element will be removed effective with directory D.05B.)
+	X  C292 PRICE CHANGE INFORMATION (Note: This composite data element will be removed effective with directory D.08A.)
+- Batch Segment
+	No CHANGES
