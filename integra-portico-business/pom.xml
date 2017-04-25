@@ -33,9 +33,16 @@
 				</executions>
 				<configuration>
 					<visitor>true</visitor>
+					<listener>false</listener>
 				</configuration>
 			</plugin>
 		</plugins>
+
+		<!-- <pluginManagement> <plugins> <plugin> <artifactId>maven-site-plugin</artifactId> 
+			<version>${maven-site-plugin.version}</version> <configuration> <reportPlugins> 
+			<plugins> <plugin> <groupId>de.flashpixx</groupId> <artifactId>rrd-antlr4</artifactId> 
+			<version>0.0.1</version> </plugin> </plugins> </reportPlugins> </configuration> 
+			</plugin> </plugins> </pluginManagement> -->
 	</build>
 
 	<dependencies>

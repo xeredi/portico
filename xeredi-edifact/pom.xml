@@ -35,7 +35,7 @@
             <plugin>
                 <groupId>org.antlr</groupId>
                 <artifactId>antlr4-maven-plugin</artifactId>
-                <version>4.5</version>
+                <version>4.7</version>
                 <executions>
                     <execution>
                         <id>antlr</id>
@@ -46,6 +46,7 @@
                 </executions>
                 <configuration>
                     <visitor>true</visitor>
+                    <listener>false</listener>
                 </configuration>
             </plugin>
         </plugins>
@@ -55,7 +56,7 @@
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>antlr4-runtime</artifactId>
-            <version>4.5.1-1</version>
+            <version>4.7</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
