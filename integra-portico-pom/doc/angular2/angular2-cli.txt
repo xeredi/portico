@@ -1,0 +1,144 @@
+REFERENCES
+
+https://github.com/angular/angular-cli
+https://www.sitepoint.com/ultimate-angular-cli-reference/
+
+
+
+INSTALL
+
+$ npm install -g @angular/cli
+
+
+
+USAGE
+
+$ ng help
+
+
+
+CREATE PROJECT
+
+$ ng new PROJECT-NAME
+$ cd PROJECT-NAME
+$ ng serve
+
+$ ng new PROJECT-NAME --routing
+Crea el proyecto con app.routing.ts
+
+http://localhost:4200
+
+
+
+BUILD PROJECT
+
+$ ng build
+Minificado:
+$ ng build --prod --env=prod
+
+
+
+CREATE MODULE
+
+$ ng generate module [name]
+
+	Options
+
+	app
+		--app (aliases: -a) default value: 1st app
+		Specifies app name to use.
+	flat
+		--flat
+		Flag to indicate if a dir is created.
+	spec
+		--spec
+		Specifies if a spec file is generated.
+	routing
+		--routing
+		Specifies if a routing module file should be generated.
+
+	EJEMPLO ARGO
+
+	$ ng generate module common
+	$ ng generate module i18n
+	$ ng generate module seguridad --routing
+	$ ng generate module metamodelo --routing
+
+
+
+CREATE SERVICE
+
+$ ng generate service [name]
+
+	Options
+
+	app
+		--app (aliases: -a) default value: 1st app
+		Specifies app name to use.
+	flat
+		--flat
+		Flag to indicate if a dir is created.
+	module
+		--module (aliases: -m)
+		Specifies where the service should be provided.
+	spec
+		--spec
+		Specifies if a spec file is generated.
+
+	EJEMPLO ARGO
+	$ ng generate service seguridad/Usuario
+	$ ng generate service seguridad/Grupo
+
+
+
+CREATE COMPONENT
+
+$ ng generate component [name]
+
+	Options
+
+	app
+		--app (aliases: -a) default value: 1st app
+		Specifies app name to use.
+	change-detection
+		--change-detection (aliases: -cd)
+		Specifies the change detection strategy.
+	flat
+		--flat default value: false
+		Flag to indicate if a dir is created.
+	export
+		--export default value: false
+		Specifies if declaring module exports the component.
+	inline-style
+		--inline-style (aliases: -is) default value: false
+		Specifies if the style will be in the ts file.
+	inline-template
+		--inline-template (aliases: -it) default value: false
+		Specifies if the template will be in the ts file.
+	module
+		--module (aliases: -m)
+		Allows specification of the declaring module's file name (e.g `app.module.ts`).
+	prefix
+		--prefix
+		Specifies whether to use the prefix.
+	skip-import
+		--skip-import default value: false
+		Allows for skipping the module import.
+	spec
+		--spec
+		Specifies if a spec file is generated.
+	view-encapsulation
+		--view-encapsulation (aliases: -ve)
+		Specifies the view encapsulation strategy.
+
+	EJEMPLO ARGO
+	$ ng generate component seguridad/UsuarioAcceso
+	$ ng generate component seguridad/UsuarioGrid
+	$ ng generate component seguridad/Usuario
+	$ ng generate component seguridad/UsuarioEdit
+	$ ng generate component seguridad/UsuarioFilter
+	$ ng generate component seguridad/GrupoGrid
+	$ ng generate component seguridad/Grupo
+	$ ng generate component seguridad/GrupoEdit
+	$ ng generate component seguridad/GrupoFilter
+

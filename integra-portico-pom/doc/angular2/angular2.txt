@@ -11,17 +11,34 @@ NPM EN LINUX (https://docs.npmjs.com/getting-started/fixing-npm-permissions)
     - Verificar que funciona correctamente:
         $ npm install -g jshint
 
+INSTALACION DE LIBRERIAS
+Desde la carpeta del proyecto (coge las librerías definidas en package.json):
+	- Instalar:
+		$ npm install -g
+	- Desinstalar:
+		$ npm uninstall -g
+
 INSTALACION MODULOS NPM
 $ npm install -g typescript
-$ npm install -g angular-cli
-$ npm install -g ionic
+$ npm install -g @angular/cli
+$ npm install -g ionic-framework
 $ npm install -g cordova
 ...
 
 
 ANGULAR CLI (https://github.com/angular/angular-cli)
 - Prepara los ficheros iniciales de un proyecto angular 2
-    $ sudo npm install -g angular-cli
+    $ sudo npm install -g @angular/cli
+	Opciones
+	$ ng help
+
+    Creacion de un proyecto:
+    $ ng new PROJECT-NAME
+	$ cd PROJECT-NAME
+	$ ng serve
+
+	Abrir navegador e ir a: http://localhost:4200/
+
     Desde la carpeta del proyecto:
     $ ng init
     $ ng init --routing (Crea un módulo para las URL)
@@ -77,3 +94,30 @@ $ npm install
 $ npm run build
 $ npm run build:prod
 $ npm run serve
+
+Añadir twitter bootstrap a un proyecto
+
+Instalar bootstrap (Con opcion -g creo que no funciona)
+-------------------------------------------------------
+
+$ npm install ng2-bootstrap bootstrap --save
+
+src/app/app.module.ts and add:
+	import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
+	...
+	@NgModule({
+	...
+	imports: [AlertModule.forRoot(), ... ],
+	...
+	})
+angular-cli.json and insert a new entry into the styles array
+	"styles": [
+		"styles.css",
+		"../node_modules/bootstrap/dist/css/bootstrap.min.css"
+	],
+open src/app/app.component.html and add
+	<alert type="success">hello</alert>
+
+Instalar http-proxy-middleware
+------------------------------
+	http://stackoverflow.com/questions/43067858/angular2-angular-seed-http-proxy-middleware-proxy-api-requests

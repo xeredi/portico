@@ -1,0 +1,234 @@
+SOURCES
+
+https://angular-meteor.com/tutorials/whatsapp2/meteor/setup
+
+
+
+INSTALL
+
+$ curl https://install.meteor.com/ | sh
+
+
+
+CREATE APP
+
+$ meteor create ~/my_cool_app
+$ cd ~/my_cool_app
+$ meteor
+
+Ver app en http://localhost:3000/
+
+
+
+USE ANGULARJS INSTEAD OF BLAZE
+
+$ meteor remove blaze-html-templates
+$ meteor add angular2-compilers
+
+
+
+CREATE FILE tsconfig.json
+
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "dom",
+      "es2015"
+    ],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "target": "es5",
+    "skipLibCheck": true,
+    "stripInternal": true,
+    "noImplicitAny": false,
+    "types": [
+      "meteor-typings",
+      "@types/underscore"
+    ]
+  },
+  "include": [
+    "client/**/*.ts",
+    "server/**/*.ts",
+    "imports/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "compileOnSave": false,
+  "atom": {
+    "rewriteTsconfig": false
+  }
+}
+
+
+
+CREATE FILE declarations.d.ts
+
+declare module '*';
+
+
+
+INSTALL ANGULAR 2 DEPENDENCIES
+
+$ meteor npm install --save @angular/common
+$ meteor npm install --save @angular/animations
+$ meteor npm install --save @angular/compiler
+$ meteor npm install --save @angular/compiler-cli
+$ meteor npm install --save @angular/core
+$ meteor npm install --save @angular/forms
+$ meteor npm install --save @angular/http
+$ meteor npm install --save @angular/platform-browser
+$ meteor npm install --save @angular/platform-browser-dynamic
+$ meteor npm install --save @angular/platform-server
+$ meteor npm install --save meteor-rxjs
+$ meteor npm install --save reflect-metadata
+$ meteor npm install --save rxjs
+$ meteor npm install --save zone.js
+$ meteor npm install --save-dev @types/meteor
+$ meteor npm install --save-dev @types/meteor-accounts-phone
+$ meteor npm install --save-dev @types/underscore
+$ meteor npm install --save-dev meteor-typings
+$ meteor npm install --save-dev typescript
+
+
+
+js TO ts AND css TO scss
+
+$ mv server/main.js server/main.ts
+$ mv client/main.js client/main.ts
+$ mv client/main.css client/main.scss
+
+
+
+CORDOVA PLUGINS
+
+$ meteor add cordova:cordova-plugin-whitelist@1.3.1
+$ meteor add cordova:cordova-plugin-console@1.0.5
+$ meteor add cordova:cordova-plugin-statusbar@2.2.1
+$ meteor add cordova:cordova-plugin-device@1.1.4
+$ meteor add cordova:ionic-plugin-keyboard@1.1.4
+$ meteor add cordova:cordova-plugin-splashscreen@4.0.1
+
+
+
+FILE client/imports/app/app.component.ts
+
+$ mkdir -p client/imports/app
+$ vi client/imports/app/app.component.ts
+
+import { Component } from '@angular/core';
+import template from "./app.html";
+
+@Component({
+  selector: 'my-app',
+  template
+})
+export class MyApp {}
+
+
+
+FILE client/imports/app/app.html
+
+$ mkdir -p client/imports/app
+$ vi client/imports/app/app.html
+
+My App
+
+
+
+FILE client/imports/app/app.module.ts
+
+$ mkdir -p client/imports/app
+$ vi client/imports/app/app.module.ts
+
+import { NgModule, ErrorHandler } from '@angular/core';
+import { MyApp } from './app.component';
+
+@NgModule({
+  declarations: [
+    MyApp
+  ],
+  entryComponents: [
+    MyApp
+  ],
+  providers: [
+    { provide: ErrorHandler }
+  ]
+})
+export class AppModule {}
+
+
+
+FILE client/imports/app/app.scss
+
+$ mkdir -p client/imports/app
+$ vi client/imports/app/app.scss
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+
+
+
+FILE client/main.html
+
+$ mkdir -p client
+$ vi client/main.html
+
+<head>
+  <title>MyApp</title>
+</head>
+
+<body>
+  <my-app></my-app>
+</body>
+
+
+
+FILE client/main.scss
+
+$ mkdir -p client
+$ vi client/main.scss
+
+// App
+@import "imports/app/app";
+
+
+
+FILE client/main.ts
+
+$ mkdir -p client
+$ vi client/main.ts
+
+import 'zone.js';
+import 'reflect-metadata';
+
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { Meteor } from 'meteor/meteor';
+import { AppModule } from './imports/app/app.module';
+
+Meteor.startup(() => {
+  platformBrowserDynamic().bootstrapModule(AppModule);
+});
+
+
+
+FILE declarations.d.ts
+
+$ vi declarations.d.ts
+
+/*
+  A wildcard module is declared below to allow third party libraries to be used in an app even if they don't
+  provide their own type declarations.
+ */
+declare module '*';
+
