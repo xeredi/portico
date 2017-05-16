@@ -7,7 +7,27 @@ https://www.sitepoint.com/ultimate-angular-cli-reference/
 
 INSTALL
 
-$ npm install -g @angular/cli
+$ npm install -g @angular/cli@latest
+
+
+
+UPGRADE
+
+Si venimos de angular-cli:
+$ sudo npm uninstall -g angular-cli
+$ sudo npm uninstall --save-dev angular-cli
+$ sudo npm install -g @angular/cli@latest
+
+Si venimos de una version anterior de @angular/cli
+$ sudo npm uninstall -g @angular/cli
+$ sudo npm cache clean
+$ sudo npm install -g @angular/cli@latest
+
+
+
+VERSION
+
+$ ng --version
 
 
 
@@ -141,4 +161,40 @@ $ ng generate component [name]
 	$ ng generate component seguridad/Grupo
 	$ ng generate component seguridad/GrupoEdit
 	$ ng generate component seguridad/GrupoFilter
+
+
+
+CREATE GUARD
+
+$ ng generate guard [name]
+
+	Options
+
+	app
+		--app (aliases: -a) default value: 1st app
+		Specifies app name to use.
+	flat
+		--flat
+		Indicate if a dir is created.
+	module
+		--module (aliases: -m)
+		Specifies where the guard should be provided.
+	spec
+		--spec
+		Specifies if a spec file is generated.
+
+	EJEMPLO ARGO
+	$ ng generate guard permission --flat
+
+
+
+
+
+EJEMPLO argo-front-ng2
+
+ng new argo-front-ng2 --routing
+cd argo-front-ng2
+ng g service Authentication
+ng g component Login --flat
+ng g guard Permission --flat
 

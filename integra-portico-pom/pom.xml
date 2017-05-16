@@ -166,6 +166,7 @@
 		<module>../integra-portico-jobs</module>
 		<module>../integra-portico-web</module>
 		<module>../argo-front-ng1</module>
+		<module>../argo-front-ng2</module>
 
 		<!-- module>../integra-portico-test</module -->
 	</modules>
