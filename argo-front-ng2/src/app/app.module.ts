@@ -6,19 +6,32 @@ import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login.component';
+import { HomeComponent } from './home.component';
+import { AlertComponent } from './alert.component';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule,
-    AppRoutingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
+import { PermissionGuard } from './permission.guard';
+
+import { AlertService } from './alert.service';
+import { AuthenticationService } from './authentication.service';
+
+@NgModule( {
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        HomeComponent,
+        AlertComponent
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpModule,
+        AppRoutingModule
+    ],
+    providers: [
+        PermissionGuard,
+        AlertService,
+        AuthenticationService
+    ],
+    bootstrap: [AppComponent]
+} )
 export class AppModule { }

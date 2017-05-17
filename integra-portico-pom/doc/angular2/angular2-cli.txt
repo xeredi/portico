@@ -195,6 +195,22 @@ EJEMPLO argo-front-ng2
 ng new argo-front-ng2 --routing
 cd argo-front-ng2
 ng g service Authentication
-ng g component Login --flat
+ng g service Alert
 ng g guard Permission --flat
+ng g component Alert --flat
+ng g component Login --flat
+ng g component Home --flat
 
+
+
+
+AÑADIR TWITTER BOOTSTRAP
+
+$ npm install bootstrap@3
+
+En archivo .angular-cli.json:
+
+"styles": [
+  "../node_modules/bootstrap/dist/css/bootstrap.css",
+  "styles.css"
+],
