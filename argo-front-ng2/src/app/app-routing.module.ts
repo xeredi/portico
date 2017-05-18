@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home.component';
 import { LoginComponent } from './login.component';
 
-import { PermissionGuard } from './permission.guard';
+import { PermissionGuard } from './shared/permission.guard';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [PermissionGuard] }

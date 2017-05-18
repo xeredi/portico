@@ -195,13 +195,13 @@ EJEMPLO argo-front-ng2
 ng new argo-front-ng2 --routing
 cd argo-front-ng2
 ng g service Authentication
-ng g service Alert
-ng g guard Permission --flat
-ng g component Alert --flat
 ng g component Login --flat
 ng g component Home --flat
 
 ng g module shared
+ng g guard shared/Permission --flat
+ng g service shared/Alert
+ng g component shared/Alert --flat
 
 ng g module security --routing
 ng g component security/Home --flat

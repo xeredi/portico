@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { AuthenticationService } from './authentication.service';
-import { AlertService } from './alert.service';
+import { AlertService } from './shared/alert.service';
 
 @Component( {
     moduleId: module.id,

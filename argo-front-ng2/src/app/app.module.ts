@@ -7,13 +7,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login.component';
 import { HomeComponent } from './home.component';
-import { AlertComponent } from './alert.component';
 
-import { PermissionGuard } from './permission.guard';
-
-import { AlertService } from './alert.service';
 import { AuthenticationService } from './authentication.service';
 
+import { SharedModule } from './shared/shared.module';
 import { SecurityModule } from './security/security.module';
 
 
@@ -21,19 +18,17 @@ import { SecurityModule } from './security/security.module';
     declarations: [
         AppComponent,
         LoginComponent,
-        HomeComponent,
-        AlertComponent
+        HomeComponent
     ],
     imports: [
         BrowserModule,
         FormsModule,
         HttpModule,
         AppRoutingModule,
+        SharedModule,
         SecurityModule
     ],
     providers: [
-        PermissionGuard,
-        AlertService,
         AuthenticationService
     ],
     bootstrap: [AppComponent]

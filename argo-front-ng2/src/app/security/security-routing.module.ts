@@ -9,7 +9,7 @@ import { UserGridComponent } from './user-grid.component';
 import { UserComponent } from './user.component';
 import { UserEditComponent } from './user-edit.component';
 
-import { PermissionGuard } from '../permission.guard';
+import { PermissionGuard } from '../shared/permission.guard';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [PermissionGuard] }
