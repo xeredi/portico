@@ -9,6 +9,7 @@ import { PermissionGuard } from './permission.guard';
 const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [PermissionGuard] }
     , { path: 'login', component: LoginComponent }
+    , { path: 'security', loadChildren: './security/security.module#SecurityModule' }
 
     // otherwise redirect to home
     , { path: '**', redirectTo: '' }

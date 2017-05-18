@@ -14,6 +14,9 @@ import { PermissionGuard } from './permission.guard';
 import { AlertService } from './alert.service';
 import { AuthenticationService } from './authentication.service';
 
+import { SecurityModule } from './security/security.module';
+
+
 @NgModule( {
     declarations: [
         AppComponent,
@@ -25,7 +28,8 @@ import { AuthenticationService } from './authentication.service';
         BrowserModule,
         FormsModule,
         HttpModule,
-        AppRoutingModule
+        AppRoutingModule,
+        SecurityModule
     ],
     providers: [
         PermissionGuard,

@@ -201,6 +201,19 @@ ng g component Alert --flat
 ng g component Login --flat
 ng g component Home --flat
 
+ng g module shared
+
+ng g module security --routing
+ng g component security/Home --flat
+ng g component security/GroupGrid --flat
+ng g component security/Group --flat
+ng g component security/GroupEdit --flat
+ng g component security/UserGrid --flat
+ng g component security/User --flat
+ng g component security/UserEdit --flat
+
+
+
 
 
 
