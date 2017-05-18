@@ -12,8 +12,10 @@ export class AuthenticationService {
         return this.http.post( '/seguridad/usuario-acceso.action', { model: { login: username, contrasenia: password } } )
             .map(( response: Response ) => {
                 let serverResponse = response.json();
-                if ( serverResponse && serverResponse.model ) {
-                    localStorage.setItem( 'currentUser', JSON.stringify( serverResponse.model ) );
+                if ( serverResponse && serverResponse.resultadoLogin ) {
+                    console.log( "Login OK" );
+
+                    localStorage.setItem( 'currentUser', JSON.stringify( serverResponse.resultadoLogin ) );
                 }
             } );
     }

@@ -204,6 +204,8 @@ ng g service shared/Alert
 ng g component shared/Alert --flat
 
 ng g module security --routing
+ng g service security/Group
+ng g service security/User
 ng g component security/Home --flat
 ng g component security/GroupGrid --flat
 ng g component security/Group --flat

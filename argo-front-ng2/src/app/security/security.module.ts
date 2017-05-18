@@ -10,11 +10,16 @@ import { UserGridComponent } from './user-grid.component';
 import { UserComponent } from './user.component';
 import { UserEditComponent } from './user-edit.component';
 
+import { UserService } from './user.service';
+import { GroupService } from './group.service';
+
 @NgModule( {
     imports: [
         CommonModule,
         SecurityRoutingModule
     ],
-    declarations: [HomeComponent, GroupGridComponent, GroupComponent, GroupEditComponent, UserGridComponent, UserComponent, UserEditComponent]
+    declarations: [HomeComponent, GroupGridComponent, GroupComponent, GroupEditComponent, UserGridComponent, UserComponent, UserEditComponent],
+    providers: [UserService, GroupService]
+
 } )
 export class SecurityModule { }
