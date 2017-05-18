@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 import { CommonModule } from '@angular/common';
 
 import { SecurityRoutingModule } from './security-routing.module';
@@ -15,6 +17,7 @@ import { GroupService } from './group.service';
 
 @NgModule( {
     imports: [
+        FormsModule,
         CommonModule,
         SecurityRoutingModule
     ],

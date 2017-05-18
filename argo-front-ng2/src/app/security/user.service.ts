@@ -11,6 +11,6 @@ export class UserService {
     }
 
     save( accion: string, item: any ) {
-        return this.http.post( '/seguridad/usuario-edit.action', { accion: accion, model: item, prefix: "usro" } ).map(( response: Response ) => response.json() );
+        return this.http.post( '/seguridad/usuario-save.action', { accion: accion, model: item, prefix: "usro" } ).map(( response: Response ) => response.json() );
     }
 }
