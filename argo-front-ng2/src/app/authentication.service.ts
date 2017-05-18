@@ -9,11 +9,11 @@ export class AuthenticationService {
     constructor( private http: Http ) { }
 
     login( username: string, password: string ) {
-        return this.http.post( '/api/authenticate', JSON.stringify( { username: username, password: password } ) )
+        return this.http.post( '/seguridad/usuario-acceso.action', { model: { login: username, contrasenia: password } } )
             .map(( response: Response ) => {
-                let user = response.json();
-                if ( user && user.token ) {
-                    localStorage.setItem( 'currentUser', JSON.stringify( user ) );
+                let serverResponse = response.json();
+                if ( serverResponse && serverResponse.model ) {
+                    localStorage.setItem( 'currentUser', JSON.stringify( serverResponse.model ) );
                 }
             } );
     }
@@ -22,3 +22,5 @@ export class AuthenticationService {
         localStorage.removeItem( 'currentUser' );
     }
 }
+
+// http://localhost:8081/seguridad/usuario-acceso.action
