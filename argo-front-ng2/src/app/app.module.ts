@@ -14,6 +14,7 @@ import { AuthenticationService } from './authentication.service';
 
 import { SharedModule } from './shared/shared.module';
 import { SecurityModule } from './security/security.module';
+import { SettingsModule } from './settings/settings.module';
 
 import { AlertService } from './shared/alert.service';
 
@@ -30,7 +31,8 @@ import { AlertService } from './shared/alert.service';
         HttpModule,
         AppRoutingModule,
         SharedModule,
-        SecurityModule
+        SecurityModule,
+        SettingsModule
     ],
     providers: [
         AuthenticationService

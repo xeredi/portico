@@ -10,6 +10,7 @@ const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [PermissionGuard] }
     , { path: 'login', component: LoginComponent }
     , { path: 'security', loadChildren: './security/security.module#SecurityModule' }
+    , { path: 'settings', loadChildren: './settings/settings.module#SettingsModule' }
 
     // otherwise redirect to home
     , { path: '**', redirectTo: '' }

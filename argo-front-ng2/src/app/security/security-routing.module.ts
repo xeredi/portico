@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { PermissionGuard } from '../shared/permission.guard';
+
 import { HomeComponent } from './home.component';
 import { GroupGridComponent } from './group-grid.component';
 import { GroupComponent } from './group.component';
@@ -8,8 +10,6 @@ import { GroupEditComponent } from './group-edit.component';
 import { UserGridComponent } from './user-grid.component';
 import { UserComponent } from './user.component';
 import { UserEditComponent } from './user-edit.component';
-
-import { PermissionGuard } from '../shared/permission.guard';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [PermissionGuard] }
