@@ -1,2 +1,6 @@
-<div *ngIf="message"
-	[ngClass]="{ 'alert': message, 'alert-success': message.type === 'success', 'alert-danger': message.type === 'error' }">{{message.text}}</div>
+<div *ngIf="messages"
+    [ngClass]="{ 'alert': messages, 'alert-success': messages.type === 'success', 'alert-danger': messages.type === 'error' }">
+    <ul>
+        <li *ngFor="let message of messages.text">{{message}}</li>
+    </ul>
+</div>

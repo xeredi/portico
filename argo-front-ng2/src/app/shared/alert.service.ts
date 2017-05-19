@@ -23,17 +23,17 @@ export class AlertService {
         } );
     }
 
-    success( message: string, keepAfterNavigationChange = false ) {
+    success( messages: any, keepAfterNavigationChange = false ) {
         this.keepAfterNavigationChange = keepAfterNavigationChange;
-        this.subject.next( { type: 'success', text: message } );
+        this.subject.next( { type: 'success', text: messages } );
     }
 
-    error( message: string, keepAfterNavigationChange = false ) {
+    error( messages: any, keepAfterNavigationChange = false ) {
         this.keepAfterNavigationChange = keepAfterNavigationChange;
-        this.subject.next( { type: 'error', text: message } );
+        this.subject.next( { type: 'error', text: messages } );
     }
 
-    getMessage(): Observable<any> {
+    getMessages(): Observable<any> {
         return this.subject.asObservable();
     }
 }

@@ -27,31 +27,47 @@ export class InterceptedHttp extends Http {
 
         const observableRequest = super
             .request( request, options )
-            .catch( this.onCatch() )
+            .do( res => this.handleResponse( res ) )
+            .catch( res => this.handleError( res ) )
             .finally( this.onFinally() );
 
         return observableRequest;
     }
 
-    /**
-     * Interceptor para captura genérica de errores http
-     * */
-    private onCatch() {
-        this.alertService.success( "onCatch: ", false );
+    private onDo() {
+        return () => console.log( 'onDo' );
+    }
 
-        return ( res: Response ) => {
-            this.alertService.error( "onCatch Error: " + res.toString(), false );
+    private handleResponse( res: Response ) {
+        // this.alertService.success( "handleResponse: " + res.toString(), false );
 
-            console.log( "onCatch Error: " + res.toString() );
+        console.log( "handleResponse: " + res.toString() );
 
-            // Security errors
-            if ( res.status === 401 || res.status === 403 ) {
-                // redirigir al usuario para pedir credenciales
-                //                this.router.navigate( ['user/login'] );
-            }
-            // To Do: Gestión común de otros errores...
-            return Observable.throw( res );
-        };
+        var json = res.json();
+
+        console.log( "jsonResponse: " + JSON.stringify( json ) );
+
+        if ( Object.keys( json.errorMessages ).length > 0 ) {
+            console.log( "has Errors!!!" );
+
+            this.alertService.error( json.errorMessages, false );
+        }
+
+        return res;
+    }
+
+    private handleError( res: Response ) {
+        this.alertService.error( ["handleError: " + res.toString()], false );
+
+        console.log( "handleError: " + res.toString() );
+
+        // Security errors
+        if ( res.status === 401 || res.status === 403 ) {
+            // redirigir al usuario para pedir credenciales
+            //                this.router.navigate( ['user/login'] );
+        }
+
+        return Observable.throw( res );
     }
 
     private onFinally() {

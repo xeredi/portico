@@ -1,38 +1,41 @@
-<div>
+<div class="container-fluid">
     <form role="form" (ngSubmit)="save()">
-        <div class="form-group">
-            <div class="row">
-                <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                    <label>Login</label> <input type="text" [(ngModel)]="model.login" name="login" class="form-control" />
-                </div>
-                <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
-                    <label>Password</label> <input type="password" [(ngModel)]="model.contrasenia" name="contrasenia"
-                        class="form-control" />
-                </div>
-                <div class="col-sm-4 col-md-3 col-lg-3 col-xl-2 form-group-sm">
-                    <label>Email</label> <input type="text" [(ngModel)]="model.email" name="email" class="form-control" />
-                </div>
-                <div class="col-sm-5 col-md-4 col-lg-3 col-xl-2 form-group-sm">
-                    <label>Nombre</label> <input type="text" [(ngModel)]="model.nombre" name="nombre"
-                        class="form-control" />
-                </div>
-                <!--
-				<div class="col-sm-5 col-md-4 col-lg-3 col-xl-2 form-group-sm">
-					<label data-translate="sprt"></label> <select
-						data-ng-model="vm.model.sprt.id"
-						data-ng-options="sprt.id as sprt.etiqueta for sprt in vm.sprtList"
-						class="form-control">
-						<option />
-					</select>
-				</div>
-				<div class="col-sm-5 col-md-4 col-lg-3 col-xl-2 form-group-sm">
-					<label data-translate="prto"></label> <select
-						data-ng-model="vm.model.prto.id"
-						data-ng-options="prto.id as prto.etiqueta for prto in vm.prtoList"
-						class="form-control">
-						<option />
-					</select>
-				</div>
+        <fieldset class="form-group">
+            <legend>User</legend>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                        <label>Login</label> <input type="text" [(ngModel)]="model.login" name="login"
+                            class="form-control form-control-sm" />
+                    </div>
+                    <div class="col-sm-4 col-md-3 col-lg-2 form-group">
+                        <label>Password</label> <input type="password" [(ngModel)]="model.contrasenia"
+                            name="contrasenia" class="form-control form-control-sm" />
+                    </div>
+                    <div class="col-sm-4 col-md-3 col-lg-3 col-xl-2 form-group">
+                        <label>Email</label> <input type="text" [(ngModel)]="model.email" name="email"
+                            class="form-control form-control-sm" />
+                    </div>
+                    <div class="col-sm-5 col-md-4 col-lg-3 col-xl-2 form-group">
+                        <label>Nombre</label> <input type="text" [(ngModel)]="model.nombre" name="model.nombre"
+                            class="form-control form-control-sm" />
+                    </div>
+                    <div class="col-sm-5 col-md-4 col-lg-3 col-xl-2 form-group">
+                        <label>A. Portuaria</label> <select [(ngModel)]="model.sprt" name="model.sprt"
+                            class="form-control form-control-sm">
+                            <option></option>
+                            <option *ngFor="let sprt of sprtList" [ngValue]="sprt">{{sprt.etiqueta}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-5 col-md-4 col-lg-3 col-xl-2 form-group">
+                        <label>Puerto</label> <select [(ngModel)]="model.prto" name="model.prto"
+                            class="form-control form-control-sm">
+                            <option></option>
+                            <option *ngFor="let prto of prtoList" [ngValue]="prto">{{prto.etiqueta}}</option>
+                        </select>
+                    </div>
+                    <!--
 				<div class="col-sm-5 col-md-4 col-lg-3 col-xl-2 form-group-sm">
 					<label data-translate="orga"></label> <input class="form-control"
 						data-ng-controller="ParametroTypeaheadController as ta"
@@ -42,8 +45,23 @@
 						class="form-control">
 				</div>
 				-->
+                </div>
             </div>
-        </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <legend>User Groups</legend>
+            <!--
+                <div *ngFor="let grpo of grpoList"
+                    <input type="checkbox" class="checkbox" [checked]="model.grpoIds.indexOf(grpo.id) >= 0"
+                        (click)="updateGroups($event, grpo.id)"><label><span>{{grpo.nombre}}</span></label>
+                </div>
+-->
+            <div *ngFor="let grpo of grpoList" class="form-check">
+                <label class="form-check-label"><input class="form-check-input" type="checkbox"
+                    [checked]="model.grpoIds.indexOf(grpo.id) >= 0" (click)="updateGroups($event, grpo.id)"><span>{{grpo.nombre}}</span></label>
+            </div>
+        </fieldset>
 
         <!--
 		<fieldset>
@@ -62,14 +80,12 @@
 		</fieldset>
  -->
         <div class="form-group">
-            <div class="btn-group">
-                <button type="submit" class="btn btn-primary">
-                    <i class="glyphicon glyphicon-ok"></i> <span data-translate="btn_guardar">Save</span>
-                </button>
-                <button type="button" (ngClick)="cancel()" class="btn btn-default">
-                    <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_cancelar">Cancel</span>
-                </button>
-            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="glyphicon glyphicon-ok"></i> <span data-translate="btn_guardar">Save</span>
+            </button>
+            <button type="button" (click)="cancel()" class="btn btn-default">
+                <i class="glyphicon glyphicon-remove"></i> <span data-translate="btn_cancelar">Cancel</span>
+            </button>
         </div>
     </form>
 </div>

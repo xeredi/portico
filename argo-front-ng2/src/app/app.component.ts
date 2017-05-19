@@ -5,4 +5,14 @@ import { Component } from '@angular/core';
     selector: 'app',
     templateUrl: './app.component.html'
 } )
-export class AppComponent { }
+export class AppComponent {
+
+    public localStorageItem( id: string ): string {
+        return localStorage.getItem( id );
+    }
+
+    public existsLocalStorageItem( id: string ): boolean {
+        return localStorage.getItem( id ) != null;
+    }
+}
+

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Location } from '@angular/common';
+
 import { UserService } from './user.service';
 
 @Component( {
@@ -15,7 +17,7 @@ export class UserEditComponent implements OnInit {
     orgaEntiId: number;
     fref: Date;
 
-    constructor( private userService: UserService ) { }
+    constructor( private location: Location, private userService: UserService ) { }
 
     ngOnInit() {
         console.log( "User edit" );
@@ -33,11 +35,21 @@ export class UserEditComponent implements OnInit {
         } );
     }
 
+    updateGroups( event: KeyboardEvent, grpoId: number ) {
+        console.log( "UpdateGroups:" + grpoId );
+    }
+
     save() {
         console.log( "User save" );
 
         this.userService.save( "create", this.model ).subscribe( resp => {
             console.log( "User saved" );
         } );
+    }
+
+    cancel() {
+        console.log( "Cancel" );
+
+        this.location.back();
     }
 }
