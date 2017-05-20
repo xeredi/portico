@@ -3,7 +3,37 @@ import { Component } from '@angular/core';
 @Component( {
     moduleId: module.id,
     selector: 'app',
-    templateUrl: './app.component.html'
+    template: `
+<!-- main app container -->
+<div class="jumbotron">
+    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <span class="navbar-brand">ARGO</span>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li *ngIf="existsLocalStorageItem('currentUser')" class="nav-item active"><a class="nav-link"
+                    [routerLink]="['/']">Home <span class="sr-only">(current)</span></a></li>
+                <li *ngIf="existsLocalStorageItem('currentUser')" class="nav-item"><a class="nav-link"
+                    [routerLink]="['/login']">Logout</a></li>
+                <li *ngIf="!existsLocalStorageItem('currentUser')" class="nav-item"><a class="nav-link"
+                    [routerLink]="['/login']">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="col-sm-12">
+            <alert></alert>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
+    `
 } )
 export class AppComponent {
 

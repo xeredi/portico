@@ -5,7 +5,14 @@ import { AlertService } from './alert.service';
 @Component( {
     /*    moduleId: module.id,*/
     selector: 'alert',
-    templateUrl: 'alert.component.html'
+    template: `
+<div *ngIf="messages"
+    [ngClass]="{ 'alert': messages, 'alert-success': messages.type === 'success', 'alert-danger': messages.type === 'error' }">
+    <ul>
+        <li *ngFor="let message of messages.text">{{message}}</li>
+    </ul>
+</div>
+    `
 } )
 export class AlertComponent {
     messages: any;

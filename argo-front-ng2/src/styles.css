@@ -13,6 +13,10 @@ body {
 	font-size: 0.9rem;
 }
 
+.btn-toolbar {
+	margin-bottom: .7em;
+}
+
 .form-group {
 	margin-bottom: .6em;
 }
