@@ -200,6 +200,7 @@ ng g component Home --flat
 
 ng g module shared
 ng g guard shared/Permission --flat
+ng g service shared/Crud
 ng g service shared/Alert
 ng g component shared/Alert --flat
 
@@ -259,3 +260,18 @@ En archivo .angular-cli.json:
   "../node_modules/bootstrap/dist/css/bootstrap.css",
   "styles.css"
 ],
+
+AÑADIR FONT AWESOME
+
+$ npm install font-awesome
+
+
+En archivo .angular-cli.json:
+
+"styles": [
+  "../node_modules/font-awesome/css/font-awesome.css",
+  "styles.css"
+],
+
+
+

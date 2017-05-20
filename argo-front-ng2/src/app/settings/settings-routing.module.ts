@@ -24,6 +24,7 @@ const routes: Routes = [
     , { path: 'port/grid', component: PortGridComponent, canActivate: [PermissionGuard] }
     , { path: 'port/create', component: PortEditComponent, canActivate: [PermissionGuard] }
     , { path: 'configuration/grid', component: ConfigurationGridComponent, canActivate: [PermissionGuard] }
+    , { path: 'configuration/detail/:key', component: ConfigurationComponent, canActivate: [PermissionGuard] }
     , { path: 'i18n-message/grid', component: I18nMessageGridComponent, canActivate: [PermissionGuard] }
 ];
 

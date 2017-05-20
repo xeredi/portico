@@ -16,11 +16,36 @@ import { I18nMessageGridComponent } from './i18n-message-grid.component';
 import { I18nMessageComponent } from './i18n-message.component';
 import { I18nMessageEditComponent } from './i18n-message-edit.component';
 
+import { SuperportService } from './superport.service';
+import { PortService } from './port.service';
+import { ConfigurationService } from './configuration.service';
+import { I18nMessageService } from './i18n-message.service';
+
 @NgModule( {
     imports: [
         CommonModule,
         SettingsRoutingModule
     ],
-    declarations: [HomeComponent, SuperportGridComponent, SuperportComponent, SuperportEditComponent, PortGridComponent, PortComponent, PortEditComponent, ConfigurationGridComponent, ConfigurationComponent, ConfigurationEditComponent, I18nMessageGridComponent, I18nMessageComponent, I18nMessageEditComponent]
+    declarations: [
+        HomeComponent
+        , SuperportGridComponent
+        , SuperportComponent
+        , SuperportEditComponent
+        , PortGridComponent
+        , PortComponent
+        , PortEditComponent
+        , ConfigurationGridComponent
+        , ConfigurationComponent
+        , ConfigurationEditComponent
+        , I18nMessageGridComponent
+        , I18nMessageComponent
+        , I18nMessageEditComponent
+    ],
+    providers: [
+        SuperportService
+        , PortService
+        , ConfigurationService
+        , I18nMessageService
+    ]
 } )
 export class SettingsModule { }

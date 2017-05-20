@@ -6,6 +6,7 @@ import { AlertComponent } from './alert.component';
 import { PermissionGuard } from './permission.guard';
 
 import { AlertService } from './alert.service';
+import { CrudService } from './crud.service';
 
 
 @NgModule( {
@@ -17,7 +18,8 @@ import { AlertService } from './alert.service';
     ],
     providers: [
         PermissionGuard,
-        AlertService
+        AlertService,
+        CrudService
     ], exports: [
         AlertComponent
     ]

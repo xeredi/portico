@@ -21,8 +21,18 @@ import { GroupService } from './group.service';
         CommonModule,
         SecurityRoutingModule
     ],
-    declarations: [HomeComponent, GroupGridComponent, GroupComponent, GroupEditComponent, UserGridComponent, UserComponent, UserEditComponent],
-    providers: [UserService, GroupService]
-
+    declarations: [
+        HomeComponent
+        , GroupGridComponent
+        , GroupComponent
+        , GroupEditComponent
+        , UserGridComponent
+        , UserComponent
+        , UserEditComponent
+    ],
+    providers: [
+        UserService
+        , GroupService
+    ]
 } )
 export class SecurityModule { }
