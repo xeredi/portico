@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 import { SettingsRoutingModule } from './settings-routing.module';
 import { HomeComponent } from './home.component';
@@ -23,6 +25,7 @@ import { I18nMessageService } from './i18n-message.service';
 
 @NgModule( {
     imports: [
+        FormsModule,
         CommonModule,
         SettingsRoutingModule
     ],

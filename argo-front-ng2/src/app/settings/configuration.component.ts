@@ -40,7 +40,7 @@ import { ConfigurationService } from './configuration.service';
 } )
 export class ConfigurationComponent implements OnInit {
 
-    conf: any[] = [];
+    conf: any = {};
 
     constructor( private route: ActivatedRoute,
         private router: Router, private confService: ConfigurationService ) {

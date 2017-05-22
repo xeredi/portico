@@ -21,18 +21,20 @@ const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [PermissionGuard] }
     , { path: 'superport/grid', component: SuperportGridComponent, canActivate: [PermissionGuard] }
     , { path: 'superport/detail/:id', component: SuperportComponent, canActivate: [PermissionGuard] }
-    , { path: 'superport/edit/:action/:id?', component: SuperportEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'superport/edit/:action', component: SuperportEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'superport/edit/:action/:id', component: SuperportEditComponent, canActivate: [PermissionGuard] }
     , { path: 'superport/create', component: SuperportEditComponent, canActivate: [PermissionGuard] }
     , { path: 'port/grid', component: PortGridComponent, canActivate: [PermissionGuard] }
     , { path: 'port/detail/:id', component: PortComponent, canActivate: [PermissionGuard] }
-    , { path: 'port/edit/:action/:id?', component: PortEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'port/edit/:action', component: PortEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'port/edit/:action/:id', component: PortEditComponent, canActivate: [PermissionGuard] }
     , { path: 'port/create', component: PortEditComponent, canActivate: [PermissionGuard] }
     , { path: 'configuration/grid', component: ConfigurationGridComponent, canActivate: [PermissionGuard] }
     , { path: 'configuration/detail/:key', component: ConfigurationComponent, canActivate: [PermissionGuard] }
-    , { path: 'configuration/edit/:action/:key?', component: ConfigurationEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'configuration/edit/:action/:key', component: ConfigurationEditComponent, canActivate: [PermissionGuard] }
     , { path: 'i18n-message/grid', component: I18nMessageGridComponent, canActivate: [PermissionGuard] }
     , { path: 'i18n-message/detail/:key', component: I18nMessageComponent, canActivate: [PermissionGuard] }
-    , { path: 'i18n-message/edit/:action/:key?', component: I18nMessageEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'i18n-message/edit/:action/:key', component: I18nMessageEditComponent, canActivate: [PermissionGuard] }
 ];
 
 @NgModule( {

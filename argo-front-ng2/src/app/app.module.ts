@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { httpFactory } from "./http.factory";
 
@@ -36,6 +37,7 @@ import { AlertService } from './shared/alert.service';
     ],
     providers: [
         AuthenticationService
+        , { provide: LocationStrategy, useClass: HashLocationStrategy }
         , {
             provide: Http,
             deps: [XHRBackend, RequestOptions, AlertService],

@@ -48,8 +48,6 @@ export class UserEditComponent implements OnInit {
     }
 
     cancel() {
-        console.log( "Cancel" );
-
         this.location.back();
     }
 }
