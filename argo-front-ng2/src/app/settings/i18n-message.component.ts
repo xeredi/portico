@@ -6,7 +6,29 @@ import { I18nMessageService } from './i18n-message.service';
 
 @Component( {
     selector: 'app-i18n-message',
-    templateUrl: './i18n-message.component.html'
+    template: `
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group">
+        <a class="btn btn-primary" [routerLink]="['/settings/i18n-message/edit', 'edit', key]"><i class="fa fa-edit"></i>
+            Edit</a>
+    </div>
+</div>
+
+<form>
+    <fieldset class="form-group">
+        <div class="row">
+            <div class="col-sm-9 col-md-8 col-lg-7 form-group-sm">
+                <label>Clave</label>
+                <p class="form-control-static form-control-sm">{{key}}</p>
+            </div>
+            <div *ngFor="let availableLanguage of availableLanguages" class="col-sm-9 col-md-8 col-lg-7 form-group-sm">
+                <label>{{availableLanguage}}</label>
+                <p class="form-control-static form-control-sm">{{i18nMap[availableLanguage]?.value}}</p>
+            </div>
+        </div>
+    </fieldset>
+</form>
+    `
 } )
 export class I18nMessageComponent implements OnInit {
     key: string;

@@ -19,19 +19,19 @@ import { ConfigurationService } from './configuration.service';
         <div class="row">
             <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
                 <label>Tipo Valor</label>
-                <p class="form-control-static">{{conf.valueType}}</p>
+                <p class="form-control-static form-control-sm">{{conf.valueType}}</p>
             </div>
             <div class="col-sm-9 col-md-8 col-lg-7 form-group-sm">
                 <label>Clave</label>
-                <p class="form-control-static">{{conf.key}}</p>
+                <p class="form-control-static form-control-sm">{{conf.key}}</p>
             </div>
             <div class="col-sm-9 col-md-8 col-lg-7 form-group-sm">
                 <label>Valor Defecto</label>
-                <p class="form-control-static">{{conf.defaultValue}}</p>
+                <p class="form-control-static form-control-sm">{{conf.defaultValue}}</p>
             </div>
             <div class="col-sm-9 col-md-8 col-lg-7 form-group-sm">
                 <label>Valor</label>
-                <p class="form-control-static">{{conf.value}}</p>
+                <p class="form-control-static form-control-sm">{{conf.value}}</p>
             </div>
         </div>
     </fieldset>

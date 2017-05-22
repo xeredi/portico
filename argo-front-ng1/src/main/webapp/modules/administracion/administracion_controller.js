@@ -444,7 +444,7 @@
             key : $routeParams.key
         };
 
-        MessageI18nService.edit(vm.accion, vm.search).then(function(data) {
+        MessageI18nService.edit(vm.accion, $routeParams.key).then(function(data) {
             vm.key = data.model;
             vm.i18nMap = data.i18nMap;
 

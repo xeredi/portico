@@ -21,6 +21,10 @@ export class CrudService {
         return this._http.post( this._urlBase + '-save.action', { accion: accion, model: item, prefix: this._prefix } ).map(( response: Response ) => response.json() );
     }
 
+    saveI18n( accion: string, item: any, i18nMap: any ) {
+        return this._http.post( this._urlBase + '-save.action', { accion: accion, model: item, i18nMap: i18nMap, prefix: this._prefix } ).map(( response: Response ) => response.json() );
+    }
+
     list( searchCriteria: any ) {
         return this._http.post( this._urlBase + '-list.action', { model: searchCriteria, prefix: this._prefix } ).map(( response: Response ) => response.json() );
     }

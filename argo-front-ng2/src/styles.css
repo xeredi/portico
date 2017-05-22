@@ -17,12 +17,21 @@ body {
 	margin-bottom: .7em;
 }
 
-.form-group {
+.form-group, .form-group-sm {
 	margin-bottom: .6em;
 }
 
 .form-control, .form-control:focus {
 	color: black;
+}
+
+.form-control-static {
+	border-color: gray;
+	border-width: 1px;
+}
+
+.form-control-static:before {
+	content: "\00a0 ";
 }
 
 label {

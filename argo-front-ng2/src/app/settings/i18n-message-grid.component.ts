@@ -4,7 +4,24 @@ import { I18nMessageService } from './i18n-message.service';
 
 @Component( {
     selector: 'app-i18n-message-grid',
-    templateUrl: './i18n-message-grid.component.html'
+    template: `
+<table class="table table-sm table-bordered table-hover">
+    <thead class="thead-inverse">
+        <tr>
+            <th nowrap="nowrap"></th>
+            <th nowrap="nowrap">Clave</th>
+            <th *ngFor="let availableLanguage of availableLanguages" nowrap="nowrap">{{availableLanguage}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let key of keyList">
+            <td><a [routerLink]="['/settings/i18n-message/detail', key]"><i class="fa fa-search"></i></a></td>
+            <td nowrap="nowrap">{{key}}</td>
+            <td *ngFor="let availableLanguage of availableLanguages" nowrap="nowrap">{{keyMap[key][availableLanguage]}}</td>
+        </tr>
+    </tbody>
+</table>
+    `
 } )
 export class I18nMessageGridComponent implements OnInit {
 
