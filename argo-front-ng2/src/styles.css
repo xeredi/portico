@@ -56,3 +56,7 @@ label {
 .jumbotron {
 	padding: 4rem 1rem;
 }
+
+.table {
+	width: auto;
+}

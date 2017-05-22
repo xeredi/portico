@@ -265,7 +265,6 @@ AÑADIR FONT AWESOME
 
 $ npm install font-awesome
 
-
 En archivo .angular-cli.json:
 
 "styles": [
@@ -273,5 +272,31 @@ En archivo .angular-cli.json:
   "styles.css"
 ],
 
+AÑADIR ANGULAR UI BOOTSTRAP
+
+$ npm install @ng-bootstrap/ng-bootstrap
+
+En el archivo app.module.ts:
+
+	import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
+	@NgModule({
+	  declarations: [AppComponent, ...],
+	  imports: [NgbModule.forRoot(), ...],
+	  bootstrap: [AppComponent]
+	})
+	export class AppModule {
+	}
+
+En resto de módulos:
+
+	import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
+	@NgModule({
+	  declarations: [OtherComponent, ...],
+	  imports: [NgbModule, ...]
+	})
+	export class OtherModule {
+	}
 
 

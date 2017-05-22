@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
@@ -30,6 +31,7 @@ import { AlertService } from './shared/alert.service';
         BrowserModule,
         FormsModule,
         HttpModule,
+        NgbModule.forRoot(),
         AppRoutingModule,
         SharedModule,
         SecurityModule,

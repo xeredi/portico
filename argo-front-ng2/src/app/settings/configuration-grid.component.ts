@@ -5,7 +5,7 @@ import { ConfigurationService } from './configuration.service';
 @Component( {
     selector: 'app-configuration-grid',
     template: `
-<table class="table table-sm table-bordered table-hover">
+<table class="table table-sm table-bordered table-hover table-condensed">
     <thead class="thead-inverse">
         <tr>
             <th nowrap="nowrap"></th>

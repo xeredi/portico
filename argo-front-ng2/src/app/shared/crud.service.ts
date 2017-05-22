@@ -29,6 +29,10 @@ export class CrudService {
         return this._http.post( this._urlBase + '-list.action', { model: searchCriteria, prefix: this._prefix } ).map(( response: Response ) => response.json() );
     }
 
+    listPage( searchCriteria: any, page: number, limit: number ) {
+        return this._http.post( this._urlBase + '-list.action', { model: searchCriteria, page: page, limit: limit, prefix: this._prefix } ).map(( response: Response ) => response.json() );
+    }
+
     detail( id: any ) {
         return this._http.post( this._urlBase + '-detail.action', { model: id, prefix: this._prefix } ).map(( response: Response ) => response.json() );
     }
