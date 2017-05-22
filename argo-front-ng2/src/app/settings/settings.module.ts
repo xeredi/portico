@@ -23,6 +23,8 @@ import { SuperportService } from './superport.service';
 import { PortService } from './port.service';
 import { ConfigurationService } from './configuration.service';
 import { I18nMessageService } from './i18n-message.service';
+import { I18nInfoDetailComponent } from './i18n-info-detail.component';
+import { I18nInfoEditComponent } from './i18n-info-edit.component';
 
 @NgModule( {
     imports: [
@@ -30,8 +32,8 @@ import { I18nMessageService } from './i18n-message.service';
         CommonModule,
         NgbModule,
         SettingsRoutingModule
-    ],
-    declarations: [
+    ]
+    , declarations: [
         HomeComponent
         , SuperportGridComponent
         , SuperportComponent
@@ -45,8 +47,10 @@ import { I18nMessageService } from './i18n-message.service';
         , I18nMessageGridComponent
         , I18nMessageComponent
         , I18nMessageEditComponent
-    ],
-    providers: [
+        , I18nInfoDetailComponent
+        , I18nInfoEditComponent
+    ]
+    , providers: [
         SuperportService
         , PortService
         , ConfigurationService

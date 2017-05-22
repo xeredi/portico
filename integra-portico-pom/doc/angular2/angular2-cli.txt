@@ -203,6 +203,8 @@ ng g guard shared/Permission --flat
 ng g service shared/Crud
 ng g service shared/Alert
 ng g component shared/Alert --flat
+ng g component shared/I18nInfoDetail --flat
+ng g component shared/I18nInfoEdit --flat
 
 ng g module security --routing
 ng g service security/Group

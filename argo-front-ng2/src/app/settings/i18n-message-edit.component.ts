@@ -41,7 +41,6 @@ import { I18nMessageService } from './i18n-message.service';
     `
 } )
 export class I18nMessageEditComponent implements OnInit {
-
     model: any;
     action: string;
     key: string;
