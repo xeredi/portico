@@ -17,6 +17,10 @@ body {
 	margin-bottom: .7em;
 }
 
+.btn-secondary {
+	color: black;
+}
+
 .form-group, .form-group-sm {
 	margin-bottom: .6em;
 }
@@ -31,9 +35,12 @@ body {
 	border-width: 1px;
 }
 */
-
 .form-control-static:before {
 	content: "\00a0 ";
+}
+
+.pagination {
+	margin-bottom: 0px;
 }
 
 label {

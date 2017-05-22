@@ -224,6 +224,7 @@ ng g service settings/Configuration
 ng g service settings/I18nMessage
 ng g component settings/Home --flat
 ng g component settings/SuperportGrid --flat
+ng g component settings/SuperportFilter --flat
 ng g component settings/Superport --flat
 ng g component settings/SuperportEdit --flat
 ng g component settings/PortGrid --flat

@@ -1,5 +1,17 @@
-<ngb-pagination [collectionSize]="count" [(page)]="page" [pageSize]="pageSize" [maxSize]="1" [size]="sm"
-    [boundaryLinks]="false" [ellipses]="false" (pageChange)="pageChange()"></ngb-pagination>
+<div class="btn-toolbar" role="toolbar">
+    <div class="btn-group mr-2" role="group">
+        <ngb-pagination [collectionSize]="count" [(page)]="page" [pageSize]="pageSize" [maxSize]="1" [size]="sm"
+            [boundaryLinks]="false" [ellipses]="false" (pageChange)="pageChange()"></ngb-pagination>
+    </div>
+
+    <div class="btn-group mr-2" role="group">
+        <button class="btn btn-secondary" (click)="editFilter()">
+            <i class="fa fa-filter"></i> Filter
+        </button>
+        <a class="btn btn-secondary" [routerLink]="['/settings/superport/edit', 'create']"><i class="fa fa-file-o"></i>
+            New</a>
+    </div>
+</div>
 
 <span>Nº Resultados: {{count}}</span>
 

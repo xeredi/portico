@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
+import { SuperportFilterComponent } from './superport-filter.component';
 import { SuperportService } from './superport.service';
 
 @Component( {
@@ -14,7 +17,7 @@ export class SuperportGridComponent implements OnInit {
     pageSize: number;
     count: number;
 
-    constructor( private sprtService: SuperportService ) { }
+    constructor( private sprtService: SuperportService, private modalService: NgbModal ) { }
 
     ngOnInit() {
         this.page = 1;
@@ -37,5 +40,9 @@ export class SuperportGridComponent implements OnInit {
         this.doSearch();
     }
 
+    editFilter() {
+        const modalRef = this.modalService.open( SuperportFilterComponent );
 
+        modalRef.componentInstance.name = 'World';
+    }
 }
