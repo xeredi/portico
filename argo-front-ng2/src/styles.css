@@ -43,6 +43,17 @@ body {
 	margin-bottom: 0px;
 }
 
+.modal-lg {
+	max-width: 80%;
+}
+
+.modal-header {
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
 label {
 	margin-bottom: .3rem;
 }

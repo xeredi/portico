@@ -26,4 +26,8 @@ export class SuperportComponent implements OnInit {
                 this.availableLanguages = resp.availableLanguages;
             } );
     }
+
+    remove() {
+        console.log( "Remove" );
+    }
 }

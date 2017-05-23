@@ -25,7 +25,6 @@ import { ConfigurationService } from './configuration.service';
 import { I18nMessageService } from './i18n-message.service';
 import { I18nInfoDetailComponent } from './i18n-info-detail.component';
 import { I18nInfoEditComponent } from './i18n-info-edit.component';
-import { SuperportFilterComponent } from './superport-filter.component';
 
 @NgModule( {
     imports: [
@@ -49,7 +48,7 @@ import { SuperportFilterComponent } from './superport-filter.component';
         , I18nMessageComponent
         , I18nMessageEditComponent
         , I18nInfoDetailComponent
-        , I18nInfoEditComponent, SuperportFilterComponent
+        , I18nInfoEditComponent
     ]
     , providers: [
         SuperportService
@@ -57,8 +56,5 @@ import { SuperportFilterComponent } from './superport-filter.component';
         , ConfigurationService
         , I18nMessageService
     ]
-    , entryComponents: [
-    SuperportFilterComponent
-]
 } )
 export class SettingsModule { }

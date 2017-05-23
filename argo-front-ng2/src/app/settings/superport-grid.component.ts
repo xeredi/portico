@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { SuperportFilterComponent } from './superport-filter.component';
 import { SuperportService } from './superport.service';
 
 @Component( {
@@ -27,6 +26,8 @@ export class SuperportGridComponent implements OnInit {
     }
 
     doSearch() {
+        console.log( "Do Search" );
+
         this.sprtService.listPage( this.model, this.page, this.pageSize ).subscribe( resp => {
             this.model = resp.model;
             this.resultList = resp.resultList;
@@ -40,9 +41,22 @@ export class SuperportGridComponent implements OnInit {
         this.doSearch();
     }
 
-    editFilter() {
-        const modalRef = this.modalService.open( SuperportFilterComponent );
+    editFilter( filter ) {
+        console.log( "Edit Filter" );
 
-        modalRef.componentInstance.name = 'World';
+        this.modalService.open( filter, { size: "lg" } );
+    }
+
+    saveFilter() {
+        console.log( "Save Filter" );
+
+        this.page = 1;
+        this.doSearch();
+    }
+
+    resetFilter() {
+        console.log( "Reset Filter" );
+
+        this.model = {};
     }
 }
