@@ -13,7 +13,8 @@ export class SuperportEditComponent implements OnInit {
     model: any = {};
     action: string;
     id: number;
-    i18nMap: any = {};
+
+    i18nMap: Map<string, any> = new Map<string, any>();
     availableLanguages: string[] = [];
 
     constructor( private location: Location, private route: ActivatedRoute,

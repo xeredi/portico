@@ -13,5 +13,5 @@ import { Component, Input } from '@angular/core';
 } )
 export class I18nInfoDetailComponent {
     @Input() availableLanguages: string[] = [];
-    @Input() i18nMap: any = {};
+    @Input() i18nMap: Map<string, any> = new Map<string, any>();
 }
