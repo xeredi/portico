@@ -17,26 +17,14 @@ export class I18nInfoEditComponent {
 
     @Input()
     set availableLanguages( availableLanguages: string[] ) {
-        // console.log( "Setting availableLanguages" );
-
         this._availableLanguages = availableLanguages;
-
-        for ( let availableLanguage of this._availableLanguages ) {
-            if ( !this.i18nMap[availableLanguage] ) {
-                this.i18nMap[availableLanguage] = {};
-            }
-        }
     }
 
     get availableLanguages(): string[] { return this._availableLanguages; }
 
     @Input()
     set i18nMap( i18nMap: Map<string, any> ) {
-        // console.log( "Setting i18nMap" );
-
-        for ( let key in i18nMap ) {
-            this._i18nMap[key] = i18nMap[key];
-        }
+        this._i18nMap = i18nMap;
     }
 
     get i18nMap(): Map<string, any> { return this._i18nMap; }

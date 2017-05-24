@@ -12,6 +12,20 @@ import { Component, Input } from '@angular/core';
 `
 } )
 export class I18nInfoDetailComponent {
-    @Input() availableLanguages: string[] = [];
-    @Input() i18nMap: Map<string, any> = new Map<string, any>();
+    private _availableLanguages: string[] = [];
+    private _i18nMap: Map<string, any> = new Map<string, any>();
+
+    @Input()
+    set availableLanguages( availableLanguages: string[] ) {
+        this._availableLanguages = availableLanguages;
+    }
+
+    get availableLanguages(): string[] { return this._availableLanguages; }
+
+    @Input()
+    set i18nMap( i18nMap: Map<string, any> ) {
+        this._i18nMap = i18nMap;
+    }
+
+    get i18nMap(): Map<string, any> { return this._i18nMap; }
 }

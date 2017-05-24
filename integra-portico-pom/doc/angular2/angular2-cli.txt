@@ -203,6 +203,7 @@ ng g guard shared/Permission --flat
 ng g service shared/Crud
 ng g service shared/Alert
 ng g component shared/Alert --flat
+ng g service shared/I18nInfo
 ng g component shared/I18nInfoDetail --flat
 ng g component shared/I18nInfoEdit --flat
 
@@ -211,10 +212,10 @@ ng g service security/Group
 ng g service security/User
 ng g component security/Home --flat
 ng g component security/GroupGrid --flat
-ng g component security/Group --flat
+ng g component security/GroupDetail --flat
 ng g component security/GroupEdit --flat
 ng g component security/UserGrid --flat
-ng g component security/User --flat
+ng g component security/UserDetail --flat
 ng g component security/UserEdit --flat
 
 ng g module settings --routing
@@ -224,17 +225,16 @@ ng g service settings/Configuration
 ng g service settings/I18nMessage
 ng g component settings/Home --flat
 ng g component settings/SuperportGrid --flat
-ng g component settings/SuperportFilter --flat
-ng g component settings/Superport --flat
+ng g component settings/SuperportDetail --flat
 ng g component settings/SuperportEdit --flat
 ng g component settings/PortGrid --flat
-ng g component settings/Port --flat
+ng g component settings/PortDetail --flat
 ng g component settings/PortEdit --flat
 ng g component settings/ConfigurationGrid --flat
-ng g component settings/Configuration --flat
+ng g component settings/ConfigurationDetail --flat
 ng g component settings/ConfigurationEdit --flat
 ng g component settings/I18nMessageGrid --flat
-ng g component settings/I18nMessage --flat
+ng g component settings/I18nMessageDetail --flat
 ng g component settings/I18nMessageEdit --flat
 
 

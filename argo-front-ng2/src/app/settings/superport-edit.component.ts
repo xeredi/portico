@@ -4,10 +4,40 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { SuperportService } from './superport.service';
+import { I18nInfoEditComponent } from './i18n-info-edit.component';
+import { I18nInfoService } from './i18n-info.service';
 
 @Component( {
     selector: 'app-superport-edit',
-    templateUrl: './superport-edit.component.html'
+    template: `
+<div class="container-fluid">
+    <form role="form" (ngSubmit)="save()">
+        <fieldset class="form-group">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
+                        <label>Código</label>
+                        <p *ngIf="action == 'edit'" class="form-control-static form-control-sm">{{model.codigo}}</p>
+                        <input *ngIf="action != 'edit'" type="text" [(ngModel)]="model.codigo" name="value"
+                            class="form-control form-control-sm" />
+                    </div>
+                </div>
+
+                <app-i18n-info-edit [(i18nMap)]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-edit>
+            </div>
+        </fieldset>
+
+        <div class="btn-group">
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-check"></i> Save
+            </button>
+            <button type="button" (click)="cancel()" class="btn btn-secondary">
+                <i class="fa fa-close"></i> Cancel
+            </button>
+        </div>
+    </form>
+</div>
+    `
 } )
 export class SuperportEditComponent implements OnInit {
     model: any = {};
@@ -17,8 +47,13 @@ export class SuperportEditComponent implements OnInit {
     i18nMap: Map<string, any> = new Map<string, any>();
     availableLanguages: string[] = [];
 
-    constructor( private location: Location, private route: ActivatedRoute,
-        private router: Router, private sprtService: SuperportService ) {
+    constructor(
+        private location: Location
+        , private route: ActivatedRoute
+        , private router: Router
+        , private sprtService: SuperportService
+        , private i18iService: I18nInfoService
+    ) {
     }
 
     ngOnInit() {
@@ -29,8 +64,9 @@ export class SuperportEditComponent implements OnInit {
             this.sprtService.edit( this.action, { id: this.id } )
                 .subscribe( resp => {
                     this.model = resp.model;
+
                     this.availableLanguages = resp.availableLanguages;
-                    this.i18nMap = resp.i18nMap;
+                    this.i18nMap = this.i18iService.normalize( resp.i18nMap, resp.availableLanguages );
                 } );
         } );
     }
