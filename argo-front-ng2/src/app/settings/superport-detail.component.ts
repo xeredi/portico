@@ -4,7 +4,6 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { SuperportService } from './superport.service';
-import { I18nInfoService } from './i18n-info.service';
 
 @Component( {
     selector: 'app-superport-detail',
@@ -24,7 +23,7 @@ import { I18nInfoService } from './i18n-info.service';
         <div class="row">
             <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
                 <label>Código</label>
-                <p class="form-control-static form-control-sm">{{model.codigo}}</p>
+                <p class="form-control-static form-control-sm" [innerHTML]="model.codigo"></p>
             </div>
         </div>
 
@@ -44,7 +43,6 @@ export class SuperportDetailComponent implements OnInit {
         , private router: Router
         , private location: Location
         , private sprtService: SuperportService
-        , private i18iService: I18nInfoService
     ) {
     }
 
@@ -55,7 +53,7 @@ export class SuperportDetailComponent implements OnInit {
                     this.model = resp.model;
 
                     this.availableLanguages = resp.availableLanguages;
-                    this.i18nMap = this.i18iService.normalize( resp.i18nMap, resp.availableLanguages );
+                    this.i18nMap = resp.i18nMap;
                 } );
         } );
     }

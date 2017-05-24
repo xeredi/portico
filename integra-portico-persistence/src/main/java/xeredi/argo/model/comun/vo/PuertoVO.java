@@ -11,47 +11,49 @@ import lombok.Data;
 @Data
 public final class PuertoVO implements Identifiable, I18nable, Serializable {
 
-    /** The prefix. */
-    private final transient ClassPrefix prefix = ClassPrefix.prto;
+	/** The prefix. */
+	private final transient ClassPrefix prefix = ClassPrefix.prto;
 
-    /** The id. */
-    private Long id;
+	/** The id. */
+	private Long id;
 
-    /** The sprt. */
-    private SuperpuertoVO sprt;
+	/** The sprt. */
+	private SuperpuertoVO sprt = new SuperpuertoVO();
 
-    /** The codigo. */
-    private String codigo;
+	/** The codigo. */
+	private String codigo;
 
-    /** The codigo corto. */
-    private String codigoCorto;
+	/** The codigo corto. */
+	private String codigoCorto;
 
-    /** The codigo edi. */
-    private String codigoEdi;
+	/** The codigo edi. */
+	private String codigoEdi;
 
-    /** The rec aduanero. */
-    private String recAduanero;
+	/** The rec aduanero. */
+	private String recAduanero;
 
-    /** The unlocode. */
-    private String unlocode;
+	/** The unlocode. */
+	private String unlocode;
 
-    /** The nombre. */
-    private String nombre;
+	/** The nombre. */
+	private String nombre;
 
-    /**
-     * Gets the etiqueta.
-     *
-     * @return the etiqueta
-     */
-    public String getEtiqueta() {
-        final StringBuffer buffer = new StringBuffer();
+	/**
+	 * Gets the etiqueta.
+	 *
+	 * @return the etiqueta
+	 */
+	public String getEtiqueta() {
+		final StringBuffer buffer = new StringBuffer();
 
-        buffer.append(codigo);
+		if (codigo != null) {
+			buffer.append(codigo);
+		}
 
-        if (nombre != null) {
-            buffer.append(" - ").append(nombre);
-        }
+		if (nombre != null) {
+			buffer.append(" - ").append(nombre);
+		}
 
-        return buffer.toString();
-    }
+		return buffer.toString();
+	}
 }

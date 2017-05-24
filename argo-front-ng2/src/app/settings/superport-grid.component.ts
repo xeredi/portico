@@ -38,8 +38,8 @@ import { SuperportService } from './superport.service';
         <tbody>
             <tr *ngFor="let item of resultList.list">
                 <td><a [routerLink]="['/settings/superport/detail', item.id]"><i class="fa fa-search"></i></a></td>
-                <td nowrap="nowrap">{{item.codigo}}</td>
-                <td nowrap="nowrap">{{item.nombre}}</td>
+                <td nowrap="nowrap" [innerHTML]="item.codigo"></td>
+                <td nowrap="nowrap" [innerHTML]="item.nombre"></td>
             </tr>
         </tbody>
     </table>
@@ -121,7 +121,9 @@ export class SuperportGridComponent implements OnInit {
 
     editFilter( filter ) {
         // console.log( "Edit Filter" );
-        this.modalService.open( filter, { size: "lg" } );
+        this.sprtService.filter( this.model ).subscribe( resp => {
+            this.modalService.open( filter, { size: "lg" } );
+        } );
     }
 
     saveFilter() {

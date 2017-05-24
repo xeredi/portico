@@ -8,7 +8,7 @@ import { SuperportGridComponent } from './superport-grid.component';
 import { SuperportDetailComponent } from './superport-detail.component';
 import { SuperportEditComponent } from './superport-edit.component';
 import { PortGridComponent } from './port-grid.component';
-import { PortComponent } from './port.component';
+import { PortDetailComponent } from './port-detail.component';
 import { PortEditComponent } from './port-edit.component';
 import { ConfigurationGridComponent } from './configuration-grid.component';
 import { ConfigurationComponent } from './configuration.component';
@@ -25,7 +25,7 @@ const routes: Routes = [
     , { path: 'superport/edit/:action/:id', component: SuperportEditComponent, canActivate: [PermissionGuard] }
     , { path: 'superport/create', component: SuperportEditComponent, canActivate: [PermissionGuard] }
     , { path: 'port/grid', component: PortGridComponent, canActivate: [PermissionGuard] }
-    , { path: 'port/detail/:id', component: PortComponent, canActivate: [PermissionGuard] }
+    , { path: 'port/detail/:id', component: PortDetailComponent, canActivate: [PermissionGuard] }
     , { path: 'port/edit/:action', component: PortEditComponent, canActivate: [PermissionGuard] }
     , { path: 'port/edit/:action/:id', component: PortEditComponent, canActivate: [PermissionGuard] }
     , { path: 'port/create', component: PortEditComponent, canActivate: [PermissionGuard] }

@@ -5,8 +5,10 @@ import { Component, Input } from '@angular/core';
     template: `
 <div class="row">
     <div *ngFor="let availableLanguage of availableLanguages" class="col-sm-9 col-md-8 col-lg-7 form-group-sm">
-        <label>{{availableLanguage}}</label>
-        <p class="form-control-static form-control-sm">{{i18nMap[availableLanguage]?.text}}</p>
+        <div *ngIf="i18nMap[availableLanguage]?.text">
+            <label>{{availableLanguage}}</label>
+            <p class="form-control-static form-control-sm">{{i18nMap[availableLanguage].text}}</p>
+        </div>
     </div>
 </div>
 `

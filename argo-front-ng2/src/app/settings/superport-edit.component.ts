@@ -17,8 +17,8 @@ import { I18nInfoService } from './i18n-info.service';
                 <div class="row">
                     <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
                         <label>Código</label>
-                        <p *ngIf="action == 'edit'" class="form-control-static form-control-sm">{{model.codigo}}</p>
-                        <input *ngIf="action != 'edit'" type="text" [(ngModel)]="model.codigo" name="value"
+                        <p *ngIf="action == 'edit'" class="form-control-static form-control-sm" [innerHTML]="model.codigo"></p>
+                        <input *ngIf="action != 'edit'" type="text" [(ngModel)]="model.codigo" name="model.codigo"
                             class="form-control form-control-sm" />
                     </div>
                 </div>

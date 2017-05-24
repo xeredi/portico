@@ -10,7 +10,7 @@ import { SuperportGridComponent } from './superport-grid.component';
 import { SuperportDetailComponent } from './superport-detail.component';
 import { SuperportEditComponent } from './superport-edit.component';
 import { PortGridComponent } from './port-grid.component';
-import { PortComponent } from './port.component';
+import { PortDetailComponent } from './port-detail.component';
 import { PortEditComponent } from './port-edit.component';
 import { ConfigurationGridComponent } from './configuration-grid.component';
 import { ConfigurationComponent } from './configuration.component';
@@ -40,7 +40,7 @@ import { I18nInfoEditComponent } from './i18n-info-edit.component';
         , SuperportDetailComponent
         , SuperportEditComponent
         , PortGridComponent
-        , PortComponent
+        , PortDetailComponent
         , PortEditComponent
         , ConfigurationGridComponent
         , ConfigurationComponent
