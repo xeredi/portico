@@ -3,11 +3,11 @@ import { Component, Input } from '@angular/core';
 @Component( {
     selector: 'app-i18n-info-detail',
     template: `
-<div class="row">
+<div class="row" *ngIf=i18nMap>
     <div *ngFor="let availableLanguage of availableLanguages" class="col-sm-9 col-md-8 col-lg-7 form-group-sm">
         <div *ngIf="i18nMap[availableLanguage]?.text">
-            <label>{{availableLanguage}}</label>
-            <p class="form-control-static form-control-sm">{{i18nMap[availableLanguage].text}}</p>
+            <label [innerHTML]="availableLanguage"></label>
+            <p class="form-control-static form-control-sm" [innerHTML]="i18nMap[availableLanguage].text"></p>
         </div>
     </div>
 </div>

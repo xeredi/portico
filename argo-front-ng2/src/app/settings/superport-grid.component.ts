@@ -10,68 +10,70 @@ import { SuperportService } from './superport.service';
 @Component( {
     selector: 'app-superport-grid',
     template: `
-<div class="btn-toolbar" role="toolbar">
-    <div class="btn-group mr-2" role="group">
-        <ngb-pagination [collectionSize]="count" [(page)]="page" [pageSize]="pageSize" [maxSize]="1" [size]="sm"
-            [boundaryLinks]="false" [ellipses]="false" (pageChange)="pageChange()"></ngb-pagination>
+<div class="container-fluid" *ngIf="resultList">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group mr-2" role="group">
+            <ngb-pagination [collectionSize]="count" [(page)]="page" [pageSize]="pageSize" [maxSize]="1" [size]="sm"
+                [boundaryLinks]="false" [ellipses]="false" (pageChange)="pageChange()"></ngb-pagination>
+        </div>
+        <div class="btn-group mr-2" role="group">
+            <button class="btn btn-secondary" (click)="editFilter(filter)">
+                <i class="fa fa-filter"></i> Filter
+            </button>
+            <a class="btn btn-secondary" [routerLink]="['/settings/superport/edit', 'create']"><i class="fa fa-file-o"></i>
+                New</a>
+        </div>
     </div>
-    <div class="btn-group mr-2" role="group">
-        <button class="btn btn-secondary" (click)="editFilter(filter)">
-            <i class="fa fa-filter"></i> Filter
+
+    <span>Nº Resultados: {{count}}</span>
+
+    <div class="table-responsive">
+        <table class="table table-sm table-bordered table-hover table-condensed table-nonfluid">
+            <thead class="thead-inverse">
+                <tr>
+                    <th nowrap="nowrap"></th>
+                    <th nowrap="nowrap">Codigo</th>
+                    <th nowrap="nowrap">Nombre</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of resultList.list">
+                    <td><a [routerLink]="['/settings/superport/detail', item.id]"><i class="fa fa-search"></i></a></td>
+                    <td nowrap="nowrap" [innerHTML]="item.codigo"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.nombre"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <ng-template #filter let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Search Filter</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
         </button>
-        <a class="btn btn-secondary" [routerLink]="['/settings/superport/edit', 'create']"><i class="fa fa-file-o"></i>
-            New</a>
     </div>
-</div>
-
-<span>Nº Resultados: {{count}}</span>
-
-<div class="table-responsive">
-    <table class="table table-sm table-bordered table-hover table-condensed table-nonfluid">
-        <thead class="thead-inverse">
-            <tr>
-                <th nowrap="nowrap"></th>
-                <th nowrap="nowrap">Codigo</th>
-                <th nowrap="nowrap">Nombre</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let item of resultList.list">
-                <td><a [routerLink]="['/settings/superport/detail', item.id]"><i class="fa fa-search"></i></a></td>
-                <td nowrap="nowrap" [innerHTML]="item.codigo"></td>
-                <td nowrap="nowrap" [innerHTML]="item.nombre"></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<ng-template #filter let-c="close" let-d="dismiss">
-<div class="modal-header">
-    <h4 class="modal-title">Search Filter</h4>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-<div class="modal-body">
-    <fieldset class="form-group">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
-                    <label>Código</label> <input type="text" [(ngModel)]="model.codigo" name="value"
-                        class="form-control form-control-sm" />
+    <div class="modal-body">
+        <fieldset class="form-group">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
+                        <label>Código</label> <input type="text" [(ngModel)]="model.codigo" name="value"
+                            class="form-control form-control-sm" />
+                    </div>
                 </div>
             </div>
-        </div>
-    </fieldset>
-</div>
-<div class="modal-footer">
-    <div class="btn-group">
-        <button type="button" class="btn btn-primary" (click)="saveFilter();c()">Search</button>
-        <button type="button" class="btn btn-secondary" (click)="resetFilter()">Reset</button>
-        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+        </fieldset>
     </div>
+    <div class="modal-footer">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary" (click)="saveFilter();c()">Search</button>
+            <button type="button" class="btn btn-secondary" (click)="resetFilter()">Reset</button>
+            <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+        </div>
+    </div>
+    </ng-template>
 </div>
-</ng-template>
     `
 } )
 export class SuperportGridComponent implements OnInit {

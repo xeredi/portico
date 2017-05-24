@@ -10,7 +10,7 @@ import { I18nInfoService } from './i18n-info.service';
 @Component( {
     selector: 'app-superport-edit',
     template: `
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="model">
     <form role="form" (ngSubmit)="save()">
         <fieldset class="form-group">
             <div class="container-fluid">

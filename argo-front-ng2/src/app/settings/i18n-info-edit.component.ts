@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component( {
     selector: 'app-i18n-info-edit',
     template: `
-<div class="row">
+<div class="row" *ngIf=i18nMap>
     <div *ngFor="let availableLanguage of availableLanguages" class="col-sm-9 col-md-8 col-lg-7 form-group-sm">
         <label>{{availableLanguage}}</label> <input type="text" [(ngModel)]="i18nMap[availableLanguage].text"
             name="i18nMap[{{availableLanguage}}].text" class="form-control form-control-sm" />
