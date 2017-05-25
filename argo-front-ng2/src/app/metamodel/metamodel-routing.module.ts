@@ -11,6 +11,10 @@ import { EntityDatagroupDetailComponent } from './entity-datagroup-detail.compon
 import { EntityDatagroupEditComponent } from './entity-datagroup-edit.component';
 import { EntityDatatypeDetailComponent } from './entity-datatype-detail.component';
 import { EntityDatatypeEditComponent } from './entity-datatype-edit.component';
+import { EntityActionDetailComponent } from './entity-action-detail.component';
+import { EntityActionEditComponent } from './entity-action-edit.component';
+import { SubparameterTypeDetailComponent } from './subparameter-type-detail.component';
+import { SubparameterTypeEditComponent } from './subparameter-type-edit.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [PermissionGuard] }
@@ -24,6 +28,12 @@ const routes: Routes = [
     , { path: 'entity-datatype/detail/:id', component: EntityDatatypeDetailComponent, canActivate: [PermissionGuard] }
     , { path: 'entity-datatype/edit/:action/:entityId', component: EntityDatatypeEditComponent, canActivate: [PermissionGuard] }
     , { path: 'entity-datatype/edit/:action/:entityId/:id', component: EntityDatatypeEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'entity-action/detail/:id', component: EntityActionDetailComponent, canActivate: [PermissionGuard] }
+    , { path: 'entity-action/edit/:action/:entityId', component: EntityActionEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'entity-action/edit/:action/:entityId/:id', component: EntityActionEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'subparameter-type/detail/:id', component: SubparameterTypeDetailComponent, canActivate: [PermissionGuard] }
+    , { path: 'subparameter-type/edit/:action/:entityId', component: SubparameterTypeEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'subparameter-type/edit/:action/:entityId/:id', component: SubparameterTypeEditComponent, canActivate: [PermissionGuard] }
 ];
 
 @NgModule( {

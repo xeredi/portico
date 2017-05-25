@@ -24,6 +24,16 @@ import { EntityDatatypeGridFragmentComponent } from './entity-datatype-grid-frag
 import { EntityDatatypeDetailComponent } from './entity-datatype-detail.component';
 import { EntityDatatypeEditComponent } from './entity-datatype-edit.component';
 
+import { EntityActionService } from './entity-action.service';
+import { EntityActionGridFragmentComponent } from './entity-action-grid-fragment.component';
+import { EntityActionDetailComponent } from './entity-action-detail.component';
+import { EntityActionEditComponent } from './entity-action-edit.component';
+
+import { SubparameterTypeService } from './subparameter-type.service';
+import { SubparameterTypeGridFragmentComponent } from './subparameter-type-grid-fragment.component';
+import { SubparameterTypeDetailComponent } from './subparameter-type-detail.component';
+import { SubparameterTypeEditComponent } from './subparameter-type-edit.component';
+
 @NgModule( {
     imports: [
         FormsModule
@@ -43,11 +53,19 @@ import { EntityDatatypeEditComponent } from './entity-datatype-edit.component';
         , EntityDatatypeGridFragmentComponent
         , EntityDatatypeDetailComponent
         , EntityDatatypeEditComponent
+        , EntityActionGridFragmentComponent
+        , EntityActionDetailComponent
+        , EntityActionEditComponent
+        , SubparameterTypeGridFragmentComponent
+        , SubparameterTypeDetailComponent
+        , SubparameterTypeEditComponent
     ]
     , providers: [
         ParameterTypeService
         , EntityDatagroupService
         , EntityDatatypeService
+        , EntityActionService
+        , SubparameterTypeService
     ]
     , schemas: [
         CUSTOM_ELEMENTS_SCHEMA

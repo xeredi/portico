@@ -15,6 +15,8 @@ export class ParameterTypeDetailComponent implements OnInit {
     model: any;
     endgList: any[];
     endtList: any[];
+    enacList: any[];
+    subentiList: any[];
 
     i18nMap: Map<string, any>;
     availableLanguages: string[];
@@ -38,6 +40,8 @@ export class ParameterTypeDetailComponent implements OnInit {
                     this.model = resp.model;
                     this.endgList = resp.engdList;
                     this.endtList = resp.entdList;
+                    this.enacList = resp.acenList;
+                    this.subentiList = resp.subentiList;
 
                     this.availableLanguages = resp.availableLanguages;
                     this.i18nMap = resp.i18nMap;

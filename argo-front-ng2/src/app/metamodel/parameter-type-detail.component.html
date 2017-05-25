@@ -14,15 +14,93 @@
     <form>
         <fieldset class="form-group">
             <div class="row">
-                <div class="col-sm-3 col-lg-2 col-xl-1 form-group-sm">
+                <div class="col-sm-4 col-lg-3 col-xl-2 form-group-sm">
                     <label>Código</label>
                     <p class="form-control-static form-control-sm" [innerHTML]="model.codigo"></p>
+                </div>
+                <div class="col-sm-3 col-lg-2 col-xl-1 form-group-sm">
+                    <label>Grid Max. (Filas)</label>
+                    <p class="form-control-static form-control-sm number" [innerHTML]="model.maxGrid"></p>
+                </div>
+                <div class="col-sm-4 col-lg-3 col-xl-2 form-group-sm">
+                    <label>Tipo de Dato</label>
+                    <p class="form-control-static form-control-sm">
+                        <a *ngIf="model.tpdtNombre" [routerLink]="['/metamodel/data-type/detail', model.tpdtNombre.id]"
+                            [innerHTML]="model.tpdtNombre.nombre"></a>
+                    </p>
                 </div>
             </div>
 
             <app-i18n-info-detail [i18nMap]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-detail>
+
+            <div class="row">
+                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
+                    <label>Alta?</label>
+                    <p class="form-control-static form-control-sm">
+                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.cmdAlta]"></i>
+                    </p>
+                </div>
+                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
+                    <label>Baja?</label>
+                    <p class="form-control-static form-control-sm">
+                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.cmdBaja]"></i>
+                    </p>
+                </div>
+                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
+                    <label>Edicion?</label>
+                    <p class="form-control-static form-control-sm">
+                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.cmdEdicion]"></i>
+                    </p>
+                </div>
+                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
+                    <label>Duplicado?</label>
+                    <p class="form-control-static form-control-sm">
+                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.cmdDuplicado]"></i>
+                    </p>
+                </div>
+                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
+                    <label>Gis?</label>
+                    <p class="form-control-static form-control-sm">
+                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.gis]"></i>
+                    </p>
+                </div>
+                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
+                    <label>Puerto?</label>
+                    <p class="form-control-static form-control-sm">
+                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.puerto]"></i>
+                    </p>
+                </div>
+                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
+                    <label>I18n?</label>
+                    <p class="form-control-static form-control-sm">
+                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.i18n]"></i>
+                    </p>
+                </div>
+                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
+                    <label>Temp Explicita?</label>
+                    <p class="form-control-static form-control-sm">
+                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.tempExp]"></i>
+                    </p>
+                </div>
+                <div class="col-sm-4 col-lg-3 col-xl-2 form-group-sm">
+                    <label>Classpath</label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.classpath"></p>
+                </div>
+            </div>
         </fieldset>
     </form>
+
+    <fieldset>
+        <legend>Maestros Dependientes</legend>
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-primary" [routerLink]="['/metamodel/entity-datagroup/edit', 'create', model.id]"><i
+                    class="fa fa-file-o"></i> New</a>
+            </div>
+        </div>
+
+        <app-subparameter-type-grid-fragment [itemList]="subentiList"></app-subparameter-type-grid-fragment>
+    </fieldset>
     </ng-template> </ngb-tab> <ngb-tab id="entityDatatypesTab"> <ng-template ngbTabTitle> Datos </ng-template> <ng-template
         ngbTabContent>
     <fieldset>
@@ -34,7 +112,7 @@
             </div>
         </div>
 
-        <app-entity-datagroup-grid-fragment [endgList]="endgList"></app-entity-datagroup-grid-fragment>
+        <app-entity-datagroup-grid-fragment [itemList]="endgList"></app-entity-datagroup-grid-fragment>
     </fieldset>
     <fieldset>
         <legend>Datos de Entidad</legend>
@@ -45,8 +123,20 @@
             </div>
         </div>
 
-        <app-entity-datatype-grid-fragment [endtList]="endtList"></app-entity-datatype-grid-fragment>
+        <app-entity-datatype-grid-fragment [itemList]="endtList"></app-entity-datatype-grid-fragment>
     </fieldset>
     </ng-template> </ngb-tab> <ngb-tab id="entityFunctionalitiesTab"> <ng-template ngbTabTitle> Funcionalidades </ng-template> <ng-template
-        ngbTabContent> En Construccion </ng-template> </ngb-tab></ngb-tabset>
+        ngbTabContent>
+    <fieldset>
+        <legend>Acciones de Entidad</legend>
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-primary" [routerLink]="['/metamodel/entity-action/edit', 'create', model.id]"><i
+                    class="fa fa-file-o"></i> New</a>
+            </div>
+        </div>
+
+        <app-entity-action-grid-fragment [itemList]="enacList"></app-entity-action-grid-fragment>
+    </fieldset>
+    </ng-template> </ngb-tab></ngb-tabset>
 </div>

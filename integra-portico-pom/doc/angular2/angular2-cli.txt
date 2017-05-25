@@ -241,6 +241,8 @@ ng g module metamodel --routing
 ng g service metamodel/ParameterType
 ng g service metamodel/EntityDatagroup
 ng g service metamodel/EntityDatatype
+ng g service metamodel/EntityAction
+ng g service metamodel/SubparameterType
 ng g component metamodel/Home --flat
 ng g component metamodel/ParameterTypeGrid --flat
 ng g component metamodel/ParameterTypeDetail --flat
@@ -251,9 +253,24 @@ ng g component metamodel/EntityDatagroupEdit --flat
 ng g component metamodel/EntityDatatypeGridFragment --flat
 ng g component metamodel/EntityDatatypeDetail --flat
 ng g component metamodel/EntityDatatypeEdit --flat
+ng g component metamodel/EntityActionGridFragment --flat
+ng g component metamodel/EntityActionDetail --flat
+ng g component metamodel/EntityActionEdit --flat
+ng g component metamodel/SubparameterTypeGridFragment --flat
+ng g component metamodel/SubparameterTypeDetail --flat
+ng g component metamodel/SubparameterTypeEdit --flat
 
 
 
+VER LIBRERIAS DESFASADAS:
+
+$ npm outdated
+
+
+
+ACTUALIZAR LIBRERIAS DESFASADAS A ULTIMA VERSION:
+
+$ npm update -D && npm update -S
 
 
 
@@ -268,6 +285,8 @@ En archivo .angular-cli.json:
   "styles.css"
 ],
 
+
+
 AÑADIR TWITTER BOOTSTRAP 4
 
 $ npm install bootstrap@next
@@ -279,6 +298,8 @@ En archivo .angular-cli.json:
   "styles.css"
 ],
 
+
+
 AÑADIR FONT AWESOME
 
 $ npm install font-awesome
@@ -289,6 +310,8 @@ En archivo .angular-cli.json:
   "../node_modules/font-awesome/css/font-awesome.css",
   "styles.css"
 ],
+
+
 
 AÑADIR ANGULAR UI BOOTSTRAP
 
