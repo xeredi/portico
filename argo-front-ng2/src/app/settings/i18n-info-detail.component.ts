@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component( {
     selector: 'app-i18n-info-detail',
     template: `
+    <p>Test</p>
 <div class="row" *ngIf=i18nMap>
     <div *ngFor="let availableLanguage of availableLanguages" class="col-sm-9 col-md-8 col-lg-7 form-group-sm">
         <div *ngIf="i18nMap[availableLanguage]?.text">
@@ -14,8 +15,8 @@ import { Component, Input } from '@angular/core';
 `
 } )
 export class I18nInfoDetailComponent {
-    private _availableLanguages: string[] = [];
-    private _i18nMap: Map<string, any> = new Map<string, any>();
+    private _availableLanguages: string[];
+    private _i18nMap: Map<string, any>;
 
     @Input()
     set availableLanguages( availableLanguages: string[] ) {

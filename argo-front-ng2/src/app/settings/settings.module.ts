@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -29,10 +29,10 @@ import { I18nInfoEditComponent } from './i18n-info-edit.component';
 
 @NgModule( {
     imports: [
-        FormsModule,
-        CommonModule,
-        NgbModule,
-        SettingsRoutingModule
+        FormsModule
+        , CommonModule
+        , NgbModule
+        , SettingsRoutingModule
     ]
     , declarations: [
         HomeComponent
@@ -57,6 +57,9 @@ import { I18nInfoEditComponent } from './i18n-info-edit.component';
         , ConfigurationService
         , I18nMessageService
         , I18nInfoService
+    ]
+    , schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
     ]
 } )
 export class SettingsModule { }

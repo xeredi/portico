@@ -1,4 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+.number {
+	text-align: right;
+}
+
 .alert-danger {
 	color: red;
 }
@@ -59,6 +63,10 @@ body {
 .modal-footer {
 	justify-content: flex-start;
 	padding: 5px;
+}
+
+.nav {
+	margin-bottom: 10px;
 }
 
 label {

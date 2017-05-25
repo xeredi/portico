@@ -1,0 +1,52 @@
+<div class="container-fluid" *ngIf="model">
+    <ngb-tabset #t="ngbTabset" type="pills" [activeId]="activeTab" (tabChange)="tabChange($event)"> <ngb-tab
+        id="mainTab"> <ng-template ngbTabTitle> Entidad </ng-template> <ng-template ngbTabContent>
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-primary" [routerLink]="['/metamodel/parameter-type/edit', 'edit', model.id]"><i
+                class="fa fa-edit"></i> Edit</a>
+            <button class="btn btn-secondary" (click)="remove()">
+                <i class="fa fa-remove"></i> Remove
+            </button>
+        </div>
+    </div>
+
+    <form>
+        <fieldset class="form-group">
+            <div class="row">
+                <div class="col-sm-3 col-lg-2 col-xl-1 form-group-sm">
+                    <label>Código</label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.codigo"></p>
+                </div>
+            </div>
+
+            <app-i18n-info-detail [i18nMap]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-detail>
+        </fieldset>
+    </form>
+    </ng-template> </ngb-tab> <ngb-tab id="entityDatatypesTab"> <ng-template ngbTabTitle> Datos </ng-template> <ng-template
+        ngbTabContent>
+    <fieldset>
+        <legend>Grupos de datos</legend>
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-primary" [routerLink]="['/metamodel/entity-datagroup/edit', 'create', model.id]"><i
+                    class="fa fa-file-o"></i> New</a>
+            </div>
+        </div>
+
+        <app-entity-datagroup-grid-fragment [endgList]="endgList"></app-entity-datagroup-grid-fragment>
+    </fieldset>
+    <fieldset>
+        <legend>Datos de Entidad</legend>
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-primary" [routerLink]="['/metamodel/entity-datatype/edit', 'create', model.id]"><i
+                    class="fa fa-file-o"></i> New</a>
+            </div>
+        </div>
+
+        <app-entity-datatype-grid-fragment [endtList]="endtList"></app-entity-datatype-grid-fragment>
+    </fieldset>
+    </ng-template> </ngb-tab> <ngb-tab id="entityFunctionalitiesTab"> <ng-template ngbTabTitle> Funcionalidades </ng-template> <ng-template
+        ngbTabContent> En Construccion </ng-template> </ngb-tab></ngb-tabset>
+</div>

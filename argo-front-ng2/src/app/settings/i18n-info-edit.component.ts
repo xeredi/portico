@@ -12,8 +12,8 @@ import { Component, Input } from '@angular/core';
     `
 } )
 export class I18nInfoEditComponent {
-    private _availableLanguages: string[] = [];
-    private _i18nMap: Map<string, any> = new Map<string, any>();
+    private _availableLanguages: string[];
+    private _i18nMap: Map<string, any>;
 
     @Input()
     set availableLanguages( availableLanguages: string[] ) {

@@ -8,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
     <p>You're logged in with Angular 2!!</p>
     <p>
         <a [routerLink]="['/login']">Logout</a> - <a [routerLink]="['/settings']">Settings</a> - <a
-            [routerLink]="['/security']">Security</a>
+            [routerLink]="['/security']">Security</a> - <a
+            [routerLink]="['/metamodel']">Metamodel</a>
     </p>
 </div>
     `

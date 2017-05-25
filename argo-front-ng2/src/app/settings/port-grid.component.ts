@@ -68,7 +68,7 @@ import { PortService } from './port.service';
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
-                        <label>Código</label> <input type="text" [(ngModel)]="model.codigo" name="value"
+                        <label>Código</label> <input type="text" [(ngModel)]="model.codigo" name="model.codigo"
                             class="form-control form-control-sm" />
                     </div>
                     <div class="col-sm-4 col-md-3 col-lg-2 form-group-sm">
@@ -131,7 +131,7 @@ export class PortGridComponent implements OnInit {
             this.resultList = resp.resultList;
             this.count = resp.resultList.count;
 
-            this.location.replaceState( "/settings/port/grid;page=" + this.page + ";model=" + JSON.stringify( this.model ) );
+            this.location.replaceState( "/settings/port/grid;page=" + this.page + ";model=" + encodeURIComponent( JSON.stringify( this.model ) ) );
         } );
     }
 

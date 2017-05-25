@@ -11,6 +11,7 @@ const routes: Routes = [
     , { path: 'login', component: LoginComponent }
     , { path: 'security', loadChildren: './security/security.module#SecurityModule' }
     , { path: 'settings', loadChildren: './settings/settings.module#SettingsModule' }
+    , { path: 'metamodel', loadChildren: './metamodel/metamodel.module#MetamodelModule' }
 
     // otherwise redirect to home
     , { path: '**', redirectTo: '' }

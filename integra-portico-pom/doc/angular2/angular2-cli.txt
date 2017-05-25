@@ -237,6 +237,21 @@ ng g component settings/I18nMessageGrid --flat
 ng g component settings/I18nMessageDetail --flat
 ng g component settings/I18nMessageEdit --flat
 
+ng g module metamodel --routing
+ng g service metamodel/ParameterType
+ng g service metamodel/EntityDatagroup
+ng g service metamodel/EntityDatatype
+ng g component metamodel/Home --flat
+ng g component metamodel/ParameterTypeGrid --flat
+ng g component metamodel/ParameterTypeDetail --flat
+ng g component metamodel/ParameterTypeEdit --flat
+ng g component metamodel/EntityDatagroupGridFragment --flat
+ng g component metamodel/EntityDatagroupDetail --flat
+ng g component metamodel/EntityDatagroupEdit --flat
+ng g component metamodel/EntityDatatypeGridFragment --flat
+ng g component metamodel/EntityDatatypeDetail --flat
+ng g component metamodel/EntityDatatypeEdit --flat
+
 
 
 

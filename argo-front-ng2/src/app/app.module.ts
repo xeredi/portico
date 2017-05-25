@@ -17,27 +17,28 @@ import { AuthenticationService } from './authentication.service';
 import { SharedModule } from './shared/shared.module';
 import { SecurityModule } from './security/security.module';
 import { SettingsModule } from './settings/settings.module';
+import { MetamodelModule } from './metamodel/metamodel.module';
 
 import { AlertService } from './shared/alert.service';
 
-
 @NgModule( {
     declarations: [
-        AppComponent,
-        LoginComponent,
-        HomeComponent
-    ],
-    imports: [
-        BrowserModule,
-        FormsModule,
-        HttpModule,
-        NgbModule.forRoot(),
-        AppRoutingModule,
-        SharedModule,
-        SecurityModule,
-        SettingsModule
-    ],
-    providers: [
+        AppComponent
+        , LoginComponent
+        , HomeComponent
+    ]
+    , imports: [
+        BrowserModule
+        , FormsModule
+        , HttpModule
+        , NgbModule.forRoot()
+        , AppRoutingModule
+        , SharedModule
+        , SecurityModule
+        , SettingsModule
+        , MetamodelModule
+    ]
+    , providers: [
         AuthenticationService
         , { provide: LocationStrategy, useClass: HashLocationStrategy }
         , {
@@ -45,7 +46,7 @@ import { AlertService } from './shared/alert.service';
             deps: [XHRBackend, RequestOptions, AlertService],
             useFactory: httpFactory
         }
-    ],
-    bootstrap: [AppComponent]
+    ]
+    , bootstrap: [AppComponent]
 } )
 export class AppModule { }
