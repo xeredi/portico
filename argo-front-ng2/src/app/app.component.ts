@@ -26,12 +26,8 @@ import { Component } from '@angular/core';
         </div>
     </nav>
 
-    <div class="container-fluid">
-        <div class="col-sm-12">
-            <alert></alert>
-            <router-outlet></router-outlet>
-        </div>
-    </div>
+        <alert></alert>
+        <router-outlet></router-outlet>
 </div>
     `
 } )

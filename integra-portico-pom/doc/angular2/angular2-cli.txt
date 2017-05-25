@@ -260,6 +260,35 @@ ng g component metamodel/SubparameterTypeGridFragment --flat
 ng g component metamodel/SubparameterTypeDetail --flat
 ng g component metamodel/SubparameterTypeEdit --flat
 
+ng g module billing --routing
+ng g service billing/Charge
+ng g service billing/Rule
+ng g service billing/IncompatibleRule
+ng g service billing/Assessment
+ng g service billing/AssessmentLine
+ng g service billing/AssessmentDetail
+ng g component billing/Home --flat
+ng g component billing/ChargeGrid --flat
+ng g component billing/ChargeDetail --flat
+ng g component billing/ChargeEdit --flat
+ng g component billing/RuleGridFragment --flat
+ng g component billing/RuleDetail --flat
+ng g component billing/RuleEdit --flat
+ng g component billing/IncompatibleRuleGridFragment --flat
+ng g component billing/IncompatibleRuleDetail --flat
+ng g component billing/IncompatibleRuleEdit --flat
+ng g component billing/AssessmentGrid --flat
+ng g component billing/AssessmentDetail --flat
+ng g component billing/AssessmentEdit --flat
+ng g component billing/AssessmentChargeGridFragment --flat
+ng g component billing/AssessmentTaxGridFragment --flat
+ng g component billing/AssessmentLineGridFragment --flat
+ng g component billing/AssessmentLineDetail --flat
+ng g component billing/AssessmentLineEdit --flat
+ng g component billing/AssessmentDetailGridFragment --flat
+ng g component billing/AssessmentDetailDetail --flat
+ng g component billing/AssessmentDetailEdit --flat
+
 
 
 VER LIBRERIAS DESFASADAS:

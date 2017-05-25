@@ -18,6 +18,7 @@ import { SharedModule } from './shared/shared.module';
 import { SecurityModule } from './security/security.module';
 import { SettingsModule } from './settings/settings.module';
 import { MetamodelModule } from './metamodel/metamodel.module';
+import { BillingModule } from './billing/billing.module';
 
 import { AlertService } from './shared/alert.service';
 
@@ -37,6 +38,7 @@ import { AlertService } from './shared/alert.service';
         , SecurityModule
         , SettingsModule
         , MetamodelModule
+        , BillingModule
     ]
     , providers: [
         AuthenticationService

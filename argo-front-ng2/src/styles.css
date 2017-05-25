@@ -45,6 +45,11 @@ body {
 	content: "\00a0 ";
 }
 
+.row {
+	margin-right: 0px;
+	margin-left: 0px;
+}
+
 .pagination {
 	margin-bottom: 0px;
 }

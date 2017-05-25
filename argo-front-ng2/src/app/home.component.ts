@@ -9,7 +9,8 @@ import { Component, OnInit } from '@angular/core';
     <p>
         <a [routerLink]="['/login']">Logout</a> - <a [routerLink]="['/settings']">Settings</a> - <a
             [routerLink]="['/security']">Security</a> - <a
-            [routerLink]="['/metamodel']">Metamodel</a>
+            [routerLink]="['/metamodel']">Metamodel</a> - <a
+            [routerLink]="['/billing']">Billing</a>
     </p>
 </div>
     `

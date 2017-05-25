@@ -1,0 +1,129 @@
+<div *ngIf="resultList">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group mr-2" role="group">
+            <ngb-pagination [collectionSize]="count" [(page)]="page" [pageSize]="pageSize" [maxSize]="1" [size]="sm"
+                [boundaryLinks]="false" [ellipses]="false" (pageChange)="pageChange()"></ngb-pagination>
+        </div>
+        <div class="btn-group mr-2" role="group">
+            <button class="btn btn-secondary" (click)="editFilter(filter)">
+                <i class="fa fa-filter"></i> Filter
+            </button>
+            <a class="btn btn-secondary" [routerLink]="['/billing/assessment/edit', 'create']"><i
+                class="fa fa-file-o"></i> New</a>
+        </div>
+    </div>
+
+    <span>Nº Resultados: {{count}}</span>
+
+    <div class="table-responsive">
+        <table class="table table-sm table-bordered table-hover table-condensed table-nonfluid">
+            <thead class="thead-inverse">
+                <tr>
+                    <th></th>
+                    <th>ID</th>
+                    <th>Tipo de Servicio</th>
+                    <th>Servicio</th>
+                    <th>Aspecto</th>
+                    <th>Fac. Rectificada</th>
+                    <th>Pagador</th>
+                    <th>Suj. Pasivo</th>
+                    <th>Importe</th>
+                    <th>Impuesto</th>
+                    <th>Fec. Liquidación</th>
+                    <th>Fec. Inicio</th>
+                    <th>Fec. Fin</th>
+                    <th>Fec. Alta</th>
+                    <th>Cod. Exencion</th>
+                    <th>Info 1</th>
+                    <th>Info 2</th>
+                    <th>Info 3</th>
+                    <th>Info 4</th>
+                    <th>Info 5</th>
+                    <th>Info 6</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of resultList.list">
+                    <td><a [routerLink]="['/billing/assessment/detail', item.id]"><i class="fa fa-search"></i></a></td>
+                    <td nowrap="nowrap" [innerHTML]="item.id"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.srvc.entiId"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.srvc.etiqueta"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.aspc.codigo" [ngbTooltip]="item.aspc.etiqueta"
+                        container="body"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.fctrRectificada?.etiqueta"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.pagador.parametro" [ngbTooltip]="item.pagador.etiqueta"
+                        container="body"></td>
+                    <td nowrap="nowrap"><i class="fa"
+                        [ngClass]="{true:'fa-check', false:'fa-remove'}[item.sujPasivo]"></i></td>
+                    <td nowrap="nowrap" [innerHTML]="item.importe | currency : 'EUR' : 2" class="number"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.impuesto | currency : 'EUR' : 2" class="number"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.fliq | date: 'dd/MM/yyyy'"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.fini | date: 'dd/MM/yyyy HH:mm'"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.ffin | date: 'dd/MM/yyyy HH:mm'"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.falta | date: 'dd/MM/yyyy HH:mm'"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.codExencion"></td>
+                    <td nowrap="nowrap"><span *ngIf="item.info1"> <span
+                            [innerHTML]="item.aspc.version.cetiqInfo1"></span>: <span [innerHTML]="item.info1"></span>
+                    </span></td>
+                    <td nowrap="nowrap"><span *ngIf="item.info2"> <span
+                            [innerHTML]="item.aspc.version.cetiqInfo2"></span>: <span [innerHTML]="item.info2"></span>
+                    </span></td>
+                    <td nowrap="nowrap"><span *ngIf="item.info3"> <span
+                            [innerHTML]="item.aspc.version.cetiqInfo3"></span>: <span [innerHTML]="item.info3"></span>
+                    </span></td>
+                    <td nowrap="nowrap"><span *ngIf="item.info4"> <span
+                            [innerHTML]="item.aspc.version.cetiqInfo4"></span>: <span [innerHTML]="item.info4"></span>
+                    </span></td>
+                    <td nowrap="nowrap"><span *ngIf="item.info5"> <span
+                            [innerHTML]="item.aspc.version.cetiqInfo5"></span>: <span [innerHTML]="item.info5"></span>
+                    </span></td>
+                    <td nowrap="nowrap"><span *ngIf="item.info6"> <span
+                            [innerHTML]="item.aspc.version.cetiqInfo6"></span>: <span [innerHTML]="item.info6"></span>
+                    </span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <ng-template #filter let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Search Filter</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <fieldset class="form-group">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
+                        <label>ID</label> <input type="text" [(ngModel)]="model.id" name="model.id"
+                            class="form-control form-control-sm" />
+                    </div>
+                    <div class="col-lg-3 col-xl-2 form-group-sm">
+                        <label>Tipo de Servicio</label> <select [(ngModel)]="model.tpsrId" name="model.tpsrId"
+                            class="form-control form-control-sm">
+                            <option></option>
+                            <option *ngFor="let item of tpsrList" [value]="item.value" [innerHTML]="item.value"></option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3 col-xl-2 form-group-sm">
+                        <label>Puerto</label> <select [(ngModel)]="model.prtoId" name="model.prtoId"
+                            class="form-control form-control-sm">
+                            <option></option>
+                            <option *ngFor="let item of prtoList" [value]="item.id" [innerHTML]="item.etiqueta"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div class="modal-footer">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary" (click)="saveFilter();c()">Search</button>
+            <button type="button" class="btn btn-secondary" (click)="resetFilter()">Reset</button>
+            <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+        </div>
+    </div>
+    </ng-template>
+</div>

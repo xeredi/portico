@@ -1,4 +1,4 @@
-<div class="container-fluid" *ngIf="model">
+<div *ngIf="model">
     <ngb-tabset #t="ngbTabset" type="pills" [activeId]="activeTab" (tabChange)="tabChange($event)"> <ngb-tab
         id="mainTab"> <ng-template ngbTabTitle> Entidad </ng-template> <ng-template ngbTabContent>
     <div class="btn-toolbar" role="toolbar">
