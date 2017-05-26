@@ -33,7 +33,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let item of resultList.list">
-                    <td><a [routerLink]="['/billing/charge/detail', item.id]"><i class="fa fa-search"></i></a></td>
+                    <td><a [routerLink]="['/billing/charge/detail', item.id, item.fref]"><i class="fa fa-search"></i></a></td>
                     <td nowrap="nowrap" [innerHTML]="item.codigo"></td>
                     <td nowrap="nowrap" [innerHTML]="item.etiqueta"></td>
                     <td nowrap="nowrap" [innerHTML]="item.version.codigoNormalizado"></td>

@@ -32,12 +32,12 @@ const routes: Routes = [
     , { path: 'assessment-detail/edit/:action/:entityId', component: AssessmentDetailEditComponent, canActivate: [PermissionGuard] }
     , { path: 'assessment-detail/edit/:action/:entityId/:id', component: AssessmentDetailEditComponent, canActivate: [PermissionGuard] }
     , { path: 'charge/grid', component: ChargeGridComponent, canActivate: [PermissionGuard] }
-    , { path: 'charge/detail/:id', component: ChargeDetailComponent, canActivate: [PermissionGuard] }
+    , { path: 'charge/detail/:id/:date', component: ChargeDetailComponent, canActivate: [PermissionGuard] }
     , { path: 'charge/edit/:action', component: ChargeEditComponent, canActivate: [PermissionGuard] }
-    , { path: 'charge/edit/:action/:id', component: ChargeEditComponent, canActivate: [PermissionGuard] }
-    , { path: 'rule/detail/:id', component: RuleDetailComponent, canActivate: [PermissionGuard] }
-    , { path: 'rule/edit/:action/:chargeId', component: RuleEditComponent, canActivate: [PermissionGuard] }
-    , { path: 'rule/edit/:action/:chargeId/:id', component: RuleEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'charge/edit/:action/:id/:date', component: ChargeEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'rule/detail/:id/:date', component: RuleDetailComponent, canActivate: [PermissionGuard] }
+    , { path: 'rule/edit/:action/:chargeId/:date', component: RuleEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'rule/edit/:action/:chargeId/:date/:id', component: RuleEditComponent, canActivate: [PermissionGuard] }
     , { path: 'incompatible-rule/detail/:id', component: IncompatibleRuleDetailComponent, canActivate: [PermissionGuard] }
     , { path: 'incompatible-rule/edit/:action/:ruleId', component: IncompatibleRuleEditComponent, canActivate: [PermissionGuard] }
     , { path: 'incompatible-rule/edit/:action/:ruleId/:id', component: IncompatibleRuleEditComponent, canActivate: [PermissionGuard] }
