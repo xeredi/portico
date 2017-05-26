@@ -10,7 +10,7 @@ import { PortService } from './port.service';
 @Component( {
     selector: 'app-port-grid',
     template: `
-<div class="container-fluid" *ngIf="resultList">
+<div *ngIf="resultList">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group mr-2" role="group">
             <ngb-pagination [collectionSize]="count" [(page)]="page" [pageSize]="pageSize" [maxSize]="1" [size]="sm"
@@ -94,14 +94,14 @@ import { PortService } from './port.service';
     `
 } )
 export class PortGridComponent implements OnInit {
-    model: any = {};
-    resultList: any = {};
+    model: any;
+    resultList: any;
 
     page: number;
     pageSize: number;
     count: number;
 
-    sprtList: any[] = [];
+    sprtList: any[];
 
     constructor(
         private route: ActivatedRoute

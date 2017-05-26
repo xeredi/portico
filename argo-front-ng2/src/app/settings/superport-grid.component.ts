@@ -10,7 +10,7 @@ import { SuperportService } from './superport.service';
 @Component( {
     selector: 'app-superport-grid',
     template: `
-<div class="container-fluid" *ngIf="resultList">
+<div *ngIf="resultList">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group mr-2" role="group">
             <ngb-pagination [collectionSize]="count" [(page)]="page" [pageSize]="pageSize" [maxSize]="1" [size]="sm"
@@ -77,8 +77,8 @@ import { SuperportService } from './superport.service';
     `
 } )
 export class SuperportGridComponent implements OnInit {
-    model: any = {};
-    resultList: any = {};
+    model: any;
+    resultList: any;
 
     page: number;
     pageSize: number;

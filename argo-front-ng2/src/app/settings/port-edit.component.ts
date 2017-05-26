@@ -10,48 +10,46 @@ import { I18nInfoService } from './i18n-info.service';
 @Component( {
     selector: 'app-port-edit',
     template: `
-<div class="container-fluid" *ngIf="model">
+<div *ngIf="model">
     <form role="form" (ngSubmit)="save()">
         <fieldset class="form-group">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-3 col-lg-2 col-xl-1 form-group-sm">
-                        <label>Código</label>
-                        <p *ngIf="action == 'edit'" class="form-control-static form-control-sm">{{model.codigo}}</p>
-                        <input *ngIf="action != 'edit'" type="text" [(ngModel)]="model.codigo" name="model.codigo"
-                            class="form-control form-control-sm" />
-                    </div>
-                    <div class="col-sm-3 col-lg-2 col-xl-1 form-group-sm">
-                        <label>Cod. Corto</label>
-                        <input type="text" [(ngModel)]="model.codigoCorto" name="model.codigoCorto"
-                            class="form-control form-control-sm" />
-                    </div>
-                    <div class="col-sm-3 col-lg-2 col-xl-1 form-group-sm">
-                        <label>Cod. EDI</label>
-                        <input type="text" [(ngModel)]="model.codigoEdi" name="model.codigoEdi"
-                            class="form-control form-control-sm" />
-                    </div>
-                    <div class="col-sm-3 col-lg-2 col-xl-1 form-group-sm">
-                        <label>R. Aduanero</label>
-                        <input type="text" [(ngModel)]="model.recAduanero" name="model.recAduanero"
-                            class="form-control form-control-sm" />
-                    </div>
-                    <div class="col-sm-3 col-lg-2 col-xl-1 form-group-sm">
-                        <label>UNlocode</label>
-                        <input type="text" [(ngModel)]="model.unlocode" name="model.unlocode"
-                            class="form-control form-control-sm" />
-                    </div>
-                    <div class="col-sm-4 col-lg-3 col-xl-2 form-group-sm">
-                        <label>A. Portuaria</label>
-                        <select class="form-control form-control-sm" [(ngModel)]="model.sprt.id" name="model.sprt.id">
-                            <option></option>
-                            <option *ngFor="let sprt of sprtList" [ngValue]="sprt.id" [innerHTML]="sprt.etiqueta"></option>
-                        </select>
-                    </div>
+            <div class="row">
+                <div class="col-sm-3 col-lg-2 col-xl-1 form-group-sm">
+                    <label>Código</label>
+                    <p *ngIf="action == 'edit'" class="form-control-static form-control-sm">{{model.codigo}}</p>
+                    <input *ngIf="action != 'edit'" type="text" [(ngModel)]="model.codigo" name="model.codigo"
+                        class="form-control form-control-sm" />
                 </div>
-
-                <app-i18n-info-edit [(i18nMap)]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-edit>
+                <div class="col-sm-3 col-lg-2 col-xl-1 form-group-sm">
+                    <label>Cod. Corto</label>
+                    <input type="text" [(ngModel)]="model.codigoCorto" name="model.codigoCorto"
+                        class="form-control form-control-sm" />
+                </div>
+                <div class="col-sm-3 col-lg-2 col-xl-1 form-group-sm">
+                    <label>Cod. EDI</label>
+                    <input type="text" [(ngModel)]="model.codigoEdi" name="model.codigoEdi"
+                        class="form-control form-control-sm" />
+                </div>
+                <div class="col-sm-3 col-lg-2 col-xl-1 form-group-sm">
+                    <label>R. Aduanero</label>
+                    <input type="text" [(ngModel)]="model.recAduanero" name="model.recAduanero"
+                        class="form-control form-control-sm" />
+                </div>
+                <div class="col-sm-3 col-lg-2 col-xl-1 form-group-sm">
+                    <label>UNlocode</label>
+                    <input type="text" [(ngModel)]="model.unlocode" name="model.unlocode"
+                        class="form-control form-control-sm" />
+                </div>
+                <div class="col-sm-4 col-lg-3 col-xl-2 form-group-sm">
+                    <label>A. Portuaria</label>
+                    <select class="form-control form-control-sm" [(ngModel)]="model.sprt.id" name="model.sprt.id">
+                        <option></option>
+                        <option *ngFor="let sprt of sprtList" [ngValue]="sprt.id" [innerHTML]="sprt.etiqueta"></option>
+                    </select>
+                </div>
             </div>
+
+            <app-i18n-info-edit [(i18nMap)]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-edit>
         </fieldset>
 
         <div class="btn-group">
@@ -71,10 +69,10 @@ export class PortEditComponent implements OnInit {
     action: string;
     id: number;
 
-    i18nMap: Map<string, any> = new Map<string, any>();
-    availableLanguages: string[] = [];
+    i18nMap: Map<string, any>;
+    availableLanguages: string[];
 
-    sprtList: any[] = [];
+    sprtList: any[];
 
     constructor(
         private location: Location

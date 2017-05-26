@@ -8,7 +8,7 @@ import { SuperportService } from './superport.service';
 @Component( {
     selector: 'app-superport-detail',
     template: `
-<div class="container-fluid" *ngIf="model">
+<div *ngIf="model">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a class="btn btn-primary" [routerLink]="['/settings/superport/edit', 'edit', model.id]"><i
@@ -35,10 +35,10 @@ import { SuperportService } from './superport.service';
     `
 } )
 export class SuperportDetailComponent implements OnInit {
-    model: any = {};
+    model: any;
 
-    i18nMap: Map<string, any> = new Map<string, any>();
-    availableLanguages: string[] = [];
+    i18nMap: Map<string, any>;
+    availableLanguages: string[];
 
     constructor(
         private route: ActivatedRoute

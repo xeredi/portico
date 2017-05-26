@@ -10,21 +10,19 @@ import { I18nInfoService } from './i18n-info.service';
 @Component( {
     selector: 'app-superport-edit',
     template: `
-<div class="container-fluid" *ngIf="model">
+<div *ngIf="model">
     <form role="form" (ngSubmit)="save()">
         <fieldset class="form-group">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
-                        <label>Código</label>
-                        <p *ngIf="action == 'edit'" class="form-control-static form-control-sm" [innerHTML]="model.codigo"></p>
-                        <input *ngIf="action != 'edit'" type="text" [(ngModel)]="model.codigo" name="model.codigo"
-                            class="form-control form-control-sm" />
-                    </div>
+            <div class="row">
+                <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
+                    <label>Código</label>
+                    <p *ngIf="action == 'edit'" class="form-control-static form-control-sm" [innerHTML]="model.codigo"></p>
+                    <input *ngIf="action != 'edit'" type="text" [(ngModel)]="model.codigo" name="model.codigo"
+                        class="form-control form-control-sm" />
                 </div>
-
-                <app-i18n-info-edit [(i18nMap)]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-edit>
             </div>
+
+            <app-i18n-info-edit [(i18nMap)]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-edit>
         </fieldset>
 
         <div class="btn-group">
@@ -40,12 +38,12 @@ import { I18nInfoService } from './i18n-info.service';
     `
 } )
 export class SuperportEditComponent implements OnInit {
-    model: any = {};
+    model: any;
     action: string;
     id: number;
 
-    i18nMap: Map<string, any> = new Map<string, any>();
-    availableLanguages: string[] = [];
+    i18nMap: Map<string, any>;
+    availableLanguages: string[];
 
     constructor(
         private location: Location

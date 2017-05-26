@@ -8,7 +8,7 @@ import { PortService } from './port.service';
 @Component( {
     selector: 'app-port-detail',
     template: `
-<div class="container-fluid" *ngIf="model">
+<div *ngIf="model">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a class="btn btn-primary" [routerLink]="['/settings/port/edit', 'edit', model.id]"><i
@@ -57,10 +57,10 @@ import { PortService } from './port.service';
     `
 } )
 export class PortDetailComponent implements OnInit {
-    model: any = {};
+    model: any;
 
-    i18nMap: Map<string, any> = new Map<string, any>();
-    availableLanguages: string[] = [];
+    i18nMap: Map<string, any>;
+    availableLanguages: string[];
 
     constructor(
         private route: ActivatedRoute
