@@ -28,7 +28,7 @@ import { Component, Input } from '@angular/core';
                 <td nowrap="nowrap" [innerHTML]="item.version.fini | date: 'dd/MM/yyyy'"></td>
                 <td nowrap="nowrap" [innerHTML]="item.version.ffin | date: 'dd/MM/yyyy'"></td>
                 <td nowrap="nowrap" [innerHTML]="item.version.orden" class="number"></td>
-                <td nowrap="nowrap" [innerHTML]="item.version.valorBase | number:'1.4-4'" class="number"></td>
+                <td [innerHTML]="item.version.valorBase"></td>
             </tr>
         </tbody>
     </table>

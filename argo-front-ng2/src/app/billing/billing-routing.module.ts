@@ -38,9 +38,9 @@ const routes: Routes = [
     , { path: 'rule/detail/:id/:date', component: RuleDetailComponent, canActivate: [PermissionGuard] }
     , { path: 'rule/edit/:action/:chargeId/:date', component: RuleEditComponent, canActivate: [PermissionGuard] }
     , { path: 'rule/edit/:action/:chargeId/:date/:id', component: RuleEditComponent, canActivate: [PermissionGuard] }
-    , { path: 'incompatible-rule/detail/:id', component: IncompatibleRuleDetailComponent, canActivate: [PermissionGuard] }
-    , { path: 'incompatible-rule/edit/:action/:ruleId', component: IncompatibleRuleEditComponent, canActivate: [PermissionGuard] }
-    , { path: 'incompatible-rule/edit/:action/:ruleId/:id', component: IncompatibleRuleEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'incompatible-rule/detail/:id/:date', component: IncompatibleRuleDetailComponent, canActivate: [PermissionGuard] }
+    , { path: 'incompatible-rule/edit/:action/:ruleId/:date', component: IncompatibleRuleEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'incompatible-rule/edit/:action/:ruleId/:date/:id', component: IncompatibleRuleEditComponent, canActivate: [PermissionGuard] }
 ];
 
 @NgModule( {

@@ -1,3 +1,165 @@
-<p>
-  rule-detail works!
-</p>
+<div *ngIf="model">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-primary"
+                [routerLink]="['/billing/rule/edit', 'edit', model.crgo.id, model.fref, model.id]"><i
+                class="fa fa-edit"></i> Edit</a>
+            <button class="btn btn-secondary" (click)="remove()">
+                <i class="fa fa-remove"></i> Remove
+            </button>
+        </div>
+    </div>
+
+    <form>
+        <fieldset class="form-group">
+            <div class="row">
+                <div class="col-sm-4 col-lg-3 col-xl-2 form-group-sm">
+                    <label>Cargo</label>
+                    <p class="form-control-static form-control-sm">
+                        <a [routerLink]="['/billing/charge/detail', model.crgo.id, model.fref]"
+                            [innerHTML]="model.crgo.etiqueta"></a>
+                    </p>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label>Código</label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.codigo"></p>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label>Tipo</label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.tipo"></p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label>Entidad</label>
+                    <p class="form-control-static form-control-sm">
+                        <a
+                            [routerLink]="[{'T':'/metamodel/service-type/detail', 'S':'/metamodel/subservice-type/detail'}[model.enti.tipo], model.enti.id]"
+                            [innerHTML]="model.enti.id"></a>
+                    </p>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label>Orden</label>
+                    <p class="form-control-static form-control-sm number" [innerHTML]="model.version.orden"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label>F. Inicio</label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.version.fini | date: 'dd/MM/yyyy'"></p>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label>F. Fin</label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.version.ffin | date: 'dd/MM/yyyy'"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-10 col-xl-8 form-group-sm">
+                    <label>Valor Base</label>
+                    <pre class="form-control-static form-control-sm" [innerHTML]="model.version.valorBase"></pre>
+                </div>
+                <div class="col-lg-10 col-xl-8 form-group-sm">
+                    <label>Fórmula</label>
+                    <pre class="form-control-static form-control-sm" [innerHTML]="model.version.formula"></pre>
+                </div>
+                <div class="col-lg-10 col-xl-8 form-group-sm">
+                    <label>Condición</label>
+                    <pre class="form-control-static form-control-sm" [innerHTML]="model.version.condicion"></pre>
+                </div>
+            </div>
+
+            <app-i18n-info-detail [i18nMap]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-detail>
+        </fieldset>
+    </form>
+
+    <fieldset *ngIf="model.tipo == 'T'">
+        <legend>Datos Variables</legend>
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered table-hover table-condensed table-nonfluid">
+                <thead class="thead-inverse">
+                    <tr>
+                        <th nowrap="nowrap">Campo</th>
+                        <th nowrap="nowrap">Etiqueta</th>
+                        <th nowrap="nowrap">Ruta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="model.version.pathInfo1">
+                        <td>Info 1</td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.etiqInfo1"></td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.pathInfo1"></td>
+                    </tr>
+                    <tr *ngIf="model.version.pathInfo2">
+                        <td>Info 2</td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.etiqInfo2"></td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.pathInfo2"></td>
+                    </tr>
+                    <tr *ngIf="model.version.pathInfo3">
+                        <td>Info 3</td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.etiqInfo3"></td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.pathInfo3"></td>
+                    </tr>
+                    <tr *ngIf="model.version.pathInfo4">
+                        <td>Info 4</td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.etiqInfo4"></td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.pathInfo4"></td>
+                    </tr>
+                    <tr *ngIf="model.version.pathInfo5">
+                        <td>Info 5</td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.etiqInfo5"></td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.pathInfo5"></td>
+                    </tr>
+                    <tr *ngIf="model.version.pathInfo6">
+                        <td>Info 6</td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.etiqInfo6"></td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.pathInfo6"></td>
+                    </tr>
+
+                    <tr *ngIf="model.version.pathCuant1">
+                        <td>Cuantitativo 1</td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.etiqCuant1"></td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.pathCuant1"></td>
+                    </tr>
+                    <tr *ngIf="model.version.pathCuant2">
+                        <td>Cuantitativo 2</td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.etiqCuant2"></td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.pathCuant2"></td>
+                    </tr>
+                    <tr *ngIf="model.version.pathCuant3">
+                        <td>Cuantitativo 3</td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.etiqCuant3"></td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.pathCuant3"></td>
+                    </tr>
+                    <tr *ngIf="model.version.pathCuant4">
+                        <td>Cuantitativo 4</td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.etiqCuant4"></td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.pathCuant4"></td>
+                    </tr>
+                    <tr *ngIf="model.version.pathCuant5">
+                        <td>Cuantitativo 5</td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.etiqCuant5"></td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.pathCuant5"></td>
+                    </tr>
+                    <tr *ngIf="model.version.pathCuant6">
+                        <td>Cuantitativo 6</td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.etiqCuant6"></td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.pathCuant6"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Reglas Incompatibles</legend>
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-primary"
+                    [routerLink]="['/billing/incompatible-rule/edit', 'create', model.id, model.fref]"><i
+                    class="fa fa-file-o"></i> New</a>
+            </div>
+        </div>
+
+        <app-incompatible-rule-grid-fragment [itemList]="inrlList"></app-incompatible-rule-grid-fragment>
+    </fieldset>
+</div>

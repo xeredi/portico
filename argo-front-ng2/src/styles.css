@@ -1,4 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+/*
+th.buttonLinks {
+	white-space: nowrap;
+	width: 2%;
+}
+
+table {
+	min-width: 40%;
+}
+*/
+
 .number {
 	text-align: right;
 }
@@ -10,6 +21,10 @@
 body {
 	font-size: 0.9rem;
 	line-height: 1.2;
+	color: black;
+}
+
+pre {
 	color: black;
 }
 
