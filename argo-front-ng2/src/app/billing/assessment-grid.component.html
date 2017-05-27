@@ -1,7 +1,7 @@
 <div *ngIf="resultList">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group mr-2" role="group">
-            <ngb-pagination [collectionSize]="count" [(page)]="page" [pageSize]="pageSize" [maxSize]="1" [size]="sm"
+            <ngb-pagination [collectionSize]="resultList.count" [(page)]="page" [pageSize]="pageSize" [maxSize]="1" [size]="sm"
                 [boundaryLinks]="false" [ellipses]="false" (pageChange)="pageChange()"></ngb-pagination>
         </div>
         <div class="btn-group mr-2" role="group">
@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    <span>Nº Resultados: {{count}}</span>
+    <span>Nº Resultados: {{resultList.count}}</span>
 
     <div class="table-responsive">
         <table class="table table-sm table-bordered table-hover table-condensed table-nonfluid">

@@ -26,11 +26,11 @@ const routes: Routes = [
     , { path: 'assessment/edit/:action', component: AssessmentEditComponent, canActivate: [PermissionGuard] }
     , { path: 'assessment/edit/:action/:id', component: AssessmentEditComponent, canActivate: [PermissionGuard] }
     , { path: 'assessment-line/detail/:id', component: AssessmentLineDetailComponent, canActivate: [PermissionGuard] }
-    , { path: 'assessment-line/edit/:action/:entityId', component: AssessmentLineEditComponent, canActivate: [PermissionGuard] }
-    , { path: 'assessment-line/edit/:action/:entityId/:id', component: AssessmentLineEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'assessment-line/edit/:action/:assessmentId', component: AssessmentLineEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'assessment-line/edit/:action/:assessmentId/:id', component: AssessmentLineEditComponent, canActivate: [PermissionGuard] }
     , { path: 'assessment-detail/detail/:id', component: AssessmentDetailDetailComponent, canActivate: [PermissionGuard] }
-    , { path: 'assessment-detail/edit/:action/:entityId', component: AssessmentDetailEditComponent, canActivate: [PermissionGuard] }
-    , { path: 'assessment-detail/edit/:action/:entityId/:id', component: AssessmentDetailEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'assessment-detail/edit/:action/:assessmentLineId', component: AssessmentDetailEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'assessment-detail/edit/:action/:assessmentLineId/:id', component: AssessmentDetailEditComponent, canActivate: [PermissionGuard] }
     , { path: 'charge/grid', component: ChargeGridComponent, canActivate: [PermissionGuard] }
     , { path: 'charge/detail/:id/:date', component: ChargeDetailComponent, canActivate: [PermissionGuard] }
     , { path: 'charge/edit/:action', component: ChargeEditComponent, canActivate: [PermissionGuard] }

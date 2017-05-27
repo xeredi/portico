@@ -16,7 +16,6 @@ export class AssessmentGridComponent implements OnInit {
     resultList: any;
     page: number;
     pageSize: number;
-    count: number;
 
     tpsrList: any[];
     prtoList: any[];
@@ -71,7 +70,6 @@ export class AssessmentGridComponent implements OnInit {
         this.assmService.listPage( this.model, this.page, this.pageSize ).subscribe( resp => {
             this.model = resp.model;
             this.resultList = resp.resultList;
-            this.count = resp.resultList.count;
 
             this.location.replaceState( "/billing/assessment/grid;page=" + this.page + ";model=" + encodeURIComponent( JSON.stringify( this.model ) ) );
         } );

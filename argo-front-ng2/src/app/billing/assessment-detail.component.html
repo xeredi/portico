@@ -1,3 +1,207 @@
-<p>
-  assessment-detail works!
-</p>
+<div *ngIf="model">
+    <ngb-tabset #t="ngbTabset" type="pills" [activeId]="activeTab" (tabChange)="tabChange($event)"> <ngb-tab
+        id="mainTab"> <ng-template ngbTabTitle> Valoración </ng-template> <ng-template ngbTabContent>
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-primary" [routerLink]="['/billing/assessment/edit', 'edit', model.id]"><i
+                class="fa fa-edit"></i> Edit</a>
+            <button class="btn btn-secondary" (click)="remove()">
+                <i class="fa fa-remove"></i> Remove
+            </button>
+        </div>
+    </div>
+
+    <form>
+        <fieldset class="form-group">
+            <div class="row">
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label>ID</label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.id"></p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label>Tipo de Servicio</label>
+                    <p class="form-control-static form-control-sm">
+                        <a [routerLink]="['/metamodel/service-type/detail', model.srvc.entiId]"
+                            [innerHTML]="model.srvc.entiId"></a>
+                    </p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label>Servicio</label>
+                    <p class="form-control-static form-control-sm">
+                        <a [routerLink]="['/service/service/detail', model.srvc.entiId, model.srvc.id]"
+                            [innerHTML]="model.srvc.etiqueta"></a>
+                    </p>
+                </div>
+                <div class="col-lg-4 col-xl-3 form-group-sm">
+                    <label>Aspecto</label>
+                    <p class="form-control-static form-control-sm">
+                        <a [routerLink]="['/billing/aspect/detail', model.aspc.id]" [innerHTML]="model.aspc.etiqueta"></a>
+                    </p>
+                </div>
+                <div *ngIf="model.fctr" class="col-lg-2 col-xl-1 form-group-sm">
+                    <label>Factura</label>
+                    <p class="form-control-static form-control-sm">
+                        <a [routerLink]="['/billing/bill/detail', model.fctr.id]" [innerHTML]="model.fctr.etiqueta"></a>
+                    </p>
+                </div>
+                <div *ngIf="model.fctrRectificada" class="col-lg-2 col-xl-1 form-group-sm">
+                    <label>Factura Rect.</label>
+                    <p class="form-control-static form-control-sm">
+                        <a [routerLink]="['/billing/bill/detail', model.fctrRectificada.id]"
+                            [innerHTML]="model.fctrRectificada.etiqueta"></a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label>Importe</label>
+                    <p class="form-control-static form-control-sm number" [innerHTML]="model.importe | number:'1.2-2'"></p>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label>Impuesto</label>
+                    <p class="form-control-static form-control-sm number" [innerHTML]="model.impuesto | number:'1.2-2'"></p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label>Cod. Exencion</label>
+                    <p class="form-control-static form-control-sm"
+                        [innerHTML]="'cdrf_' + dttyExemptionCode.id + '_' + model.codExencion"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4 col-xl-3 form-group-sm">
+                    <label>Pagador</label>
+                    <p class="form-control-static form-control-sm">
+                        <a
+                            [routerLink]="['/master/parameter/detail', model.pagador.entiId, model.pagador.id, model.fref]"
+                            [innerHTML]="model.pagador.etiqueta"></a>
+                    </p>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label>Suj. Pasivo?</label>
+                    <p class="form-control-static form-control-sm">
+                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.sujPasivo]"></i>
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label>Fec. Alta</label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.falta | date:'dd/MM/yyyy HH:mm'"></p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label>Fec. Liquidacion</label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.fliq | date:'dd/MM/yyyy'"></p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label>Fec. Referencia</label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.fref | date:'dd/MM/yyyy HH:mm'"></p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label>Fec. Inicio</label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.fini | date:'dd/MM/yyyy HH:mm'"></p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label>Fec. Fin</label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.ffin | date:'dd/MM/yyyy HH:mm'"></p>
+                </div>
+            </div>
+
+            <!--
+            <div class="row">
+                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
+                    <label>Alta?</label>
+                    <p class="form-control-static form-control-sm">
+                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.cmdAlta]"></i>
+                    </p>
+                </div>
+                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
+                    <label>Baja?</label>
+                    <p class="form-control-static form-control-sm">
+                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.cmdBaja]"></i>
+                    </p>
+                </div>
+                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
+                    <label>Edicion?</label>
+                    <p class="form-control-static form-control-sm">
+                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.cmdEdicion]"></i>
+                    </p>
+                </div>
+                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
+                    <label>Duplicado?</label>
+                    <p class="form-control-static form-control-sm">
+                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.cmdDuplicado]"></i>
+                    </p>
+                </div>
+                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
+                    <label>Gis?</label>
+                    <p class="form-control-static form-control-sm">
+                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.gis]"></i>
+                    </p>
+                </div>
+                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
+                    <label>Puerto?</label>
+                    <p class="form-control-static form-control-sm">
+                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.puerto]"></i>
+                    </p>
+                </div>
+                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
+                    <label>I18n?</label>
+                    <p class="form-control-static form-control-sm">
+                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.i18n]"></i>
+                    </p>
+                </div>
+                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
+                    <label>Temp Explicita?</label>
+                    <p class="form-control-static form-control-sm">
+                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.tempExp]"></i>
+                    </p>
+                </div>
+                <div class="col-sm-4 col-lg-3 col-xl-2 form-group-sm">
+                    <label>Classpath</label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.classpath"></p>
+                </div>
+            </div>
+ -->
+        </fieldset>
+
+        <div class="row">
+            <div class="col-lg-6 col-xl-4 form-group-sm">
+                <fieldset>
+                    <legend>Cargos</legend>
+                    <app-assessment-charge-grid-fragment [itemList]="asscList"></app-assessment-charge-grid-fragment>
+                </fieldset>
+            </div>
+
+            <div class="col-lg-6 col-xl-4 form-group-sm">
+                <fieldset>
+                    <legend>Impuestos</legend>
+                    <app-assessment-tax-grid-fragment [itemList]="asstList"></app-assessment-tax-grid-fragment>
+                </fieldset>
+            </div>
+        </div>
+
+    </form>
+    </ng-template> </ngb-tab> <ngb-tab id="assessmentLinesTab"> <ng-template ngbTabTitle> Lineas de Valoración </ng-template> <ng-template
+        ngbTabContent>
+    <div *ngIf="aslnList">
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group mr-2" role="group">
+                <ngb-pagination [collectionSize]="aslnList.count" [(page)]="pageMap['aslnList']" [pageSize]="pageSize"
+                    [maxSize]="1" [size]="sm" [boundaryLinks]="false" [ellipses]="false"
+                    (pageChange)="pageChange('aslnList')"></ngb-pagination>
+            </div>
+            <div class="btn-group mr-2" role="group">
+                <a class="btn btn-primary" [routerLink]="['/billing/assessment-line/edit', 'create', model.id]"><i
+                    class="fa fa-file-o"></i> New</a>
+            </div>
+        </div>
+
+        <span>Nº Resultados: {{aslnList.count}}</span>
+
+        <app-assessment-line-grid-fragment [itemList]="aslnList.list"></app-assessment-line-grid-fragment>
+    </div>
+    </ng-template> </ngb-tab> </ngb-tabset>
+</div>

@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core';
     <table class="table table-sm table-bordered table-hover table-condensed table-nonfluid">
         <thead class="thead-inverse">
             <tr>
-                <th nowrap="nowrap" class="buttonLinks"></th>
+                <th nowrap="nowrap"></th>
                 <th nowrap="nowrap">Código</th>
             </tr>
         </thead>
