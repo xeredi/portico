@@ -108,63 +108,6 @@
                     <p class="form-control-static form-control-sm" [innerHTML]="model.ffin | date:'dd/MM/yyyy HH:mm'"></p>
                 </div>
             </div>
-
-            <!--
-            <div class="row">
-                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
-                    <label>Alta?</label>
-                    <p class="form-control-static form-control-sm">
-                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.cmdAlta]"></i>
-                    </p>
-                </div>
-                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
-                    <label>Baja?</label>
-                    <p class="form-control-static form-control-sm">
-                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.cmdBaja]"></i>
-                    </p>
-                </div>
-                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
-                    <label>Edicion?</label>
-                    <p class="form-control-static form-control-sm">
-                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.cmdEdicion]"></i>
-                    </p>
-                </div>
-                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
-                    <label>Duplicado?</label>
-                    <p class="form-control-static form-control-sm">
-                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.cmdDuplicado]"></i>
-                    </p>
-                </div>
-                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
-                    <label>Gis?</label>
-                    <p class="form-control-static form-control-sm">
-                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.gis]"></i>
-                    </p>
-                </div>
-                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
-                    <label>Puerto?</label>
-                    <p class="form-control-static form-control-sm">
-                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.puerto]"></i>
-                    </p>
-                </div>
-                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
-                    <label>I18n?</label>
-                    <p class="form-control-static form-control-sm">
-                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.i18n]"></i>
-                    </p>
-                </div>
-                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
-                    <label>Temp Explicita?</label>
-                    <p class="form-control-static form-control-sm">
-                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.tempExp]"></i>
-                    </p>
-                </div>
-                <div class="col-sm-4 col-lg-3 col-xl-2 form-group-sm">
-                    <label>Classpath</label>
-                    <p class="form-control-static form-control-sm" [innerHTML]="model.classpath"></p>
-                </div>
-            </div>
- -->
         </fieldset>
 
         <div class="row">
@@ -201,7 +144,7 @@
 
         <span>Nº Resultados: {{aslnList.count}}</span>
 
-        <app-assessment-line-grid-fragment [itemList]="aslnList.list"></app-assessment-line-grid-fragment>
+        <app-assessment-line-grid-fragment [itemList]="aslnList.list" [aspect]="aspect"></app-assessment-line-grid-fragment>
     </div>
     </ng-template> </ngb-tab> </ngb-tabset>
 </div>

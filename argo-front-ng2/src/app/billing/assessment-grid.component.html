@@ -1,8 +1,8 @@
 <div *ngIf="resultList">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group mr-2" role="group">
-            <ngb-pagination [collectionSize]="resultList.count" [(page)]="page" [pageSize]="pageSize" [maxSize]="1" [size]="sm"
-                [boundaryLinks]="false" [ellipses]="false" (pageChange)="pageChange()"></ngb-pagination>
+            <ngb-pagination [collectionSize]="resultList.count" [(page)]="page" [pageSize]="pageSize" [maxSize]="1"
+                [size]="sm" [boundaryLinks]="false" [ellipses]="false" (pageChange)="pageChange()"></ngb-pagination>
         </div>
         <div class="btn-group mr-2" role="group">
             <button class="btn btn-secondary" (click)="editFilter(filter)">
