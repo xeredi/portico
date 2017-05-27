@@ -37,7 +37,7 @@ export class AssessmentDetailComponent implements OnInit {
 
         this.route.params.subscribe( params => {
             this.activeTab = params['activeTab'] ? params['activeTab'] : "mainTab";
-            this.pageMap = params['pageMap'] ? params['pageMap'] : {};
+            this.pageMap = params['pageMap'] ? JSON.parse( params['pageMap'] ) : {};
 
             this.assmService.detail( { id: +params['id'] } )
                 .subscribe( resp => {
@@ -83,6 +83,7 @@ export class AssessmentDetailComponent implements OnInit {
     }
 
     private replaceState() {
-        this.location.replaceState( "/billing/assessment/detail/" + this.model.id + ";activeTab=" + this.activeTab + ";pageMap=" + JSON.stringify( this.pageMap ) );
+        this.location.replaceState( "/billing/assessment/detail/" + this.model.id + ";activeTab=" + this.activeTab
+            + ";pageMap=" + encodeURIComponent( JSON.stringify( this.pageMap ) ) );
     }
 }

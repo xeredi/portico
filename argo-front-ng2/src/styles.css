@@ -9,7 +9,6 @@ table {
 	min-width: 40%;
 }
 */
-
 .number {
 	text-align: right;
 }
@@ -95,6 +94,10 @@ label {
 
 legend {
 	font-size: 1.2rem;
+}
+
+td span {
+	/*display: block;*/
 }
 
 .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9,
