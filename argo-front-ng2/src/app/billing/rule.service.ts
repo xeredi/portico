@@ -6,6 +6,8 @@ import { CrudService } from '../shared/crud.service';
 @Injectable()
 export class RuleService extends CrudService {
     constructor( private http: Http ) {
-        super( '/facturacion/regla', 'rgla', http );
+        super( http );
+
+        this.setParams( '/facturacion/regla', 'rgla' );
     }
 }

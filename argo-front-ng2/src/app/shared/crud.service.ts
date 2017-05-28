@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 
 @Injectable()
@@ -7,10 +7,13 @@ export class CrudService {
     _urlBase: string;
     _prefix: string;
 
-    constructor( urlBase: string, prefix: string, http: Http ) {
+    constructor( @Inject( Http ) crudHttp: Http ) {
+        this._http = crudHttp;
+    }
+
+    setParams( urlBase: string, prefix: string ) {
         this._urlBase = urlBase;
         this._prefix = prefix;
-        this._http = http;
     }
 
     edit( accion: string, id: any ) {

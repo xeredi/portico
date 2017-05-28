@@ -6,6 +6,8 @@ import { CrudService } from '../shared/crud.service';
 @Injectable()
 export class UserService extends CrudService {
     constructor( private http: Http ) {
-        super( '/seguridad/usuario', 'usro', http );
+        super( http );
+
+        this.setParams( '/seguridad/usuario', 'usro' );
     }
 }

@@ -6,6 +6,8 @@ import { CrudService } from '../shared/crud.service';
 @Injectable()
 export class AssessmentLineService extends CrudService {
     constructor( private http: Http ) {
-        super( '/facturacion/valoracion-linea', 'vlrl', http );
+        super( http );
+
+        this.setParams( '/facturacion/valoracion-linea', 'vlrl' );
     }
 }

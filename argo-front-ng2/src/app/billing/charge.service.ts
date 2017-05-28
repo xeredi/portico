@@ -6,6 +6,8 @@ import { CrudService } from '../shared/crud.service';
 @Injectable()
 export class ChargeService extends CrudService {
     constructor( private http: Http ) {
-        super( '/facturacion/cargo', 'crgo', http );
+        super( http );
+
+        this.setParams( '/facturacion/cargo', 'crgo' );
     }
 }

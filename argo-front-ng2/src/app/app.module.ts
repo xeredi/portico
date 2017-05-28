@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
@@ -45,7 +46,7 @@ import { AlertService } from './shared/alert.service';
         , { provide: LocationStrategy, useClass: HashLocationStrategy }
         , {
             provide: Http,
-            deps: [XHRBackend, RequestOptions, AlertService],
+            deps: [XHRBackend, RequestOptions, AlertService, Router],
             useFactory: httpFactory
         }
     ]

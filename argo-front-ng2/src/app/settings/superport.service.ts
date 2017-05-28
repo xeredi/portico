@@ -6,6 +6,8 @@ import { CrudService } from '../shared/crud.service';
 @Injectable()
 export class SuperportService extends CrudService {
     constructor( private http: Http ) {
-        super( '/administracion/puerto/superpuerto', 'sprt', http );
+        super( http );
+
+        this.setParams( '/administracion/puerto/superpuerto', 'sprt' );
     }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { UserService } from './user.service';
@@ -17,7 +17,12 @@ export class UserEditComponent implements OnInit {
     orgaEntiId: number;
     fref: Date;
 
-    constructor( private location: Location, private userService: UserService ) { }
+    constructor(
+        private route: ActivatedRoute
+        , private router: Router
+        , private location: Location
+        , private userService: UserService
+    ) { }
 
     ngOnInit() {
         console.log( "User edit" );
@@ -44,6 +49,12 @@ export class UserEditComponent implements OnInit {
 
         this.userService.save( "create", this.model ).subscribe( resp => {
             console.log( "User saved" );
+
+            if ( !resp.actionErrors ) {
+                console.log( "Go to user detail" );
+
+                this.router.navigate( ['/security/user-detail', resp.model.id] );
+            }
         } );
     }
 

@@ -8,12 +8,14 @@ import { AlertService } from "./shared/alert.service";
 @Injectable()
 export class InterceptedHttp extends Http {
     alertService: AlertService;
+    router: Router;
 
     constructor( backend: ConnectionBackend, defaultOptions: RequestOptions,
-        alertService: AlertService ) {
+        alertService: AlertService, router: Router ) {
         super( backend, defaultOptions );
 
         this.alertService = alertService;
+        this.router = router;
     }
 
     request( request: string | Request, options: RequestOptionsArgs = { headers: new Headers() } ): Observable<Response> {
@@ -39,18 +41,24 @@ export class InterceptedHttp extends Http {
     }
 
     private handleResponse( res: Response ) {
-        // this.alertService.success( "handleResponse: " + res.toString(), false );
-
         console.log( "handleResponse: " + res.toString() );
 
         var json = res.json();
 
         console.log( "jsonResponse: " + JSON.stringify( json ) );
 
+        if ( json.responseCode == "login" ) {
+            console.log( "Needs login!!!" );
+            this.router.navigate( ['/login'] );
+
+            return Observable.empty();
+        }
+
         if ( Object.keys( json.errorMessages ).length > 0 ) {
             console.log( "has Errors!!!" );
-
             this.alertService.error( json.errorMessages, false );
+
+            return Observable.empty();
         }
 
         return res;
@@ -61,10 +69,9 @@ export class InterceptedHttp extends Http {
 
         console.log( "handleError: " + res.toString() );
 
-        // Security errors
         if ( res.status === 401 || res.status === 403 ) {
-            // redirigir al usuario para pedir credenciales
-            //                this.router.navigate( ['user/login'] );
+            console.log( "send to login. cause: " + res.toString() );
+            this.router.navigate( ['/login'] );
         }
 
         return Observable.throw( res );

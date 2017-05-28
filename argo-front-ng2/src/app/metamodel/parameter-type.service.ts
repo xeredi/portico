@@ -6,6 +6,8 @@ import { CrudService } from '../shared/crud.service';
 @Injectable()
 export class ParameterTypeService extends CrudService {
     constructor( private http: Http ) {
-        super( '/metamodelo/tipo-parametro', 'prto', http );
+        super( http );
+
+        this.setParams( '/metamodelo/tipo-parametro', 'prto' );
     }
 }

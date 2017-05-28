@@ -6,6 +6,8 @@ import { CrudService } from '../shared/crud.service';
 @Injectable()
 export class ConfigurationService extends CrudService {
     constructor( private http: Http ) {
-        super( '/administracion/configuration/configuration', 'conf', http );
+        super( http );
+
+        this.setParams( '/administracion/configuration/configuration', 'conf' );
     }
 }
