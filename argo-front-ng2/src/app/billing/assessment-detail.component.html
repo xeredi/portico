@@ -108,6 +108,33 @@
                     <p class="form-control-static form-control-sm" [innerHTML]="model.ffin | date:'dd/MM/yyyy HH:mm'"></p>
                 </div>
             </div>
+
+            <div class="row">
+                <div *ngIf="aspect.version.cetiqInfo1" class="col-lg-4 col-xl-3 form-group-sm">
+                    <label [innerHTML]="aspect.version.cetiqInfo1"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.info1"></p>
+                </div>
+                <div *ngIf="aspect.version.cetiqInfo2" class="col-lg-4 col-xl-3 form-group-sm">
+                    <label [innerHTML]="aspect.version.cetiqInfo2"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.info2"></p>
+                </div>
+                <div *ngIf="aspect.version.cetiqInfo3" class="col-lg-4 col-xl-3 form-group-sm">
+                    <label [innerHTML]="aspect.version.cetiqInfo3"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.info3"></p>
+                </div>
+                <div *ngIf="aspect.version.cetiqInfo4" class="col-lg-4 col-xl-3 form-group-sm">
+                    <label [innerHTML]="aspect.version.cetiqInfo4"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.info4"></p>
+                </div>
+                <div *ngIf="aspect.version.cetiqInfo5" class="col-lg-4 col-xl-3 form-group-sm">
+                    <label [innerHTML]="aspect.version.cetiqInfo5"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.info5"></p>
+                </div>
+                <div *ngIf="aspect.version.cetiqInfo6" class="col-lg-4 col-xl-3 form-group-sm">
+                    <label [innerHTML]="aspect.version.cetiqInfo6"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.info6"></p>
+                </div>
+            </div>
         </fieldset>
 
         <div class="row">
