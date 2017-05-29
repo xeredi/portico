@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { SharedModule } from '../shared/shared.module';
+
 import { BillingRoutingModule } from './billing-routing.module';
 import { HomeComponent } from './home.component';
 
@@ -44,6 +46,8 @@ import { IncompatibleRuleEditComponent } from './incompatible-rule-edit.componen
         FormsModule
         , CommonModule
         , NgbModule
+
+        , SharedModule
         , BillingRoutingModule
     ]
     , declarations: [

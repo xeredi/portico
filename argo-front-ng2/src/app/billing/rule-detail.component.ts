@@ -5,7 +5,6 @@ import { Location } from '@angular/common';
 import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 import { RuleService } from './rule.service';
-import { I18nInfoDetailComponent } from '../settings/i18n-info-detail.component';
 
 @Component( {
     selector: 'app-rule-detail',

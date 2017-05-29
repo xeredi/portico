@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { SettingsModule } from '../settings/settings.module';
+import { SharedModule } from '../shared/shared.module';
 
 import { MetamodelRoutingModule } from './metamodel-routing.module';
 import { HomeComponent } from './home.component';
@@ -39,8 +39,9 @@ import { SubparameterTypeEditComponent } from './subparameter-type-edit.componen
         FormsModule
         , CommonModule
         , NgbModule
+
+        , SharedModule
         , MetamodelRoutingModule
-        , SettingsModule
     ]
     , declarations: [
         HomeComponent

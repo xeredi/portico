@@ -5,7 +5,6 @@ import { Location } from '@angular/common';
 import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 import { ParameterTypeService } from './parameter-type.service';
-import { I18nInfoDetailComponent } from '../settings/i18n-info-detail.component';
 
 @Component( {
     selector: 'app-parameter-type-detail',

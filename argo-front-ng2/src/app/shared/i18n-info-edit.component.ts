@@ -5,8 +5,8 @@ import { Component, Input } from '@angular/core';
     template: `
 <div class="row" *ngIf=i18nMap>
     <div *ngFor="let availableLanguage of availableLanguages" class="col-sm-9 col-md-8 col-lg-7 form-group-sm">
-        <label>{{availableLanguage}}</label> <input type="text" [(ngModel)]="i18nMap[availableLanguage].text"
-            name="i18nMap[{{availableLanguage}}].text" class="form-control form-control-sm" />
+        <label>{{availableLanguage}}</label> <!--input type="text" [(ngModel)]="i18nMap[availableLanguage].text"
+            name="i18nMap[{{availableLanguage}}].text" class="form-control form-control-sm" /-->
     </div>
 </div>
     `

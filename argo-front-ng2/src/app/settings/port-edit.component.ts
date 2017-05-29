@@ -4,8 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { PortService } from './port.service';
-import { I18nInfoEditComponent } from './i18n-info-edit.component';
-import { I18nInfoService } from './i18n-info.service';
+import { I18nInfoService } from '../shared/i18n-info.service';
 
 @Component( {
     selector: 'app-port-edit',

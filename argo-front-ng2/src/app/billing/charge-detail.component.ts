@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 import { ChargeService } from './charge.service';
-import { I18nInfoDetailComponent } from '../settings/i18n-info-detail.component';
+import { I18nInfoDetailComponent } from '../shared/i18n-info-detail.component';
 
 @Component( {
     selector: 'app-charge-detail',
