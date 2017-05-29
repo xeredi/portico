@@ -4,7 +4,6 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { SuperportService } from './superport.service';
-import { I18nInfoService } from '../shared/i18n-info.service';
 
 @Component( {
     selector: 'app-superport-edit',
@@ -21,7 +20,7 @@ import { I18nInfoService } from '../shared/i18n-info.service';
                 </div>
             </div>
 
-            <app-i18n-info-edit name="i18nMap" [i18nMap]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-edit>
+            <app-i18n-info-edit [(i18nMap)]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-edit>
         </fieldset>
 
         <div class="btn-group">
@@ -49,7 +48,6 @@ export class SuperportEditComponent implements OnInit {
         , private route: ActivatedRoute
         , private router: Router
         , private sprtService: SuperportService
-        , private i18iService: I18nInfoService
     ) {
     }
 
@@ -63,7 +61,7 @@ export class SuperportEditComponent implements OnInit {
                     this.model = resp.model;
 
                     this.availableLanguages = resp.availableLanguages;
-                    this.i18nMap = this.i18iService.normalize( resp.i18nMap, resp.availableLanguages );
+                    this.i18nMap = resp.i18nMap ? resp.i18nMap : {};
                 } );
         } );
     }

@@ -10,7 +10,6 @@ import { PermissionGuard } from './permission.guard';
 
 import { AlertService } from './alert.service';
 import { CrudService } from './crud.service';
-import { I18nInfoService } from './i18n-info.service';
 
 
 @NgModule( {
@@ -27,7 +26,6 @@ import { I18nInfoService } from './i18n-info.service';
         PermissionGuard
         , AlertService
         , CrudService
-        , I18nInfoService
     ]
     , exports: [
         AlertComponent

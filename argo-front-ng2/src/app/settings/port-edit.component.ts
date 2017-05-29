@@ -4,7 +4,6 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { PortService } from './port.service';
-import { I18nInfoService } from '../shared/i18n-info.service';
 
 @Component( {
     selector: 'app-port-edit',
@@ -78,7 +77,6 @@ export class PortEditComponent implements OnInit {
         , private route: ActivatedRoute
         , private router: Router
         , private prtoService: PortService
-        , private i18iService: I18nInfoService
     ) {
     }
 
@@ -92,7 +90,7 @@ export class PortEditComponent implements OnInit {
                     this.model = resp.model;
 
                     this.availableLanguages = resp.availableLanguages;
-                    this.i18nMap = this.i18iService.normalize( resp.i18nMap, resp.availableLanguages );
+                    this.i18nMap = resp.i18nMap ? resp.i18nMap : {};
 
                     this.sprtList = resp.sprtList;
                 } );
