@@ -13,130 +13,136 @@
 
     <form>
         <fieldset class="form-group">
-<!--
             <div class="row">
-                <div class="col-lg-2 col-xl-1 form-group-sm">
-                    <label>ID</label>
-                    <p class="form-control-static form-control-sm" [innerHTML]="model.id"></p>
-                </div>
                 <div class="col-lg-3 col-xl-2 form-group-sm">
-                    <label>Tipo de Servicio</label>
+                    <label>Entidad</label>
                     <p class="form-control-static form-control-sm">
-                        <a [routerLink]="['/metamodel/service-type/detail', model.srvc.entiId]"
-                            [innerHTML]="model.srvc.entiId"></a>
-                    </p>
-                </div>
-                <div class="col-lg-3 col-xl-2 form-group-sm">
-                    <label>Servicio</label>
-                    <p class="form-control-static form-control-sm">
-                        <a [routerLink]="['/service/service/detail', model.srvc.entiId, model.srvc.id]"
-                            [innerHTML]="model.srvc.etiqueta"></a>
+                        <a
+                            [routerLink]="[{'T':'/metamodel/service-type/detail', 'S':'/metamodel/subservice-type/detail'}[model.rgla.enti.tipo], model.rgla.enti.id]"
+                            [innerHTML]="model.rgla.enti.id"></a>
                     </p>
                 </div>
                 <div class="col-lg-4 col-xl-3 form-group-sm">
-                    <label>Aspecto</label>
+                    <label>Cargo</label>
                     <p class="form-control-static form-control-sm">
-                        <a [routerLink]="['/billing/aspect/detail', model.aspc.id]" [innerHTML]="model.aspc.etiqueta"></a>
+                        <a [routerLink]="['/billing/charge/detail', model.rgla.crgo.id, model.fref]"
+                            [innerHTML]="model.rgla.crgo.etiqueta"></a>
                     </p>
                 </div>
-                <div *ngIf="model.fctr" class="col-lg-2 col-xl-1 form-group-sm">
-                    <label>Factura</label>
+                <div class="col-lg-4 col-xl-3 form-group-sm">
+                    <label>Regla</label>
                     <p class="form-control-static form-control-sm">
-                        <a [routerLink]="['/billing/bill/detail', model.fctr.id]" [innerHTML]="model.fctr.etiqueta"></a>
+                        <a [routerLink]="['/billing/rule/detail', model.rgla.id, model.fref]"
+                            [innerHTML]="model.rgla.etiqueta"></a>
                     </p>
                 </div>
-                <div *ngIf="model.fctrRectificada" class="col-lg-2 col-xl-1 form-group-sm">
-                    <label>Factura Rect.</label>
-                    <p class="form-control-static form-control-sm">
-                        <a [routerLink]="['/billing/bill/detail', model.fctrRectificada.id]"
-                            [innerHTML]="model.fctrRectificada.etiqueta"></a>
-                    </p>
+                <div class="col-lg-1 col-xl-1 form-group-sm">
+                    <label>Tipo</label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.rgla.tipo"></p>
                 </div>
             </div>
 
             <div class="row">
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label>Valor Base</label>
+                    <p class="form-control-static form-control-sm number" [innerHTML]="model.valorBase | number:'1.6-6'"></p>
+                </div>
+                <div *ngIf="model.rgla.tipo != 'T'" class="col-lg-2 col-xl-1 form-group-sm">
+                    <label>Importe Base</label>
+                    <p class="form-control-static form-control-sm number"
+                        [innerHTML]="model.importeBase | number:'1.2-2'"></p>
+                </div>
                 <div class="col-lg-2 col-xl-1 form-group-sm">
                     <label>Importe</label>
                     <p class="form-control-static form-control-sm number" [innerHTML]="model.importe | number:'1.2-2'"></p>
                 </div>
-                <div class="col-lg-2 col-xl-1 form-group-sm">
-                    <label>Impuesto</label>
-                    <p class="form-control-static form-control-sm number" [innerHTML]="model.impuesto | number:'1.2-2'"></p>
-                </div>
-                <div class="col-lg-3 col-xl-2 form-group-sm">
-                    <label>Cod. Exencion</label>
-                    <p class="form-control-static form-control-sm"
-                        [innerHTML]="'cdrf_' + dttyExemptionCode.id + '_' + model.codExencion"></p>
-                </div>
-            </div>
-
-            <div class="row">
                 <div class="col-lg-4 col-xl-3 form-group-sm">
-                    <label>Pagador</label>
+                    <label>Impuesto</label>
                     <p class="form-control-static form-control-sm">
                         <a
-                            [routerLink]="['/master/parameter/detail', model.pagador.entiId, model.pagador.id, model.fref]"
-                            [innerHTML]="model.pagador.etiqueta"></a>
+                            [routerLink]="['/metamodel/parameter-type/detail', aslnParent.impuesto.entiId, aslnParent.impuesto.id, model.fref]"
+                            [innerHTML]="aslnParent.impuesto.etiqueta"></a>
                     </p>
                 </div>
-                <div class="col-lg-2 col-xl-1 form-group-sm">
-                    <label>Suj. Pasivo?</label>
+            </div>
+
+            <div *ngIf="model.ssrv" class="row">
+                <div class="col-lg-4 col-xl-3 form-group-sm">
+                    <label [innerHTML]="model.rgla.enti.id"></label>
                     <p class="form-control-static form-control-sm">
-                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.sujPasivo]"></i>
+                        <a [routerLink]="['/service/subservice/detail', model.rgla.enti.id, model.ssrv.id]"
+                            [innerHTML]="model.ssrv.numero"></a>
                     </p>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-3 col-xl-2 form-group-sm">
-                    <label>Fec. Alta</label>
-                    <p class="form-control-static form-control-sm" [innerHTML]="model.falta | date:'dd/MM/yyyy HH:mm'"></p>
-                </div>
-                <div class="col-lg-3 col-xl-2 form-group-sm">
-                    <label>Fec. Liquidacion</label>
-                    <p class="form-control-static form-control-sm" [innerHTML]="model.fliq | date:'dd/MM/yyyy'"></p>
-                </div>
-                <div class="col-lg-3 col-xl-2 form-group-sm">
-                    <label>Fec. Referencia</label>
-                    <p class="form-control-static form-control-sm" [innerHTML]="model.fref | date:'dd/MM/yyyy HH:mm'"></p>
-                </div>
-                <div class="col-lg-3 col-xl-2 form-group-sm">
+                <div *ngIf="model.rgla.crgo.version.temporal" class="col-lg-3 col-xl-2 form-group-sm">
                     <label>Fec. Inicio</label>
-                    <p class="form-control-static form-control-sm" [innerHTML]="model.fini | date:'dd/MM/yyyy HH:mm'"></p>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.fini | date: 'dd/MM/yyyy HH:mm'"></p>
                 </div>
-                <div class="col-lg-3 col-xl-2 form-group-sm">
+                <div *ngIf="model.rgla.crgo.version.temporal" class="col-lg-3 col-xl-2 form-group-sm">
                     <label>Fec. Fin</label>
-                    <p class="form-control-static form-control-sm" [innerHTML]="model.ffin | date:'dd/MM/yyyy HH:mm'"></p>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.ffin | date: 'dd/MM/yyyy HH:mm'"></p>
                 </div>
             </div>
 
             <div class="row">
-                <div *ngIf="aspect.version.cetiqInfo1" class="col-lg-4 col-xl-3 form-group-sm">
-                    <label [innerHTML]="aspect.version.cetiqInfo1"></label>
-                    <p class="form-control-static form-control-sm" [innerHTML]="model.info1"></p>
+                <div *ngIf="aslnParent.rgla.version.etiqInfo1 && aspect.version.lgrpInfo1"
+                    class="col-lg-4 col-xl-3 form-group-sm">
+                    <label [innerHTML]="aslnParent.rgla.version.etiqInfo1"></label>
+                    <p class="form-control-static" [innerHTML]="model.info1"></p>
                 </div>
-                <div *ngIf="aspect.version.cetiqInfo2" class="col-lg-4 col-xl-3 form-group-sm">
-                    <label [innerHTML]="aspect.version.cetiqInfo2"></label>
-                    <p class="form-control-static form-control-sm" [innerHTML]="model.info2"></p>
+                <div *ngIf="aslnParent.rgla.version.etiqInfo2 && aspect.version.lgrpInfo2"
+                    class="col-lg-4 col-xl-3 form-group-sm">
+                    <label [innerHTML]="aslnParent.rgla.version.etiqInfo2"></label>
+                    <p class="form-control-static" [innerHTML]="model.info2"></p>
                 </div>
-                <div *ngIf="aspect.version.cetiqInfo3" class="col-lg-4 col-xl-3 form-group-sm">
-                    <label [innerHTML]="aspect.version.cetiqInfo3"></label>
-                    <p class="form-control-static form-control-sm" [innerHTML]="model.info3"></p>
+                <div *ngIf="aslnParent.rgla.version.etiqInfo3 && aspect.version.lgrpInfo3"
+                    class="col-lg-4 col-xl-3 form-group-sm">
+                    <label [innerHTML]="aslnParent.rgla.version.etiqInfo3"></label>
+                    <p class="form-control-static" [innerHTML]="model.info3"></p>
                 </div>
-                <div *ngIf="aspect.version.cetiqInfo4" class="col-lg-4 col-xl-3 form-group-sm">
-                    <label [innerHTML]="aspect.version.cetiqInfo4"></label>
-                    <p class="form-control-static form-control-sm" [innerHTML]="model.info4"></p>
+                <div *ngIf="aslnParent.rgla.version.etiqInfo4 && aspect.version.lgrpInfo4"
+                    class="col-lg-4 col-xl-3 form-group-sm">
+                    <label [innerHTML]="aslnParent.rgla.version.etiqInfo4"></label>
+                    <p class="form-control-static" [innerHTML]="model.info4"></p>
                 </div>
-                <div *ngIf="aspect.version.cetiqInfo5" class="col-lg-4 col-xl-3 form-group-sm">
-                    <label [innerHTML]="aspect.version.cetiqInfo5"></label>
-                    <p class="form-control-static form-control-sm" [innerHTML]="model.info5"></p>
+                <div *ngIf="aslnParent.rgla.version.etiqInfo5 && aspect.version.lgrpInfo5"
+                    class="col-lg-4 col-xl-3 form-group-sm">
+                    <label [innerHTML]="aslnParent.rgla.version.etiqInfo5"></label>
+                    <p class="form-control-static" [innerHTML]="model.info5"></p>
                 </div>
-                <div *ngIf="aspect.version.cetiqInfo6" class="col-lg-4 col-xl-3 form-group-sm">
-                    <label [innerHTML]="aspect.version.cetiqInfo6"></label>
-                    <p class="form-control-static form-control-sm" [innerHTML]="model.info6"></p>
+                <div *ngIf="aslnParent.rgla.version.etiqInfo6 && aspect.version.lgrpInfo6"
+                    class="col-lg-4 col-xl-3 form-group-sm">
+                    <label [innerHTML]="aslnParent.rgla.version.etiqInfo6"></label>
+                    <p class="form-control-static" [innerHTML]="model.info6"></p>
                 </div>
             </div>
--->
+
+            <div class="row">
+                <div *ngIf="aslnParent.rgla.version.etiqCuant1" class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [innerHTML]="aslnParent.rgla.version.etiqCuant1"></label>
+                    <p class="form-control-static number" [innerHTML]="model.cuant1 | number"></p>
+                </div>
+                <div *ngIf="aslnParent.rgla.version.etiqCuant2" class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [innerHTML]="aslnParent.rgla.version.etiqCuant2"></label>
+                    <p class="form-control-static number" [innerHTML]="model.cuant2 | number"></p>
+                </div>
+                <div *ngIf="aslnParent.rgla.version.etiqCuant3" class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [innerHTML]="aslnParent.rgla.version.etiqCuant3"></label>
+                    <p class="form-control-static number" [innerHTML]="model.cuant3 | number"></p>
+                </div>
+                <div *ngIf="aslnParent.rgla.version.etiqCuant4" class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [innerHTML]="aslnParent.rgla.version.etiqCuant4"></label>
+                    <p class="form-control-static number" [innerHTML]="model.cuant4 | number"></p>
+                </div>
+                <div *ngIf="aslnParent.rgla.version.etiqCuant5" class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [innerHTML]="aslnParent.rgla.version.etiqCuant5"></label>
+                    <p class="form-control-static number" [innerHTML]="model.cuant5 | number"></p>
+                </div>
+                <div *ngIf="aslnParent.rgla.version.etiqCuant6" class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [innerHTML]="aslnParent.rgla.version.etiqCuant6"></label>
+                    <p class="form-control-static number" [innerHTML]="model.cuant6 | number"></p>
+                </div>
+            </div>
         </fieldset>
 
         <fieldset *ngIf="aslnChildList">
@@ -161,7 +167,8 @@
 
         <span>Nº Resultados: {{asdtList.count}}</span>
 
-        <app-assessment-detail-grid-fragment [itemList]="asdtList.list" [aspect]="aspect"></app-assessment-detail-grid-fragment>
+        <app-assessment-detail-grid-fragment [itemList]="asdtList.list" [aspect]="aspect" [assessmentLine]="model"
+            [assessmentLineParent]="aslnParent"></app-assessment-detail-grid-fragment>
     </div>
     </ng-template> </ngb-tab> </ngb-tabset>
 </div>

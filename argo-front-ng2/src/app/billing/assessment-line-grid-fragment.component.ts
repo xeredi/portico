@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component( {
     selector: 'app-assessment-line-grid-fragment',
@@ -157,9 +157,9 @@ import { Component, Input } from '@angular/core';
 </div>
     `
 } )
-export class AssessmentLineGridFragmentComponent {
-    private _itemList: any[];
-    private _aspect: any;
+export class AssessmentLineGridFragmentComponent implements OnInit {
+    @Input() itemList: any[];
+    @Input() aspect: any;
 
     private _existsEntity: boolean;
     private _existsCharge: boolean;
@@ -183,22 +183,6 @@ export class AssessmentLineGridFragmentComponent {
     private _existsInfo5: boolean;
     private _existsInfo6: boolean;
 
-    @Input()
-    set itemList( itemList: any[] ) {
-        this._itemList = itemList;
-        this.initVariables();
-    }
-
-    get itemList(): any[] { return this._itemList; }
-
-    @Input()
-    set aspect( aspect: any ) {
-        this._aspect = aspect;
-        this.initVariables();
-    }
-
-    get aspect(): any { return this._aspect; }
-
     get existsEntity(): boolean { return this._existsEntity; }
     get existsCharge(): boolean { return this._existsCharge; }
     get existsSubtotal(): boolean { return this._existsSubtotal; }
@@ -221,55 +205,52 @@ export class AssessmentLineGridFragmentComponent {
     get existsInfo5(): boolean { return this._existsInfo5; }
     get existsInfo6(): boolean { return this._existsInfo6; }
 
-    private initVariables() {
-        if ( this._aspect && this._itemList ) {
-            console.log( "Init Variables" );
+    ngOnInit() {
+        // console.log( "Init Variables" );
+        this._existsEntity = false;
+        this._existsCharge = false;
+        this._existsSubtotal = false;
+        this._existsTax = false;
+        this._existsSsrv = false;
+        this._existsFini = false;
+        this._existsFfin = false;
 
-            this._existsEntity = false;
-            this._existsCharge = false;
-            this._existsSubtotal = false;
-            this._existsTax = false;
-            this._existsSsrv = false;
-            this._existsFini = false;
-            this._existsFfin = false;
+        this._existsCuant1 = false;
+        this._existsCuant2 = false;
+        this._existsCuant3 = false;
+        this._existsCuant4 = false;
+        this._existsCuant5 = false;
+        this._existsCuant6 = false;
 
-            this._existsCuant1 = false;
-            this._existsCuant2 = false;
-            this._existsCuant3 = false;
-            this._existsCuant4 = false;
-            this._existsCuant5 = false;
-            this._existsCuant6 = false;
+        this._existsInfo1 = false;
+        this._existsInfo2 = false;
+        this._existsInfo3 = false;
+        this._existsInfo4 = false;
+        this._existsInfo5 = false;
+        this._existsInfo6 = false;
 
-            this._existsInfo1 = false;
-            this._existsInfo2 = false;
-            this._existsInfo3 = false;
-            this._existsInfo4 = false;
-            this._existsInfo5 = false;
-            this._existsInfo6 = false;
+        for ( let item of this.itemList ) {
+            if ( item.id == item.padreId ) { this._existsEntity = true; }
+            if ( item.id == item.padreId ) { this._existsCharge = true; }
+            if ( item.id == item.padreId ) { this._existsSubtotal = true; }
+            if ( item.id == item.padreId ) { this._existsTax = true; }
+            if ( item.id == item.padreId && item.ssrv ) { this._existsSsrv = true; }
+            if ( item.id == item.padreId && item.fini ) { this._existsFini = true; }
+            if ( item.id == item.padreId && item.ffin ) { this._existsFfin = true; }
 
-            for ( let item of this._itemList ) {
-                if ( item.id == item.padreId ) { this._existsEntity = true; }
-                if ( item.id == item.padreId ) { this._existsCharge = true; }
-                if ( item.id == item.padreId ) { this._existsSubtotal = true; }
-                if ( item.id == item.padreId ) { this._existsTax = true; }
-                if ( item.id == item.padreId && item.ssrv ) { this._existsSsrv = true; }
-                if ( item.id == item.padreId && item.fini ) { this._existsFini = true; }
-                if ( item.id == item.padreId && item.ffin ) { this._existsFfin = true; }
+            if ( item.rgla.version.etiqCuant1 ) { this._existsCuant1 = true; }
+            if ( item.rgla.version.etiqCuant2 ) { this._existsCuant2 = true; }
+            if ( item.rgla.version.etiqCuant3 ) { this._existsCuant3 = true; }
+            if ( item.rgla.version.etiqCuant4 ) { this._existsCuant4 = true; }
+            if ( item.rgla.version.etiqCuant5 ) { this._existsCuant5 = true; }
+            if ( item.rgla.version.etiqCuant6 ) { this._existsCuant6 = true; }
 
-                if ( item.rgla.version.etiqCuant1 ) { this._existsCuant1 = true; }
-                if ( item.rgla.version.etiqCuant2 ) { this._existsCuant2 = true; }
-                if ( item.rgla.version.etiqCuant3 ) { this._existsCuant3 = true; }
-                if ( item.rgla.version.etiqCuant4 ) { this._existsCuant4 = true; }
-                if ( item.rgla.version.etiqCuant5 ) { this._existsCuant5 = true; }
-                if ( item.rgla.version.etiqCuant6 ) { this._existsCuant6 = true; }
-
-                if ( this._aspect.version.lgrpInfo1 && item.id == item.padreId && item.info1 ) { this._existsInfo1 = true; }
-                if ( this._aspect.version.lgrpInfo2 && item.id == item.padreId && item.info2 ) { this._existsInfo2 = true; }
-                if ( this._aspect.version.lgrpInfo3 && item.id == item.padreId && item.info3 ) { this._existsInfo3 = true; }
-                if ( this._aspect.version.lgrpInfo4 && item.id == item.padreId && item.info4 ) { this._existsInfo4 = true; }
-                if ( this._aspect.version.lgrpInfo5 && item.id == item.padreId && item.info5 ) { this._existsInfo5 = true; }
-                if ( this._aspect.version.lgrpInfo6 && item.id == item.padreId && item.info6 ) { this._existsInfo6 = true; }
-            }
+            if ( this.aspect.version.lgrpInfo1 && item.id == item.padreId && item.info1 ) { this._existsInfo1 = true; }
+            if ( this.aspect.version.lgrpInfo2 && item.id == item.padreId && item.info2 ) { this._existsInfo2 = true; }
+            if ( this.aspect.version.lgrpInfo3 && item.id == item.padreId && item.info3 ) { this._existsInfo3 = true; }
+            if ( this.aspect.version.lgrpInfo4 && item.id == item.padreId && item.info4 ) { this._existsInfo4 = true; }
+            if ( this.aspect.version.lgrpInfo5 && item.id == item.padreId && item.info5 ) { this._existsInfo5 = true; }
+            if ( this.aspect.version.lgrpInfo6 && item.id == item.padreId && item.info6 ) { this._existsInfo6 = true; }
         }
     }
 }

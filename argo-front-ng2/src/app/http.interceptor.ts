@@ -25,7 +25,7 @@ export class InterceptedHttp extends Http {
     }
 
     private interceptResponse( request: string | Request, options: RequestOptionsArgs ): Observable<Response> {
-        console.log( "interceptResponse: " + ( typeof request === 'string' ? request : request['url'] ) );
+        // console.log( "interceptResponse: " + ( typeof request === 'string' ? request : request['url'] ) );
 
         const observableRequest = super
             .request( request, options )
@@ -36,10 +36,6 @@ export class InterceptedHttp extends Http {
         return observableRequest;
     }
 
-    private onDo() {
-        return () => console.log( 'onDo' );
-    }
-
     private handleResponse( res: Response ) {
         console.log( "handleResponse: " + res.toString() );
 
@@ -48,16 +44,14 @@ export class InterceptedHttp extends Http {
         console.log( "jsonResponse: " + JSON.stringify( json ) );
 
         if ( json.responseCode == "login" ) {
-            console.log( "Needs login!!!" );
+            // console.log( "Needs login!!!" );
             this.router.navigate( ['/login'] );
 
             return Observable.empty();
         }
 
         if ( Object.keys( json.errorMessages ).length > 0 ) {
-            console.log( "has Errors!!!" );
-            // this.alertService.error( json.errorMessages, false );
-
+            // console.log( "has Errors!!!" );
             throw res;
         }
 
@@ -86,6 +80,6 @@ export class InterceptedHttp extends Http {
     }
 
     private onFinally() {
-        return () => console.log( 'onFinally' );
+        return () => {};
     }
 }

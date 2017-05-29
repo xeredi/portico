@@ -56,13 +56,13 @@
                                 data-ng-bind="vm.model.ssrv.numero"></a>
                         </p>
                     </div>
-                    <div class="col-md-2 form-group-sm" data-ng-if="vlrl.rgla.crgo.version.temporal">
+                    <div class="col-md-2 form-group-sm" data-ng-if="vm.vlrl.rgla.crgo.version.temporal">
                         <label data-translate="vlrd_fini"></label>
-                        <p class="form-control-static" data-ng-bind="model.fini | date: ('format_datetime' | translate)"></p>
+                        <p class="form-control-static" data-ng-bind="vm.model.fini | date: ('format_datetime' | translate)"></p>
                     </div>
-                    <div class="col-md-2 form-group-sm" data-ng-if="vlrl.rgla.crgo.version.temporal">
+                    <div class="col-md-2 form-group-sm" data-ng-if="vm.vlrl.rgla.crgo.version.temporal">
                         <label data-translate="vlrd_ffin"></label>
-                        <p class="form-control-static" data-ng-bind="model.ffin | date: ('format_datetime' | translate)"></p>
+                        <p class="form-control-static" data-ng-bind="vm.model.ffin | date: ('format_datetime' | translate)"></p>
                     </div>
                 </div>
 

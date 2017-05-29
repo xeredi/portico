@@ -1,3 +1,77 @@
-<p>
-  assessment-detail-grid-fragment works!
-</p>
+<div class="table-responsive" *ngIf="itemList">
+    <table class="table table-sm table-bordered table-hover table-condensed table-nonfluid">
+        <thead class="thead-inverse">
+            <tr>
+                <th></th>
+
+                <th>Regla</th>
+                <th>Tipo</th>
+                <th>Valor Base</th>
+                <th *ngIf="existsImporteBase">Importe Base</th>
+                <th>Importe</th>
+                <th *ngIf="existsSsrv">Subservicio</th>
+                <th *ngIf="existsFini">Fec. Inicio</th>
+                <th *ngIf="existsFfin">Fec. Fin</th>
+
+                <th *ngIf="existsInfo1" [innerHTML]="assessmentLineParent.rgla.version.etiqInfo1"></th>
+                <th *ngIf="existsInfo2" [innerHTML]="assessmentLineParent.rgla.version.etiqInfo2"></th>
+                <th *ngIf="existsInfo3" [innerHTML]="assessmentLineParent.rgla.version.etiqInfo3"></th>
+                <th *ngIf="existsInfo4" [innerHTML]="assessmentLineParent.rgla.version.etiqInfo4"></th>
+                <th *ngIf="existsInfo5" [innerHTML]="assessmentLineParent.rgla.version.etiqInfo5"></th>
+                <th *ngIf="existsInfo6" [innerHTML]="assessmentLineParent.rgla.version.etiqInfo6"></th>
+
+                <th *ngIf="existsCuant1" [innerHTML]="assessmentLineParent.rgla.version.etiqCuant1"></th>
+                <th *ngIf="existsCuant2" [innerHTML]="assessmentLineParent.rgla.version.etiqCuant2"></th>
+                <th *ngIf="existsCuant3" [innerHTML]="assessmentLineParent.rgla.version.etiqCuant3"></th>
+                <th *ngIf="existsCuant4" [innerHTML]="assessmentLineParent.rgla.version.etiqCuant4"></th>
+                <th *ngIf="existsCuant5" [innerHTML]="assessmentLineParent.rgla.version.etiqCuant5"></th>
+                <th *ngIf="existsCuant6" [innerHTML]="assessmentLineParent.rgla.version.etiqCuant6"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of itemList">
+                <td nowrap="nowrap"><a [routerLink]="['/billing/assessment-detail/detail', item.id]"><i
+                        class="fa fa-search"></i></a></td>
+
+                <td nowrap="nowrap" [innerHTML]="item.rgla.etiqueta"></td>
+                <td nowrap="nowrap" [innerHTML]="item.rgla.tipo"></td>
+                <td nowrap="nowrap" class="number" [innerHTML]="item.valorBase | number : '1.6-6'"></td>
+                <td *ngIf="existsImporteBase" nowrap="nowrap" class="number"><span *ngIf="item.id != item.padreId"
+                    [innerHTML]="item.importeBase | number : '1.2-2'"></span></td>
+                <td nowrap="nowrap" class="number"><span [innerHTML]="item.importe | number : '1.2-2'"></span></td>
+                <td *ngIf="existsSsrv" nowrap="nowrap" class="number"><span
+                    *ngIf="item.id == item.padreId && item.ssrv" [innerHTML]="item.ssrv.numero | number"></span></td>
+                <td *ngIf="existsFini" nowrap="nowrap"><span *ngIf="item.id == item.padreId"
+                    [innerHTML]="item.fini | date: 'dd/MM/yyyy HH:mm'"></span></td>
+                <td *ngIf="existsFfin" nowrap="nowrap"><span *ngIf="item.id == item.padreId"
+                    [innerHTML]="item.ffin | date: 'dd/MM/yyyy HH:mm'"></span></td>
+
+                <td *ngIf="existsInfo1" nowrap="nowrap"><span *ngIf="item.id == item.padreId"
+                    [innerHTML]="item.info1"></span></td>
+                <td *ngIf="existsInfo2" nowrap="nowrap"><span *ngIf="item.id == item.padreId"
+                    [innerHTML]="item.info2"></span></td>
+                <td *ngIf="existsInfo3" nowrap="nowrap"><span *ngIf="item.id == item.padreId"
+                    [innerHTML]="item.info3"></span></td>
+                <td *ngIf="existsInfo4" nowrap="nowrap"><span *ngIf="item.id == item.padreId"
+                    [innerHTML]="item.info4"></span></td>
+                <td *ngIf="existsInfo5" nowrap="nowrap"><span *ngIf="item.id == item.padreId"
+                    [innerHTML]="item.info5"></span></td>
+                <td *ngIf="existsInfo6" nowrap="nowrap"><span *ngIf="item.id == item.padreId"
+                    [innerHTML]="item.info6"></span></td>
+
+                <td *ngIf="existsCuant1" nowrap="nowrap" class="number"><span [innerHTML]="item.cuant1 | number"></span>
+                </td>
+                <td *ngIf="existsCuant2" nowrap="nowrap" class="number"><span [innerHTML]="item.cuant2 | number"></span>
+                </td>
+                <td *ngIf="existsCuant3" nowrap="nowrap" class="number"><span [innerHTML]="item.cuant3 | number"></span>
+                </td>
+                <td *ngIf="existsCuant4" nowrap="nowrap" class="number"><span [innerHTML]="item.cuant4 | number"></span>
+                </td>
+                <td *ngIf="existsCuant5" nowrap="nowrap" class="number"><span [innerHTML]="item.cuant5 | number"></span>
+                </td>
+                <td *ngIf="existsCuant6" nowrap="nowrap" class="number"><span [innerHTML]="item.cuant6 | number"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
