@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { AlertComponent } from './alert.component';
 import { I18nInfoDetailComponent } from './i18n-info-detail.component';
@@ -15,6 +16,7 @@ import { I18nInfoService } from './i18n-info.service';
 @NgModule( {
     imports: [
         CommonModule
+        , FormsModule
     ]
     , declarations: [
         AlertComponent

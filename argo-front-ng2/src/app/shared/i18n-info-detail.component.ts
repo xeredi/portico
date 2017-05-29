@@ -19,8 +19,7 @@ export class I18nInfoDetailComponent {
 
     @Input()
     set availableLanguages( availableLanguages: string[] ) {
-        console.log('set availableLanguages');
-
+        // console.log('set availableLanguages');
         this._availableLanguages = availableLanguages;
     }
 
@@ -28,8 +27,7 @@ export class I18nInfoDetailComponent {
 
     @Input()
     set i18nMap( i18nMap: Map<string, any> ) {
-        console.log('set i18nMap');
-
+        // console.log('set i18nMap');
         this._i18nMap = i18nMap;
     }
 

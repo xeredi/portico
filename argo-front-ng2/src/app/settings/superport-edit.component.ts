@@ -21,7 +21,7 @@ import { I18nInfoService } from '../shared/i18n-info.service';
                 </div>
             </div>
 
-            <app-i18n-info-edit [(i18nMap)]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-edit>
+            <app-i18n-info-edit name="i18nMap" [i18nMap]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-edit>
         </fieldset>
 
         <div class="btn-group">
