@@ -56,22 +56,30 @@ export class InterceptedHttp extends Http {
 
         if ( Object.keys( json.errorMessages ).length > 0 ) {
             console.log( "has Errors!!!" );
-            this.alertService.error( json.errorMessages, false );
+            // this.alertService.error( json.errorMessages, false );
 
-            return Observable.empty();
+            throw res;
         }
 
         return res;
     }
 
     private handleError( res: Response ) {
-        this.alertService.error( ["handleError: " + res.toString()], false );
-
-        console.log( "handleError: " + res.toString() );
-
+        // console.log( "handleError: " + res.toString() );
         if ( res.status === 401 || res.status === 403 ) {
-            console.log( "send to login. cause: " + res.toString() );
+            // console.log( "send to login. cause: " + res.toString() );
             this.router.navigate( ['/login'] );
+        }
+
+        try {
+            var json = res.json();
+
+            if ( json.errorMessages ) {
+                this.alertService.error( json.errorMessages, false );
+            }
+        } catch ( e ) {
+            // console.log( "not json!!!" );
+            this.alertService.error( [res.toString()], false );
         }
 
         return Observable.throw( res );

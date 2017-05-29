@@ -1,8 +1,13 @@
 import { Injectable } from '@angular/core';
+import { Http, Headers, Response } from '@angular/http';
+
+import { CrudService } from '../shared/crud.service';
 
 @Injectable()
-export class AssessmentDetailService {
+export class AssessmentDetailService extends CrudService {
+    constructor( private http: Http ) {
+        super( http );
 
-  constructor() { }
-
+        this.setParams( '/facturacion/valoracion-detalle', 'vlrd' );
+    }
 }

@@ -8,16 +8,16 @@ import { Component, Input } from '@angular/core';
         <thead class="thead-inverse">
             <tr>
                 <th></th>
-                <th>Entidad</th>
-                <th>Cargo</th>
+                <th *ngIf="existsEntity">Entidad</th>
+                <th *ngIf="existsCharge">Cargo</th>
                 <th>Regla</th>
                 <th>Tipo</th>
                 <th>Valor Base</th>
                 <th>Importe Base</th>
                 <th>Importe</th>
-                <th>Subtotal</th>
+                <th *ngIf="existsSubtotal">Subtotal</th>
                 <th>Nº Detalles</th>
-                <th>Impuesto</th>
+                <th *ngIf="existsTax">Impuesto</th>
 
                 <th *ngIf="existsSsrv">Subservicio</th>
                 <th *ngIf="existsFini">Fec. Inicio</th>
@@ -43,10 +43,10 @@ import { Component, Input } from '@angular/core';
                 <td nowrap="nowrap">
                     <a [routerLink]="['/billing/assessment-line/detail', item.id]"><i class="fa fa-search"></i></a>
                 </td>
-                <td nowrap="nowrap">
+                <td *ngIf="existsEntity" nowrap="nowrap">
                     <span *ngIf="item.id == item.padreId" [innerHTML]="item.rgla.enti.id"></span>
                 </td>
-                <td nowrap="nowrap">
+                <td *ngIf="existsCharge" nowrap="nowrap">
                     <span *ngIf="item.id == item.padreId" [innerHTML]="item.rgla.crgo.etiqueta"></span>
                 </td>
                 <td nowrap="nowrap" [innerHTML]="item.rgla.etiqueta"></td>
@@ -58,13 +58,13 @@ import { Component, Input } from '@angular/core';
                 <td nowrap="nowrap" class="number">
                     <span [innerHTML]="item.importe | number : '1.2-2'"></span>
                 </td>
-                <td nowrap="nowrap" class="number">
+                <td *ngIf="existsSubtotal" nowrap="nowrap" class="number">
                     <span *ngIf="item.id == item.padreId" [innerHTML]="item.subtotal | number : '1.2-2'"></span>
                 </td>
                 <td nowrap="nowrap" class="number">
                     <span [innerHTML]="item.vlrdCount | number"></span>
                 </td>
-                <td nowrap="nowrap">
+                <td *ngIf="existsTax" nowrap="nowrap">
                     <span *ngIf="item.id == item.padreId" [innerHTML]="item.impuesto.parametro"
                         [ngbTooltip]="item.impuesto.etiqueta" container="body"></span>
                 </td>
@@ -161,6 +161,10 @@ export class AssessmentLineGridFragmentComponent {
     private _itemList: any[];
     private _aspect: any;
 
+    private _existsEntity: boolean;
+    private _existsCharge: boolean;
+    private _existsSubtotal: boolean;
+    private _existsTax: boolean;
     private _existsSsrv: boolean;
     private _existsFini: boolean;
     private _existsFfin: boolean;
@@ -195,6 +199,10 @@ export class AssessmentLineGridFragmentComponent {
 
     get aspect(): any { return this._aspect; }
 
+    get existsEntity(): boolean { return this._existsEntity; }
+    get existsCharge(): boolean { return this._existsCharge; }
+    get existsSubtotal(): boolean { return this._existsSubtotal; }
+    get existsTax(): boolean { return this._existsTax; }
     get existsSsrv(): boolean { return this._existsSsrv; }
     get existsFini(): boolean { return this._existsFini; }
     get existsFfin(): boolean { return this._existsFfin; }
@@ -217,6 +225,10 @@ export class AssessmentLineGridFragmentComponent {
         if ( this._aspect && this._itemList ) {
             console.log( "Init Variables" );
 
+            this._existsEntity = false;
+            this._existsCharge = false;
+            this._existsSubtotal = false;
+            this._existsTax = false;
             this._existsSsrv = false;
             this._existsFini = false;
             this._existsFfin = false;
@@ -236,6 +248,10 @@ export class AssessmentLineGridFragmentComponent {
             this._existsInfo6 = false;
 
             for ( let item of this._itemList ) {
+                if ( item.id == item.padreId ) { this._existsEntity = true; }
+                if ( item.id == item.padreId ) { this._existsCharge = true; }
+                if ( item.id == item.padreId ) { this._existsSubtotal = true; }
+                if ( item.id == item.padreId ) { this._existsTax = true; }
                 if ( item.id == item.padreId && item.ssrv ) { this._existsSsrv = true; }
                 if ( item.id == item.padreId && item.fini ) { this._existsFini = true; }
                 if ( item.id == item.padreId && item.ffin ) { this._existsFfin = true; }

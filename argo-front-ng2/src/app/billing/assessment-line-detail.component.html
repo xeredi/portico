@@ -1,3 +1,167 @@
-<p>
-  assessment-line-detail works!
-</p>
+<div *ngIf="model">
+    <ngb-tabset #t="ngbTabset" type="pills" [activeId]="activeTab" (tabChange)="tabChange($event)"> <ngb-tab
+        id="mainTab"> <ng-template ngbTabTitle> Linea de Valoración </ng-template> <ng-template ngbTabContent>
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-primary" [routerLink]="['/billing/assessment-line/edit', 'edit', model.vlrcId, model.id]"><i
+                class="fa fa-edit"></i> Edit</a>
+            <button class="btn btn-secondary" (click)="remove()">
+                <i class="fa fa-remove"></i> Remove
+            </button>
+        </div>
+    </div>
+
+    <form>
+        <fieldset class="form-group">
+<!--
+            <div class="row">
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label>ID</label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.id"></p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label>Tipo de Servicio</label>
+                    <p class="form-control-static form-control-sm">
+                        <a [routerLink]="['/metamodel/service-type/detail', model.srvc.entiId]"
+                            [innerHTML]="model.srvc.entiId"></a>
+                    </p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label>Servicio</label>
+                    <p class="form-control-static form-control-sm">
+                        <a [routerLink]="['/service/service/detail', model.srvc.entiId, model.srvc.id]"
+                            [innerHTML]="model.srvc.etiqueta"></a>
+                    </p>
+                </div>
+                <div class="col-lg-4 col-xl-3 form-group-sm">
+                    <label>Aspecto</label>
+                    <p class="form-control-static form-control-sm">
+                        <a [routerLink]="['/billing/aspect/detail', model.aspc.id]" [innerHTML]="model.aspc.etiqueta"></a>
+                    </p>
+                </div>
+                <div *ngIf="model.fctr" class="col-lg-2 col-xl-1 form-group-sm">
+                    <label>Factura</label>
+                    <p class="form-control-static form-control-sm">
+                        <a [routerLink]="['/billing/bill/detail', model.fctr.id]" [innerHTML]="model.fctr.etiqueta"></a>
+                    </p>
+                </div>
+                <div *ngIf="model.fctrRectificada" class="col-lg-2 col-xl-1 form-group-sm">
+                    <label>Factura Rect.</label>
+                    <p class="form-control-static form-control-sm">
+                        <a [routerLink]="['/billing/bill/detail', model.fctrRectificada.id]"
+                            [innerHTML]="model.fctrRectificada.etiqueta"></a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label>Importe</label>
+                    <p class="form-control-static form-control-sm number" [innerHTML]="model.importe | number:'1.2-2'"></p>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label>Impuesto</label>
+                    <p class="form-control-static form-control-sm number" [innerHTML]="model.impuesto | number:'1.2-2'"></p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label>Cod. Exencion</label>
+                    <p class="form-control-static form-control-sm"
+                        [innerHTML]="'cdrf_' + dttyExemptionCode.id + '_' + model.codExencion"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4 col-xl-3 form-group-sm">
+                    <label>Pagador</label>
+                    <p class="form-control-static form-control-sm">
+                        <a
+                            [routerLink]="['/master/parameter/detail', model.pagador.entiId, model.pagador.id, model.fref]"
+                            [innerHTML]="model.pagador.etiqueta"></a>
+                    </p>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label>Suj. Pasivo?</label>
+                    <p class="form-control-static form-control-sm">
+                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.sujPasivo]"></i>
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label>Fec. Alta</label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.falta | date:'dd/MM/yyyy HH:mm'"></p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label>Fec. Liquidacion</label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.fliq | date:'dd/MM/yyyy'"></p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label>Fec. Referencia</label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.fref | date:'dd/MM/yyyy HH:mm'"></p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label>Fec. Inicio</label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.fini | date:'dd/MM/yyyy HH:mm'"></p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label>Fec. Fin</label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.ffin | date:'dd/MM/yyyy HH:mm'"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div *ngIf="aspect.version.cetiqInfo1" class="col-lg-4 col-xl-3 form-group-sm">
+                    <label [innerHTML]="aspect.version.cetiqInfo1"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.info1"></p>
+                </div>
+                <div *ngIf="aspect.version.cetiqInfo2" class="col-lg-4 col-xl-3 form-group-sm">
+                    <label [innerHTML]="aspect.version.cetiqInfo2"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.info2"></p>
+                </div>
+                <div *ngIf="aspect.version.cetiqInfo3" class="col-lg-4 col-xl-3 form-group-sm">
+                    <label [innerHTML]="aspect.version.cetiqInfo3"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.info3"></p>
+                </div>
+                <div *ngIf="aspect.version.cetiqInfo4" class="col-lg-4 col-xl-3 form-group-sm">
+                    <label [innerHTML]="aspect.version.cetiqInfo4"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.info4"></p>
+                </div>
+                <div *ngIf="aspect.version.cetiqInfo5" class="col-lg-4 col-xl-3 form-group-sm">
+                    <label [innerHTML]="aspect.version.cetiqInfo5"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.info5"></p>
+                </div>
+                <div *ngIf="aspect.version.cetiqInfo6" class="col-lg-4 col-xl-3 form-group-sm">
+                    <label [innerHTML]="aspect.version.cetiqInfo6"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.info6"></p>
+                </div>
+            </div>
+-->
+        </fieldset>
+
+        <fieldset *ngIf="aslnChildList">
+            <legend>Modificadores</legend>
+            <app-assessment-line-grid-fragment [itemList]="aslnChildList" [aspect]="aspect"></app-assessment-line-grid-fragment>
+        </fieldset>
+    </form>
+    </ng-template> </ngb-tab> <ngb-tab id="assessmentDetailsTab"> <ng-template ngbTabTitle> Detalles de Valoración </ng-template> <ng-template
+        ngbTabContent>
+    <div *ngIf="asdtList">
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group mr-2" role="group">
+                <ngb-pagination [collectionSize]="asdtList.count" [(page)]="pageMap['asdtList']" [pageSize]="pageSize"
+                    [maxSize]="1" [size]="sm" [boundaryLinks]="false" [ellipses]="false"
+                    (pageChange)="pageChange('asdtList')"></ngb-pagination>
+            </div>
+            <div class="btn-group mr-2" role="group">
+                <a class="btn btn-primary" [routerLink]="['/billing/assessment-detail/edit', 'create', model.id]"><i
+                    class="fa fa-file-o"></i> New</a>
+            </div>
+        </div>
+
+        <span>Nº Resultados: {{asdtList.count}}</span>
+
+        <app-assessment-detail-grid-fragment [itemList]="asdtList.list" [aspect]="aspect"></app-assessment-detail-grid-fragment>
+    </div>
+    </ng-template> </ngb-tab> </ngb-tabset>
+</div>

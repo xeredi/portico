@@ -25,6 +25,11 @@ $ sudo npm install -g @angular/cli@latest
 
 
 
+PACKAGE MANAGER
+$ ng set --global packageManager=yarn
+$ ng set --global packageManager=npm
+
+
 VERSION
 
 $ ng --version
