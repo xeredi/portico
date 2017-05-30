@@ -102,7 +102,7 @@ public abstract class BaseAction extends ActionSupport {
 			addActionError(MessageI18nKey.E00000, ex.getMessage());
 		}
 
-		return hasErrors() ? ERROR : SUCCESS;
+		return SUCCESS;
 	}
 
 	/**

@@ -69,7 +69,7 @@ export class SuperportEditComponent implements OnInit {
     save() {
         this.sprtService.saveI18n( this.action, this.model, this.i18nMap )
             .subscribe( resp => {
-                this.location.back();
+                this.action == 'edit' ? this.location.back() : this.router.navigate( ['/settings/superport/detail', resp.model.id], { replaceUrl: true } );
             } );
     }
 

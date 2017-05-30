@@ -100,7 +100,7 @@ export class PortEditComponent implements OnInit {
     save() {
         this.prtoService.saveI18n( this.action, this.model, this.i18nMap )
             .subscribe( resp => {
-                this.location.back();
+                this.action == 'edit' ? this.location.back() : this.router.navigate( ['/settings/port/detail', resp.model.id], { replaceUrl: true } );
             } );
     }
 

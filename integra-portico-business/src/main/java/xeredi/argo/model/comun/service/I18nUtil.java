@@ -55,7 +55,7 @@ public final class I18nUtil {
 			i18nVO.setPrefix(prefix);
 			i18nVO.setExternalId(externalId);
 
-			if (i18nVO.getText() != null || !i18nVO.getText().isEmpty()) {
+			if (i18nVO.getText() != null && !i18nVO.getText().isEmpty()) {
 				i18nDAO.insert(i18nVO);
 			}
 		}
