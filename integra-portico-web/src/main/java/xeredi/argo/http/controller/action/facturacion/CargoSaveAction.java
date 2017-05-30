@@ -57,6 +57,10 @@ public final class CargoSaveAction extends CrudSaveAction<CargoVO> {
 		if (AccionCodigo.create == accion) {
 			FieldValidator.validateRequired(this, MessageI18nKey.crgo_codigo, model.getCodigo());
 			FieldValidator.validateRequired(this, MessageI18nKey.tpsr, model.getTpsr());
+
+			if (!hasErrors()) {
+				FieldValidator.validateRequired(this, MessageI18nKey.tpsr, model.getTpsr().getId());
+			}
 		}
 
 		FieldValidator.validateI18n(this, i18nMap);

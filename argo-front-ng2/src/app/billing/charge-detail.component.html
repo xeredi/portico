@@ -2,9 +2,9 @@
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group">
             <a class="btn btn-primary" [routerLink]="['/billing/charge/edit', 'edit', model.id, model.fref]"><i
-                class="fa fa-edit"></i> Edit</a>
+                class="fa fa-edit"></i> <span [translate]="'btn_editar'"></span></a>
             <button class="btn btn-secondary" (click)="remove()">
-                <i class="fa fa-remove"></i> Remove
+                <i class="fa fa-remove"></i> <span [translate]="'btn_borrar'"></span>
             </button>
         </div>
     </div>
@@ -13,32 +13,32 @@
         <fieldset class="form-group">
             <div class="row">
                 <div class="col-sm-4 col-lg-3 col-xl-2 form-group-sm">
-                    <label>Tipo de Servicio</label>
+                    <label [translate]="'tpsr'"></label>
                     <p class="form-control-static form-control-sm">
                         <a *ngIf="model.tpsr" [routerLink]="['/metamodel/service-type/detail', model.tpsr.id]"
-                            [innerHTML]="model.tpsr.id"></a>
+                            [translate]="'enti_' + model.tpsr.id"></a>
                     </p>
                 </div>
                 <div class="col-lg-2 col-xl-1 form-group-sm">
-                    <label>Código</label>
+                    <label [translate]="'crgo_codigo'"></label>
                     <p class="form-control-static form-control-sm" [innerHTML]="model.codigo"></p>
                 </div>
                 <div class="col-lg-3 col-xl-2 form-group-sm">
-                    <label>Cod. Normalizado</label>
+                    <label [translate]="'crgo_codigoNormalizado'"></label>
                     <p class="form-control-static form-control-sm" [innerHTML]="model.version.codigoNormalizado"></p>
                 </div>
                 <div class="col-lg-2 col-xl-1 form-group-sm">
-                    <label>Tipo de Cargo</label>
+                    <label [translate]="'crgo_tipo'"></label>
                     <p class="form-control-static form-control-sm" [innerHTML]="'CargoTipo_' + model.version.tipo"></p>
                 </div>
                 <div class="col-lg-2 col-xl-1 form-group-sm">
-                    <label>Principal?</label>
+                    <label [translate]="'crgo_principal'"></label>
                     <p class="form-control-static form-control-sm">
                         <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.version.principal]"></i>
                     </p>
                 </div>
                 <div class="col-lg-2 col-xl-1 form-group-sm">
-                    <label>Temporal?</label>
+                    <label [translate]="'crgo_temporal'"></label>
                     <p class="form-control-static form-control-sm">
                         <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.version.temporal]"></i>
                     </p>
@@ -47,11 +47,11 @@
 
             <div class="row">
                 <div class="col-lg-2 col-xl-1 form-group-sm">
-                    <label>F. Inicio</label>
+                    <label [translate]="'fini'"></label>
                     <p class="form-control-static form-control-sm" [innerHTML]="model.version.fini | date: 'dd/MM/yyyy'"></p>
                 </div>
                 <div class="col-lg-2 col-xl-1 form-group-sm">
-                    <label>F. Fin</label>
+                    <label [translate]="'ffin'"></label>
                     <p class="form-control-static form-control-sm" [innerHTML]="model.version.ffin | date: 'dd/MM/yyyy'"></p>
                 </div>
             </div>
@@ -65,7 +65,7 @@
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
                 <a class="btn btn-primary" [routerLink]="['/billing/rule/edit', 'create', model.id, model.fref]"><i
-                    class="fa fa-file-o"></i> New</a>
+                    class="fa fa-file-o"></i> <span [translate]="'btn_crear'"></span></a>
             </div>
         </div>
 

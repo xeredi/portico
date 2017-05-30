@@ -8,6 +8,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 
 import { httpFactory } from "./http.factory";
 
@@ -48,6 +49,7 @@ export function HttpLoaderFactory( http: Http ) {
                 deps: [Http]
             }
         } )
+        , NguiDatetimePickerModule
         , AppRoutingModule
         , SharedModule
         , SecurityModule

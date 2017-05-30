@@ -19,7 +19,7 @@
                     <p class="form-control-static form-control-sm">
                         <a
                             [routerLink]="[{'T':'/metamodel/service-type/detail', 'S':'/metamodel/subservice-type/detail'}[model.rgla.enti.tipo], model.rgla.enti.id]"
-                            [innerHTML]="model.rgla.enti.id"></a>
+                            [translate]="'enti_' + model.rgla.enti.id"></a>
                     </p>
                 </div>
                 <div class="col-lg-4 col-xl-3 form-group-sm">

@@ -44,7 +44,7 @@ import { Component, Input, OnInit } from '@angular/core';
                     <a [routerLink]="['/billing/assessment-line/detail', item.id]"><i class="fa fa-search"></i></a>
                 </td>
                 <td *ngIf="existsEntity" nowrap="nowrap">
-                    <span *ngIf="item.id == item.padreId" [innerHTML]="item.rgla.enti.id"></span>
+                    <span *ngIf="item.id == item.padreId" [translate]="'enti_' + item.rgla.enti.id"></span>
                 </td>
                 <td *ngIf="existsCharge" nowrap="nowrap">
                     <span *ngIf="item.id == item.padreId" [innerHTML]="item.rgla.crgo.etiqueta"></span>

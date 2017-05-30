@@ -13,7 +13,9 @@
         </div>
     </div>
 
-    <span>Nº Resultados: {{resultList.count}}</span>
+
+
+    <span [translate]="'grid_count'" [translateParams]="{count: resultList.count}"></span>
 
     <div class="table-responsive">
         <table class="table table-sm table-bordered table-hover table-condensed table-nonfluid">
@@ -34,12 +36,12 @@
                     <th [translate]="'ffin'"></th>
                     <th [translate]="'vlrc_falta'"></th>
                     <th [translate]="'vlrc_codExencion'"></th>
-                    <th>Info 1</th>
-                    <th>Info 2</th>
-                    <th>Info 3</th>
-                    <th>Info 4</th>
-                    <th>Info 5</th>
-                    <th>Info 6</th>
+                    <th [translate]="'vlrc_info1'"></th>
+                    <th [translate]="'vlrc_info2'"></th>
+                    <th [translate]="'vlrc_info3'"></th>
+                    <th [translate]="'vlrc_info4'"></th>
+                    <th [translate]="'vlrc_info5'"></th>
+                    <th [translate]="'vlrc_info6'"></th>
                 </tr>
             </thead>
             <tbody>
@@ -96,7 +98,7 @@
         <fieldset class="form-group">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-sm-3 col-md-2 col-lg-1 form-group-sm">
+                    <div class="col-lg-1 form-group-sm">
                         <label>ID</label> <input type="text" [(ngModel)]="model.id" name="model.id"
                             class="form-control form-control-sm" />
                     </div>
@@ -104,7 +106,8 @@
                         <label>Tipo de Servicio</label> <select [(ngModel)]="model.tpsrId" name="model.tpsrId"
                             class="form-control form-control-sm">
                             <option></option>
-                            <option *ngFor="let item of tpsrList" [value]="item.value" [innerHTML]="item.value"></option>
+                            <option *ngFor="let item of tpsrList" [value]="item.value"
+                                [translate]="'enti_' + item.value"></option>
                         </select>
                     </div>
                     <div class="col-lg-3 col-xl-2 form-group-sm">

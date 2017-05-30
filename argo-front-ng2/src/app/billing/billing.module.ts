@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
+import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 
 import { SharedModule } from '../shared/shared.module';
 
@@ -48,6 +49,7 @@ import { IncompatibleRuleEditComponent } from './incompatible-rule-edit.componen
         , CommonModule
         , NgbModule
         , TranslateModule
+        , NguiDatetimePickerModule
 
         , SharedModule
         , BillingRoutingModule

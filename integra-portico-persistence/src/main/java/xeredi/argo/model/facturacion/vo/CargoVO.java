@@ -40,6 +40,7 @@ public final class CargoVO implements Versionable<CargoVersionVO>, I18nable {
         super();
 
         version = new CargoVersionVO();
+        tpsr = new TipoServicioVO();
     }
 
     /**

@@ -33,7 +33,7 @@
                     <p class="form-control-static form-control-sm">
                         <a
                             [routerLink]="[{'T':'/metamodel/service-type/detail', 'S':'/metamodel/subservice-type/detail'}[model.enti.tipo], model.enti.id]"
-                            [innerHTML]="model.enti.id"></a>
+                            [translate]="'enti_' + model.enti.id"></a>
                     </p>
                 </div>
                 <div class="col-lg-2 col-xl-1 form-group-sm">
@@ -41,6 +41,8 @@
                     <p class="form-control-static form-control-sm number" [innerHTML]="model.version.orden"></p>
                 </div>
             </div>
+
+            <app-i18n-info-detail [i18nMap]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-detail>
 
             <div class="row">
                 <div class="col-lg-2 col-xl-1 form-group-sm">
@@ -67,8 +69,6 @@
                     <pre class="form-control-static form-control-sm" [innerHTML]="model.version.condicion"></pre>
                 </div>
             </div>
-
-            <app-i18n-info-detail [i18nMap]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-detail>
         </fieldset>
     </form>
 

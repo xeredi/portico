@@ -2,41 +2,63 @@
     <form role="form" (ngSubmit)="save()">
         <fieldset class="form-group">
             <div class="row">
-<!--
-                <div class="col-sm-3 col-lg-2 col-xl-1 form-group-sm">
-                    <label>Código</label>
-                    <p *ngIf="action == 'edit'" class="form-control-static form-control-sm">{{model.codigo}}</p>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [translate]="'tpsr'"></label>
+                    <p *ngIf="action == 'edit'" class="form-control-static form-control-sm">
+                        <a *ngIf="model.tpsr" [routerLink]="['/metamodel/service-type/detail', model.tpsr.id]"
+                            [translate]="'enti_' + model.tpsr.id"></a>
+                    </p>
+                    <select *ngIf="action != 'edit'" [(ngModel)]="model.tpsr.id" name="model.tpsr.id"
+                        class="form-control form-control-sm">
+                        <option></option>
+                        <option *ngFor="let item of srtpList" [value]="item.value" [translate]="'enti_' + item.value"></option>
+                    </select>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'crgo_codigo'"></label>
+                    <p *ngIf="action == 'edit'" class="form-control-static form-control-sm" [innerHTML]="model.codigo"></p>
                     <input *ngIf="action != 'edit'" type="text" [(ngModel)]="model.codigo" name="model.codigo"
                         class="form-control form-control-sm" />
                 </div>
-                <div class="col-sm-3 col-lg-2 col-xl-1 form-group-sm">
-                    <label>Cod. Corto</label>
-                    <input type="text" [(ngModel)]="model.codigoCorto" name="model.codigoCorto"
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [translate]="'crgo_codigoNormalizado'"></label> <input type="text"
+                        [(ngModel)]="model.version.codigoNormalizado" name="model.version.codigoNormalizado"
                         class="form-control form-control-sm" />
                 </div>
-                <div class="col-sm-3 col-lg-2 col-xl-1 form-group-sm">
-                    <label>Cod. EDI</label>
-                    <input type="text" [(ngModel)]="model.codigoEdi" name="model.codigoEdi"
-                        class="form-control form-control-sm" />
-                </div>
-                <div class="col-sm-3 col-lg-2 col-xl-1 form-group-sm">
-                    <label>R. Aduanero</label>
-                    <input type="text" [(ngModel)]="model.recAduanero" name="model.recAduanero"
-                        class="form-control form-control-sm" />
-                </div>
-                <div class="col-sm-3 col-lg-2 col-xl-1 form-group-sm">
-                    <label>UNlocode</label>
-                    <input type="text" [(ngModel)]="model.unlocode" name="model.unlocode"
-                        class="form-control form-control-sm" />
-                </div>
-                <div class="col-sm-4 col-lg-3 col-xl-2 form-group-sm">
-                    <label>A. Portuaria</label>
-                    <select class="form-control form-control-sm" [(ngModel)]="model.sprt.id" name="model.sprt.id">
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'crgo_tipo'"></label> <select [(ngModel)]="model.version.tipo"
+                        name="model.version.tipo" class="form-control form-control-sm">
                         <option></option>
-                        <option *ngFor="let sprt of sprtList" [ngValue]="sprt.id" [innerHTML]="sprt.etiqueta"></option>
+                        <option *ngFor="let item of chtpList" [value]="item" [translate]="'CargoTipo_' + item"></option>
                     </select>
                 </div>
--->
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'crgo_principal'"></label> <select [(ngModel)]="model.version.principal"
+                        name="model.version.principal" class="form-control form-control-sm">
+                        <option></option>
+                        <option *ngFor="let item of [true, false]" [value]="item" [translate]="'format_' + item"></option>
+                    </select>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'crgo_temporal'"></label> <select [(ngModel)]="model.version.temporal"
+                        name="model.version.temporal" class="form-control form-control-sm">
+                        <option></option>
+                        <option *ngFor="let item of [true, false]" [value]="item" [translate]="'format_' + item"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'fini'"></label> <input class="form-control form-control-sm"
+                        [(ngModel)]="model.version.fini" name="model.version.fini" ngui-datetime-picker date-only="true"
+                        date-format="DD/MM/YYYY" />
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'ffin'"></label> <input class="form-control form-control-sm"
+                        [(ngModel)]="model.version.ffin" name="model.version.ffin" ngui-datetime-picker date-only="true"
+                        date-format="DD/MM/YYYY" />
+                </div>
             </div>
 
             <app-i18n-info-edit [(i18nMap)]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-edit>

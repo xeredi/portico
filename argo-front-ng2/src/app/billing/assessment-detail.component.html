@@ -22,7 +22,7 @@
                     <label>Tipo de Servicio</label>
                     <p class="form-control-static form-control-sm">
                         <a [routerLink]="['/metamodel/service-type/detail', model.srvc.entiId]"
-                            [innerHTML]="model.srvc.entiId"></a>
+                            [translate]="'enti_' + model.srvc.entiId"></a>
                     </p>
                 </div>
                 <div class="col-lg-3 col-xl-2 form-group-sm">
@@ -65,7 +65,7 @@
                 <div class="col-lg-3 col-xl-2 form-group-sm">
                     <label>Cod. Exencion</label>
                     <p class="form-control-static form-control-sm"
-                        [innerHTML]="'cdrf_' + dttyExemptionCode.id + '_' + model.codExencion"></p>
+                        [translate]="'cdrf_' + dttyExemptionCode.id + '_' + model.codExencion"></p>
                 </div>
             </div>
 

@@ -376,6 +376,50 @@ En resto de módulos:
 
 
 
+AÑADIR ng2-date-picker
+
+https://github.com/ng2-ui/datetime-picker
+
+$ npm install @ngui/datetime-picker --save
+
+En los modulos (en el principal y en los modulos que usen el datepicker):
+
+	import { NgModule } from '@angular/core';
+	 import { FormsModule } from "@angular/forms";
+	 import { BrowserModule  } from '@angular/platform-browser';
+	 import { AppComponent } from './app.component';
+	 import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
+
+	 @NgModule({
+	   imports: [BrowserModule, FormsModule, NguiDatetimePickerModule],
+	   declarations: [AppComponent],
+	   bootstrap: [ AppComponent ]
+	 })
+	 export class AppModule { }
+
+Añadir moment para e formateo de fechas:
+	$ npm install moment --save
+
+	Go to your angular-cli.json on your project root and configure it like,
+
+		{
+		  ...
+		  "apps": [
+		     ...
+		     "scripts": [
+		        "../node_modules/moment/min/moment.min.js"
+		     ]
+		     ...
+		  ]
+		  ...
+		}
+
+	In your component.ts use: import * as moment from 'moment';
+		and that's it. You can use from your component's class:
+
+
+
+
 AÑADIR ngx-translate (OJO!!! Choca con el interceptor de Http)
 
 $ npm install @ngx-translate/core --save
@@ -445,3 +489,5 @@ En el archivo app.component.ts:
 	        translate.use('en');
 	    }
 	}
+
+

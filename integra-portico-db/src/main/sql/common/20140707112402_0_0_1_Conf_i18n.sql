@@ -1366,6 +1366,18 @@ INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'vlrc_sujPasiv
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'vlrc_sujPasivo', 'Suj. Pasivo?')\
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'vlrc_codExencion')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'vlrc_codExencion', 'Cód. Exención')\
+INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'vlrc_info1')\
+	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'vlrc_info1', 'Info. 1')\
+INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'vlrc_info2')\
+	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'vlrc_info2', 'Info. 2')\
+INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'vlrc_info3')\
+	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'vlrc_info3', 'Info. 3')\
+INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'vlrc_info4')\
+	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'vlrc_info4', 'Info. 4')\
+INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'vlrc_info5')\
+	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'vlrc_info5', 'Info. 5')\
+INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'vlrc_info6')\
+	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'vlrc_info6', 'Info. 6')\
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'vlrgList')\
 	INSERT INTO tbl_message_i18n_m18n (m18n_language, m18n_key, m18n_value) VALUES ('es', 'vlrgList', 'Cargos')\
 INSERT INTO tbl_message_mesg (mesg_internal, mesg_key) VALUES (0, 'vlrg_importe')\
