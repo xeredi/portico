@@ -60,37 +60,73 @@ public final class I18nJs {
 				labelValues.add(new LabelValueVO(key.name(), m18nMap.get(key)));
 			}
 
-			final Iterator<LabelValueVO> labelValueIterator = labelValues.iterator();
-			final StringBuffer i18nParams = new StringBuffer();
-
-			while (labelValueIterator.hasNext()) {
-				final LabelValueVO labelValue = labelValueIterator.next();
-
-				i18nParams.append(labelValue.getLabel() + ":'" + labelValue.getValue() + '\'');
-
-				if (labelValueIterator.hasNext()) {
-					i18nParams.append(',');
-				}
-			}
-
-			final String jsTemplate = "angular.module('argo.i18n', [ 'pascalprecht.translate' ])"
-					+ ".config(function($translateProvider) { $translateProvider.translations('" + language + "', {"
-					+ i18nParams.toString() + "}); $translateProvider.preferredLanguage('" + defaultLanguage
-					+ "'); });";
-
-			final String filename = webappInstallPath + "/modules/i18n/i18n_messages_" + language + ".js";
-
-			LOG.info("Filename: " + filename);
-
-			try (final PrintWriter printWriter = new PrintWriter(filename, "UTF-8")) {
-				printWriter.print(jsTemplate);
-
-				if (LOG.isDebugEnabled()) {
-					LOG.debug("jsTemplate: " + jsTemplate);
-				}
-			}
+			exportJs(labelValues, webappInstallPath, language, defaultLanguage);
+			exportJson(labelValues, "/home/xeredi/git/portico/argo-front-ng2/src/assets/i18n", language,
+					defaultLanguage);
 		}
 
 		LOG.info("I18n export success");
+	}
+
+	private void exportJs(final List<LabelValueVO> labelValues, final String webappInstallPath, final String language,
+			final String defaultLanguage) throws IOException {
+		final Iterator<LabelValueVO> labelValueIterator = labelValues.iterator();
+		final StringBuffer i18nParams = new StringBuffer();
+
+		while (labelValueIterator.hasNext()) {
+			final LabelValueVO labelValue = labelValueIterator.next();
+
+			i18nParams.append(labelValue.getLabel() + ":'" + labelValue.getValue() + '\'');
+
+			if (labelValueIterator.hasNext()) {
+				i18nParams.append(',');
+			}
+		}
+
+		final String jsTemplate = "angular.module('argo.i18n', [ 'pascalprecht.translate' ])"
+				+ ".config(function($translateProvider) { $translateProvider.translations('" + language + "', {"
+				+ i18nParams.toString() + "}); $translateProvider.preferredLanguage('" + defaultLanguage + "'); });";
+
+		final String filename = webappInstallPath + "/modules/i18n/i18n_messages_" + language + ".js";
+
+		LOG.info("Filename: " + filename);
+
+		try (final PrintWriter printWriter = new PrintWriter(filename, "UTF-8")) {
+			printWriter.print(jsTemplate);
+
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("jsTemplate: " + jsTemplate);
+			}
+		}
+	}
+
+	private void exportJson(final List<LabelValueVO> labelValues, final String webappInstallPath, final String language,
+			final String defaultLanguage) throws IOException {
+		final Iterator<LabelValueVO> labelValueIterator = labelValues.iterator();
+		final StringBuffer i18nParams = new StringBuffer();
+
+		while (labelValueIterator.hasNext()) {
+			final LabelValueVO labelValue = labelValueIterator.next();
+
+			i18nParams.append("\"" + labelValue.getLabel() + "\":\"" + labelValue.getValue() + "\"");
+
+			if (labelValueIterator.hasNext()) {
+				i18nParams.append(',');
+			}
+		}
+
+		final String jsonTemplate = "{" + i18nParams.toString() + "}";
+
+		final String filename = webappInstallPath + "/" + language + ".json";
+
+		LOG.info("Filename: " + filename);
+
+		try (final PrintWriter printWriter = new PrintWriter(filename, "UTF-8")) {
+			printWriter.print(jsonTemplate);
+
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("jsonTemplate: " + jsonTemplate);
+			}
+		}
 	}
 }

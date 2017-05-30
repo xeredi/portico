@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { SharedModule } from '../shared/shared.module';
 
@@ -46,6 +47,7 @@ import { IncompatibleRuleEditComponent } from './incompatible-rule-edit.componen
         FormsModule
         , CommonModule
         , NgbModule
+        , TranslateModule
 
         , SharedModule
         , BillingRoutingModule

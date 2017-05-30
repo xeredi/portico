@@ -375,3 +375,73 @@ En resto de módulos:
 	}
 
 
+
+AÑADIR ngx-translate (OJO!!! Choca con el interceptor de Http)
+
+$ npm install @ngx-translate/core --save
+$ npm install @ngx-translate/http-loader
+
+En el archivo app.module.ts:
+
+	import {NgModule} from '@angular/core';
+	import {BrowserModule} from '@angular/platform-browser';
+	import {HttpModule, Http} from '@angular/http';
+	import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+	import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+	import {AppComponent} from './app';
+
+	export function createTranslateLoader(http: Http) {
+	    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+	}
+
+	@NgModule({
+	    imports: [
+	        BrowserModule,
+	        HttpModule,
+	        TranslateModule.forRoot({
+	            loader: {
+	                provide: TranslateLoader,
+	                useFactory: (createTranslateLoader),
+	                deps: [Http]
+	            }
+	        })
+	    ],
+	    bootstrap: [AppComponent]
+	})
+	export class AppModule { }
+
+En el resto de modulos:
+	import {TranslateModule} from '@ngx-translate/core';
+	...
+	@NgModule( {
+	    imports: [
+	    	...
+	        , TranslateModule
+	    	...
+	    ]
+
+
+En el archivo app.component.ts:
+
+	2. Init the TranslateService for your application:
+
+	import {Component} from '@angular/core';
+	import {TranslateService} from '@ngx-translate/core';
+
+	@Component({
+	    selector: 'app',
+	    template: `
+	        <div>{{ 'HELLO' | translate:param }}</div>
+	    `
+	})
+	export class AppComponent {
+	    param = {value: 'world'};
+
+	    constructor(translate: TranslateService) {
+	        // this language will be used as a fallback when a translation isn't found in the current language
+	        translate.setDefaultLang('en');
+
+	         // the lang to use, if the lang isn't available, it will use the current loader to get them
+	        translate.use('en');
+	    }
+	}

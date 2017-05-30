@@ -19,9 +19,10 @@ export class InterceptedHttp extends Http {
     }
 
     request( request: string | Request, options: RequestOptionsArgs = { headers: new Headers() } ): Observable<Response> {
-        // console.log( "request: " + ( typeof request === 'string' ? request : request['url'] ) );
-        // this.configureRequest( request, options );
-        return this.interceptResponse( request, options );
+        var url = ( typeof request === 'string' ? request : request['url'] );
+
+        // FIXME Mirar si hay forma más elegante de hacer que funcione angular translate
+        return url.startsWith( "/assets/i18n" ) ? super.request( request, options ) : this.interceptResponse( request, options );
     }
 
     private interceptResponse( request: string | Request, options: RequestOptionsArgs ): Observable<Response> {
@@ -59,7 +60,7 @@ export class InterceptedHttp extends Http {
     }
 
     private handleError( res: Response ) {
-        // console.log( "handleError: " + res.toString() );
+        console.log( "handleError: " + res.toString() );
         if ( res.status === 401 || res.status === 403 ) {
             // console.log( "send to login. cause: " + res.toString() );
             this.router.navigate( ['/login'] );
@@ -80,6 +81,6 @@ export class InterceptedHttp extends Http {
     }
 
     private onFinally() {
-        return () => {};
+        return () => { };
     }
 }

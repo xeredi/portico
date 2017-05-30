@@ -37,8 +37,6 @@ export class AssessmentGridComponent implements OnInit {
                 this.page = params['page'] ? +params['page'] : 1;
                 this.model = params['model'] ? JSON.parse( params['model'] ) : {};
 
-                console.log( "after params page: " + this.page );
-
                 this.doSearch();
             } );
     }

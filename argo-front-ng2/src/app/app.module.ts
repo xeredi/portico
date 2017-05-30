@@ -2,9 +2,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpModule, Http, XHRBackend, RequestOptions } from '@angular/http';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { httpFactory } from "./http.factory";
 
@@ -23,6 +26,10 @@ import { BillingModule } from './billing/billing.module';
 
 import { AlertService } from './shared/alert.service';
 
+export function HttpLoaderFactory( http: Http ) {
+    return new TranslateHttpLoader( http );
+}
+
 @NgModule( {
     declarations: [
         AppComponent
@@ -34,6 +41,13 @@ import { AlertService } from './shared/alert.service';
         , FormsModule
         , HttpModule
         , NgbModule.forRoot()
+        , TranslateModule.forRoot( {
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [Http]
+            }
+        } )
         , AppRoutingModule
         , SharedModule
         , SecurityModule
@@ -49,7 +63,14 @@ import { AlertService } from './shared/alert.service';
             deps: [XHRBackend, RequestOptions, AlertService, Router],
             useFactory: httpFactory
         }
+        /*
+*/
     ]
     , bootstrap: [AppComponent]
+    , exports: [
+        BrowserModule
+        , HttpModule
+        , TranslateModule
+    ]
 } )
 export class AppModule { }

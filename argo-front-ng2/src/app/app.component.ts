@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component( {
     moduleId: module.id,
@@ -32,6 +33,12 @@ import { Component } from '@angular/core';
     `
 } )
 export class AppComponent {
+
+    constructor( private translate: TranslateService ) {
+        translate.addLangs( ["es", "ca", "en"] );
+        translate.setDefaultLang( 'es' );
+        translate.use( 'es' );
+    }
 
     public localStorageItem( id: string ): string {
         return localStorage.getItem( id );
