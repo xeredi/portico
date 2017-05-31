@@ -33,9 +33,12 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.BooleanUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.StrutsConstants;
-import org.apache.struts2.dispatcher.FilterDispatcher;
+import org.apache.struts2.dispatcher.PrepareOperations;
 import org.apache.struts2.json.annotations.SMDMethod;
 import org.apache.struts2.json.rpc.RPCError;
 import org.apache.struts2.json.rpc.RPCErrorCode;
@@ -50,102 +53,55 @@ import com.opensymphony.xwork2.inject.Inject;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 import com.opensymphony.xwork2.util.ValueStack;
 import com.opensymphony.xwork2.util.WildcardUtil;
-import com.opensymphony.xwork2.util.logging.Logger;
-import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
-// TODO: Auto-generated Javadoc
 /**
- * Populates an action from a JSON string.
+ * Populates an action from a JSON string
  */
 public class JSONInterceptor extends AbstractInterceptor {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 4950170304212158803L;
+	private static final long serialVersionUID = 4950170304212158803L;
+	private static final Logger LOG = LogManager.getLogger(JSONInterceptor.class);
 
-    /** The Constant LOG. */
-    private static final Logger LOG = LoggerFactory.getLogger(JSONInterceptor.class);
+	private boolean enableSMD = false;
+	private boolean enableGZIP = false;
+	private boolean wrapWithComments;
+	private boolean prefix;
+	private String defaultEncoding = "UTF-8";
+	private boolean ignoreHierarchy = true;
+	private String root;
+	private List<Pattern> excludeProperties;
+	private List<Pattern> includeProperties;
+	private boolean ignoreSMDMethodInterfaces = true;
+	private JSONPopulator populator = new JSONPopulator();
+	private JSONCleaner dataCleaner = null;
+	private boolean debug = false;
+	private boolean noCache = false;
+	private boolean excludeNullProperties;
+	private String callbackParameter;
+	private String jsonContentType = "application/json";
+	private String jsonRpcContentType = "application/json-rpc";
 
-    /** The enable smd. */
-    private final boolean enableSMD = false;
+	@SuppressWarnings("unchecked")
+	public String intercept(ActionInvocation invocation) throws Exception {
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
 
-    /** The enable gzip. */
-    private final boolean enableGZIP = false;
+		String requestContentType = readContentType(request);
+		String requestContentTypeEncoding = readContentTypeEncoding(request);
 
-    /** The wrap with comments. */
-    private boolean wrapWithComments;
+		Object rootObject = null;
+		final ValueStack stack = invocation.getStack();
+		if (this.root != null) {
+			rootObject = stack.findValue(this.root);
 
-    /** The prefix. */
-    private boolean prefix;
+			if (rootObject == null) {
+				throw new RuntimeException("Invalid root expression: '" + this.root + "'.");
+			}
+		}
 
-    /** The default encoding. */
-    private String defaultEncoding = "ISO-8859-1";
+		if (jsonContentType.equalsIgnoreCase(requestContentType)) {
+			// INICIO MIO
 
-    /** The ignore hierarchy. */
-    private final boolean ignoreHierarchy = true;
-
-    /** The root. */
-    private String root;
-
-    /** The exclude properties. */
-    private List<Pattern> excludeProperties;
-
-    /** The include properties. */
-    private List<Pattern> includeProperties;
-
-    /** The ignore smd method interfaces. */
-    private final boolean ignoreSMDMethodInterfaces = true;
-
-    /** The populator. */
-    private final JSONPopulator populator = new JSONPopulator();
-
-    /** The data cleaner. */
-    private final JSONCleaner dataCleaner = null;
-
-    /** The debug. */
-    private final boolean debug = false;
-
-    /** The no cache. */
-    private final boolean noCache = false;
-
-    /** The exclude null properties. */
-    private boolean excludeNullProperties;
-
-    /** The callback parameter. */
-    private String callbackParameter;
-
-    /** The content type. */
-    private String contentType;
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.opensymphony.xwork2.interceptor.AbstractInterceptor#intercept(com.opensymphony.xwork2.
-     * ActionInvocation )
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    public String intercept(final ActionInvocation invocation) throws Exception {
-        final HttpServletRequest request = ServletActionContext.getRequest();
-        final HttpServletResponse response = ServletActionContext.getResponse();
-        String contentType = request.getHeader("content-type");
-        if (contentType != null) {
-            int iSemicolonIdx;
-            if ((iSemicolonIdx = contentType.indexOf(";")) != -1) {
-                contentType = contentType.substring(0, iSemicolonIdx);
-            }
-        }
-
-        Object rootObject = null;
-        if (root != null) {
-            final ValueStack stack = invocation.getStack();
-            rootObject = stack.findValue(root);
-
-            if (rootObject == null) {
-                throw new RuntimeException("Invalid root expression: '" + root + "'.");
-            }
-        }
-
-        if (contentType != null && contentType.equalsIgnoreCase("application/json")) {
             // load JSON object
             if (rootObject == null) {
                 rootObject = invocation.getStack().peek();
@@ -157,527 +113,495 @@ public class JSONInterceptor extends AbstractInterceptor {
             mapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
             mapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
             mapper.readerForUpdating(rootObject).readValue(request.getReader());
-        } else if (contentType != null && contentType.equalsIgnoreCase("application/json-rpc")) {
-            Object result;
-            if (enableSMD) {
-                // load JSON object
-                final Object obj = JSONUtil.deserialize(request.getReader());
 
-                if (obj instanceof Map) {
-                    final Map smd = (Map) obj;
+			// FIN MIO
 
-                    if (rootObject == null) {
-                        rootObject = invocation.getAction();
-                    }
 
-                    // invoke method
-                    try {
-                        result = invoke(rootObject, smd);
-                    } catch (final Exception e) {
-                        final RPCResponse rpcResponse = new RPCResponse();
-                        rpcResponse.setId(smd.get("id").toString());
-                        rpcResponse.setError(new RPCError(e, RPCErrorCode.EXCEPTION, getDebug()));
+			// INICIO VIEJUNO
 
-                        result = rpcResponse;
-                    }
-                } else {
-                    final String message = "SMD request was not in the right format. See http://json-rpc.org";
+			// // load JSON object
+			// Object obj = JSONUtil.deserialize(request.getReader());
+			//
+			// // JSON array (this.root cannot be null in this case)
+			// if(obj instanceof List && this.root != null) {
+			// String mapKey = this.root;
+			// rootObject = null;
+			//
+			// if(this.root.indexOf('.') != -1) {
+			// mapKey = this.root.substring(this.root.lastIndexOf('.') + 1);
+			//
+			// rootObject = stack.findValue(this.root.substring(0,
+			// this.root.lastIndexOf('.')));
+			// if (rootObject == null) {
+			// throw new RuntimeException("JSON array: Invalid root expression:
+			// '" + this.root + "'.");
+			// }
+			// }
+			//
+			// // create a map with a list inside
+			// Map m = new HashMap();
+			// m.put(mapKey, new ArrayList((List) obj));
+			// obj = m;
+			// }
+			//
+			// if (obj instanceof Map) {
+			// Map json = (Map) obj;
+			//
+			// // clean up the values
+			// if (dataCleaner != null)
+			// dataCleaner.clean("", json);
+			//
+			// if (rootObject == null) // model overrides action
+			// rootObject = invocation.getStack().peek();
+			//
+			// // populate fields
+			// populator.populateObject(rootObject, json);
+			// } else {
+			// LOG.error("Unable to deserialize JSON object from request");
+			// throw new JSONException("Unable to deserialize JSON object from
+			// request");
+			// }
 
-                    final RPCResponse rpcResponse = new RPCResponse();
-                    rpcResponse.setError(new RPCError(message, RPCErrorCode.INVALID_PROCEDURE_CALL));
-                    result = rpcResponse;
-                }
-            } else {
-                final String message = "Request with content type of 'application/json-rpc' was received but SMD is "
-                        + "not enabled for this interceptor. Set 'enableSMD' to true to enable it";
+			// FIN VIEJUNO
 
-                final RPCResponse rpcResponse = new RPCResponse();
-                rpcResponse.setError(new RPCError(message, RPCErrorCode.SMD_DISABLED));
-                result = rpcResponse;
-            }
+		} else if (jsonRpcContentType.equalsIgnoreCase(requestContentType)) {
+			Object result;
+			if (this.enableSMD) {
+				// load JSON object
+				Object obj = JSONUtil.deserialize(request.getReader());
 
-            String json = JSONUtil.serialize(result, excludeProperties, getIncludeProperties(), ignoreHierarchy,
-                    excludeNullProperties);
-            json = addCallbackIfApplicable(request, json);
-            final boolean writeGzip = enableGZIP && JSONUtil.isGzipInRequest(request);
-            JSONUtil.writeJSONToResponse(new SerializationParams(response, defaultEncoding, wrapWithComments, json,
-                    true, writeGzip, noCache, -1, -1, prefix, "application/json"));
+				if (obj instanceof Map) {
+					Map smd = (Map) obj;
 
-            return Action.NONE;
-        } else {
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Content type must be 'application/json' or 'application/json-rpc'. "
-                        + "Ignoring request with content type " + contentType);
-            }
-        }
+					if (rootObject == null) { // model makes no sense when using
+												// RPC
+						rootObject = invocation.getAction();
+					}
 
-        return invocation.invoke();
-    }
+					// invoke method
+					try {
+						result = this.invoke(rootObject, smd);
+					} catch (Exception e) {
+						RPCResponse rpcResponse = new RPCResponse();
+						rpcResponse.setId(smd.get("id").toString());
+						rpcResponse.setError(new RPCError(e, RPCErrorCode.EXCEPTION, getDebug()));
 
-    /**
-     * Invoke.
-     *
-     * @param object
-     *            the object
-     * @param data
-     *            the data
-     * @return the RPC response
-     * @throws IllegalArgumentException
-     *             the illegal argument exception
-     * @throws IllegalAccessException
-     *             the illegal access exception
-     * @throws InvocationTargetException
-     *             the invocation target exception
-     * @throws JSONException
-     *             the JSON exception
-     * @throws InstantiationException
-     *             the instantiation exception
-     * @throws NoSuchMethodException
-     *             the no such method exception
-     * @throws IntrospectionException
-     *             the introspection exception
-     */
-    @SuppressWarnings("unchecked")
-    public RPCResponse invoke(final Object object, final Map data)
-            throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, JSONException,
-            InstantiationException, NoSuchMethodException, IntrospectionException {
+						result = rpcResponse;
+					}
+				} else {
+					String message = "SMD request was not in the right format. See http://json-rpc.org";
 
-        final RPCResponse response = new RPCResponse();
+					RPCResponse rpcResponse = new RPCResponse();
+					rpcResponse.setError(new RPCError(message, RPCErrorCode.INVALID_PROCEDURE_CALL));
+					result = rpcResponse;
+				}
+			} else {
+				String message = "Request with content type of 'application/json-rpc' was received but SMD is "
+						+ "not enabled for this interceptor. Set 'enableSMD' to true to enable it";
 
-        // validate id
-        final Object id = data.get("id");
-        if (id == null) {
-            final String message = "'id' is required for JSON RPC";
-            response.setError(new RPCError(message, RPCErrorCode.METHOD_NOT_FOUND));
-            return response;
-        }
-        // could be a numeric value
-        response.setId(id.toString());
+				RPCResponse rpcResponse = new RPCResponse();
+				rpcResponse.setError(new RPCError(message, RPCErrorCode.SMD_DISABLED));
+				result = rpcResponse;
+			}
 
-        // the map is going to have: 'params', 'method' and 'id' (for the
-        // client to identify the response)
-        final Class clazz = object.getClass();
+			String json = JSONUtil.serialize(result, excludeProperties, getIncludeProperties(), ignoreHierarchy,
+					excludeNullProperties);
+			json = addCallbackIfApplicable(request, json);
+			boolean writeGzip = enableGZIP && JSONUtil.isGzipInRequest(request);
+			JSONUtil.writeJSONToResponse(new SerializationParams(response, requestContentTypeEncoding,
+					this.wrapWithComments, json, true, writeGzip, noCache, -1, -1, prefix, "application/json"));
 
-        // parameters
-        final List parameters = (List) data.get("params");
-        final int parameterCount = parameters != null ? parameters.size() : 0;
+			return Action.NONE;
+		} else {
+			LOG.debug("Accept header parameter must be '{}' or '{}'. Ignoring request with Content Type '{}'",
+					jsonContentType, jsonRpcContentType, requestContentType);
+		}
 
-        // method
-        final String methodName = (String) data.get("method");
-        if (methodName == null) {
-            final String message = "'method' is required for JSON RPC";
-            response.setError(new RPCError(message, RPCErrorCode.MISSING_METHOD));
-            return response;
-        }
+		return invocation.invoke();
+	}
 
-        final Method method = getMethod(clazz, methodName, parameterCount);
-        if (method == null) {
-            final String message = "Method " + methodName + " could not be found in action class.";
-            response.setError(new RPCError(message, RPCErrorCode.METHOD_NOT_FOUND));
-            return response;
-        }
+	protected String readContentType(HttpServletRequest request) {
+		String contentType = request.getHeader("Content-Type");
+		LOG.debug("Content Type from request: {}", contentType);
 
-        // parameters
-        if (parameterCount > 0) {
-            final Class[] parameterTypes = method.getParameterTypes();
-            final Type[] genericTypes = method.getGenericParameterTypes();
-            final List invocationParameters = new ArrayList();
+		if (contentType != null && contentType.contains(";")) {
+			contentType = contentType.substring(0, contentType.indexOf(";")).trim();
+		}
+		return contentType;
+	}
 
-            // validate size
-            if (parameterTypes.length != parameterCount) {
-                // size mismatch
-                final String message = "Parameter count in request, " + parameterCount
-                        + " do not match expected parameter count for " + methodName + ", " + parameterTypes.length;
+	protected String readContentTypeEncoding(HttpServletRequest request) {
+		String contentTypeEncoding = request.getHeader("Content-Type");
+		LOG.debug("Content Type encoding from request: {}", contentTypeEncoding);
 
-                response.setError(new RPCError(message, RPCErrorCode.PARAMETERS_MISMATCH));
-                return response;
-            }
+		if (contentTypeEncoding != null && contentTypeEncoding.contains(";charset=")) {
+			contentTypeEncoding = contentTypeEncoding
+					.substring(contentTypeEncoding.indexOf(";charset=") + ";charset=".length()).trim();
+		} else {
+			contentTypeEncoding = defaultEncoding;
+		}
 
-            // convert parameters
-            for (int i = 0; i < parameters.size(); i++) {
-                Object parameter = parameters.get(i);
-                final Class paramType = parameterTypes[i];
-                final Type genericType = genericTypes[i];
+		LOG.debug("Content Type encoding to be used in de-serialisation: {}", contentTypeEncoding);
+		return contentTypeEncoding;
+	}
 
-                // clean up the values
-                if (dataCleaner != null) {
-                    parameter = dataCleaner.clean("[" + i + "]", parameter);
-                }
+	@SuppressWarnings("unchecked")
+	public RPCResponse invoke(Object object, Map data)
+			throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, JSONException,
+			InstantiationException, NoSuchMethodException, IntrospectionException {
 
-                final Object converted = populator.convert(paramType, genericType, parameter, method);
-                invocationParameters.add(converted);
-            }
+		RPCResponse response = new RPCResponse();
 
-            response.setResult(method.invoke(object, invocationParameters.toArray()));
-        } else {
-            response.setResult(method.invoke(object, new Object[0]));
-        }
+		// validate id
+		Object id = data.get("id");
+		if (id == null) {
+			String message = "'id' is required for JSON RPC";
+			response.setError(new RPCError(message, RPCErrorCode.METHOD_NOT_FOUND));
+			return response;
+		}
+		// could be a numeric value
+		response.setId(id.toString());
 
-        return response;
-    }
+		// the map is going to have: 'params', 'method' and 'id' (for the
+		// client to identify the response)
+		Class clazz = object.getClass();
 
-    /**
-     * Gets the method.
-     *
-     * @param clazz
-     *            the clazz
-     * @param name
-     *            the name
-     * @param parameterCount
-     *            the parameter count
-     * @return the method
-     */
-    private Method getMethod(final Class clazz, final String name, final int parameterCount) {
-        final Method[] smdMethods = JSONUtil.listSMDMethods(clazz, ignoreSMDMethodInterfaces);
+		// parameters
+		List parameters = (List) data.get("params");
+		int parameterCount = parameters != null ? parameters.size() : 0;
 
-        for (final Method method : smdMethods) {
-            if (checkSMDMethodSignature(method, name, parameterCount)) {
-                return method;
-            }
-        }
-        return null;
-    }
+		// method
+		String methodName = (String) data.get("method");
+		if (methodName == null) {
+			String message = "'method' is required for JSON RPC";
+			response.setError(new RPCError(message, RPCErrorCode.MISSING_METHOD));
+			return response;
+		}
 
-    /**
-     * Look for a method in clazz carrying the SMDMethod annotation with matching name and parametersCount.
-     *
-     * @param method
-     *            the method
-     * @param name
-     *            the name
-     * @param parameterCount
-     *            the parameter count
-     * @return true if matches name and parameterCount
-     */
-    private boolean checkSMDMethodSignature(final Method method, final String name, final int parameterCount) {
+		Method method = this.getMethod(clazz, methodName, parameterCount);
+		if (method == null) {
+			String message = "Method " + methodName + " could not be found in action class.";
+			response.setError(new RPCError(message, RPCErrorCode.METHOD_NOT_FOUND));
+			return response;
+		}
 
-        final SMDMethod smdMethodAnntotation = method.getAnnotation(SMDMethod.class);
-        if (smdMethodAnntotation != null) {
-            final String alias = smdMethodAnntotation.name();
-            final boolean paramsMatch = method.getParameterTypes().length == parameterCount;
-            if (alias.length() == 0 && method.getName().equals(name) && paramsMatch
-                    || alias.equals(name) && paramsMatch) {
-                return true;
-            }
-        }
+		// parameters
+		if (parameterCount > 0) {
+			Class[] parameterTypes = method.getParameterTypes();
+			Type[] genericTypes = method.getGenericParameterTypes();
+			List invocationParameters = new ArrayList();
 
-        return false;
-    }
+			// validate size
+			if (parameterTypes.length != parameterCount) {
+				// size mismatch
+				String message = "Parameter count in request, " + parameterCount
+						+ " do not match expected parameter count for " + methodName + ", " + parameterTypes.length;
 
-    /**
-     * Adds the callback if applicable.
-     *
-     * @param request
-     *            the request
-     * @param json
-     *            the json
-     * @return the string
-     */
-    protected String addCallbackIfApplicable(final HttpServletRequest request, String json) {
-        if (callbackParameter != null && callbackParameter.length() > 0) {
-            final String callbackName = request.getParameter(callbackParameter);
-            if (callbackName != null && callbackName.length() > 0) {
-                json = callbackName + "(" + json + ")";
-            }
-        }
-        return json;
-    }
+				response.setError(new RPCError(message, RPCErrorCode.PARAMETERS_MISMATCH));
+				return response;
+			}
 
-    /**
-     * Checks if is enable smd.
-     *
-     * @return true, if is enable smd
-     */
-    public boolean isEnableSMD() {
-        return enableSMD;
-    }
+			// convert parameters
+			for (int i = 0; i < parameters.size(); i++) {
+				Object parameter = parameters.get(i);
+				Class paramType = parameterTypes[i];
+				Type genericType = genericTypes[i];
 
-    /**
-     * Sets the enable smd.
-     *
-     * @param enableSMD
-     *            the new enable smd
-     */
-    public void setEnableSMD(boolean enableSMD) {
-        enableSMD = enableSMD;
-    }
+				// clean up the values
+				if (dataCleaner != null) {
+					parameter = dataCleaner.clean("[" + i + "]", parameter);
+				}
 
-    /**
-     * Ignore annotations on methods in interfaces You may need to set to this true if your action is a
-     * proxy/enhanced as annotations are not inherited.
-     *
-     * @param ignoreSMDMethodInterfaces
-     *            the new ignore smd method interfaces
-     */
-    public void setIgnoreSMDMethodInterfaces(boolean ignoreSMDMethodInterfaces) {
-        ignoreSMDMethodInterfaces = ignoreSMDMethodInterfaces;
-    }
+				Object converted = populator.convert(paramType, genericType, parameter, method);
+				invocationParameters.add(converted);
+			}
 
-    /**
-     * Wrap generated JSON with comments. Only used if SMD is enabled.
-     *
-     * @param wrapWithComments
-     *            the new wrap with comments
-     */
-    public void setWrapWithComments(boolean wrapWithComments) {
-        wrapWithComments = wrapWithComments;
-    }
+			response.setResult(method.invoke(object, invocationParameters.toArray()));
+		} else {
+			response.setResult(method.invoke(object, new Object[0]));
+		}
 
-    /**
-     * Sets the default encoding.
-     *
-     * @param val
-     *            the new default encoding
-     */
-    @Inject(StrutsConstants.STRUTS_I18N_ENCODING)
-    public void setDefaultEncoding(final String val) {
-        defaultEncoding = val;
-    }
+		return response;
+	}
 
-    /**
-     * Ignore properties defined on base classes of the root object.
-     *
-     * @param ignoreHierarchy
-     *            the new ignore hierarchy
-     */
-    public void setIgnoreHierarchy(boolean ignoreHierarchy) {
-        ignoreHierarchy = ignoreHierarchy;
-    }
+	@SuppressWarnings("unchecked")
+	private Method getMethod(Class clazz, String name, int parameterCount) {
+		Method[] smdMethods = JSONUtil.listSMDMethods(clazz, ignoreSMDMethodInterfaces);
 
-    /**
-     * Sets the root object to be deserialized, defaults to the Action.
-     *
-     * @param root
-     *            OGNL expression of root object to be serialized
-     */
-    public void setRoot(String root) {
-        root = root;
-    }
+		for (Method method : smdMethods) {
+			if (checkSMDMethodSignature(method, name, parameterCount)) {
+				return method;
+			}
+		}
+		return null;
+	}
 
-    /**
-     * Sets the JSONPopulator to be used.
-     *
-     * @param populator
-     *            JSONPopulator
-     */
-    public void setJSONPopulator(JSONPopulator populator) {
-        populator = populator;
-    }
+	/**
+	 * Look for a method in clazz carrying the SMDMethod annotation with
+	 * matching name and parametersCount
+	 *
+	 * @return true if matches name and parameterCount
+	 */
+	private boolean checkSMDMethodSignature(Method method, String name, int parameterCount) {
 
-    /**
-     * Sets the JSONCleaner to be used.
-     *
-     * @param dataCleaner
-     *            JSONCleaner
-     */
-    public void setJSONCleaner(JSONCleaner dataCleaner) {
-        dataCleaner = dataCleaner;
-    }
+		SMDMethod smdMethodAnntotation = method.getAnnotation(SMDMethod.class);
+		if (smdMethodAnntotation != null) {
+			String alias = smdMethodAnntotation.name();
+			boolean paramsMatch = method.getParameterTypes().length == parameterCount;
+			if (((alias.length() == 0) && method.getName().equals(name) && paramsMatch)
+					|| (alias.equals(name) && paramsMatch)) {
+				return true;
+			}
+		}
 
-    /**
-     * Gets the debug.
-     *
-     * @return true if debugging is turned on
-     */
-    public boolean getDebug() {
-        final Boolean devModeOverride = FilterDispatcher.getDevModeOverride();
-        return devModeOverride != null ? devModeOverride.booleanValue() : debug;
-    }
+		return false;
+	}
 
-    /**
-     * Turns debugging on or off.
-     *
-     * @param debug
-     *            true or false
-     */
-    public void setDebug(boolean debug) {
-        debug = debug;
-    }
+	protected String addCallbackIfApplicable(HttpServletRequest request, String json) {
+		if ((callbackParameter != null) && (callbackParameter.length() > 0)) {
+			String callbackName = request.getParameter(callbackParameter);
+			if ((callbackName != null) && (callbackName.length() > 0))
+				json = callbackName + "(" + json + ")";
+		}
+		return json;
+	}
 
-    /**
-     * Sets the dev mode.
-     *
-     * @param mode
-     *            the new dev mode
-     */
-    @Inject(StrutsConstants.STRUTS_DEVMODE)
-    public void setDevMode(final String mode) {
-        setDebug("true".equalsIgnoreCase(mode));
-    }
+	public boolean isEnableSMD() {
+		return this.enableSMD;
+	}
 
-    /**
-     * Sets a comma-delimited list of regular expressions to match properties that should be excluded from the
-     * JSON output.
-     *
-     * @param commaDelim
-     *            A comma-delimited list of regular expressions
-     */
-    public void setExcludeProperties(final String commaDelim) {
-        final Set<String> excludePatterns = JSONUtil.asSet(commaDelim);
-        if (excludePatterns != null) {
-            excludeProperties = new ArrayList<Pattern>(excludePatterns.size());
-            for (final String pattern : excludePatterns) {
-                excludeProperties.add(Pattern.compile(pattern));
-            }
-        }
-    }
+	public void setEnableSMD(boolean enableSMD) {
+		this.enableSMD = enableSMD;
+	}
 
-    /**
-     * Sets a comma-delimited list of wildcard expressions to match properties that should be excluded from
-     * the JSON output.
-     *
-     * @param commaDelim
-     *            A comma-delimited list of wildcard expressions
-     */
-    public void setExcludeWildcards(final String commaDelim) {
-        final Set<String> excludePatterns = JSONUtil.asSet(commaDelim);
-        if (excludePatterns != null) {
-            excludeProperties = new ArrayList<Pattern>(excludePatterns.size());
-            for (final String pattern : excludePatterns) {
-                excludeProperties.add(WildcardUtil.compileWildcardPattern(pattern));
-            }
-        }
-    }
+	/**
+	 * Ignore annotations on methods in interfaces You may need to set to this
+	 * true if your action is a proxy/enhanced as annotations are not inherited
+	 *
+	 * @param ignoreSMDMethodInterfaces
+	 *            set the flag for ignore SMD method interfaces
+	 */
+	public void setIgnoreSMDMethodInterfaces(boolean ignoreSMDMethodInterfaces) {
+		this.ignoreSMDMethodInterfaces = ignoreSMDMethodInterfaces;
+	}
 
-    /**
-     * Sets a comma-delimited list of regular expressions to match properties that should be included from the
-     * JSON output.
-     *
-     * @param commaDelim
-     *            A comma-delimited list of regular expressions
-     */
-    public void setIncludeProperties(final String commaDelim) {
-        includeProperties = JSONUtil.processIncludePatterns(JSONUtil.asSet(commaDelim), JSONUtil.REGEXP_PATTERN);
-    }
+	/**
+	 * Wrap generated JSON with comments. Only used if SMD is enabled.
+	 *
+	 * @param wrapWithComments
+	 *            Wrap generated JSON with comments.
+	 */
+	public void setWrapWithComments(boolean wrapWithComments) {
+		this.wrapWithComments = wrapWithComments;
+	}
 
-    /**
-     * Sets a comma-delimited list of wildcard expressions to match properties that should be included from
-     * the JSON output. The standard boilerplate (id, error, debug) are automatically included, as
-     * appropriate, so you only need to provide patterns for the contents of "result".
-     *
-     * @param commaDelim
-     *            A comma-delimited list of wildcard expressions
-     */
-    public void setIncludeWildcards(final String commaDelim) {
-        includeProperties = JSONUtil.processIncludePatterns(JSONUtil.asSet(commaDelim), JSONUtil.WILDCARD_PATTERN);
-        if (includeProperties != null) {
-            includeProperties.add(Pattern.compile("id"));
-            includeProperties.add(Pattern.compile("result"));
-            includeProperties.add(Pattern.compile("error"));
-            includeProperties.add(WildcardUtil.compileWildcardPattern("error.code"));
-        }
-    }
+	@Inject(StrutsConstants.STRUTS_I18N_ENCODING)
+	public void setDefaultEncoding(String val) {
+		this.defaultEncoding = val;
+	}
 
-    /**
-     * Returns the appropriate set of includes, based on debug setting. Derived classes can override if there
-     * are additional, custom debug-only parameters.
-     *
-     * @return the include properties
-     */
-    protected List getIncludeProperties() {
-        if (includeProperties != null && getDebug()) {
-            final List<Pattern> list = new ArrayList<Pattern>(includeProperties);
-            list.add(Pattern.compile("debug"));
-            list.add(WildcardUtil.compileWildcardPattern("error.*"));
-            return list;
-        } else {
-            return includeProperties;
-        }
-    }
+	/**
+	 * @param ignoreHierarchy
+	 *            Ignore properties defined on base classes of the root object.
+	 */
+	public void setIgnoreHierarchy(boolean ignoreHierarchy) {
+		this.ignoreHierarchy = ignoreHierarchy;
+	}
 
-    /**
-     * Checks if is enable gzip.
-     *
-     * @return true, if is enable gzip
-     */
-    public boolean isEnableGZIP() {
-        return enableGZIP;
-    }
+	/**
+	 * Sets the root object to be deserialized, defaults to the Action
+	 *
+	 * @param root
+	 *            OGNL expression of root object to be serialized
+	 */
+	public void setRoot(String root) {
+		this.root = root;
+	}
 
-    /**
-     * Setting this property to "true" will compress the output.
-     *
-     * @param enableGZIP
-     *            Enable compressed output
-     */
-    public void setEnableGZIP(boolean enableGZIP) {
-        enableGZIP = enableGZIP;
-    }
+	/**
+	 * Sets the JSONPopulator to be used
+	 *
+	 * @param populator
+	 *            JSONPopulator
+	 */
+	public void setJSONPopulator(JSONPopulator populator) {
+		this.populator = populator;
+	}
 
-    /**
-     * Checks if is no cache.
-     *
-     * @return true, if is no cache
-     */
-    public boolean isNoCache() {
-        return noCache;
-    }
+	/**
+	 * Sets the JSONCleaner to be used
+	 *
+	 * @param dataCleaner
+	 *            JSONCleaner
+	 */
+	public void setJSONCleaner(JSONCleaner dataCleaner) {
+		this.dataCleaner = dataCleaner;
+	}
 
-    /**
-     * Add headers to response to prevent the browser from caching the response.
-     *
-     * @param noCache
-     *            the new no cache
-     */
-    public void setNoCache(boolean noCache) {
-        noCache = noCache;
-    }
+	/**
+	 * @return true if debugging is turned on
+	 */
+	public boolean getDebug() {
+		Boolean devModeOverride = PrepareOperations.getDevModeOverride();
+		return devModeOverride != null ? devModeOverride : this.debug;
+	}
 
-    /**
-     * Checks if is exclude null properties.
-     *
-     * @return true, if is exclude null properties
-     */
-    public boolean isExcludeNullProperties() {
-        return excludeNullProperties;
-    }
+	/**
+	 * Turns debugging on or off
+	 *
+	 * @param debug
+	 *            true or false
+	 */
+	public void setDebug(boolean debug) {
+		this.debug = debug;
+	}
 
-    /**
-     * Do not serialize properties with a null value.
-     *
-     * @param excludeNullProperties
-     *            the new exclude null properties
-     */
-    public void setExcludeNullProperties(boolean excludeNullProperties) {
-        excludeNullProperties = excludeNullProperties;
-    }
+	@Inject(StrutsConstants.STRUTS_DEVMODE)
+	public void setDevMode(String mode) {
+		setDebug(BooleanUtils.toBoolean(mode));
+	}
 
-    /**
-     * Sets the callback parameter.
-     *
-     * @param callbackParameter
-     *            the new callback parameter
-     */
-    public void setCallbackParameter(String callbackParameter) {
-        callbackParameter = callbackParameter;
-    }
+	/**
+	 * Sets a comma-delimited list of regular expressions to match properties
+	 * that should be excluded from the JSON output.
+	 *
+	 * @param commaDelim
+	 *            A comma-delimited list of regular expressions
+	 */
+	public void setExcludeProperties(String commaDelim) {
+		Set<String> excludePatterns = JSONUtil.asSet(commaDelim);
+		if (excludePatterns != null) {
+			this.excludeProperties = new ArrayList<>(excludePatterns.size());
+			for (String pattern : excludePatterns) {
+				this.excludeProperties.add(Pattern.compile(pattern));
+			}
+		}
+	}
 
-    /**
-     * Gets the callback parameter.
-     *
-     * @return the callback parameter
-     */
-    public String getCallbackParameter() {
-        return callbackParameter;
-    }
+	/**
+	 * Sets a comma-delimited list of wildcard expressions to match properties
+	 * that should be excluded from the JSON output.
+	 *
+	 * @param commaDelim
+	 *            A comma-delimited list of wildcard expressions
+	 */
+	public void setExcludeWildcards(String commaDelim) {
+		Set<String> excludePatterns = JSONUtil.asSet(commaDelim);
+		if (excludePatterns != null) {
+			this.excludeProperties = new ArrayList<>(excludePatterns.size());
+			for (String pattern : excludePatterns) {
+				this.excludeProperties.add(WildcardUtil.compileWildcardPattern(pattern));
+			}
+		}
+	}
 
-    /**
-     * Add <code>{} &amp;&amp;</code> to generated JSON.
-     *
-     * @param prefix
-     *            the new prefix
-     */
-    public void setPrefix(boolean prefix) {
-        prefix = prefix;
-    }
+	/**
+	 * Sets a comma-delimited list of regular expressions to match properties
+	 * that should be included from the JSON output.
+	 *
+	 * @param commaDelim
+	 *            A comma-delimited list of regular expressions
+	 */
+	public void setIncludeProperties(String commaDelim) {
+		includeProperties = JSONUtil.processIncludePatterns(JSONUtil.asSet(commaDelim), JSONUtil.REGEXP_PATTERN);
+	}
 
-    /**
-     * Sets the content type.
-     *
-     * @param contentType
-     *            the new content type
-     */
-    public void setContentType(String contentType) {
-        contentType = contentType;
-    }
+	/**
+	 * Sets a comma-delimited list of wildcard expressions to match properties
+	 * that should be included from the JSON output. The standard boilerplate
+	 * (id, error, debug) are automatically included, as appropriate, so you
+	 * only need to provide patterns for the contents of "result".
+	 *
+	 * @param commaDelim
+	 *            A comma-delimited list of wildcard expressions
+	 */
+	public void setIncludeWildcards(String commaDelim) {
+		includeProperties = JSONUtil.processIncludePatterns(JSONUtil.asSet(commaDelim), JSONUtil.WILDCARD_PATTERN);
+		if (includeProperties != null) {
+			includeProperties.add(Pattern.compile("id"));
+			includeProperties.add(Pattern.compile("result"));
+			includeProperties.add(Pattern.compile("error"));
+			includeProperties.add(WildcardUtil.compileWildcardPattern("error.code"));
+		}
+	}
+
+	/**
+	 * @return the appropriate set of includes, based on debug setting. Derived
+	 *         classes can override if there are additional, custom debug-only
+	 *         parameters.
+	 */
+	protected List getIncludeProperties() {
+		if (includeProperties != null && getDebug()) {
+			List<Pattern> list = new ArrayList<>(includeProperties);
+			list.add(Pattern.compile("debug"));
+			list.add(WildcardUtil.compileWildcardPattern("error.*"));
+			return list;
+		} else {
+			return includeProperties;
+		}
+	}
+
+	public boolean isEnableGZIP() {
+		return enableGZIP;
+	}
+
+	/**
+	 * Setting this property to "true" will compress the output.
+	 *
+	 * @param enableGZIP
+	 *            Enable compressed output
+	 */
+	public void setEnableGZIP(boolean enableGZIP) {
+		this.enableGZIP = enableGZIP;
+	}
+
+	public boolean isNoCache() {
+		return noCache;
+	}
+
+	/**
+	 * Add headers to response to prevent the browser from caching the response
+	 *
+	 * @param noCache
+	 *            no cache
+	 */
+	public void setNoCache(boolean noCache) {
+		this.noCache = noCache;
+	}
+
+	public boolean isExcludeNullProperties() {
+		return excludeNullProperties;
+	}
+
+	/**
+	 * @param excludeNullProperties
+	 *            Do not serialize properties with a null value
+	 */
+	public void setExcludeNullProperties(boolean excludeNullProperties) {
+		this.excludeNullProperties = excludeNullProperties;
+	}
+
+	public void setCallbackParameter(String callbackParameter) {
+		this.callbackParameter = callbackParameter;
+	}
+
+	public String getCallbackParameter() {
+		return callbackParameter;
+	}
+
+	/**
+	 * @param prefix
+	 *            Add "{} &amp;&amp; " to generated JSON
+	 */
+	public void setPrefix(boolean prefix) {
+		this.prefix = prefix;
+	}
+
+	public void setJsonContentType(String jsonContentType) {
+		this.jsonContentType = jsonContentType;
+	}
+
+	public void setJsonRpcContentType(String jsonRpcContentType) {
+		this.jsonRpcContentType = jsonRpcContentType;
+	}
 }

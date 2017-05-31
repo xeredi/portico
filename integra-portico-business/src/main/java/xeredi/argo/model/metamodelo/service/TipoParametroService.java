@@ -1,22 +1,53 @@
 package xeredi.argo.model.metamodelo.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.RowBounds;
+import org.mybatis.guice.transactional.Transactional;
+
+import com.google.common.base.Preconditions;
+
 import lombok.NonNull;
+import xeredi.argo.model.comun.bo.IgUtilBO;
+import xeredi.argo.model.comun.dao.I18nDAO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
+import xeredi.argo.model.comun.service.I18nUtil;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.LabelValueVO;
+import xeredi.argo.model.comun.vo.MessageI18nKey;
+import xeredi.argo.model.metamodelo.dao.EntidadDAO;
+import xeredi.argo.model.metamodelo.dao.TipoParametroDAO;
+import xeredi.argo.model.metamodelo.vo.TipoEntidad;
 import xeredi.argo.model.metamodelo.vo.TipoParametroCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoParametroVO;
 import xeredi.argo.model.util.PaginatedList;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Interface TipoParametroService.
+ * The Class TipoParametroServiceImpl.
  */
-public interface TipoParametroService {
+@Transactional(executorType = ExecutorType.REUSE)
+@Singleton
+public class TipoParametroService {
+
+	/** The tppr DAO. */
+	@Inject
+	private TipoParametroDAO tpprDAO;
+
+	/** The enti DAO. */
+	@Inject
+	private EntidadDAO entiDAO;
+
+	/** The i 18 n DAO. */
+	@Inject
+	private I18nDAO i18nDAO;
 
 	/**
 	 * Select label values.
@@ -25,30 +56,46 @@ public interface TipoParametroService {
 	 *            the tppr criterio
 	 * @return the list
 	 */
-	public List<LabelValueVO> selectLabelValues(final TipoParametroCriterioVO tpprCriterio);
+	public List<LabelValueVO> selectLabelValues(final TipoParametroCriterioVO tpprCriterio) {
+		final List<LabelValueVO> list = new ArrayList<>();
+
+		for (final TipoParametroVO tppr : selectList(tpprCriterio)) {
+			list.add(new LabelValueVO(tppr.getNombre(), tppr.getId()));
+		}
+
+		return list;
+	}
 
 	/**
 	 * Select list.
 	 *
 	 * @param tpprCriterioVO
-	 *            the tppr criterio vo
+	 *            the tppr criterio VO
 	 * @return the list
 	 */
-	public List<TipoParametroVO> selectList(@NonNull final TipoParametroCriterioVO tpprCriterioVO);
+	public List<TipoParametroVO> selectList(@NonNull final TipoParametroCriterioVO tpprCriterioVO) {
+		return tpprDAO.selectList(tpprCriterioVO);
+	}
 
 	/**
 	 * Select list.
 	 *
 	 * @param tpprCriterioVO
-	 *            the tppr criterio vo
+	 *            the tppr criterio VO
 	 * @param offset
 	 *            the offset
 	 * @param limit
 	 *            the limit
 	 * @return the paginated list
 	 */
-	public PaginatedList<TipoParametroVO> selectList(@NonNull final TipoParametroCriterioVO tpprCriterioVO,
-			final int offset, final int limit);
+	public PaginatedList<TipoParametroVO> selectList(@NonNull final TipoParametroCriterioVO tpprCriterioVO, int offset,
+			int limit) {
+		final int count = tpprDAO.count(tpprCriterioVO);
+
+		return new PaginatedList<>(
+				count > offset ? tpprDAO.selectList(tpprCriterioVO, new RowBounds(offset, limit)) : new ArrayList<>(),
+				offset, limit, count);
+	}
 
 	/**
 	 * Select.
@@ -57,11 +104,24 @@ public interface TipoParametroService {
 	 *            the id
 	 * @param idioma
 	 *            the idioma
-	 * @return the tipo parametro vo
+	 * @return the tipo parametro VO
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	public TipoParametroVO select(@NonNull final Long id, final String idioma) throws InstanceNotFoundException;
+	public TipoParametroVO select(@NonNull final Long id, final String idioma) throws InstanceNotFoundException {
+		final TipoParametroCriterioVO entiCriterio = new TipoParametroCriterioVO();
+
+		entiCriterio.setId(id);
+		entiCriterio.setIdioma(idioma);
+
+		final TipoParametroVO enti = tpprDAO.selectObject(entiCriterio);
+
+		if (enti == null) {
+			throw new InstanceNotFoundException(MessageI18nKey.tppr, id);
+		}
+
+		return enti;
+	}
 
 	/**
 	 * Insert.
@@ -69,12 +129,24 @@ public interface TipoParametroService {
 	 * @param tppr
 	 *            the tppr
 	 * @param i18nMap
-	 *            the i18n map
+	 *            the i 18 n map
 	 * @throws DuplicateInstanceException
 	 *             the duplicate instance exception
 	 */
 	public void insert(@NonNull final TipoParametroVO tppr, @NonNull final Map<String, I18nVO> i18nMap)
-			throws DuplicateInstanceException;
+			throws DuplicateInstanceException {
+		if (entiDAO.exists(tppr)) {
+			throw new DuplicateInstanceException(MessageI18nKey.tppr, tppr);
+		}
+
+		IgUtilBO.assignNextVal(tppr);
+		tppr.setTipo(TipoEntidad.P);
+
+		entiDAO.insert(tppr);
+		tpprDAO.insert(tppr);
+
+		I18nUtil.insertMap(i18nDAO, tppr, i18nMap);
+	}
 
 	/**
 	 * Update.
@@ -82,12 +154,21 @@ public interface TipoParametroService {
 	 * @param tppr
 	 *            the tppr
 	 * @param i18nMap
-	 *            the i18n map
+	 *            the i 18 n map
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
 	public void update(@NonNull final TipoParametroVO tppr, @NonNull final Map<String, I18nVO> i18nMap)
-			throws InstanceNotFoundException;
+			throws InstanceNotFoundException {
+		Preconditions.checkNotNull(tppr.getId());
+
+		if (tpprDAO.update(tppr) == 0) {
+			throw new InstanceNotFoundException(MessageI18nKey.tppr, tppr);
+		}
+
+		entiDAO.update(tppr);
+		I18nUtil.updateMap(i18nDAO, tppr, i18nMap);
+	}
 
 	/**
 	 * Delete.
@@ -97,5 +178,14 @@ public interface TipoParametroService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	public void delete(@NonNull final TipoParametroVO tppr) throws InstanceNotFoundException;
+	public void delete(@NonNull final TipoParametroVO tppr) throws InstanceNotFoundException {
+		Preconditions.checkNotNull(tppr.getId());
+
+		if (tpprDAO.delete(tppr) == 0) {
+			throw new InstanceNotFoundException(MessageI18nKey.tppr, tppr);
+		}
+
+		I18nUtil.deleteMap(i18nDAO, tppr);
+		entiDAO.delete(tppr);
+	}
 }

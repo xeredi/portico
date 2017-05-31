@@ -59,31 +59,31 @@
 		<umlgraph.version>5.6.6</umlgraph.version>
 
 		<commons-lang3.version>3.5</commons-lang3.version>
-		<mybatis.version>3.4.2</mybatis.version>
-		<commons-dbcp.version>1.4</commons-dbcp.version>
-		<commons-pool.version>1.6</commons-pool.version>
+		<mybatis.version>3.4.4</mybatis.version>
+		<commons-dbcp2.version>2.1.1</commons-dbcp2.version>
+		<commons-pool2.version>2.4.2</commons-pool2.version>
 		<commons-configuration.version>1.10</commons-configuration.version>
-		<cglib.version>2.2.2</cglib.version>
+		<cglib.version>3.2.5</cglib.version>
 		<javassist.version>3.21.0-GA</javassist.version>
-		<lombok.version>1.16.10</lombok.version>
+		<lombok.version>1.16.16</lombok.version>
 
-		<poi.version>3.15</poi.version>
-		<dynamicreports.version>4.1.1</dynamicreports.version>
+		<poi.version>3.16</poi.version>
+		<dynamicreports.version>5.0.0</dynamicreports.version>
 		<itext.version>2.1.7</itext.version>
-		<guava.version>21.0</guava.version>
+		<guava.version>22.0</guava.version>
 		<commons-io.version>2.5</commons-io.version>
-		<commons-compress.version>1.12</commons-compress.version>
+		<commons-compress.version>1.14</commons-compress.version>
 		<antlr4-runtime.version>4.7</antlr4-runtime.version>
 		<xdocreport.version>1.0.6</xdocreport.version>
 		<mybatis-guice.version>3.9</mybatis-guice.version>
 		<guice.version>4.1.0</guice.version>
 
-		<quartz.version>2.2.3</quartz.version>
+		<quartz.version>2.3.0</quartz.version>
 
 		<javax.servlet-api.version>3.1.0</javax.servlet-api.version>
-		<struts2.version>2.3.31</struts2.version>
-		<jackson.version>2.8.6</jackson.version>
-		<commons-validator.version>1.5.1</commons-validator.version>
+		<struts2.version>2.5.5</struts2.version>
+		<jackson.version>2.8.8</jackson.version>
+		<commons-validator.version>1.6</commons-validator.version>
 	</properties>
 
 	<profiles>
@@ -317,7 +317,8 @@
 										<artifactId>umlgraph</artifactId>
 										<version>5.6.6</version>
 									</docletArtifact>
-									<additionalparam>-views -attributes -operations -constructors -visibility
+									<additionalparam>-views -attributes -operations -constructors
+										-visibility
 										-inferrel -inferdep -hide
 										(java.*|org.apache.*|com.*|net.sf.*)</additionalparam>
 									<useStandardDocletOptions>true</useStandardDocletOptions>
@@ -363,28 +364,36 @@
 								</reportSets>
 							</plugin>
 							<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-surefire-report-plugin</artifactId>
-								<version>${maven-surefire-report-plugin.version}</version> <configuration> <aggregate>${maven-surefire-report-plugin.aggregate}</aggregate>
-								</configuration> </plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-checkstyle-plugin</artifactId>
+								<version>${maven-surefire-report-plugin.version}</version> <configuration>
+								<aggregate>${maven-surefire-report-plugin.aggregate}</aggregate> </configuration>
+								</plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-checkstyle-plugin</artifactId>
 								<version>${maven-checkstyle-plugin.version}</version> <configuration> <configLocation>conf/checkstyle-checker.xml</configLocation>
-								</configuration> </plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-changelog-plugin</artifactId>
-								<version>${maven-changelog-plugin.version}</version> <configuration> <username>${scm.username}</username> <password>${scm.password}</password>
-								<outputXMLExpiration>${maven-changelog-plugin.outputXMLExpiration}</outputXMLExpiration> </configuration> </plugin>
-								<plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>cobertura-maven-plugin</artifactId> <version>${cobertura-maven-plugin.version}</version>
-								<configuration> <aggregate>${cobertura-maven-plugin.aggregate}</aggregate> <quiet>${cobertura-maven-plugin.quiet}</quiet>
-								</configuration> </plugin> <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>findbugs-maven-plugin</artifactId>
-								<version>${findbugs-maven-plugin.version}</version> <configuration> <includeTests>true</includeTests> </configuration>
-								</plugin> <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>jdepend-maven-plugin</artifactId> <version>${jdepend-maven-plugin.version}</version>
-								</plugin> <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>taglist-maven-plugin</artifactId> <version>${taglist-maven-plugin.version}</version>
-								<configuration> <aggregate>${taglist-maven-plugin.aggregate}</aggregate> <tagListOptions> <tagClasses> <tagClass>
-								<displayName>Todo Work</displayName> <tags> <tag> <matchString>TODO</matchString> <matchType>exact</matchType>
-								</tag> <tag> <matchString>FIXME</matchString> <matchType>exact</matchType> </tag> </tags> </tagClass> </tagClasses>
-								</tagListOptions> </configuration> </plugin> -->
+								</configuration> </plugin> <plugin> <groupId>org.apache.maven.plugins</groupId>
+								<artifactId>maven-changelog-plugin</artifactId> <version>${maven-changelog-plugin.version}</version>
+								<configuration> <username>${scm.username}</username> <password>${scm.password}</password>
+								<outputXMLExpiration>${maven-changelog-plugin.outputXMLExpiration}</outputXMLExpiration>
+								</configuration> </plugin> <plugin> <groupId>org.codehaus.mojo</groupId>
+								<artifactId>cobertura-maven-plugin</artifactId> <version>${cobertura-maven-plugin.version}</version>
+								<configuration> <aggregate>${cobertura-maven-plugin.aggregate}</aggregate>
+								<quiet>${cobertura-maven-plugin.quiet}</quiet> </configuration> </plugin>
+								<plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>findbugs-maven-plugin</artifactId>
+								<version>${findbugs-maven-plugin.version}</version> <configuration> <includeTests>true</includeTests>
+								</configuration> </plugin> <plugin> <groupId>org.codehaus.mojo</groupId>
+								<artifactId>jdepend-maven-plugin</artifactId> <version>${jdepend-maven-plugin.version}</version>
+								</plugin> <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>taglist-maven-plugin</artifactId>
+								<version>${taglist-maven-plugin.version}</version> <configuration> <aggregate>${taglist-maven-plugin.aggregate}</aggregate>
+								<tagListOptions> <tagClasses> <tagClass> <displayName>Todo Work</displayName>
+								<tags> <tag> <matchString>TODO</matchString> <matchType>exact</matchType>
+								</tag> <tag> <matchString>FIXME</matchString> <matchType>exact</matchType>
+								</tag> </tags> </tagClass> </tagClasses> </tagListOptions> </configuration>
+								</plugin> -->
 
 							<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-changes-plugin</artifactId>
-								<version>${maven-changes-plugin.version}</version> <configuration> <tracUser>${changes.username}</tracUser> <tracPassword>${changes.password}</tracPassword>
-								<query>component=${changes.component}</query> </configuration> </plugin> -->
-							<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>javancss-maven-plugin</artifactId> <version>${javancss-maven-plugin.version}</version>
-								</plugin> -->
+								<version>${maven-changes-plugin.version}</version> <configuration> <tracUser>${changes.username}</tracUser>
+								<tracPassword>${changes.password}</tracPassword> <query>component=${changes.component}</query>
+								</configuration> </plugin> -->
+							<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>javancss-maven-plugin</artifactId>
+								<version>${javancss-maven-plugin.version}</version> </plugin> -->
 						</reportPlugins>
 					</configuration>
 				</plugin>
@@ -403,9 +412,9 @@
 			<artifactId>commons-logging</artifactId>
 			<version>${commons-logging.version}</version>
 		</dependency>
-		<!-- <dependency> <groupId>org.apache.logging.log4j</groupId> <artifactId>log4j-api</artifactId> <version>2.0.1</version>
-			</dependency> <dependency> <groupId>org.apache.logging.log4j</groupId> <artifactId>log4j-core</artifactId> <version>2.0.1</version>
-			</dependency> -->
+		<!-- <dependency> <groupId>org.apache.logging.log4j</groupId> <artifactId>log4j-api</artifactId>
+			<version>2.0.1</version> </dependency> <dependency> <groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId> <version>2.0.1</version> </dependency> -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -437,6 +446,7 @@
 		</pluginRepository>
 	</pluginRepositories>
 </project>
-<!-- <doclet.version>5.6.6</doclet.version> <doclet.additionalparam> -inferrel -inferdep -quiet -hide java.* -hide
-	xeredi.util.* -hide org.* -hide com.* -qualify -postfixpackage -nodefontsize 9 -nodefontpackagesize 8 -useimports
+<!-- <doclet.version>5.6.6</doclet.version> <doclet.additionalparam> -inferrel
+	-inferdep -quiet -hide java.* -hide xeredi.util.* -hide org.* -hide com.*
+	-qualify -postfixpackage -nodefontsize 9 -nodefontpackagesize 8 -useimports
 	</doclet.additionalparam> <doclet.useStandardDocletOptions>true</doclet.useStandardDocletOptions> -->

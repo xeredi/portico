@@ -8,49 +8,35 @@
 
 	<settings>
 		<setting name="logImpl" value="NO_LOGGING" />
-		<setting name="proxyFactory" value="JAVASSIST" />
+		<setting name="proxyFactory" value="CGLIB" />
 		<setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
 
 	<typeAliases>
 		<package name="xeredi.argo.model" />
-		<!-- package name="xeredi.argo.model.auditoria.vo" /> <package name="xeredi.argo.model.comun.vo" /> <package
-			name="xeredi.argo.model.estadistica.vo" /> <package name="xeredi.argo.model.facturacion.vo" /> <package name="xeredi.argo.model.gis.vo"
-			/> <package name="xeredi.argo.model.item.vo" /> <package name="xeredi.argo.model.maestro.vo" /> <package name="xeredi.argo.model.metamodelo.vo"
-			/> <package name="xeredi.argo.model.proceso.vo" /> <package name="xeredi.argo.model.seguridad.vo" /> <package name="xeredi.argo.model.servicio.vo"
-			/> <package name="xeredi.argo.model.servicio.vo.manifiesto" / -->
 	</typeAliases>
 
 	<typeHandlers>
-		<typeHandler handler="xeredi.argo.model.util.mybatis.BooleanTypeHandler" javaType="java.lang.Boolean"
-			jdbcType="INTEGER" />
+		<typeHandler handler="xeredi.argo.model.util.mybatis.BooleanTypeHandler"
+			javaType="java.lang.Boolean" jdbcType="INTEGER" />
 	</typeHandlers>
 
 	<environments default="local">
 		<environment id="local">
-			<transactionManager type="JDBC">
-				<property name="DataSource" value="${db.dataSource}" />
-				<property name="JDBC.Driver" value="${db.dataSource.driver}" />
-				<property name="JDBC.ConnectionURL" value="${db.dataSource.url}" />
-				<property name="JDBC.Username" value="${db.dataSource.username}" />
-				<property name="JDBC.Password" value="${db.dataSource.password}" />
-				<property name="JDBC.DefaultAutoCommit" value="false" />
+			<transactionManager type="JDBC"></transactionManager>
 
-				<property name="Pool.MaximumActiveConnections" value="10" />
-				<property name="Pool.MaximumIdleConnections" value="5" />
-				<property name="Pool.MaximumWait" value="60000" />
-
-				<property name="Pool.ValidationQuery" value="select 1+1" />
-				<property name="Pool.LogAbandoned" value="false" />
-				<property name="Pool.RemoveAbandoned" value="false" />
-				<property name="Pool.RemoveAbandonedTimeout" value="50000" />
-			</transactionManager>
-
-			<dataSource type="POOLED">
+			<dataSource type="xeredi.argo.model.util.mybatis.DbcpDataSourceFactory">
 				<property name="url" value="${db.dataSource.url}" />
-				<property name="driver" value="${db.dataSource.driver}" />
+				<property name="driverClassName" value="${db.dataSource.driver}" />
 				<property name="username" value="${db.dataSource.username}" />
 				<property name="password" value="${db.dataSource.password}" />
+				<property name="defaultAutoCommit" value="false" />
+				<property name="rollbackOnReturn" value="false" />
+				<property name="initialSize" value="4" />
+				<property name="maxTotal" value="8" />
+				<property name="minIdle" value="4" />
+				<property name="maxIdle" value="4" />
+				<property name="validationQuery" value="select 1 FROM dual" />
 			</dataSource>
 		</environment>
 	</environments>
@@ -63,13 +49,5 @@
 
 	<mappers>
 		<package name="xeredi.argo.model" />
-		<!-- package name="xeredi.argo.model.auditoria.dao" /> <package name="xeredi.argo.model.comun.dao" /> <package
-			name="xeredi.argo.model.estadistica.dao" /> <package name="xeredi.argo.model.facturacion.dao" /> <package name="xeredi.argo.model.item.dao"
-			/> <package name="xeredi.argo.model.maestro.dao" /> <package name="xeredi.argo.model.maestro.dao.embdeportivas"
-			/> <package name="xeredi.argo.model.metamodelo.dao" /> <package name="xeredi.argo.model.proceso.dao" /> <package
-			name="xeredi.argo.model.seguridad.dao" /> <package name="xeredi.argo.model.servicio.dao" /> <package name="xeredi.argo.model.servicio.dao.amarredep"
-			/> <package name="xeredi.argo.model.servicio.dao.buquepesca" /> <package name="xeredi.argo.model.servicio.dao.escala"
-			/> <package name="xeredi.argo.model.servicio.dao.manifiesto" /> <package name="xeredi.argo.model.servicio.dao.pesca"
-			/> <package name="xeredi.argo.model.servicio.dao.suministrored" / -->
 	</mappers>
 </configuration>

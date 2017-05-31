@@ -1,6 +1,6 @@
 package xeredi.argo.http.util;
 
-import org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter;
+import org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;

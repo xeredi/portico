@@ -41,38 +41,47 @@ export class InterceptedHttp extends Http {
         // console.log( "handleResponse: " + res.toString() );
         var json = res.json();
 
-        // console.log( "jsonResponse: " + JSON.stringify( json ) );
+        console.log( "jsonResponse: " + JSON.stringify( json ) );
 
-        if ( json.responseCode == "login" ) {
-            // console.log( "Needs login!!!" );
+        console.log( "Checking errors" );
+        if ( json.actionErrors && Object.keys( json.actionErrors ).length > 0 ) {
+            console.log( "has Errors!!!" );
+            throw res;
+        }
+
+        console.log( "Checking login" );
+        if ( json.responseCode && json.responseCode == "login" ) {
+            console.log( "Needs login!!!" );
             this.router.navigate( ['/login'] );
 
             return Observable.empty();
         }
 
-        if ( Object.keys( json.errorMessages ).length > 0 ) {
-            // console.log( "has Errors!!!" );
-            throw res;
-        }
+        console.log( "All OK" );
 
         return res;
     }
 
     private handleError( res: Response ) {
         console.log( "handleError: " + res.toString() );
+        console.log( "res.status: " + res.status );
+        console.log( "Checking login" );
         if ( res.status === 401 || res.status === 403 ) {
             // console.log( "send to login. cause: " + res.toString() );
             this.router.navigate( ['/login'] );
         }
 
+        console.log( "Checking errors" );
         try {
             var json = res.json();
 
-            if ( json.errorMessages ) {
-                this.alertService.error( json.errorMessages, false );
+            console.log( "jsonErrors: " + JSON.stringify( json ) );
+            if ( json.actionErrors && Object.keys( json.actionErrors ).length > 0 ) {
+                console.log( "alertErrors: " + JSON.stringify( json.actionErrors ) );
+                this.alertService.error( json.actionErrors, false );
             }
         } catch ( e ) {
-            // console.log( "not json!!!" );
+            console.log( "not json!!!" );
             this.alertService.error( [res.toString()], false );
         }
 

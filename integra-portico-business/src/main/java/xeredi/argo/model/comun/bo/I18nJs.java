@@ -93,10 +93,6 @@ public final class I18nJs {
 
 		try (final PrintWriter printWriter = new PrintWriter(filename, "UTF-8")) {
 			printWriter.print(jsTemplate);
-
-			if (LOG.isDebugEnabled()) {
-				LOG.debug("jsTemplate: " + jsTemplate);
-			}
 		}
 	}
 
@@ -123,10 +119,6 @@ public final class I18nJs {
 
 		try (final PrintWriter printWriter = new PrintWriter(filename, "UTF-8")) {
 			printWriter.print(jsonTemplate);
-
-			if (LOG.isDebugEnabled()) {
-				LOG.debug("jsonTemplate: " + jsonTemplate);
-			}
 		}
 	}
 }

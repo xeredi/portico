@@ -53,7 +53,11 @@ public abstract class BaseAction extends ActionSupport {
 	}
 
 	/** The bundle. */
-	private final ResourceBundle bundle = PorticoResourceBundle.getBundle(getLocale());
+	// FIXME
+	private final ResourceBundle bundle = null /*
+												 * PorticoResourceBundle.
+												 * getBundle(getLocale())
+												 */;
 
 	/** the prefix. */
 	@Getter
@@ -120,7 +124,9 @@ public abstract class BaseAction extends ActionSupport {
 	 *            the key
 	 */
 	public final void addActionError(@NonNull final MessageI18nKey key) {
-		addActionError(bundle.getString(key.name()));
+		// FIXME
+		// addActionError(bundle.getString(key.name()));
+		addActionError(key.name());
 	}
 
 	/**
@@ -132,7 +138,13 @@ public abstract class BaseAction extends ActionSupport {
 	 *            the args
 	 */
 	public final void addActionError(@NonNull final MessageI18nKey key, final Object... args) {
-		addActionError(MessageFormat.format(bundle.getString(key.name()), args));
+		// FIXME!!!
+		for (int i = 0; i < args.length; i++) {
+			addActionError(key.name() + ": " + args[i]);
+		}
+
+		// addActionError(MessageFormat.format(bundle.getString(key.name()),
+		// args));
 	}
 
 	/**
@@ -143,7 +155,9 @@ public abstract class BaseAction extends ActionSupport {
 	 * @return the text
 	 */
 	public final String getText(@NonNull final MessageI18nKey key) {
-		return bundle.getString(key.name());
+		// FIXME
+		// return bundle.getString(key.name());
+		return key.name();
 	}
 
 	/**
@@ -151,6 +165,8 @@ public abstract class BaseAction extends ActionSupport {
 	 */
 	@Override
 	public final String getText(final String key) {
-		return bundle.getString(key);
+		// FIXME!!
+		// return bundle.getString(key);
+		return key;
 	}
 }

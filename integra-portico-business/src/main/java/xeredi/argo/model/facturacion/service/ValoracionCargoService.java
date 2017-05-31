@@ -2,15 +2,25 @@ package xeredi.argo.model.facturacion.service;
 
 import java.util.List;
 
-import lombok.NonNull;
+import org.apache.ibatis.session.ExecutorType;
+import org.mybatis.guice.transactional.Transactional;
+
+import com.google.inject.Inject;
+
+import xeredi.argo.model.facturacion.dao.ValoracionCargoDAO;
 import xeredi.argo.model.facturacion.vo.ValoracionCargoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Interface ValoracionCargoService.
+ * The Class ValoracionCargoServiceImpl.
  */
-public interface ValoracionCargoService {
+@Transactional(executorType = ExecutorType.REUSE)
+public class ValoracionCargoService {
+
+	/** The vlrg DAO. */
+	@Inject
+	private ValoracionCargoDAO vlrgDAO;
 
 	/**
 	 * Select list.
@@ -19,5 +29,7 @@ public interface ValoracionCargoService {
 	 *            the vlrc criterio
 	 * @return the list
 	 */
-	List<ValoracionCargoVO> selectList(@NonNull final ValoracionCriterioVO vlrcCriterio);
+	public List<ValoracionCargoVO> selectList(ValoracionCriterioVO vlrcCriterio) {
+		return vlrgDAO.selectList(vlrcCriterio);
+	}
 }

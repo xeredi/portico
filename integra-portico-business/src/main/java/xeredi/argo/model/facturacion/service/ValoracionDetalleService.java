@@ -1,18 +1,34 @@
 package xeredi.argo.model.facturacion.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import lombok.NonNull;
+import javax.inject.Singleton;
+
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.RowBounds;
+import org.mybatis.guice.transactional.Transactional;
+
+import com.google.inject.Inject;
+
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
+import xeredi.argo.model.comun.vo.MessageI18nKey;
+import xeredi.argo.model.facturacion.dao.ValoracionDetalleDAO;
 import xeredi.argo.model.facturacion.vo.ValoracionDetalleCriterioVO;
 import xeredi.argo.model.facturacion.vo.ValoracionDetalleVO;
 import xeredi.argo.model.util.PaginatedList;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Interface ValoracionDetalleService.
+ * The Class ValoracionDetalleServiceImpl.
  */
-public interface ValoracionDetalleService {
+@Transactional(executorType = ExecutorType.REUSE)
+@Singleton
+public class ValoracionDetalleService {
+
+	/** The vlrd DAO. */
+	@Inject
+	private ValoracionDetalleDAO vlrdDAO;
 
 	/**
 	 * Select.
@@ -25,7 +41,20 @@ public interface ValoracionDetalleService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	ValoracionDetalleVO select(@NonNull final Long id, final String idioma) throws InstanceNotFoundException;
+	public ValoracionDetalleVO select(Long id, String idioma) throws InstanceNotFoundException {
+		final ValoracionDetalleCriterioVO vlrdCriterio = new ValoracionDetalleCriterioVO();
+
+		vlrdCriterio.setId(id);
+		vlrdCriterio.setIdioma(idioma);
+
+		final ValoracionDetalleVO vlrd = vlrdDAO.selectObject(vlrdCriterio);
+
+		if (vlrd == null) {
+			throw new InstanceNotFoundException(MessageI18nKey.vlrd, id);
+		}
+
+		return vlrd;
+	}
 
 	/**
 	 * Select list.
@@ -38,8 +67,14 @@ public interface ValoracionDetalleService {
 	 *            the limit
 	 * @return the paginated list
 	 */
-	PaginatedList<ValoracionDetalleVO> selectList(@NonNull final ValoracionDetalleCriterioVO vlrdCriterio,
-			final int offset, final int limit);
+	public PaginatedList<ValoracionDetalleVO> selectList(ValoracionDetalleCriterioVO vlrdCriterio, int offset,
+			int limit) {
+		final int count = vlrdDAO.count(vlrdCriterio);
+
+		return new PaginatedList<ValoracionDetalleVO>(
+				count > offset ? vlrdDAO.selectList(vlrdCriterio, new RowBounds(offset, limit)) : new ArrayList<>(),
+				offset, limit, count);
+	}
 
 	/**
 	 * Select list.
@@ -48,7 +83,9 @@ public interface ValoracionDetalleService {
 	 *            the vlrd criterio
 	 * @return the list
 	 */
-	List<ValoracionDetalleVO> selectList(@NonNull final ValoracionDetalleCriterioVO vlrdCriterio);
+	public List<ValoracionDetalleVO> selectList(ValoracionDetalleCriterioVO vlrdCriterio) {
+		return vlrdDAO.selectList(vlrdCriterio);
+	}
 
 	/**
 	 * Insert.
@@ -58,7 +95,10 @@ public interface ValoracionDetalleService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	void insert(@NonNull final ValoracionDetalleVO vlrd) throws InstanceNotFoundException;
+	public void insert(ValoracionDetalleVO vlrd) throws InstanceNotFoundException {
+		// TODO Auto-generated method stub
+
+	}
 
 	/**
 	 * Update.
@@ -68,7 +108,10 @@ public interface ValoracionDetalleService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	void update(@NonNull final ValoracionDetalleVO vlrd) throws InstanceNotFoundException;
+	public void update(ValoracionDetalleVO vlrd) throws InstanceNotFoundException {
+		// TODO Auto-generated method stub
+
+	}
 
 	/**
 	 * Delete.
@@ -78,5 +121,9 @@ public interface ValoracionDetalleService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	void delete(@NonNull final ValoracionDetalleVO vlrd) throws InstanceNotFoundException;
+	public void delete(ValoracionDetalleVO vlrd) throws InstanceNotFoundException {
+		// TODO Auto-generated method stub
+
+	}
+
 }

@@ -5,7 +5,6 @@ import javax.servlet.ServletException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter;
 
 import com.google.inject.servlet.GuiceFilter;
 
