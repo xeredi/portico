@@ -38,11 +38,10 @@ export class InterceptedHttp extends Http {
     }
 
     private handleResponse( res: Response ) {
-        console.log( "handleResponse: " + res.toString() );
-
+        // console.log( "handleResponse: " + res.toString() );
         var json = res.json();
 
-        console.log( "jsonResponse: " + JSON.stringify( json ) );
+        // console.log( "jsonResponse: " + JSON.stringify( json ) );
 
         if ( json.responseCode == "login" ) {
             // console.log( "Needs login!!!" );

@@ -13,8 +13,6 @@
         </div>
     </div>
 
-
-
     <span [translate]="'grid_count'" [translateParams]="{count: resultList.count}"></span>
 
     <div class="table-responsive">
@@ -45,7 +43,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let item of resultList.list">
+                <tr *ngFor="let item of resultList.list; trackBy:trackByFn">
                     <td><a [routerLink]="['/billing/assessment/detail', item.id]"><i class="fa fa-search"></i></a></td>
                     <td nowrap="nowrap" [innerHTML]="item.id"></td>
                     <td nowrap="nowrap" [innerHTML]="item.srvc.entiId"></td>

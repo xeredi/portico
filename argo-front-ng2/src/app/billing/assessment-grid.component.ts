@@ -41,6 +41,10 @@ export class AssessmentGridComponent implements OnInit {
             } );
     }
 
+    trackByFn( index, item ) {
+        return index;
+    }
+
     pageChange() {
         this.doSearch();
     }
