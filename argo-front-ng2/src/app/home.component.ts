@@ -5,13 +5,14 @@ import { Component, OnInit } from '@angular/core';
     template: `
 <div class="col-md-6 col-md-offset-3">
     <h1>Hi {{currentUser.firstName}}!</h1>
-    <p>You're logged in with Angular 2!!</p>
-    <p>
-        <a [routerLink]="['/login']">Logout</a> - <a [routerLink]="['/settings']">Settings</a> - <a
-            [routerLink]="['/security']">Security</a> - <a
-            [routerLink]="['/metamodel']">Metamodel</a> - <a
-            [routerLink]="['/billing']">Billing</a>
-    </p>
+
+    <ul class="list-group">
+      <li class="list-group-item"><a [routerLink]="['/settings']">Settings</a></li>
+      <li class="list-group-item"><a [routerLink]="['/metamodel']">Metamodel</a></li>
+      <li class="list-group-item"><a [routerLink]="['/security']">Security</a></li>
+      <li class="list-group-item"><a [routerLink]="['/billing']">Billing</a></li>
+      <li class="list-group-item"><a [routerLink]="['/login']">Logout</a></li>
+    </ul>
 </div>
     `
 } )

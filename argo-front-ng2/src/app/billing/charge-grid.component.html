@@ -38,7 +38,7 @@
                     <td nowrap="nowrap" [innerHTML]="item.etiqueta"></td>
                     <td nowrap="nowrap" [innerHTML]="item.version.codigoNormalizado"></td>
                     <td nowrap="nowrap" [innerHTML]="item.version.tipo"></td>
-                    <td nowrap="nowrap" [innerHTML]="item.tpsr.id"></td>
+                    <td nowrap="nowrap" [translate]="'enti_' + item.tpsr.id"></td>
                     <td nowrap="nowrap"><i class="fa"
                         [ngClass]="{true:'fa-check', false:'fa-remove'}[item.version.principal]"></i></td>
                     <td nowrap="nowrap"><i class="fa"
@@ -73,7 +73,7 @@
                         <label>Tipo de Servicio</label> <select [(ngModel)]="model.tpsrId" name="model.tpsrId"
                             class="form-control form-control-sm">
                             <option></option>
-                            <option *ngFor="let item of tpsrList" [value]="item.value" [innerHTML]="item.value"></option>
+                            <option *ngFor="let item of tpsrList" [value]="item.value" [translate]="'enti_' + item.value"></option>
                         </select>
                     </div>
                     <div class="col-lg-2 col-xl-1 form-group-sm">

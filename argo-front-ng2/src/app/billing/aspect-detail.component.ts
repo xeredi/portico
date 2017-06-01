@@ -4,15 +4,15 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
-import { ChargeService } from './charge.service';
+import { AspectService } from './aspect.service';
 
 @Component( {
-    selector: 'app-charge-detail',
-    templateUrl: './charge-detail.component.html'
+    selector: 'app-aspect-detail',
+    templateUrl: './aspect-detail.component.html'
 } )
-export class ChargeDetailComponent implements OnInit {
+export class AspectDetailComponent implements OnInit {
     model: any;
-    ruleList: any[];
+    chrgList: any[];
 
     i18nMap: Map<string, any>;
     availableLanguages: string[];
@@ -21,16 +21,16 @@ export class ChargeDetailComponent implements OnInit {
         private route: ActivatedRoute
         , private router: Router
         , private location: Location
-        , private chrgService: ChargeService
+        , private aspcService: AspectService
     ) {
     }
 
     ngOnInit() {
         this.route.params.subscribe( params => {
-            this.chrgService.detail( { id: +params['id'], fref: params['date'] } )
+            this.aspcService.detail( { id: +params['id'], fref: params['date'] } )
                 .subscribe( resp => {
                     this.model = resp.model;
-                    this.ruleList = resp.rglaList;
+                    this.chrgList = resp.ascrList;
 
                     this.availableLanguages = resp.availableLanguages;
                     this.i18nMap = resp.i18nMap;
@@ -41,7 +41,7 @@ export class ChargeDetailComponent implements OnInit {
     remove() {
         console.log( "Remove" );
 
-        this.chrgService.remove( this.model )
+        this.aspcService.remove( this.model )
             .subscribe( resp => {
                 this.location.back();
             } );

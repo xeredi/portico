@@ -7,30 +7,32 @@ import { AlertService } from './shared/alert.service';
 @Component( {
     moduleId: module.id,
     template: `
-<div class="col-md-6 col-md-offset-3">
-    <h2>Login</h2>
-    <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm"
-        novalidate>
-        <div class="form-group"
-            [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-            <label for="username">Username</label> <input type="text"
-                class="form-control" name="username" [(ngModel)]="model.username"
-                #username="ngModel" required />
-            <div *ngIf="f.submitted && !username.valid" class="help-block">Username
-                is required</div>
+<div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-3">A R G O</h1>
+            <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm"
+                novalidate>
+                <div class="form-group"
+                    [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+                    <label for="username">Username</label> <input type="text"
+                        class="form-control" name="username" [(ngModel)]="model.username"
+                        #username="ngModel" required />
+                    <div *ngIf="f.submitted && !username.valid" class="help-block">Username
+                        is required</div>
+                </div>
+                <div class="form-group"
+                    [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+                    <label for="password">Password</label> <input type="password"
+                        class="form-control" name="password" [(ngModel)]="model.password"
+                        #password="ngModel" required />
+                    <div *ngIf="f.submitted && !password.valid" class="help-block">Password
+                        is required</div>
+                </div>
+                <div class="form-group">
+                    <button [disabled]="loading" class="btn btn-primary">Login</button>
+                </div>
+            </form>
         </div>
-        <div class="form-group"
-            [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-            <label for="password">Password</label> <input type="password"
-                class="form-control" name="password" [(ngModel)]="model.password"
-                #password="ngModel" required />
-            <div *ngIf="f.submitted && !password.valid" class="help-block">Password
-                is required</div>
-        </div>
-        <div class="form-group">
-            <button [disabled]="loading" class="btn btn-primary">Login</button>
-        </div>
-    </form>
 </div>
     `
 } )

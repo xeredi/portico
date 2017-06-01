@@ -43,6 +43,14 @@ import { IncompatibleRuleGridFragmentComponent } from './incompatible-rule-grid-
 import { IncompatibleRuleDetailComponent } from './incompatible-rule-detail.component';
 import { IncompatibleRuleEditComponent } from './incompatible-rule-edit.component';
 
+import { AspectService } from './aspect.service';
+import { AspectGridComponent } from './aspect-grid.component';
+import { AspectDetailComponent } from './aspect-detail.component';
+import { AspectEditComponent } from './aspect-edit.component';
+import { AspectChargeGridFragmentComponent } from './aspect-charge-grid-fragment.component';
+import { AspectChargeDetailComponent } from './aspect-charge-detail.component';
+import { AspectChargeEditComponent } from './aspect-charge-edit.component';
+
 @NgModule( {
     imports: [
         FormsModule
@@ -76,6 +84,12 @@ import { IncompatibleRuleEditComponent } from './incompatible-rule-edit.componen
         , IncompatibleRuleGridFragmentComponent
         , IncompatibleRuleDetailComponent
         , IncompatibleRuleEditComponent
+        , AspectGridComponent
+        , AspectDetailComponent
+        , AspectEditComponent
+        , AspectChargeGridFragmentComponent
+        , AspectChargeDetailComponent
+        , AspectChargeEditComponent
     ]
     , providers: [
         AssessmentService
@@ -84,6 +98,7 @@ import { IncompatibleRuleEditComponent } from './incompatible-rule-edit.componen
         , ChargeService
         , RuleService
         , IncompatibleRuleService
+        , AspectService
     ]
     , schemas: [CUSTOM_ELEMENTS_SCHEMA]
 } )

@@ -157,15 +157,15 @@ $ ng generate component [name]
 		Specifies the view encapsulation strategy.
 
 	EJEMPLO ARGO
-	$ ng generate component seguridad/UsuarioAcceso
-	$ ng generate component seguridad/UsuarioGrid
-	$ ng generate component seguridad/Usuario
-	$ ng generate component seguridad/UsuarioEdit
-	$ ng generate component seguridad/UsuarioFilter
-	$ ng generate component seguridad/GrupoGrid
-	$ ng generate component seguridad/Grupo
-	$ ng generate component seguridad/GrupoEdit
-	$ ng generate component seguridad/GrupoFilter
+	$ ng generate component seguridad/UsuarioAcceso --flat
+	$ ng generate component seguridad/UsuarioGrid --flat
+	$ ng generate component seguridad/Usuario --flat
+	$ ng generate component seguridad/UsuarioEdit --flat
+	$ ng generate component seguridad/UsuarioFilter --flat
+	$ ng generate component seguridad/GrupoGrid --flat
+	$ ng generate component seguridad/Grupo --flat
+	$ ng generate component seguridad/GrupoEdit --flat
+	$ ng generate component seguridad/GrupoFilter --flat
 
 
 
@@ -192,6 +192,34 @@ $ ng generate guard [name]
 	$ ng generate guard permission --flat
 
 
+
+CREATE PIPE
+
+$ ng generate pipe [name]
+
+	Options
+
+	app
+		--app (aliases: -a) default value: 1st app
+		Specifies app name to use.
+	export
+		--export
+		Specifies if declaring module exports the pipe.
+	flat
+		--flat
+		Flag to indicate if a dir is created.
+	module
+		--module (aliases: -m)
+		Allows specification of the declaring module.
+	skip-import
+		--skip-import
+		Allows for skipping the module import.
+	spec
+		--spec
+		Specifies if a spec file is generated.
+
+	EJEMPLO ARGO
+	$ ng g pipe settings/ConfigurationFilter --flat
 
 
 
@@ -241,6 +269,8 @@ ng g component settings/ConfigurationEdit --flat
 ng g component settings/I18nMessageGrid --flat
 ng g component settings/I18nMessageDetail --flat
 ng g component settings/I18nMessageEdit --flat
+ng g pipe settings/ConfigurationFilter --flat
+ng g pipe settings/I18nMessageFilter --flat
 
 ng g module metamodel --routing
 ng g service metamodel/ParameterType
@@ -269,6 +299,7 @@ ng g module billing --routing
 ng g service billing/Charge
 ng g service billing/Rule
 ng g service billing/IncompatibleRule
+ng g service billing/Aspect
 ng g service billing/Assessment
 ng g service billing/AssessmentLine
 ng g service billing/AssessmentDetail
@@ -282,6 +313,12 @@ ng g component billing/RuleEdit --flat
 ng g component billing/IncompatibleRuleGridFragment --flat
 ng g component billing/IncompatibleRuleDetail --flat
 ng g component billing/IncompatibleRuleEdit --flat
+ng g component billing/AspectGrid --flat
+ng g component billing/AspectDetail --flat
+ng g component billing/AspectEdit --flat
+ng g component billing/AspectChargeGridFragment --flat
+ng g component billing/AspectChargeDetail --flat
+ng g component billing/AspectChargeEdit --flat
 ng g component billing/AssessmentGrid --flat
 ng g component billing/AssessmentDetail --flat
 ng g component billing/AssessmentEdit --flat

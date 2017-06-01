@@ -46,7 +46,7 @@
                 <tr *ngFor="let item of resultList.list; trackBy:trackByFn">
                     <td><a [routerLink]="['/billing/assessment/detail', item.id]"><i class="fa fa-search"></i></a></td>
                     <td nowrap="nowrap" [innerHTML]="item.id"></td>
-                    <td nowrap="nowrap" [innerHTML]="item.srvc.entiId"></td>
+                    <td nowrap="nowrap" [translate]="'enti_' + item.srvc.entiId"></td>
                     <td nowrap="nowrap" [innerHTML]="item.srvc.etiqueta"></td>
                     <td nowrap="nowrap" [innerHTML]="item.aspc.codigo" [ngbTooltip]="item.aspc.etiqueta"
                         container="body"></td>

@@ -1,0 +1,59 @@
+<div *ngIf="model">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-primary" [routerLink]="['/billing/aspect/edit', 'edit', model.id, model.fref]"><i
+                class="fa fa-edit"></i> <span [translate]="'btn_editar'"></span></a>
+            <button class="btn btn-secondary" (click)="remove()">
+                <i class="fa fa-remove"></i> <span [translate]="'btn_borrar'"></span>
+            </button>
+        </div>
+    </div>
+
+    <form>
+        <fieldset class="form-group">
+            <div class="row">
+                <div class="col-sm-4 col-lg-3 col-xl-2 form-group-sm">
+                    <label [translate]="'tpsr'"></label>
+                    <p class="form-control-static form-control-sm">
+                        <a *ngIf="model.tpsr" [routerLink]="['/metamodel/service-type/detail', model.tpsr.id]"
+                            [translate]="'enti_' + model.tpsr.id"></a>
+                    </p>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'aspc_codigo'"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.codigo"></p>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'aspc_prioridad'"></label>
+                    <p class="form-control-static form-control-sm number" [innerHTML]="model.version.prioridad"></p>
+                </div>
+            </div>
+
+            <app-i18n-info-detail [i18nMap]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-detail>
+
+            <div class="row">
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'fini'"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.version.fini | date: 'dd/MM/yyyy'"></p>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'ffin'"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.version.ffin | date: 'dd/MM/yyyy'"></p>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+    <fieldset>
+        <legend [translate]="'ascrList'"></legend>
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-primary"
+                    [routerLink]="['/billing/aspect-charge/edit', 'create', model.id, model.fref]"><i
+                    class="fa fa-file-o"></i> <span [translate]="'btn_crear'"></span></a>
+            </div>
+        </div>
+
+        <app-aspect-charge-grid-fragment [itemList]="chrgList"></app-aspect-charge-grid-fragment>
+    </fieldset>
+</div>

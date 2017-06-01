@@ -26,6 +26,9 @@ import { PortService } from './port.service';
 import { ConfigurationService } from './configuration.service';
 import { I18nMessageService } from './i18n-message.service';
 
+import { ConfigurationFilterPipe } from './configuration-filter.pipe';
+import { I18nMessageFilterPipe } from './i18n-message-filter.pipe';
+
 @NgModule( {
     imports: [
         FormsModule
@@ -49,6 +52,9 @@ import { I18nMessageService } from './i18n-message.service';
         , I18nMessageGridComponent
         , I18nMessageComponent
         , I18nMessageEditComponent
+
+        , ConfigurationFilterPipe
+        , I18nMessageFilterPipe
     ]
     , providers: [
         SuperportService

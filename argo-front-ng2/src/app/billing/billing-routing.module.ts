@@ -18,6 +18,11 @@ import { RuleDetailComponent } from './rule-detail.component';
 import { RuleEditComponent } from './rule-edit.component';
 import { IncompatibleRuleDetailComponent } from './incompatible-rule-detail.component';
 import { IncompatibleRuleEditComponent } from './incompatible-rule-edit.component';
+import { AspectGridComponent } from './aspect-grid.component';
+import { AspectDetailComponent } from './aspect-detail.component';
+import { AspectEditComponent } from './aspect-edit.component';
+import { AspectChargeDetailComponent } from './aspect-charge-detail.component';
+import { AspectChargeEditComponent } from './aspect-charge-edit.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [PermissionGuard] }
@@ -41,6 +46,13 @@ const routes: Routes = [
     , { path: 'incompatible-rule/detail/:id/:date', component: IncompatibleRuleDetailComponent, canActivate: [PermissionGuard] }
     , { path: 'incompatible-rule/edit/:action/:ruleId/:date', component: IncompatibleRuleEditComponent, canActivate: [PermissionGuard] }
     , { path: 'incompatible-rule/edit/:action/:ruleId/:date/:id', component: IncompatibleRuleEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'aspect/grid', component: AspectGridComponent, canActivate: [PermissionGuard] }
+    , { path: 'aspect/detail/:id/:date', component: AspectDetailComponent, canActivate: [PermissionGuard] }
+    , { path: 'aspect/edit/:action', component: AspectEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'aspect/edit/:action/:id/:date', component: AspectEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'aspect-charge/detail/:id/:date', component: AspectChargeDetailComponent, canActivate: [PermissionGuard] }
+    , { path: 'aspect-charge/edit/:action/:aspectId/:date', component: AspectChargeEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'aspect-charge/edit/:action/:aspectId/:date/:id', component: AspectChargeEditComponent, canActivate: [PermissionGuard] }
 ];
 
 @NgModule( {

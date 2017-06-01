@@ -6,7 +6,9 @@ import { Component, OnInit } from '@angular/core';
 <p>Billing</p>
 
 <p>
-    <a [routerLink]="['/billing/charge/grid']">Charges</a> - <a [routerLink]="['/billing/assessment/grid']">Assessments</a>
+    <a [routerLink]="['/billing/charge/grid']" [translate]="'crgoList'"></a>
+    - <a [routerLink]="['/billing/aspect/grid']" [translate]="'aspcList'"></a>
+    - <a [routerLink]="['/billing/assessment/grid']" [translate]="'vlrcList'"></a>
 </p>
     `
 } )

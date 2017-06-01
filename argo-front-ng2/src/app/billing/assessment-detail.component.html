@@ -35,7 +35,7 @@
                 <div class="col-lg-4 col-xl-3 form-group-sm">
                     <label>Aspecto</label>
                     <p class="form-control-static form-control-sm">
-                        <a [routerLink]="['/billing/aspect/detail', model.aspc.id]" [innerHTML]="model.aspc.etiqueta"></a>
+                        <a [routerLink]="['/billing/aspect/detail', model.aspc.id, model.fref]" [innerHTML]="model.aspc.etiqueta"></a>
                     </p>
                 </div>
                 <div *ngIf="model.fctr" class="col-lg-2 col-xl-1 form-group-sm">
