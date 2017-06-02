@@ -19,63 +19,63 @@ import xeredi.argo.model.metamodelo.vo.AccionCodigo;
  */
 public abstract class CrudSaveAction<T> extends BaseAction implements ProtectedAction {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 6571569363320765658L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 6571569363320765658L;
 
-    /** The accion. */
-    @Getter
-    @Setter
-    protected AccionCodigo accion;
+	/** The accion. */
+	@Getter
+	@Setter
+	protected AccionCodigo accion;
 
-    /** The model. */
-    @Getter
-    @Setter
-    protected T model;
+	/** The model. */
+	@Getter
+	@Setter
+	protected T model;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void doExecute() throws ApplicationException {
-        Preconditions.checkNotNull(accion);
-        Preconditions.checkNotNull(model);
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final void doExecute() throws ApplicationException {
+		Preconditions.checkNotNull(accion);
+		Preconditions.checkNotNull(model);
 
-        if (model instanceof Identifiable) {
-            if (accion != AccionCodigo.create) {
-                Preconditions.checkNotNull(((Identifiable) model).getId());
-            }
-        }
+		doValidate();
 
-        if (model instanceof Versionable<?>) {
-            Preconditions.checkNotNull(((Versionable<?>) model).getVersion());
+		if (model instanceof Identifiable) {
+			if (accion != AccionCodigo.create) {
+				Preconditions.checkNotNull(((Identifiable) model).getId());
+			}
+		}
 
-            if (accion != AccionCodigo.create) {
-                Preconditions.checkNotNull(((Versionable<?>) model).getVersion().getId());
-            }
+		if (model instanceof Versionable<?>) {
+			Preconditions.checkNotNull(((Versionable<?>) model).getVersion());
 
-            FieldValidator.validateVersion(this, accion, (Versionable<?>) model);
-        }
+			if (accion != AccionCodigo.create) {
+				Preconditions.checkNotNull(((Versionable<?>) model).getVersion().getId());
+			}
 
-        doValidate();
+			FieldValidator.validateVersion(this, accion, (Versionable<?>) model);
+		}
 
-        if (!hasErrors()) {
-            doSave();
-        }
-    }
+		if (!hasErrors()) {
+			doSave();
+		}
+	}
 
-    /**
-     * Do execute.
-     *
-     * @throws ApplicationException
-     *             the application exception
-     */
-    public abstract void doSave() throws ApplicationException;
+	/**
+	 * Do execute.
+	 *
+	 * @throws ApplicationException
+	 *             the application exception
+	 */
+	public abstract void doSave() throws ApplicationException;
 
-    /**
-     * Do validate.
-     *
-     * @throws ApplicationException
-     *             the application exception
-     */
-    public abstract void doValidate() throws ApplicationException;
+	/**
+	 * Do validate.
+	 *
+	 * @throws ApplicationException
+	 *             the application exception
+	 */
+	public abstract void doValidate() throws ApplicationException;
 }

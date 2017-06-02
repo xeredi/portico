@@ -28,7 +28,7 @@ pre {
 }
 
 .jumbotron {
-	height: 100vh;
+	/*height: 100vh;*/
 }
 
 .form-control:FOCUS {
@@ -107,6 +107,11 @@ legend {
 td span {
 	/*display: block;*/
 
+}
+
+td i.fa {
+	display: block;
+	text-align: center;
 }
 
 .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9,

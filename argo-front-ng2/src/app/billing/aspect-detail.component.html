@@ -45,6 +45,141 @@
     </form>
 
     <fieldset>
+        <legend>Elementos Informativos de Cabecera</legend>
+
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered table-hover table-condensed table-nonfluid">
+                <thead class="thead-inverse">
+                    <tr>
+                        <th nowrap="nowrap"></th>
+                        <th nowrap="nowrap">Etiqueta</th>
+                        <th nowrap="nowrap">Ruta</th>
+                        <th nowrap="nowrap">Agrupar Valoraciones?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="model.version.cetiqInfo1">
+                        <td nowrap="nowrap">Info 1</td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.cetiqInfo1"></td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.cpathInfo1"></td>
+                        <td nowrap="nowrap"><i class="fa"
+                            [ngClass]="{true:'fa-check', false:'fa-remove'}[model.version.cgrpInfo1]"></i></td>
+                    </tr>
+                    <tr *ngIf="model.version.cetiqInfo2">
+                        <td nowrap="nowrap">Info 2</td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.cetiqInfo2"></td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.cpathInfo2"></td>
+                        <td nowrap="nowrap"><i class="fa"
+                            [ngClass]="{true:'fa-check', false:'fa-remove'}[model.version.cgrpInfo2]"></i></td>
+                    </tr>
+                    <tr *ngIf="model.version.cetiqInfo3">
+                        <td nowrap="nowrap">Info 3</td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.cetiqInfo3"></td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.cpathInfo3"></td>
+                        <td nowrap="nowrap"><i class="fa"
+                            [ngClass]="{true:'fa-check', false:'fa-remove'}[model.version.cgrpInfo3]"></i></td>
+                    </tr>
+                    <tr *ngIf="model.version.cetiqInfo4">
+                        <td nowrap="nowrap">Info 4</td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.cetiqInfo4"></td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.cpathInfo4"></td>
+                        <td nowrap="nowrap"><i class="fa"
+                            [ngClass]="{true:'fa-check', false:'fa-remove'}[model.version.cgrpInfo4]"></i></td>
+                    </tr>
+                    <tr *ngIf="model.version.cetiqInfo5">
+                        <td nowrap="nowrap">Info 5</td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.cetiqInfo5"></td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.cpathInfo5"></td>
+                        <td nowrap="nowrap"><i class="fa"
+                            [ngClass]="{true:'fa-check', false:'fa-remove'}[model.version.cgrpInfo5]"></i></td>
+                    </tr>
+                    <tr *ngIf="model.version.cetiqInfo6">
+                        <td nowrap="nowrap">Info 6</td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.cetiqInfo6"></td>
+                        <td nowrap="nowrap" [innerHTML]="model.version.cpathInfo6"></td>
+                        <td nowrap="nowrap"><i class="fa"
+                            [ngClass]="{true:'fa-check', false:'fa-remove'}[model.version.cgrpInfo6]"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Elementos Informativos de Linea</legend>
+
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered table-condensed table-nonfluid">
+                <thead class="thead-inverse">
+                    <tr>
+                        <th nowrap="nowrap"></th>
+                        <th nowrap="nowrap">Info 1</th>
+                        <th nowrap="nowrap">Info 2</th>
+                        <th nowrap="nowrap">Info 3</th>
+                        <th nowrap="nowrap">Info 4</th>
+                        <th nowrap="nowrap">Info 5</th>
+                        <th nowrap="nowrap">Info 6</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td nowrap="nowrap">Agrupar Detalles?</td>
+                        <td nowrap="nowrap"><i class="fa"
+                            [ngClass]="{true:'fa-check', false:'fa-remove'}[model.version.lgrpInfo1]"></i></td>
+                        <td nowrap="nowrap"><i class="fa"
+                            [ngClass]="{true:'fa-check', false:'fa-remove'}[model.version.lgrpInfo2]"></i></td>
+                        <td nowrap="nowrap"><i class="fa"
+                            [ngClass]="{true:'fa-check', false:'fa-remove'}[model.version.lgrpInfo3]"></i></td>
+                        <td nowrap="nowrap"><i class="fa"
+                            [ngClass]="{true:'fa-check', false:'fa-remove'}[model.version.lgrpInfo4]"></i></td>
+                        <td nowrap="nowrap"><i class="fa"
+                            [ngClass]="{true:'fa-check', false:'fa-remove'}[model.version.lgrpInfo5]"></i></td>
+                        <td nowrap="nowrap"><i class="fa"
+                            [ngClass]="{true:'fa-check', false:'fa-remove'}[model.version.lgrpInfo6]"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Elementos Cuantitativos de Linea</legend>
+
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered table-condensed table-nonfluid">
+                <thead class="thead-inverse">
+                    <tr>
+                        <th nowrap="nowrap"></th>
+                        <th nowrap="nowrap">Cuant 1</th>
+                        <th nowrap="nowrap">Cuant 2</th>
+                        <th nowrap="nowrap">Cuant 3</th>
+                        <th nowrap="nowrap">Cuant 4</th>
+                        <th nowrap="nowrap">Cuant 5</th>
+                        <th nowrap="nowrap">Cuant 6</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td nowrap="nowrap">Sumatorio Detalles?</td>
+                        <td nowrap="nowrap"><i class="fa"
+                            [ngClass]="{true:'fa-check', false:'fa-remove'}[model.version.lsumCuant1]"></i></td>
+                        <td nowrap="nowrap"><i class="fa"
+                            [ngClass]="{true:'fa-check', false:'fa-remove'}[model.version.lsumCuant2]"></i></td>
+                        <td nowrap="nowrap"><i class="fa"
+                            [ngClass]="{true:'fa-check', false:'fa-remove'}[model.version.lsumCuant3]"></i></td>
+                        <td nowrap="nowrap"><i class="fa"
+                            [ngClass]="{true:'fa-check', false:'fa-remove'}[model.version.lsumCuant4]"></i></td>
+                        <td nowrap="nowrap"><i class="fa"
+                            [ngClass]="{true:'fa-check', false:'fa-remove'}[model.version.lsumCuant5]"></i></td>
+                        <td nowrap="nowrap"><i class="fa"
+                            [ngClass]="{true:'fa-check', false:'fa-remove'}[model.version.lsumCuant6]"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+
+    <fieldset>
         <legend [translate]="'ascrList'"></legend>
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">

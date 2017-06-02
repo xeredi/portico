@@ -38,5 +38,6 @@ public final class AspectoCargoVO implements Versionable<AspectoCargoVersionVO> 
         super();
 
         version = new AspectoCargoVersionVO();
+        crgo = new CargoVO();
     }
 }

@@ -47,6 +47,8 @@ import { AspectService } from './aspect.service';
 import { AspectGridComponent } from './aspect-grid.component';
 import { AspectDetailComponent } from './aspect-detail.component';
 import { AspectEditComponent } from './aspect-edit.component';
+
+import { AspectChargeService } from './aspect-charge.service';
 import { AspectChargeGridFragmentComponent } from './aspect-charge-grid-fragment.component';
 import { AspectChargeDetailComponent } from './aspect-charge-detail.component';
 import { AspectChargeEditComponent } from './aspect-charge-edit.component';
@@ -99,6 +101,7 @@ import { AspectChargeEditComponent } from './aspect-charge-edit.component';
         , RuleService
         , IncompatibleRuleService
         , AspectService
+        , AspectChargeService
     ]
     , schemas: [CUSTOM_ELEMENTS_SCHEMA]
 } )

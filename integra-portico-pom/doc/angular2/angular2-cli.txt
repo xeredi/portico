@@ -300,6 +300,7 @@ ng g service billing/Charge
 ng g service billing/Rule
 ng g service billing/IncompatibleRule
 ng g service billing/Aspect
+ng g service billing/AspectCharge
 ng g service billing/Assessment
 ng g service billing/AssessmentLine
 ng g service billing/AssessmentDetail

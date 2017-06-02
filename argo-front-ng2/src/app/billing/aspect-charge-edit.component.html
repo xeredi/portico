@@ -1,3 +1,42 @@
-<p>
-  aspect-charge-edit works!
-</p>
+<div *ngIf="model">
+    <form role="form" (ngSubmit)="save()">
+        <fieldset class="form-group">
+            <div class="row">
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [translate]="'crgo'"></label>
+                    <p *ngIf="action == 'edit'" class="form-control-static form-control-sm">
+                        <a *ngIf="model.crgo" [routerLink]="['/billing/charge/detail', model.crgo.id, model.fref]"
+                            [innerHTML]="model.crgo.etiqueta"></a>
+                    </p>
+                    <select *ngIf="action != 'edit'" [(ngModel)]="model.crgo.id" name="model.crgo.id"
+                        class="form-control form-control-sm">
+                        <option></option>
+                        <option *ngFor="let item of chrgList" [value]="item.id" [innerHTML]="item.etiqueta"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'fini'"></label> <input class="form-control form-control-sm"
+                        [(ngModel)]="model.version.fini" name="model.version.fini" ngui-datetime-picker date-only="true"
+                        date-format="DD/MM/YYYY" />
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'ffin'"></label> <input class="form-control form-control-sm"
+                        [(ngModel)]="model.version.ffin" name="model.version.ffin" ngui-datetime-picker date-only="true"
+                        date-format="DD/MM/YYYY" />
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="btn-group">
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-check"></i> Save
+            </button>
+            <button type="button" (click)="cancel()" class="btn btn-secondary">
+                <i class="fa fa-close"></i> Cancel
+            </button>
+        </div>
+    </form>
+</div>

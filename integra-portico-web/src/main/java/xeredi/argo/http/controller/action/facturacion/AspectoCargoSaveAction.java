@@ -51,6 +51,10 @@ public final class AspectoCargoSaveAction extends CrudSaveAction<AspectoCargoVO>
 
 		if (accion == AccionCodigo.create) {
 			FieldValidator.validateRequired(this, MessageI18nKey.crgo, model.getCrgo());
+
+			if (!hasErrors()) {
+				FieldValidator.validateRequired(this, MessageI18nKey.crgo, model.getCrgo().getId());
+			}
 		} else {
 			Preconditions.checkNotNull(model.getId());
 			Preconditions.checkNotNull(model.getVersion());
