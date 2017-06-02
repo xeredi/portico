@@ -12,6 +12,8 @@ import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 
+import xeredi.argo.jobs.guice.GuiceJobFactory;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class PorticoScheduler.
@@ -38,6 +40,7 @@ public final class PorticoScheduler {
 			final SchedulerFactory factory = new StdSchedulerFactory();
 
 			instance = factory.getScheduler();
+			instance.setJobFactory(new GuiceJobFactory());
 
 			final JobDetail cargaOppeJob = JobBuilder.newJob(CargaOppeJob.class)
 					.withIdentity("cargaOppeJob", "estGroup").build();

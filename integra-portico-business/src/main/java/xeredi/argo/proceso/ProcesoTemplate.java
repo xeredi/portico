@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.inject.Inject;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -31,7 +33,7 @@ import xeredi.argo.model.metamodelo.proxy.TipoParametroProxy;
 import xeredi.argo.model.metamodelo.vo.Entidad;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
 import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
-import xeredi.argo.model.proceso.bo.ProcesoBO;
+import xeredi.argo.model.proceso.service.ProcesoService;
 import xeredi.argo.model.proceso.vo.MensajeCodigo;
 import xeredi.argo.model.proceso.vo.MensajeNivel;
 import xeredi.argo.model.proceso.vo.ProcesoMensajeVO;
@@ -50,6 +52,10 @@ public abstract class ProcesoTemplate {
 	/** The Constant BATCH_MAX_SIZE. */
 	private static final int BATCH_MAX_SIZE = 1000;
 
+	/** The prbt service. */
+	@Inject
+	private ProcesoService prbtService;
+
 	/** The prbt data. */
 	@Getter
 	protected ProcesoData prbtData;
@@ -64,12 +70,10 @@ public abstract class ProcesoTemplate {
 	public final void procesar() {
 		prepararProcesos();
 
-		final ProcesoBO prbtBO = new ProcesoBO();
-
 		ProcesoVO prbt = null;
 
 		do {
-			prbt = prbtBO.proteger(getProcesoTipo());
+			prbt = prbtService.proteger(getProcesoTipo());
 
 			if (prbt != null) {
 				if (LOG.isDebugEnabled()) {
@@ -80,8 +84,8 @@ public abstract class ProcesoTemplate {
 					prbtData = new ProcesoData();
 
 					prbtData.setPrbt(prbt);
-					prbtData.getPrpmMap().putAll(prbtBO.selectPrpmMap(prbt.getId()));
-					prbtData.getPritEntradaList().addAll(prbtBO.selectPritEntradaList(prbt.getId()));
+					prbtData.getPrpmMap().putAll(prbtService.selectPrpmMap(prbt.getId()));
+					prbtData.getPritEntradaList().addAll(prbtService.selectPritEntradaList(prbt.getId()));
 
 					ejecutarProceso();
 				} catch (final Throwable ex) {
@@ -92,7 +96,7 @@ public abstract class ProcesoTemplate {
 				}
 
 				try {
-					prbtBO.finalizar(prbt.getId(), prbtData.getPrmnList(), getProcesoTipo().getItemTipoSalida(),
+					prbtService.finalizar(prbt.getId(), prbtData.getPrmnList(), getProcesoTipo().getItemTipoSalida(),
 							prbtData.getItemSalidaList());
 				} catch (final InstanceNotFoundException ex) {
 					LOG.fatal("Proceso " + prbt.getId() + " no encontrado al tratar de finalizarlo. " + prbt);

@@ -1,5 +1,7 @@
 package xeredi.argo.jobs;
 
+import javax.inject.Inject;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.DisallowConcurrentExecution;
@@ -19,6 +21,9 @@ public final class SuministroRedJob implements Job {
 	/** The Constant LOG. */
 	private static final Log LOG = LogFactory.getLog(SuministroRedJob.class);
 
+	@Inject
+	private ProcesoSuministroRed prbt;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -26,10 +31,8 @@ public final class SuministroRedJob implements Job {
 	public void execute(final JobExecutionContext context) throws JobExecutionException {
 		LOG.info("Start Job");
 
-		final ProcesoSuministroRed procesoSuministroRed = new ProcesoSuministroRed();
-
 		try {
-			procesoSuministroRed.procesar();
+			prbt.procesar();
 		} catch (final Throwable ex) {
 			LOG.error(ex, ex);
 		}

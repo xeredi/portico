@@ -1,5 +1,7 @@
 package xeredi.argo.jobs;
 
+import javax.inject.Inject;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.DisallowConcurrentExecution;
@@ -16,25 +18,26 @@ import xeredi.argo.model.proceso.batch.estadistica.ProcesoCargaOppe;
 @DisallowConcurrentExecution
 public final class CargaOppeJob implements Job {
 
-    /** The Constant LOG. */
-    private static final Log LOG = LogFactory.getLog(CargaOppeJob.class);
+	/** The Constant LOG. */
+	private static final Log LOG = LogFactory.getLog(CargaOppeJob.class);
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void execute(final JobExecutionContext context) throws JobExecutionException {
-        LOG.info("Start Job");
+	@Inject
+	private ProcesoCargaOppe prbt;
 
-        final ProcesoCargaOppe procesoCargaOppe = new ProcesoCargaOppe();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void execute(final JobExecutionContext context) throws JobExecutionException {
+		LOG.info("Start Job");
 
-        try {
-            procesoCargaOppe.procesar();
-        } catch (final Throwable ex) {
-            LOG.error(ex, ex);
-        }
+		try {
+			prbt.procesar();
+		} catch (final Throwable ex) {
+			LOG.error(ex, ex);
+		}
 
-        LOG.info("End Job");
-    }
+		LOG.info("End Job");
+	}
 
 }

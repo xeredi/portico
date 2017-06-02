@@ -1,5 +1,7 @@
 package xeredi.argo.jobs;
 
+import javax.inject.Inject;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.quartz.DisallowConcurrentExecution;
@@ -16,25 +18,26 @@ import xeredi.argo.proceso.facturacion.ProcesoValorador;
 @DisallowConcurrentExecution
 public final class ValoradorJob implements Job {
 
-    /** The Constant LOG. */
-    private static final Log LOG = LogFactory.getLog(ValoradorJob.class);
+	/** The Constant LOG. */
+	private static final Log LOG = LogFactory.getLog(ValoradorJob.class);
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void execute(final JobExecutionContext context) throws JobExecutionException {
-        LOG.info("Start Job");
+	@Inject
+	private ProcesoValorador prbt;
 
-        final ProcesoValorador procesoValorador = new ProcesoValorador();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void execute(final JobExecutionContext context) throws JobExecutionException {
+		LOG.info("Start Job");
 
-        try {
-            procesoValorador.procesar();
-        } catch (final Throwable ex) {
-            LOG.error(ex, ex);
-        }
+		try {
+			prbt.procesar();
+		} catch (final Throwable ex) {
+			LOG.error(ex, ex);
+		}
 
-        LOG.info("End Job");
-    }
+		LOG.info("End Job");
+	}
 
 }
