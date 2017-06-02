@@ -1,6 +1,6 @@
 package xeredi.argo.model.comun.exception;
 
-import java.util.Locale;
+import java.util.ResourceBundle;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -17,7 +17,7 @@ public abstract class ApplicationException extends Exception {
      * @param message
      *            the message
      */
-    public ApplicationException(final String message) {
+    ApplicationException(final String message) {
         super(message);
     }
 
@@ -28,5 +28,5 @@ public abstract class ApplicationException extends Exception {
      *            the locale
      * @return the message
      */
-    public abstract String getMessage(final Locale locale);
+    public abstract String getMessage(final ResourceBundle bundle);
 }

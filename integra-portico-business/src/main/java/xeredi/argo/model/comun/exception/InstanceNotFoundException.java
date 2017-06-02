@@ -1,13 +1,10 @@
 package xeredi.argo.model.comun.exception;
 
 import java.text.MessageFormat;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
-import xeredi.argo.model.comun.proxy.PorticoResourceBundle;
+import lombok.NonNull;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -46,11 +43,7 @@ public final class InstanceNotFoundException extends ModelException {
      * {@inheritDoc}
      */
     @Override
-    public String getMessage(final Locale locale) {
-        Preconditions.checkNotNull(locale);
-
-        final ResourceBundle bundle = PorticoResourceBundle.getBundle(locale);
-
+	public String getMessage(final @NonNull ResourceBundle bundle) {
         return MessageFormat.format(bundle.getString(MessageI18nKey.E00008.name()),
                 new Object[] { bundle.getString(getClassName()), getObjId() });
     }

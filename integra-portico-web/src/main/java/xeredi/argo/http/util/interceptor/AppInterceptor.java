@@ -83,7 +83,7 @@ public final class AppInterceptor extends AbstractInterceptor {
 				}
 			}
 		} catch (final ApplicationException ex) {
-			action.addActionError(ex.getMessage(action.getLocale()));
+			action.addActionError(ex.getMessage(action.getBundle(action.getLocale())));
 
 			if (LOG.isDebugEnabled()) {
 				LOG.debug(ex, ex);

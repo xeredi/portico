@@ -1,6 +1,7 @@
 package xeredi.argo.http.controller.action.comun;
 
 import java.text.MessageFormat;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.apache.commons.logging.Log;
@@ -16,8 +17,8 @@ import lombok.NonNull;
 import lombok.Setter;
 import xeredi.argo.http.controller.session.SessionManager;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.proxy.PorticoResourceBundle;
 import xeredi.argo.model.comun.service.ConfigurationProxyService;
+import xeredi.argo.model.comun.service.ResourceBundleService;
 import xeredi.argo.model.comun.vo.ClassPrefix;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
@@ -52,13 +53,6 @@ public abstract class BaseAction extends ActionSupport {
 		load;
 	}
 
-	/** The bundle. */
-	// FIXME
-	private final ResourceBundle bundle = null /*
-												 * PorticoResourceBundle.
-												 * getBundle(getLocale())
-												 */;
-
 	/** the prefix. */
 	@Getter
 	protected ClassPrefix prefix;
@@ -72,16 +66,32 @@ public abstract class BaseAction extends ActionSupport {
 	@Getter
 	protected Long usroId;
 
+	/** the sprt id. */
 	@Getter
 	protected Long sprtId;
 
+	/** The conf proxy service. */
 	@Inject
 	protected ConfigurationProxyService confProxyService;
 
+	/** The rb service. */
+	@Inject
+	protected ResourceBundleService rbService;
+
+	/**
+	 * Gets the idioma.
+	 *
+	 * @return the idioma
+	 */
 	public String getIdioma() {
 		return confProxyService.getString(ConfigurationKey.language_default);
 	}
 
+	/**
+	 * Gets the available languages.
+	 *
+	 * @return the available languages
+	 */
 	public String[] getAvailableLanguages() {
 		return confProxyService.getStringArray(ConfigurationKey.language_available);
 	}
@@ -97,9 +107,9 @@ public abstract class BaseAction extends ActionSupport {
 
 			doExecute();
 		} catch (final ApplicationException ex) {
-			LOG.error(ex, ex);
+			LOG.info(ex);
 
-			addActionError(ex.getMessage(getLocale()));
+			addActionError(ex.getMessage(getBundle()));
 		} catch (final Throwable ex) {
 			LOG.fatal(ex, ex);
 
@@ -124,9 +134,7 @@ public abstract class BaseAction extends ActionSupport {
 	 *            the key
 	 */
 	public final void addActionError(@NonNull final MessageI18nKey key) {
-		// FIXME
-		// addActionError(bundle.getString(key.name()));
-		addActionError(key.name());
+		addActionError(getBundle().getString(key.name()));
 	}
 
 	/**
@@ -138,13 +146,7 @@ public abstract class BaseAction extends ActionSupport {
 	 *            the args
 	 */
 	public final void addActionError(@NonNull final MessageI18nKey key, final Object... args) {
-		// FIXME!!!
-		for (int i = 0; i < args.length; i++) {
-			addActionError(key.name() + ": " + args[i]);
-		}
-
-		// addActionError(MessageFormat.format(bundle.getString(key.name()),
-		// args));
+		addActionError(MessageFormat.format(getBundle().getString(key.name()), args));
 	}
 
 	/**
@@ -155,9 +157,7 @@ public abstract class BaseAction extends ActionSupport {
 	 * @return the text
 	 */
 	public final String getText(@NonNull final MessageI18nKey key) {
-		// FIXME
-		// return bundle.getString(key.name());
-		return key.name();
+		return getBundle().getString(key.name());
 	}
 
 	/**
@@ -165,8 +165,20 @@ public abstract class BaseAction extends ActionSupport {
 	 */
 	@Override
 	public final String getText(final String key) {
-		// FIXME!!
-		// return bundle.getString(key);
-		return key;
+		return getBundle().getString(key);
 	}
+
+	/**
+	 * Gets the bundle.
+	 *
+	 * @return the bundle
+	 */
+	protected ResourceBundle getBundle() {
+		return ResourceBundle.getBundle("argo", getLocale(), rbService);
+	}
+
+	public ResourceBundle getBundle(final Locale locale) {
+		return ResourceBundle.getBundle("argo", locale, rbService);
+	}
+
 }

@@ -8,11 +8,11 @@
 	</listener>
 
 	<filter>
-		<filter-name>struts2</filter-name>
-		<filter-class>xeredi.argo.http.util.filter.AppFilter</filter-class>
+		<filter-name>guiceFilter</filter-name>
+		<filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
 	</filter>
 	<filter-mapping>
-		<filter-name>struts2</filter-name>
+		<filter-name>guiceFilter</filter-name>
 		<url-pattern>*.action</url-pattern>
 	</filter-mapping>
 

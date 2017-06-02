@@ -1,10 +1,9 @@
 package xeredi.argo.model.comun.exception;
 
-import java.util.Locale;
+import java.util.ResourceBundle;
 
+import lombok.NonNull;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -12,61 +11,59 @@ import com.google.common.base.Preconditions;
  */
 public final class TooManyResultsException extends ModelException {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -6231679936855397650L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -6231679936855397650L;
 
-    /** The max results. */
-    private final int maxResults;
+	/** The max results. */
+	private final int maxResults;
 
-    /**
-     * Instantiates a new too many results exception.
-     *
-     * @param aclassName
-     *            the aclass name
-     * @param aobjId
-     *            the aobj id
-     * @param amaxResults
-     *            the amax results
-     */
-    public TooManyResultsException(final MessageI18nKey aclassName, final Object aobjId, final int amaxResults) {
-        super("TooManyResults", aclassName, aobjId);
+	/**
+	 * Instantiates a new too many results exception.
+	 *
+	 * @param aclassName
+	 *            the aclass name
+	 * @param aobjId
+	 *            the aobj id
+	 * @param amaxResults
+	 *            the amax results
+	 */
+	public TooManyResultsException(final MessageI18nKey aclassName, final Object aobjId, final int amaxResults) {
+		super("TooManyResults", aclassName, aobjId);
 
-        maxResults = amaxResults;
-    }
+		maxResults = amaxResults;
+	}
 
-    /**
-     * Instantiates a new too many results exception.
-     *
-     * @param aclassId
-     *            the aclass id
-     * @param aobjId
-     *            the aobj id
-     * @param amaxResults
-     *            the amax results
-     */
-    public TooManyResultsException(final Long aclassId, final Object aobjId, final int amaxResults) {
-        super("TooManyResults", aclassId, aobjId);
+	/**
+	 * Instantiates a new too many results exception.
+	 *
+	 * @param aclassId
+	 *            the aclass id
+	 * @param aobjId
+	 *            the aobj id
+	 * @param amaxResults
+	 *            the amax results
+	 */
+	public TooManyResultsException(final Long aclassId, final Object aobjId, final int amaxResults) {
+		super("TooManyResults", aclassId, aobjId);
 
-        maxResults = amaxResults;
-    }
+		maxResults = amaxResults;
+	}
 
-    /**
-     * Gets the max results.
-     *
-     * @return the max results
-     */
-    public int getMaxResults() {
-        return maxResults;
-    }
+	/**
+	 * Gets the max results.
+	 *
+	 * @return the max results
+	 */
+	public int getMaxResults() {
+		return maxResults;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getMessage(final Locale locale) {
-        Preconditions.checkNotNull(locale);
-
-        throw new Error("No implementado");
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getMessage(final @NonNull ResourceBundle bundle) {
+		throw new Error("No implementado");
+	}
 
 }
