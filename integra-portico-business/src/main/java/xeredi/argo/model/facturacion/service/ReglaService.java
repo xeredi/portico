@@ -16,10 +16,9 @@ import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
 
 import xeredi.argo.model.comun.bo.IgUtilBO;
-import xeredi.argo.model.comun.dao.I18nDAO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.OverlapException;
-import xeredi.argo.model.comun.service.I18nUtil;
+import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.dao.ReglaDAO;
@@ -42,7 +41,7 @@ public class ReglaService {
 
 	/** The i 18 n DAO. */
 	@Inject
-	private I18nDAO i18nDAO;
+	private I18nService i18nService;
 
 	/**
 	 * Select list.
@@ -131,7 +130,7 @@ public class ReglaService {
 
 		IgUtilBO.assignNextVal(rgla.getVersion());
 		rglaDAO.insertVersion(rgla);
-		I18nUtil.insertMap(i18nDAO, rgla, i18nMap);
+		i18nService.insertMap(rgla, i18nMap);
 	}
 
 	/**
@@ -163,7 +162,7 @@ public class ReglaService {
 			throw new InstanceNotFoundException(MessageI18nKey.rgla, rgla);
 		}
 
-		I18nUtil.updateMap(i18nDAO, rgla, i18nMap);
+		i18nService.updateMap(rgla, i18nMap);
 	}
 
 	/**
@@ -184,7 +183,7 @@ public class ReglaService {
 			throw new InstanceNotFoundException(MessageI18nKey.rgla, rgla);
 		}
 
-		I18nUtil.deleteMap(i18nDAO, rgla);
+		i18nService.deleteMap(rgla);
 	}
 
 	/**

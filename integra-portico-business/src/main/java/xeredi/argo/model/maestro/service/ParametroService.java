@@ -20,10 +20,9 @@ import com.google.inject.Inject;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgUtilBO;
-import xeredi.argo.model.comun.dao.I18nDAO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.OverlapException;
-import xeredi.argo.model.comun.service.I18nUtil;
+import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
@@ -66,7 +65,7 @@ public class ParametroService {
 
 	/** The i 18 n DAO. */
 	@Inject
-	private I18nDAO i18nDAO;
+	private I18nService i18nService;
 
 	/**
 	 * Insert.
@@ -121,7 +120,7 @@ public class ParametroService {
 		prmtDAO.insertVersion(prmt);
 
 		if (tpprDetail.getEnti().isI18n()) {
-			I18nUtil.insertMap(i18nDAO, prmt, i18nMap);
+			i18nService.insertMap(prmt, i18nMap);
 		}
 
 		if (prmt.getItdtMap() != null) {
@@ -220,7 +219,7 @@ public class ParametroService {
 		prmtDAO.insertVersion(prmt);
 
 		if (tpprDetail.getEnti().isI18n()) {
-			I18nUtil.insertMap(i18nDAO, prmt, i18nMap);
+			i18nService.insertMap(prmt, i18nMap);
 		}
 
 		if (prmt.getItdtMap() != null) {
@@ -397,7 +396,7 @@ public class ParametroService {
 		prmtDAO.insertVersion(prmt);
 
 		if (tpprDetail.getEnti().isI18n()) {
-			I18nUtil.insertMap(i18nDAO, prmt, i18nMap);
+			i18nService.insertMap(prmt, i18nMap);
 		}
 
 		if (prmt.getItdtMap() != null) {
@@ -479,7 +478,7 @@ public class ParametroService {
 		}
 
 		if (tpprDetail.getEnti().isI18n()) {
-			I18nUtil.updateMap(i18nDAO, prmt, i18nMap);
+			i18nService.updateMap(prmt, i18nMap);
 		}
 
 		if (prmt.getItdtMap() != null) {
@@ -530,7 +529,7 @@ public class ParametroService {
 
 		prdtDAO.deleteList(prmtCriterio);
 
-		I18nUtil.deleteMap(i18nDAO, prmt);
+		i18nService.deleteMap(prmt);
 
 		if (prmtDAO.deleteVersion(prmt) == 0) {
 			throw new InstanceNotFoundException(prmt.getEntiId(), prmt);

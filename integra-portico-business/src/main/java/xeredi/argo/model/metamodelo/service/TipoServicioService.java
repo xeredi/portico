@@ -12,10 +12,9 @@ import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
 
 import xeredi.argo.model.comun.bo.IgUtilBO;
-import xeredi.argo.model.comun.dao.I18nDAO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
-import xeredi.argo.model.comun.service.I18nUtil;
+import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
@@ -43,7 +42,7 @@ public class TipoServicioService {
 
 	/** The i 18 n DAO. */
 	@Inject
-	private I18nDAO i18nDAO;
+	private I18nService i18nService;
 
 	/**
 	 * Select label values.
@@ -138,7 +137,7 @@ public class TipoServicioService {
 
 		entiDAO.insert(tpsr);
 		tpsrDAO.insert(tpsr);
-		I18nUtil.insertMap(i18nDAO, tpsr, i18nMap);
+		i18nService.insertMap(tpsr, i18nMap);
 	}
 
 	/**
@@ -159,7 +158,7 @@ public class TipoServicioService {
 		}
 
 		entiDAO.update(tpsr);
-		I18nUtil.updateMap(i18nDAO, tpsr, i18nMap);
+		i18nService.updateMap(tpsr, i18nMap);
 	}
 
 	/**
@@ -177,7 +176,7 @@ public class TipoServicioService {
 			throw new InstanceNotFoundException(MessageI18nKey.tpsr, tpsr);
 		}
 
-		I18nUtil.deleteMap(i18nDAO, tpsr);
+		i18nService.deleteMap(tpsr);
 		entiDAO.delete(tpsr);
 	}
 }

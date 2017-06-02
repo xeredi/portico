@@ -29,7 +29,6 @@ import xeredi.argo.model.maestro.bo.ParametroBOFactory;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.metamodelo.vo.Entidad;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
-import xeredi.argo.model.proceso.bo.ProcesoBO;
 import xeredi.argo.model.proceso.vo.ItemTipo;
 import xeredi.argo.model.proceso.vo.MensajeCodigo;
 import xeredi.argo.model.proceso.vo.ProcesoItemVO;
@@ -52,205 +51,204 @@ import xeredi.argo.proceso.ProcesoTemplate;
  */
 public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
-    /** The Constant LOG. */
-    private static final Log LOG = LogFactory.getLog(ProcesoCargaManifiesto.class);
+	/** The Constant LOG. */
+	private static final Log LOG = LogFactory.getLog(ProcesoCargaManifiesto.class);
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void prepararProcesos() {
-        final ProcesoBO prbtBO = new ProcesoBO();
-        final ArchivoBO archBO = new ArchivoBO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void prepararProcesos() {
+		final ArchivoBO archBO = new ArchivoBO();
 
-        final String folderPath = ConfigurationProxy.getString(ConfigurationKey.manifiesto_files_entrada_home);
-        final String userBatch = ConfigurationProxy.getString(ConfigurationKey.user_batch);
+		final String folderPath = confService.getString(ConfigurationKey.manifiesto_files_entrada_home);
+		final String userBatch = confService.getString(ConfigurationKey.user_batch);
 
-        final UsuarioBO usroBO = new UsuarioBO();
-        final UsuarioCriterioVO usroCriterio = new UsuarioCriterioVO();
+		final UsuarioBO usroBO = new UsuarioBO();
+		final UsuarioCriterioVO usroCriterio = new UsuarioCriterioVO();
 
-        usroCriterio.setLogin(userBatch);
+		usroCriterio.setLogin(userBatch);
 
-        try {
-            final UsuarioVO usro = usroBO.selectObject(usroCriterio);
+		try {
+			final UsuarioVO usro = usroBO.selectObject(usroCriterio);
 
-            final File folder = new File(folderPath);
-            final File[] files = folder.listFiles();
+			final File folder = new File(folderPath);
+			final File[] files = folder.listFiles();
 
-            if (files != null && files.length > 0) {
-                Arrays.sort(files, new FiledateComparator());
+			if (files != null && files.length > 0) {
+				Arrays.sort(files, new FiledateComparator());
 
-                for (final File file : files) {
-                    try {
-                        if (LOG.isInfoEnabled()) {
-                            LOG.info("Crear proceso para archivo: " + file.getCanonicalPath());
-                        }
+				for (final File file : files) {
+					try {
+						if (LOG.isInfoEnabled()) {
+							LOG.info("Crear proceso para archivo: " + file.getCanonicalPath());
+						}
 
-                        final ArchivoVO arch = archBO.create(file, ArchivoSentido.E);
+						final ArchivoVO arch = archBO.create(file, ArchivoSentido.E);
 
-                        prbtBO.crear(usro.getId(), ProcesoTipo.MAN_CARGA, null, ItemTipo.arch,
-                                Arrays.asList(arch.getArin().getId()));
+						prbtService.crear(usro.getId(), ProcesoTipo.MAN_CARGA, null, ItemTipo.arch,
+								Arrays.asList(arch.getArin().getId()));
 
-                        file.delete();
-                    } catch (final ApplicationException ex) {
-                        LOG.fatal(ex, ex);
-                    } catch (final IOException ex) {
-                        LOG.fatal(ex, ex);
-                    }
-                }
-            }
-        } catch (final InstanceNotFoundException ex) {
-            LOG.fatal(ex, ex);
-        }
-    }
+						file.delete();
+					} catch (final ApplicationException ex) {
+						LOG.fatal(ex, ex);
+					} catch (final IOException ex) {
+						LOG.fatal(ex, ex);
+					}
+				}
+			}
+		} catch (final InstanceNotFoundException ex) {
+			LOG.fatal(ex, ex);
+		}
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void ejecutarProceso() {
-        for (final ProcesoItemVO prit : prbtData.getPritEntradaList()) {
-            try {
-                final ArchivoBO flsrBO = new ArchivoBO();
-                final ArchivoInfoVO arin = flsrBO.select(prit.getItemId());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void ejecutarProceso() {
+		for (final ProcesoItemVO prit : prbtData.getPritEntradaList()) {
+			try {
+				final ArchivoBO flsrBO = new ArchivoBO();
+				final ArchivoInfoVO arin = flsrBO.select(prit.getItemId());
 
-                LOG.info("Importar: " + arin.getNombre());
+				LOG.info("Importar: " + arin.getNombre());
 
-                try (final InputStream stream = flsrBO.selectStream(arin.getId())) {
-                    final ManifiestoFileImport fileImport = new ManifiestoFileImport(this);
-                    final List<String> lines = IOUtils.readLines(stream);
-                    final int primeraLinea = fileImport.findPrimeraLinea(lines);
+				try (final InputStream stream = flsrBO.selectStream(arin.getId())) {
+					final ManifiestoFileImport fileImport = new ManifiestoFileImport(this);
+					final List<String> lines = IOUtils.readLines(stream);
+					final int primeraLinea = fileImport.findPrimeraLinea(lines);
 
-                    if (prbtData.getPrmnList().isEmpty()) {
-                        fileImport.validarSegmentos(lines, primeraLinea);
-                    }
-                    if (prbtData.getPrmnList().isEmpty()) {
-                        fileImport.readMaestros(lines, primeraLinea);
-                    }
-                    if (prbtData.getPrmnList().isEmpty()) {
-                        // FIXME Obtener la fecha de vigencia
-                        final Date fechaVigencia = Calendar.getInstance().getTime();
+					if (prbtData.getPrmnList().isEmpty()) {
+						fileImport.validarSegmentos(lines, primeraLinea);
+					}
+					if (prbtData.getPrmnList().isEmpty()) {
+						fileImport.readMaestros(lines, primeraLinea);
+					}
+					if (prbtData.getPrmnList().isEmpty()) {
+						// FIXME Obtener la fecha de vigencia
+						final Date fechaVigencia = Calendar.getInstance().getTime();
 
-                        buscarMaestros(fechaVigencia);
-                        buscarOrganizaciones(fechaVigencia);
+						buscarMaestros(fechaVigencia);
+						buscarOrganizaciones(fechaVigencia);
 
-                        findEscala(fileImport, fechaVigencia);
-                    }
-                    if (prbtData.getPrmnList().isEmpty()) {
-                        fileImport.readFile(lines, primeraLinea);
-                    }
-                    if (prbtData.getPrmnList().isEmpty()) {
-                        final ManifiestoMensaje mensaje = fileImport.getMensaje();
-                        final ManifiestoBO srvcBO = new ManifiestoBO(prbtData.getPrbt().getUsro().getId());
+						findEscala(fileImport, fechaVigencia);
+					}
+					if (prbtData.getPrmnList().isEmpty()) {
+						fileImport.readFile(lines, primeraLinea);
+					}
+					if (prbtData.getPrmnList().isEmpty()) {
+						final ManifiestoMensaje mensaje = fileImport.getMensaje();
+						final ManifiestoBO srvcBO = new ManifiestoBO(prbtData.getPrbt().getUsro().getId());
 
-                        switch (mensaje) {
-                        case MANIFIESTO_ALTA:
-                            try {
-                                if (LOG.isDebugEnabled()) {
-                                    LOG.debug("Alta de un nuevo manifiesto");
-                                }
+						switch (mensaje) {
+						case MANIFIESTO_ALTA:
+							try {
+								if (LOG.isDebugEnabled()) {
+									LOG.debug("Alta de un nuevo manifiesto");
+								}
 
-                                srvcBO.insert(fileImport.getManifiestoVO(), fileImport.getSsrvList(),
-                                        fileImport.getSsssList(), arin.getId());
+								srvcBO.insert(fileImport.getManifiestoVO(), fileImport.getSsrvList(),
+										fileImport.getSsssList(), arin.getId());
 
-                                prbtData.getItemSalidaList().add(fileImport.getManifiestoVO().getId());
-                            } catch (final DuplicateInstanceException ex) {
-                                throw new Error(ex);
-                            }
+								prbtData.getItemSalidaList().add(fileImport.getManifiestoVO().getId());
+							} catch (final DuplicateInstanceException ex) {
+								throw new Error(ex);
+							}
 
-                            break;
+							break;
 
-                        default:
-                            break;
-                        }
-                    }
-                } catch (final IOException ex) {
-                    LOG.error(ex, ex);
+						default:
+							break;
+						}
+					}
+				} catch (final IOException ex) {
+					LOG.error(ex, ex);
 
-                    addError(MensajeCodigo.G_010, "archivo:" + arin.getNombre() + ", error:" + ex.getMessage());
-                } catch (final InstanceNotFoundException ex) {
-                    LOG.error(ex, ex);
+					addError(MensajeCodigo.G_010, "archivo:" + arin.getNombre() + ", error:" + ex.getMessage());
+				} catch (final InstanceNotFoundException ex) {
+					LOG.error(ex, ex);
 
-                    addError(MensajeCodigo.G_000, "archivo:" + arin.getNombre() + ", error:" + ex.getMessage());
-                }
-            } catch (final InstanceNotFoundException ex) {
-                LOG.fatal(ex, ex);
+					addError(MensajeCodigo.G_000, "archivo:" + arin.getNombre() + ", error:" + ex.getMessage());
+				}
+			} catch (final InstanceNotFoundException ex) {
+				LOG.fatal(ex, ex);
 
-                addError(MensajeCodigo.G_000, "archivoId:" + prit.getItemId() + ", error:" + ex.getMessage());
-            }
-        }
-    }
+				addError(MensajeCodigo.G_000, "archivoId:" + prit.getItemId() + ", error:" + ex.getMessage());
+			}
+		}
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected ProcesoTipo getProcesoTipo() {
-        return ProcesoTipo.MAN_CARGA;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected ProcesoTipo getProcesoTipo() {
+		return ProcesoTipo.MAN_CARGA;
+	}
 
-    /**
-     * Find escala.
-     *
-     * @param fileImport
-     *            the file import
-     * @param fechaVigencia
-     *            the fecha vigencia
-     */
-    private void findEscala(final ManifiestoFileImport fileImport, final Date fechaVigencia) {
-        final String recintoAduaneroCode = fileImport.getRecintoAduanero();
+	/**
+	 * Find escala.
+	 *
+	 * @param fileImport
+	 *            the file import
+	 * @param fechaVigencia
+	 *            the fecha vigencia
+	 */
+	private void findEscala(final ManifiestoFileImport fileImport, final Date fechaVigencia) {
+		final String recintoAduaneroCode = fileImport.getRecintoAduanero();
 
-        PuertoVO prto = null;
-        ServicioVO escala = null;
+		PuertoVO prto = null;
+		ServicioVO escala = null;
 
-        if (recintoAduaneroCode == null) {
-            addError(MensajeCodigo.G_001, Entidad.RECINTO_ADUANERO.name() + ": " + recintoAduaneroCode);
-        } else {
-            final PuertoBO prtoBO = new PuertoBO();
-            final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+		if (recintoAduaneroCode == null) {
+			addError(MensajeCodigo.G_001, Entidad.RECINTO_ADUANERO.name() + ": " + recintoAduaneroCode);
+		} else {
+			final PuertoBO prtoBO = new PuertoBO();
+			final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
-            prtoCriterio.setRecAduanero(recintoAduaneroCode);
+			prtoCriterio.setRecAduanero(recintoAduaneroCode);
 
-            try {
-                prto = prtoBO.selectObject(prtoCriterio);
+			try {
+				prto = prtoBO.selectObject(prtoCriterio);
 
-                if (prbtData.getPrmnList().isEmpty()) {
-                    // Busqueda de la escala
-                    final EscalaBO escaBO = new EscalaBO(prbtData.getPrbt().getUsro().getId());
-                    final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
+				if (prbtData.getPrmnList().isEmpty()) {
+					// Busqueda de la escala
+					final EscalaBO escaBO = new EscalaBO(prbtData.getPrbt().getUsro().getId());
+					final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
 
-                    srvcCriterioVO.setPrto(new PuertoCriterioVO());
-                    srvcCriterioVO.getPrto().setId(prto.getId());
+					srvcCriterioVO.setPrto(new PuertoCriterioVO());
+					srvcCriterioVO.getPrto().setId(prto.getId());
 
-                    srvcCriterioVO.setAnno(fileImport.getEscalaVO().getAnno());
-                    srvcCriterioVO.setNumero(fileImport.getEscalaVO().getNumero());
-                    srvcCriterioVO.setEntiId(Entidad.ESCALA.getId());
+					srvcCriterioVO.setAnno(fileImport.getEscalaVO().getAnno());
+					srvcCriterioVO.setNumero(fileImport.getEscalaVO().getNumero());
+					srvcCriterioVO.setEntiId(Entidad.ESCALA.getId());
 
-                    try {
-                        escala = escaBO.selectObject(srvcCriterioVO);
+					try {
+						escala = escaBO.selectObject(srvcCriterioVO);
 
-                        try {
-                            // Busqueda del buque de la escala
-                            final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.BUQUE.getId());
-                            final ParametroVO buque = prmtBO.select(
-                                    escala.getItdtMap().get(TipoDato.BUQUE.getId()).getPrmt().getId(), null,
-                                    fechaVigencia);
+						try {
+							// Busqueda del buque de la escala
+							final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.BUQUE.getId());
+							final ParametroVO buque = prmtBO.select(
+									escala.getItdtMap().get(TipoDato.BUQUE.getId()).getPrmt().getId(), null,
+									fechaVigencia);
 
-                            escala.getItdtMap().get(TipoDato.BUQUE.getId()).setPrmt(buque);
+							escala.getItdtMap().get(TipoDato.BUQUE.getId()).setPrmt(buque);
 
-                            fileImport.setEscalaVO(escala);
-                        } catch (final InstanceNotFoundException ex) {
-                            throw new Error(ex);
-                        }
-                    } catch (final InstanceNotFoundException ex) {
-                        addError(MensajeCodigo.G_001, Entidad.ESCALA.name() + ": " + prto.getCodigoCorto() + '/'
-                                + srvcCriterioVO.getAnno() + '/' + srvcCriterioVO.getNumero());
-                    }
-                }
-            } catch (final InstanceNotFoundException ex) {
-                addError(MensajeCodigo.G_001, Entidad.SUBPUERTO.name() + ": " + recintoAduaneroCode);
-            }
-        }
+							fileImport.setEscalaVO(escala);
+						} catch (final InstanceNotFoundException ex) {
+							throw new Error(ex);
+						}
+					} catch (final InstanceNotFoundException ex) {
+						addError(MensajeCodigo.G_001, Entidad.ESCALA.name() + ": " + prto.getCodigoCorto() + '/'
+								+ srvcCriterioVO.getAnno() + '/' + srvcCriterioVO.getNumero());
+					}
+				}
+			} catch (final InstanceNotFoundException ex) {
+				addError(MensajeCodigo.G_001, Entidad.SUBPUERTO.name() + ": " + recintoAduaneroCode);
+			}
+		}
 
-    }
+	}
 }

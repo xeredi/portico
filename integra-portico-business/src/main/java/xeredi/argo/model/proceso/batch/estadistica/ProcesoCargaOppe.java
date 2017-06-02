@@ -31,7 +31,6 @@ import xeredi.argo.model.estadistica.io.OppeFileImport;
 import xeredi.argo.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.argo.model.metamodelo.proxy.TipoEstadisticaProxy;
 import xeredi.argo.model.metamodelo.vo.Entidad;
-import xeredi.argo.model.proceso.bo.ProcesoBO;
 import xeredi.argo.model.proceso.vo.MensajeCodigo;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
 import xeredi.argo.proceso.ProcesoTemplate;
@@ -119,9 +118,7 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
 		}
 
 		if (prbtData.getPrmnList().isEmpty()) {
-			final ProcesoBO prbtBO = new ProcesoBO();
-
-			final List<ArchivoInfoVO> arinList = prbtBO.selectArinEntradaList(prbtData.getPrbt().getId());
+			final List<ArchivoInfoVO> arinList = prbtService.selectArinEntradaList(prbtData.getPrbt().getId());
 
 			if (arinList.isEmpty()) {
 				addError(MensajeCodigo.G_000, EstadisticaFileType.zip.name());

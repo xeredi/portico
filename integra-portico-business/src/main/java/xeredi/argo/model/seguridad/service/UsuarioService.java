@@ -152,22 +152,26 @@ public class UsuarioService {
 	 * @param usroCriterio
 	 *            the usro criterio
 	 * @return the usuario VO
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
 	 */
-	public UsuarioVO selectObject(@NonNull final UsuarioCriterioVO usroCriterio) {
+	public UsuarioVO selectObject(@NonNull final UsuarioCriterioVO usroCriterio) throws InstanceNotFoundException {
 		final UsuarioVO usro = usroDAO.selectObject(usroCriterio);
 
-		if (usro != null) {
-			final Set<Long> grpoIds = new HashSet<Long>();
-			final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();
-
-			grpoCriterio.setUsroId(usro.getId());
-
-			for (final GrupoVO grpo : grpoDAO.selectList(grpoCriterio)) {
-				grpoIds.add(grpo.getId());
-			}
-
-			usro.setGrpoIds(grpoIds);
+		if (usro == null) {
+			throw new InstanceNotFoundException(MessageI18nKey.usro, usroCriterio);
 		}
+
+		final Set<Long> grpoIds = new HashSet<Long>();
+		final GrupoCriterioVO grpoCriterio = new GrupoCriterioVO();
+
+		grpoCriterio.setUsroId(usro.getId());
+
+		for (final GrupoVO grpo : grpoDAO.selectList(grpoCriterio)) {
+			grpoIds.add(grpo.getId());
+		}
+
+		usro.setGrpoIds(grpoIds);
 
 		return usro;
 	}

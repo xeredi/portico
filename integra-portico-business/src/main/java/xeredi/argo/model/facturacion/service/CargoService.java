@@ -15,10 +15,9 @@ import com.google.inject.Inject;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgUtilBO;
-import xeredi.argo.model.comun.dao.I18nDAO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.OverlapException;
-import xeredi.argo.model.comun.service.I18nUtil;
+import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.dao.CargoDAO;
@@ -40,7 +39,7 @@ public class CargoService {
 
 	/** The i 18 n DAO. */
 	@Inject
-	private I18nDAO i18nDAO;
+	private I18nService i18nService;
 
 	/**
 	 * Select list.
@@ -193,7 +192,7 @@ public class CargoService {
 
 		IgUtilBO.assignNextVal(crgo.getVersion());
 		crgoDAO.insertVersion(crgo);
-		I18nUtil.insertMap(i18nDAO, crgo, i18nMap);
+		i18nService.insertMap(crgo, i18nMap);
 	}
 
 	/**
@@ -226,7 +225,7 @@ public class CargoService {
 			throw new InstanceNotFoundException(MessageI18nKey.crgo, crgo);
 		}
 
-		I18nUtil.updateMap(i18nDAO, crgo, i18nMap);
+		i18nService.updateMap(crgo, i18nMap);
 	}
 
 	/**
@@ -245,6 +244,6 @@ public class CargoService {
 			throw new InstanceNotFoundException(MessageI18nKey.crgo, crgo);
 		}
 
-		I18nUtil.deleteMap(i18nDAO, crgo);
+		i18nService.deleteMap(crgo);
 	}
 }

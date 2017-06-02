@@ -21,7 +21,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.OperacionNoPermitidaException;
-import xeredi.argo.model.comun.proxy.ConfigurationProxy;
+import xeredi.argo.model.comun.service.ConfigurationProxyService;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.item.vo.ItemDatoCriterioVO;
@@ -54,7 +54,10 @@ public abstract class ProcesoTemplate {
 
 	/** The prbt service. */
 	@Inject
-	private ProcesoService prbtService;
+	protected ProcesoService prbtService;
+
+	@Inject
+	protected ConfigurationProxyService confService;
 
 	/** The prbt data. */
 	@Getter
@@ -137,7 +140,7 @@ public abstract class ProcesoTemplate {
 					prmtCriterio.setEntiId(entidad.getId());
 					prmtCriterio.setParametros(batchPrmtSet);
 					prmtCriterio.setFechaVigencia(fechaVigencia);
-					prmtCriterio.setIdioma(ConfigurationProxy.getString(ConfigurationKey.language_default));
+					prmtCriterio.setIdioma(confService.getString(ConfigurationKey.language_default));
 
 					for (final ParametroVO prmt : prmtBO.selectList(prmtCriterio)) {
 						if (tpprDetail.getEnti().getPuerto()) {
@@ -418,8 +421,7 @@ public abstract class ProcesoTemplate {
 		final String parameterValueString = findStringParameter(paramName);
 
 		if (parameterValueString != null) {
-			final SimpleDateFormat format = new SimpleDateFormat(
-					ConfigurationProxy.getString(ConfigurationKey.date_format));
+			final SimpleDateFormat format = new SimpleDateFormat(confService.getString(ConfigurationKey.date_format));
 
 			try {
 				return format.parse(parameterValueString);

@@ -11,10 +11,9 @@ import com.google.inject.Inject;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgUtilBO;
-import xeredi.argo.model.comun.dao.I18nDAO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
-import xeredi.argo.model.comun.service.I18nUtil;
+import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.FuncionalidadDAO;
@@ -41,7 +40,7 @@ public class TramiteService {
 
 	/** The i 18 n DAO. */
 	@Inject
-	private I18nDAO i18nDAO;
+	private I18nService i18nService;
 
 	/** The fngr DAO. */
 	@Inject
@@ -104,7 +103,7 @@ public class TramiteService {
 		fncdDAO.insert(trmt);
 		trmtDAO.insert(trmt);
 
-		I18nUtil.insertMap(i18nDAO, trmt, i18nMap);
+		i18nService.insertMap(trmt, i18nMap);
 	}
 
 	/**
@@ -125,7 +124,7 @@ public class TramiteService {
 			throw new InstanceNotFoundException(MessageI18nKey.trmt, trmt.getId());
 		}
 
-		I18nUtil.updateMap(i18nDAO, trmt, i18nMap);
+		i18nService.updateMap(trmt, i18nMap);
 	}
 
 	/**
@@ -150,6 +149,6 @@ public class TramiteService {
 		fngrDAO.deleteList(fngrCriterio);
 		fncdDAO.delete(trmt);
 
-		I18nUtil.deleteMap(i18nDAO, trmt);
+		i18nService.deleteMap(trmt);
 	}
 }

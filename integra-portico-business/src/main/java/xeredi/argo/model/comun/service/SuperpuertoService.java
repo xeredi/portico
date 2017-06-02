@@ -13,7 +13,6 @@ import com.google.inject.Inject;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgUtilBO;
-import xeredi.argo.model.comun.dao.I18nDAO;
 import xeredi.argo.model.comun.dao.SuperpuertoDAO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
@@ -36,7 +35,7 @@ public class SuperpuertoService {
 
 	/** The i 18 n DAO. */
 	@Inject
-	private I18nDAO i18nDAO;
+	private I18nService i18nService;
 
 	/**
 	 * Select.
@@ -126,7 +125,7 @@ public class SuperpuertoService {
 
 		IgUtilBO.assignNextVal(sprt);
 		sprtDAO.insert(sprt);
-		I18nUtil.insertMap(i18nDAO, sprt, i18nMap);
+		i18nService.insertMap(sprt, i18nMap);
 	}
 
 	/**
@@ -148,7 +147,7 @@ public class SuperpuertoService {
 			throw new InstanceNotFoundException(MessageI18nKey.sprt, sprt);
 		}
 
-		I18nUtil.updateMap(i18nDAO, sprt, i18nMap);
+		i18nService.updateMap(sprt, i18nMap);
 	}
 
 	/**
@@ -166,6 +165,6 @@ public class SuperpuertoService {
 			throw new InstanceNotFoundException(MessageI18nKey.sprt, sprt);
 		}
 
-		I18nUtil.deleteMap(i18nDAO, sprt);
+		i18nService.deleteMap(sprt);
 	}
 }

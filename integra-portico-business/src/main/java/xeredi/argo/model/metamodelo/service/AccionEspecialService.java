@@ -13,10 +13,9 @@ import com.google.common.base.Preconditions;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgUtilBO;
-import xeredi.argo.model.comun.dao.I18nDAO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
-import xeredi.argo.model.comun.service.I18nUtil;
+import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.AccionEspecialDAO;
@@ -40,7 +39,7 @@ public class AccionEspecialService {
 
 	/** The i 18 n DAO. */
 	@Inject
-	private I18nDAO i18nDAO;
+	private I18nService i18nService;
 
 	/** The fncd DAO. */
 	@Inject
@@ -71,7 +70,7 @@ public class AccionEspecialService {
 		fncdDAO.insert(aces);
 		acesDAO.insert(aces);
 
-		I18nUtil.insertMap(i18nDAO, aces, i18nMap);
+		i18nService.insertMap(aces, i18nMap);
 	}
 
 	/**
@@ -92,7 +91,7 @@ public class AccionEspecialService {
 			throw new InstanceNotFoundException(MessageI18nKey.aces, aces);
 		}
 
-		I18nUtil.updateMap(i18nDAO, aces, i18nMap);
+		i18nService.updateMap(aces, i18nMap);
 	}
 
 	/**
@@ -114,7 +113,7 @@ public class AccionEspecialService {
 			throw new InstanceNotFoundException(MessageI18nKey.aces, aces);
 		}
 
-		I18nUtil.deleteMap(i18nDAO, aces);
+		i18nService.deleteMap(aces);
 
 		fngrDAO.deleteList(fngrCriterio);
 		fncdDAO.delete(aces);

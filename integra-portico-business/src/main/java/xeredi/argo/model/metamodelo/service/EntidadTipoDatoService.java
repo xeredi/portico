@@ -13,10 +13,9 @@ import com.google.common.base.Preconditions;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgUtilBO;
-import xeredi.argo.model.comun.dao.I18nDAO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
-import xeredi.argo.model.comun.service.I18nUtil;
+import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.EntidadTipoDatoDAO;
@@ -37,7 +36,7 @@ public class EntidadTipoDatoService {
 
 	/** The i 18 n DAO. */
 	@Inject
-	private I18nDAO i18nDAO;
+	private I18nService i18nService;
 
 	/**
 	 * Insert.
@@ -62,7 +61,7 @@ public class EntidadTipoDatoService {
 		IgUtilBO.assignNextVal(entdVO);
 
 		entdDAO.insert(entdVO);
-		I18nUtil.insertMap(i18nDAO, entdVO, i18nMap);
+		i18nService.insertMap(entdVO, i18nMap);
 	}
 
 	/**
@@ -85,7 +84,7 @@ public class EntidadTipoDatoService {
 			throw new InstanceNotFoundException(MessageI18nKey.entd, entdVO);
 		}
 
-		I18nUtil.updateMap(i18nDAO, entdVO, i18nMap);
+		i18nService.updateMap(entdVO, i18nMap);
 	}
 
 	/**
@@ -103,7 +102,7 @@ public class EntidadTipoDatoService {
 			throw new InstanceNotFoundException(MessageI18nKey.entd, entdVO);
 		}
 
-		I18nUtil.deleteMap(i18nDAO, entdVO);
+		i18nService.deleteMap(entdVO);
 	}
 
 	/**

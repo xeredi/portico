@@ -14,11 +14,10 @@ import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
 
 import xeredi.argo.model.comun.bo.IgUtilBO;
-import xeredi.argo.model.comun.dao.I18nDAO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.OverlapException;
-import xeredi.argo.model.comun.service.I18nUtil;
+import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.dao.AspectoDAO;
@@ -40,7 +39,7 @@ public class AspectoService {
 
 	/** The i 18 n DAO. */
 	@Inject
-	private I18nDAO i18nDAO;
+	private I18nService i18nService;
 
 	/**
 	 * Select list.
@@ -167,7 +166,7 @@ public class AspectoService {
 
 		IgUtilBO.assignNextVal(aspc.getVersion());
 		aspcDAO.insertVersion(aspc);
-		I18nUtil.insertMap(i18nDAO, aspc, i18nMap);
+		i18nService.insertMap(aspc, i18nMap);
 	}
 
 	/**
@@ -196,7 +195,7 @@ public class AspectoService {
 		aspcDAO.insert(aspc);
 		aspcDAO.insertVersion(aspc);
 
-		I18nUtil.insertMap(i18nDAO, aspc, i18nMap);
+		i18nService.insertMap(aspc, i18nMap);
 	}
 
 	/**
@@ -230,7 +229,7 @@ public class AspectoService {
 			throw new InstanceNotFoundException(MessageI18nKey.aspc, aspc);
 		}
 
-		I18nUtil.updateMap(i18nDAO, aspc, i18nMap);
+		i18nService.updateMap(aspc, i18nMap);
 	}
 
 	/**
@@ -244,7 +243,7 @@ public class AspectoService {
 	public final void delete(AspectoVO aspc) throws InstanceNotFoundException {
 		Preconditions.checkNotNull(aspc.getVersion().getId());
 
-		I18nUtil.deleteMap(i18nDAO, aspc);
+		i18nService.deleteMap(aspc);
 
 		if (aspcDAO.deleteVersion(aspc) == 0) {
 			throw new InstanceNotFoundException(MessageI18nKey.aspc, aspc);

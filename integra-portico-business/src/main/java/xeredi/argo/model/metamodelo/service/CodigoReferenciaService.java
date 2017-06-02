@@ -12,10 +12,9 @@ import com.google.common.base.Preconditions;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgUtilBO;
-import xeredi.argo.model.comun.dao.I18nDAO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
-import xeredi.argo.model.comun.service.I18nUtil;
+import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.dao.CodigoReferenciaDAO;
@@ -36,7 +35,7 @@ public class CodigoReferenciaService {
 
 	/** The i 18 n DAO. */
 	@Inject
-	private I18nDAO i18nDAO;
+	private I18nService i18nService;
 
 	/**
 	 * Insert.
@@ -56,7 +55,7 @@ public class CodigoReferenciaService {
 
 		IgUtilBO.assignNextVal(cdrf);
 		cdrfDAO.insert(cdrf);
-		I18nUtil.insertMap(i18nDAO, cdrf, i18nMap);
+		i18nService.insertMap(cdrf, i18nMap);
 	}
 
 	/**
@@ -77,7 +76,7 @@ public class CodigoReferenciaService {
 			throw new InstanceNotFoundException(MessageI18nKey.cdrf, cdrf);
 		}
 
-		I18nUtil.updateMap(i18nDAO, cdrf, i18nMap);
+		i18nService.updateMap(cdrf, i18nMap);
 	}
 
 	/**
@@ -91,7 +90,7 @@ public class CodigoReferenciaService {
 	public void delete(@NonNull final CodigoReferenciaVO cdrf) throws InstanceNotFoundException {
 		Preconditions.checkNotNull(cdrf.getId());
 
-		I18nUtil.deleteMap(i18nDAO, cdrf);
+		i18nService.deleteMap(cdrf);
 
 		final int deleted = cdrfDAO.delete(cdrf);
 

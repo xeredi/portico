@@ -17,10 +17,9 @@ import com.google.inject.Inject;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgUtilBO;
-import xeredi.argo.model.comun.dao.I18nDAO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
-import xeredi.argo.model.comun.service.I18nUtil;
+import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
@@ -50,7 +49,7 @@ public class TipoDatoService {
 
 	/** The i 18 n DAO. */
 	@Inject
-	private I18nDAO i18nDAO;
+	private I18nService i18nService;
 
 	/**
 	 * Select.
@@ -116,7 +115,7 @@ public class TipoDatoService {
 		IgUtilBO.assignNextVal(tpdt);
 		tpdtDAO.insert(tpdt);
 
-		I18nUtil.insertMap(i18nDAO, tpdt, i18nMap);
+		i18nService.insertMap(tpdt, i18nMap);
 	}
 
 	/**
@@ -137,7 +136,7 @@ public class TipoDatoService {
 			throw new InstanceNotFoundException(MessageI18nKey.tpdt, tpdt.getCodigo());
 		}
 
-		I18nUtil.updateMap(i18nDAO, tpdt, i18nMap);
+		i18nService.updateMap(tpdt, i18nMap);
 	}
 
 	/**
@@ -151,7 +150,7 @@ public class TipoDatoService {
 	public void delete(@NonNull final TipoDatoVO tpdt) throws InstanceNotFoundException {
 		Preconditions.checkNotNull(tpdt.getId());
 
-		I18nUtil.deleteMap(i18nDAO, tpdt);
+		i18nService.deleteMap(tpdt);
 
 		final CodigoReferenciaCriterioVO cdrfCriterio = new CodigoReferenciaCriterioVO();
 

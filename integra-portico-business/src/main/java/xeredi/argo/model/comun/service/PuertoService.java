@@ -15,7 +15,6 @@ import com.google.common.base.Preconditions;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgUtilBO;
-import xeredi.argo.model.comun.dao.I18nDAO;
 import xeredi.argo.model.comun.dao.PuertoDAO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
@@ -39,7 +38,7 @@ public class PuertoService {
 
 	/** The i 18 n DAO. */
 	@Inject
-	private I18nDAO i18nDAO;
+	private I18nService i18nService;
 
 	/**
 	 * Select.
@@ -73,9 +72,17 @@ public class PuertoService {
 	 * @param prtoCriterio
 	 *            the prto criterio
 	 * @return the puerto VO
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
 	 */
-	public PuertoVO selectObject(@NonNull final PuertoCriterioVO prtoCriterio) {
-		return prtoDAO.selectObject(prtoCriterio);
+	public PuertoVO selectObject(@NonNull final PuertoCriterioVO prtoCriterio) throws InstanceNotFoundException {
+		final PuertoVO prto = prtoDAO.selectObject(prtoCriterio);
+
+		if (prto == null) {
+			throw new InstanceNotFoundException(MessageI18nKey.prto, prtoCriterio);
+		}
+
+		return prto;
 	}
 
 	/**
@@ -131,7 +138,7 @@ public class PuertoService {
 
 		IgUtilBO.assignNextVal(prto);
 		prtoDAO.insert(prto);
-		I18nUtil.insertMap(i18nDAO, prto, i18nMap);
+		i18nService.insertMap(prto, i18nMap);
 	}
 
 	/**
@@ -155,7 +162,7 @@ public class PuertoService {
 			throw new InstanceNotFoundException(MessageI18nKey.prto, prto);
 		}
 
-		I18nUtil.updateMap(i18nDAO, prto, i18nMap);
+		i18nService.updateMap(prto, i18nMap);
 	}
 
 	/**
@@ -166,13 +173,13 @@ public class PuertoService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	public void delete(PuertoVO prto) throws InstanceNotFoundException {
+	public void delete(final @NonNull PuertoVO prto) throws InstanceNotFoundException {
 		Preconditions.checkNotNull(prto.getId());
 
 		if (prtoDAO.delete(prto) == 0) {
 			throw new InstanceNotFoundException(MessageI18nKey.prto, prto);
 		}
 
-		I18nUtil.deleteMap(i18nDAO, prto);
+		i18nService.deleteMap(prto);
 	}
 }
