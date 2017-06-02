@@ -2,17 +2,31 @@ package xeredi.argo.model.metamodelo.service;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+import org.apache.ibatis.session.ExecutorType;
+import org.mybatis.guice.transactional.Transactional;
+
 import lombok.NonNull;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
+import xeredi.argo.model.comun.vo.MessageI18nKey;
+import xeredi.argo.model.metamodelo.dao.CampoAgregacionDAO;
 import xeredi.argo.model.metamodelo.vo.CampoAgregacionCriterioVO;
 import xeredi.argo.model.metamodelo.vo.CampoAgregacionVO;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Interface CampoAgregacionService.
+ * The Class CampoAgregacionServiceImpl.
  */
-public interface CampoAgregacionService {
+@Transactional(executorType = ExecutorType.REUSE)
+@Singleton
+public class CampoAgregacionService {
+
+	/** The cmag DAO. */
+	@Inject
+	private CampoAgregacionDAO cmagDAO;
 
 	/**
 	 * Insert.
@@ -22,7 +36,13 @@ public interface CampoAgregacionService {
 	 * @throws DuplicateInstanceException
 	 *             the duplicate instance exception
 	 */
-	void insert(@NonNull final CampoAgregacionVO vo) throws DuplicateInstanceException;
+	public void insert(@NonNull final CampoAgregacionVO vo) throws DuplicateInstanceException {
+		if (cmagDAO.exists(vo)) {
+			throw new DuplicateInstanceException(MessageI18nKey.cmag, vo);
+		}
+
+		cmagDAO.insert(vo);
+	}
 
 	/**
 	 * Update.
@@ -32,7 +52,11 @@ public interface CampoAgregacionService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	void update(@NonNull final CampoAgregacionVO vo) throws InstanceNotFoundException;
+	public void update(@NonNull final CampoAgregacionVO vo) throws InstanceNotFoundException {
+		if (cmagDAO.update(vo) == 0) {
+			throw new InstanceNotFoundException(MessageI18nKey.cmag, vo);
+		}
+	}
 
 	/**
 	 * Delete.
@@ -42,7 +66,11 @@ public interface CampoAgregacionService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	void delete(@NonNull final CampoAgregacionVO vo) throws InstanceNotFoundException;
+	public void delete(@NonNull final CampoAgregacionVO vo) throws InstanceNotFoundException {
+		if (cmagDAO.delete(vo) == 0) {
+			throw new InstanceNotFoundException(MessageI18nKey.cmag, vo);
+		}
+	}
 
 	/**
 	 * Select.
@@ -57,8 +85,22 @@ public interface CampoAgregacionService {
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
 	 */
-	CampoAgregacionVO select(final @NonNull Long tpesId, final @NonNull Long entdId, final String idioma)
-			throws InstanceNotFoundException;
+	public CampoAgregacionVO select(@NonNull final Long tpesId, @NonNull final Long entdId, final String idioma)
+			throws InstanceNotFoundException {
+		final CampoAgregacionCriterioVO cmagCriterioVO = new CampoAgregacionCriterioVO();
+
+		cmagCriterioVO.setTpesId(tpesId);
+		cmagCriterioVO.setEntdId(entdId);
+		cmagCriterioVO.setIdioma(idioma);
+
+		final CampoAgregacionVO cmagVO = cmagDAO.selectObject(cmagCriterioVO);
+
+		if (cmagVO == null) {
+			throw new InstanceNotFoundException(MessageI18nKey.cmag, cmagCriterioVO);
+		}
+
+		return cmagVO;
+	}
 
 	/**
 	 * Select list.
@@ -67,5 +109,8 @@ public interface CampoAgregacionService {
 	 *            the criterio VO
 	 * @return the list
 	 */
-	List<CampoAgregacionVO> selectList(final @NonNull CampoAgregacionCriterioVO criterioVO);
+	public List<CampoAgregacionVO> selectList(@NonNull final CampoAgregacionCriterioVO criterioVO) {
+		return cmagDAO.selectList(criterioVO);
+	}
+
 }

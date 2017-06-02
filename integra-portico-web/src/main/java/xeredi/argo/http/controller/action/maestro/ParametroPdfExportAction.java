@@ -84,7 +84,7 @@ public final class ParametroPdfExportAction extends ItemFileExportAction<Paramet
 				: new HashMap<>();
 
 		try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
-			final ParametroPdf prmtPdf = new ParametroPdf(getLocale());
+			final ParametroPdf prmtPdf = new ParametroPdf(getBundle());
 
 			prmtPdf.imprimir(model, entiDetail, entiHijasMap, itemHijosMap, i18nMap, baos);
 

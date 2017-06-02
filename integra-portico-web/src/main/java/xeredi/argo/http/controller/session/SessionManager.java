@@ -7,7 +7,6 @@ import com.opensymphony.xwork2.ActionContext;
 import lombok.NonNull;
 import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.seguridad.bo.UsuarioAccesoBO;
 import xeredi.argo.model.seguridad.vo.ResultadoLoginVO;
 
 // TODO: Auto-generated Javadoc
@@ -43,25 +42,13 @@ public final class SessionManager {
 	}
 
 	/**
-	 * Login.
+	 * Sets the login result.
 	 *
-	 * @param login
-	 *            the login
-	 * @param password
-	 *            the password
-	 * @return the resultado login vo
-	 * @throws ApplicationException
-	 *             the application exception
+	 * @param resultadoLogin
+	 *            the new login result
 	 */
-	public static ResultadoLoginVO login(@NonNull final String login, @NonNull final String password)
-			throws ApplicationException {
-		final UsuarioAccesoBO usacBO = new UsuarioAccesoBO();
-
-		final ResultadoLoginVO resultadoLogin = usacBO.acceso(login, password);
-
+	public static void setLoginResult(@NonNull final ResultadoLoginVO resultadoLogin) {
 		getSession().put(ParamNames.loginResult.name(), resultadoLogin);
-
-		return resultadoLogin;
 	}
 
 	/**

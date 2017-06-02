@@ -1,4 +1,4 @@
-package xeredi.argo.model.seguridad.bo;
+package xeredi.argo.model.seguridad.service;
 
 import java.text.MessageFormat;
 import java.util.ResourceBundle;

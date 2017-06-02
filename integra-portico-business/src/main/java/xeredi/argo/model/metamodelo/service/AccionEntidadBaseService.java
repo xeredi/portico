@@ -2,15 +2,25 @@ package xeredi.argo.model.metamodelo.service;
 
 import java.util.List;
 
-import lombok.NonNull;
+import org.apache.ibatis.session.ExecutorType;
+import org.mybatis.guice.transactional.Transactional;
+
+import com.google.inject.Inject;
+
+import xeredi.argo.model.metamodelo.dao.AccionEntidadBaseDAO;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadBaseCriterioVO;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadBaseVO;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Interface AccionEntidadBaseService.
+ * The Class AccionEntidadBaseServiceImpl.
  */
-public interface AccionEntidadBaseService {
+@Transactional(executorType = ExecutorType.REUSE)
+public class AccionEntidadBaseService {
+
+	/** The aebs DAO. */
+	@Inject
+	private AccionEntidadBaseDAO aebsDAO;
 
 	/**
 	 * Select list.
@@ -19,5 +29,8 @@ public interface AccionEntidadBaseService {
 	 *            the aebs criterio
 	 * @return the list
 	 */
-	List<AccionEntidadBaseVO> selectList(@NonNull final AccionEntidadBaseCriterioVO aebsCriterio);
+	public List<AccionEntidadBaseVO> selectList(AccionEntidadBaseCriterioVO aebsCriterio) {
+		return aebsDAO.selectList(aebsCriterio);
+	}
+
 }

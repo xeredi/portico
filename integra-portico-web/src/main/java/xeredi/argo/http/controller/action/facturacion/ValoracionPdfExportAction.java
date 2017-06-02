@@ -87,7 +87,7 @@ public final class ValoracionPdfExportAction extends CrudFileExportAction<Valora
 		}
 
 		try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
-			final ValoracionPdf vlrcPdf = new ValoracionPdf(getLocale());
+			final ValoracionPdf vlrcPdf = new ValoracionPdf(getBundle());
 
 			vlrcPdf.imprimir(model, pagador, tpdtCodExencion, vlrgList, vlriList, vlrlList, baos);
 

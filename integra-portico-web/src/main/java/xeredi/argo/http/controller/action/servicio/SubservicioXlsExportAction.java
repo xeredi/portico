@@ -42,7 +42,7 @@ public final class SubservicioXlsExportAction extends ItemXlsExportAction<Subser
 				throw new Error("No se pueden generar Excels de mas de 10.000 filas");
 			}
 
-			final SubservicioXls excelUtil = new SubservicioXls(getLocale(), baos, itemBO.selectList(criterio), enti);
+			final SubservicioXls excelUtil = new SubservicioXls(getBundle(), baos, itemBO.selectList(criterio), enti);
 
 			excelUtil.generate();
 

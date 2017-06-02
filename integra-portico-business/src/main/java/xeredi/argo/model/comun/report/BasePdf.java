@@ -5,8 +5,9 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
+
+import com.google.common.base.Preconditions;
 
 import lombok.NonNull;
 import net.sf.dynamicreports.report.builder.DynamicReports;
@@ -14,250 +15,234 @@ import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
 import net.sf.dynamicreports.report.builder.component.TextFieldBuilder;
 import net.sf.dynamicreports.report.constant.HorizontalTextAlignment;
-import xeredi.argo.model.comun.proxy.PorticoResourceBundle;
 import xeredi.argo.model.item.vo.ItemDatoVO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoElemento;
-
-import com.google.common.base.Preconditions;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class BasePdf.
  */
 public abstract class BasePdf {
-    /** The Constant DATE_FORMAT. */
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+	/** The Constant DATE_FORMAT. */
+	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 
-    /** The Constant DATETIME_FORMAT. */
-    private static final DateFormat DATETIME_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+	/** The Constant DATETIME_FORMAT. */
+	private static final DateFormat DATETIME_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-    /** The Constant INTEGER_FORMAT. */
-    private static final DecimalFormat INTEGER_FORMAT = new DecimalFormat("###,###,##0");
+	/** The Constant INTEGER_FORMAT. */
+	private static final DecimalFormat INTEGER_FORMAT = new DecimalFormat("###,###,##0");
 
-    /** The Constant DOUBLE_FORMAT. */
-    private static final DecimalFormat DOUBLE_FORMAT = new DecimalFormat("###,###,##0.00####");
+	/** The Constant DOUBLE_FORMAT. */
+	private static final DecimalFormat DOUBLE_FORMAT = new DecimalFormat("###,###,##0.00####");
 
-    /** The Constant CURRENCY_FORMAT. */
-    private static final DecimalFormat CURRENCY_FORMAT = new DecimalFormat("###,###,##0.00");
+	/** The Constant CURRENCY_FORMAT. */
+	private static final DecimalFormat CURRENCY_FORMAT = new DecimalFormat("###,###,##0.00");
 
-    /** The locale. */
-    private final Locale locale;
+	/** The bundle. */
+	protected final ResourceBundle bundle;
 
-    /** The bundle. */
-    private final ResourceBundle bundle;
+	/**
+	 * Instantiates a new pdf util.
+	 *
+	 * @param abundle
+	 *            the abundle
+	 */
+	public BasePdf(@NonNull final ResourceBundle abundle) {
+		super();
 
-    /**
-     * Instantiates a new pdf util.
-     *
-     * @param alocale
-     *            the alocale
-     */
-    public BasePdf(@NonNull final Locale alocale) {
-        super();
+		bundle = abundle;
+	}
 
-        locale = alocale;
-        bundle = PorticoResourceBundle.getBundle(locale);
-    }
+	/**
+	 * Gets the bundle.
+	 *
+	 * @return the bundle
+	 */
+	protected final ResourceBundle getBundle() {
+		return bundle;
+	}
 
-    /**
-     * Gets the locale.
-     *
-     * @return the locale
-     */
-    protected final Locale getLocale() {
-        return locale;
-    }
+	/**
+	 * Gets the itdt value.
+	 *
+	 * @param entdVO
+	 *            the entd vo
+	 * @param itdtVO
+	 *            the itdt vo
+	 * @return the itdt value
+	 */
+	public final String getItdtValue(final EntidadTipoDatoVO entdVO, final ItemDatoVO itdtVO) {
+		Preconditions.checkNotNull(entdVO.getTpdt());
+		Preconditions.checkNotNull(entdVO.getTpdt().getTipoElemento());
 
-    /**
-     * Gets the bundle.
-     *
-     * @return the bundle
-     */
-    protected final ResourceBundle getBundle() {
-        return bundle;
-    }
+		switch (entdVO.getTpdt().getTipoElemento()) {
+		case BO:
+			return formatBoolean(itdtVO.getCantidadEntera());
 
-    /**
-     * Gets the itdt value.
-     *
-     * @param entdVO
-     *            the entd vo
-     * @param itdtVO
-     *            the itdt vo
-     * @return the itdt value
-     */
-    public final String getItdtValue(final EntidadTipoDatoVO entdVO, final ItemDatoVO itdtVO) {
-        Preconditions.checkNotNull(entdVO.getTpdt());
-        Preconditions.checkNotNull(entdVO.getTpdt().getTipoElemento());
+		case TX:
+		case CR:
+			return itdtVO.getCadena() == null ? "" : itdtVO.getCadena();
 
-        switch (entdVO.getTpdt().getTipoElemento()) {
-        case BO:
-            return formatBoolean(itdtVO.getCantidadEntera());
+		case ND:
+			return formatDouble(itdtVO.getCantidadDecimal());
 
-        case TX:
-        case CR:
-            return itdtVO.getCadena() == null ? "" : itdtVO.getCadena();
+		case NE:
+			return formatInteger(itdtVO.getCantidadEntera());
 
-        case ND:
-            return formatDouble(itdtVO.getCantidadDecimal());
+		case FE:
+			return formatDate(itdtVO.getFecha());
 
-        case NE:
-            return formatInteger(itdtVO.getCantidadEntera());
+		case FH:
+			return formatDatetime(itdtVO.getFecha());
 
-        case FE:
-            return formatDate(itdtVO.getFecha());
+		case PR:
+			return itdtVO.getPrmt() == null ? "" : itdtVO.getPrmt().getEtiqueta();
 
-        case FH:
-            return formatDatetime(itdtVO.getFecha());
+		case SR:
+			return itdtVO.getSrvc() == null ? "" : itdtVO.getSrvc().getEtiqueta();
 
-        case PR:
-            return itdtVO.getPrmt() == null ? "" : itdtVO.getPrmt().getEtiqueta();
+		default:
+			throw new Error("Tipo de dato no soportado: " + entdVO.getTpdt().getTipoElemento());
+		}
+	}
 
-        case SR:
-            return itdtVO.getSrvc() == null ? "" : itdtVO.getSrvc().getEtiqueta();
+	/**
+	 * Gets the form.
+	 *
+	 * @param title
+	 *            the title
+	 * @param listCells
+	 *            the list cells
+	 * @return the form
+	 */
+	public final ComponentBuilder<?, ?> getForm(final String title, @NonNull final List<List<PdfCell>> listCells) {
+		final HorizontalListBuilder list = DynamicReports.cmp.horizontalList();
 
-        default:
-            throw new Error("Tipo de dato no soportado: " + entdVO.getTpdt().getTipoElemento());
-        }
-    }
+		for (final List<PdfCell> row : listCells) {
+			for (final PdfCell pdfCell : row) {
+				list.add(getFieldLabel(pdfCell));
+			}
 
-    /**
-     * Gets the form.
-     *
-     * @param title
-     *            the title
-     * @param listCells
-     *            the list cells
-     * @return the form
-     */
-    public final ComponentBuilder<?, ?> getForm(final String title, @NonNull final List<List<PdfCell>> listCells) {
-        final HorizontalListBuilder list = DynamicReports.cmp.horizontalList();
+			list.newRow();
 
-        for (final List<PdfCell> row : listCells) {
-            for (final PdfCell pdfCell : row) {
-                list.add(getFieldLabel(pdfCell));
-            }
+			for (final PdfCell pdfCell : row) {
+				list.add(getFieldValue(pdfCell));
+			}
 
-            list.newRow();
+			list.newRow();
+		}
 
-            for (final PdfCell pdfCell : row) {
-                list.add(getFieldValue(pdfCell));
-            }
+		return title == null ? DynamicReports.cmp.verticalList(list)
+				: DynamicReports.cmp.verticalList(DynamicReports.cmp.text(title), list);
+	}
 
-            list.newRow();
-        }
+	/**
+	 * Gets the form.
+	 *
+	 * @param listCells
+	 *            the list cells
+	 * @return the form
+	 */
+	public final ComponentBuilder<?, ?> getForm(@NonNull final List<List<PdfCell>> listCells) {
+		return getForm(null, listCells);
+	}
 
-        return title == null ? DynamicReports.cmp.verticalList(list)
-                : DynamicReports.cmp.verticalList(DynamicReports.cmp.text(title), list);
-    }
+	/**
+	 * Gets the label.
+	 *
+	 * @param pdfCell
+	 *            the pdf cell
+	 * @return the label
+	 */
+	public final TextFieldBuilder<String> getFieldLabel(final PdfCell pdfCell) {
+		final TextFieldBuilder<String> label = DynamicReports.cmp.text(pdfCell.getLabel())
+				.setFixedWidth(pdfCell.getWidth()).setStyle(PdfConstants.LABEL_STYLE);
 
-    /**
-     * Gets the form.
-     *
-     * @param listCells
-     *            the list cells
-     * @return the form
-     */
-    public final ComponentBuilder<?, ?> getForm(@NonNull final List<List<PdfCell>> listCells) {
-        return getForm(null, listCells);
-    }
+		return label;
+	}
 
-    /**
-     * Gets the label.
-     *
-     * @param pdfCell
-     *            the pdf cell
-     * @return the label
-     */
-    public final TextFieldBuilder<String> getFieldLabel(final PdfCell pdfCell) {
-        final TextFieldBuilder<String> label = DynamicReports.cmp.text(pdfCell.getLabel())
-                .setFixedWidth(pdfCell.getWidth()).setStyle(PdfConstants.LABEL_STYLE);
+	/**
+	 * Gets the data.
+	 *
+	 * @param pdfCell
+	 *            the pdf cell
+	 * @return the data
+	 */
+	public final TextFieldBuilder<String> getFieldValue(final PdfCell pdfCell) {
+		final TextFieldBuilder<String> data = DynamicReports.cmp.text(pdfCell.getValue())
+				.setFixedWidth(pdfCell.getWidth()).setStyle(PdfConstants.VALUE_STYLE);
 
-        return label;
-    }
+		if (pdfCell.getTpel() == TipoElemento.ND || pdfCell.getTpel() == TipoElemento.NE) {
+			data.setHorizontalTextAlignment(HorizontalTextAlignment.RIGHT);
+		}
 
-    /**
-     * Gets the data.
-     *
-     * @param pdfCell
-     *            the pdf cell
-     * @return the data
-     */
-    public final TextFieldBuilder<String> getFieldValue(final PdfCell pdfCell) {
-        final TextFieldBuilder<String> data = DynamicReports.cmp.text(pdfCell.getValue())
-                .setFixedWidth(pdfCell.getWidth()).setStyle(PdfConstants.VALUE_STYLE);
+		return data;
+	}
 
-        if (pdfCell.getTpel() == TipoElemento.ND || pdfCell.getTpel() == TipoElemento.NE) {
-            data.setHorizontalTextAlignment(HorizontalTextAlignment.RIGHT);
-        }
+	/**
+	 * Format date.
+	 *
+	 * @param value
+	 *            the value
+	 * @return the string
+	 */
+	protected final String formatDate(final Date value) {
+		return value == null ? "" : DATE_FORMAT.format(value);
+	}
 
-        return data;
-    }
+	/**
+	 * Format datetime.
+	 *
+	 * @param value
+	 *            the value
+	 * @return the string
+	 */
+	protected final String formatDatetime(final Date value) {
+		return value == null ? "" : DATETIME_FORMAT.format(value);
+	}
 
-    /**
-     * Format date.
-     *
-     * @param value
-     *            the value
-     * @return the string
-     */
-    protected final String formatDate(final Date value) {
-        return value == null ? "" : DATE_FORMAT.format(value);
-    }
+	/**
+	 * Format integer.
+	 *
+	 * @param value
+	 *            the value
+	 * @return the string
+	 */
+	protected final String formatInteger(final Number value) {
+		return value == null ? "" : INTEGER_FORMAT.format(value);
+	}
 
-    /**
-     * Format datetime.
-     *
-     * @param value
-     *            the value
-     * @return the string
-     */
-    protected final String formatDatetime(final Date value) {
-        return value == null ? "" : DATETIME_FORMAT.format(value);
-    }
+	/**
+	 * Format double.
+	 *
+	 * @param value
+	 *            the value
+	 * @return the string
+	 */
+	protected final String formatDouble(final Double value) {
+		return value == null ? "" : DOUBLE_FORMAT.format(value);
+	}
 
-    /**
-     * Format integer.
-     *
-     * @param value
-     *            the value
-     * @return the string
-     */
-    protected final String formatInteger(final Number value) {
-        return value == null ? "" : INTEGER_FORMAT.format(value);
-    }
+	/**
+	 * Format currency.
+	 *
+	 * @param value
+	 *            the value
+	 * @return the string
+	 */
+	protected final String formatCurrency(final Double value) {
+		return value == null ? "" : CURRENCY_FORMAT.format(value);
+	}
 
-    /**
-     * Format double.
-     *
-     * @param value
-     *            the value
-     * @return the string
-     */
-    protected final String formatDouble(final Double value) {
-        return value == null ? "" : DOUBLE_FORMAT.format(value);
-    }
-
-    /**
-     * Format currency.
-     *
-     * @param value
-     *            the value
-     * @return the string
-     */
-    protected final String formatCurrency(final Double value) {
-        return value == null ? "" : CURRENCY_FORMAT.format(value);
-    }
-
-    /**
-     * Format boolean.
-     *
-     * @param value
-     *            the value
-     * @return the string
-     */
-    protected final String formatBoolean(final Long value) {
-        return value == null ? "" : bundle.getString("format_" + (1 == value));
-    }
+	/**
+	 * Format boolean.
+	 *
+	 * @param value
+	 *            the value
+	 * @return the string
+	 */
+	protected final String formatBoolean(final Long value) {
+		return value == null ? "" : bundle.getString("format_" + (1 == value));
+	}
 }

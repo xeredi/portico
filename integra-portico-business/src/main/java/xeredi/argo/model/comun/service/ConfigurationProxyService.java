@@ -24,7 +24,7 @@ import xeredi.argo.model.comun.vo.ConfigurationVO;
 public class ConfigurationProxyService {
 
 	/** The Constant LOG. */
-	private static final Log LOG = LogFactory.getLog(ConfigurationProxy.class);
+	private static final Log LOG = LogFactory.getLog(ConfigurationProxyService.class);
 
 	/** The Constant CONFIGURATION_FILENAME. */
 	public static final String CONFIGURATION_FILENAME = "Configuration_env.properties";

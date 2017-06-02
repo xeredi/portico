@@ -1,7 +1,8 @@
 package xeredi.argo.model.item.report;
 
-import java.util.Locale;
+import java.util.ResourceBundle;
 
+import lombok.NonNull;
 import xeredi.argo.model.comun.report.BasePdf;
 
 // TODO: Auto-generated Javadoc
@@ -10,14 +11,14 @@ import xeredi.argo.model.comun.report.BasePdf;
  */
 public abstract class ItemPdf extends BasePdf {
 
-    /**
-     * Instantiates a new item pdf.
-     *
-     * @param alocale
-     *            the alocale
-     */
-    public ItemPdf(final Locale alocale) {
-        super(alocale);
-    }
+	/**
+	 * Instantiates a new item pdf.
+	 *
+	 * @param abundle
+	 *            the abundle
+	 */
+	public ItemPdf(@NonNull final ResourceBundle abundle) {
+		super(abundle);
+	}
 
 }

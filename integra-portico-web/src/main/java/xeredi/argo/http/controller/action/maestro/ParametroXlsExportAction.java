@@ -38,7 +38,7 @@ public final class ParametroXlsExportAction extends ItemXlsExportAction<Parametr
 		final TipoParametroDetailVO enti = entiProxy.selectTppr(criterio.getEntiId());
 
 		try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
-			final ParametroXls excelUtil = new ParametroXls(getLocale(), baos, prmtService.selectList(criterio), enti);
+			final ParametroXls excelUtil = new ParametroXls(getBundle(), baos, prmtService.selectList(criterio), enti);
 
 			excelUtil.generate();
 

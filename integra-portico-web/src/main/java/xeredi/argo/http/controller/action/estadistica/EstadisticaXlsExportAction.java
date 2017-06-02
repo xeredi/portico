@@ -39,7 +39,7 @@ public final class EstadisticaXlsExportAction extends ItemXlsExportAction<Estadi
 		final TipoEstadisticaDetailVO enti = entiProxy.selectTpes(criterio.getEntiId());
 
 		try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
-			final EstadisticaXls excelUtil = new EstadisticaXls(getLocale(), baos, estdService.selectList(criterio),
+			final EstadisticaXls excelUtil = new EstadisticaXls(getBundle(), baos, estdService.selectList(criterio),
 					enti);
 
 			excelUtil.generate();

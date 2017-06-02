@@ -14,7 +14,6 @@ import org.mybatis.guice.transactional.Transactional;
 
 import xeredi.argo.model.comun.dao.MessageDAO;
 import xeredi.argo.model.comun.dao.MessageI18nDAO;
-import xeredi.argo.model.comun.proxy.ConfigurationProxy;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.MessageCriterioVO;
 import xeredi.argo.model.comun.vo.MessageI18nCriterioVO;
@@ -29,6 +28,9 @@ import xeredi.argo.model.comun.vo.MessageVO;
 @Transactional(executorType = ExecutorType.REUSE)
 @Singleton
 public class MessageI18nService {
+
+	@Inject
+	private ConfigurationProxyService confService;
 
 	/** The mesg DAO. */
 	@Inject
@@ -66,7 +68,7 @@ public class MessageI18nService {
 		final MessageI18nCriterioVO criterio = new MessageI18nCriterioVO();
 
 		if (locale == null || locale.getLanguage() == null || locale.getLanguage().isEmpty()) {
-			criterio.setLanguage(ConfigurationProxy.getString(ConfigurationKey.language_default));
+			criterio.setLanguage(confService.getString(ConfigurationKey.language_default));
 		} else {
 			criterio.setLanguage(locale.getLanguage());
 		}

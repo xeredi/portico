@@ -37,7 +37,7 @@ public final class ServicioXlsExportAction extends ItemXlsExportAction<ServicioC
 
         try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             final ServicioBO itemBO = ServicioBOFactory.newInstance(criterio.getEntiId(), usroId);
-            final ServicioXls excelUtil = new ServicioXls(getLocale(), baos, itemBO.selectList(criterio), enti);
+            final ServicioXls excelUtil = new ServicioXls(getBundle(), baos, itemBO.selectList(criterio), enti);
 
             excelUtil.generate();
 

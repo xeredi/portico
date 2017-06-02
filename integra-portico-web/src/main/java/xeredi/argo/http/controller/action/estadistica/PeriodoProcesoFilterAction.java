@@ -2,11 +2,12 @@ package xeredi.argo.http.controller.action.estadistica;
 
 import java.util.List;
 
-import lombok.Data;
+import javax.inject.Inject;
+
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
-import xeredi.argo.model.comun.bo.SuperpuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.SuperpuertoService;
 import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
 import xeredi.argo.model.estadistica.vo.PeriodoProcesoCriterioVO;
@@ -15,34 +16,35 @@ import xeredi.argo.model.estadistica.vo.PeriodoProcesoCriterioVO;
 /**
  * The Class PeriodoProcesoFilterAction.
  */
-@Data
 public final class PeriodoProcesoFilterAction extends GridFilterAction<PeriodoProcesoCriterioVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 4100651934689033353L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 4100651934689033353L;
 
-    /** The subps. */
-    @Getter
-    private List<SuperpuertoVO> sprtList;
+	@Inject
+	private SuperpuertoService sprtService;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doPrepareFilter() throws ApplicationException {
-        // noop
-    }
+	/** The subps. */
+	@Getter
+	private List<SuperpuertoVO> sprtList;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doLoadDependencies() throws ApplicationException {
-        final SuperpuertoBO sprtBO = new SuperpuertoBO();
-        final SuperpuertoCriterioVO sprtCriterio = new SuperpuertoCriterioVO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doPrepareFilter() throws ApplicationException {
+		// noop
+	}
 
-        sprtCriterio.setIdioma(getIdioma());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doLoadDependencies() throws ApplicationException {
+		final SuperpuertoCriterioVO sprtCriterio = new SuperpuertoCriterioVO();
 
-        sprtList = sprtBO.selectList(sprtCriterio);
-    }
+		sprtCriterio.setIdioma(getIdioma());
+
+		sprtList = sprtService.selectList(sprtCriterio);
+	}
 }

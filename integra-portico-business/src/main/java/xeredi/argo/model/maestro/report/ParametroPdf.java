@@ -3,7 +3,6 @@ package xeredi.argo.model.maestro.report;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -18,7 +17,6 @@ import net.sf.dynamicreports.report.datasource.DRDataSource;
 import net.sf.dynamicreports.report.exception.DRException;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.exception.InternalErrorException;
-import xeredi.argo.model.comun.proxy.PorticoResourceBundle;
 import xeredi.argo.model.comun.report.BasePdf;
 import xeredi.argo.model.comun.report.PdfCell;
 import xeredi.argo.model.comun.report.PdfConstants;
@@ -39,249 +37,242 @@ import xeredi.argo.model.metamodelo.vo.TipoSubparametroDetailVO;
  */
 public final class ParametroPdf extends BasePdf {
 
-    /** The bundle. */
-    private final ResourceBundle bundle;
+	/**
+	 * Instantiates a new parametro pdf.
+	 *
+	 * @param abundle
+	 *            the abundle
+	 */
+	public ParametroPdf(@NonNull final ResourceBundle abundle) {
+		super(abundle);
+	}
 
-    /**
-     * Instantiates a new parametro pdf.
-     *
-     * @param alocale
-     *            the alocale
-     */
-    public ParametroPdf(final Locale alocale) {
-        super(alocale);
+	/**
+	 * Imprimir.
+	 *
+	 * @param item
+	 *            the item
+	 * @param entiDetail
+	 *            the enti detail
+	 * @param entiHijasMap
+	 *            the enti hijas map
+	 * @param itemHijosMap
+	 *            the item hijos map
+	 * @param i18nMap
+	 *            the i18n map
+	 * @param stream
+	 *            the stream
+	 * @throws ApplicationException
+	 *             the ApplicationException
+	 */
+	public void imprimir(@NonNull final ParametroVO item, @NonNull final TipoParametroDetailVO entiDetail,
+			final Map<Long, TipoSubparametroDetailVO> entiHijasMap, final Map<Long, List<SubparametroVO>> itemHijosMap,
+			final Map<String, I18nVO> i18nMap, final OutputStream stream) throws ApplicationException {
+		try {
+			final JasperReportBuilder report = DynamicReports.report();
 
-        bundle = PorticoResourceBundle.getBundle(getLocale());
-    }
+			report.setPageFormat(PageType.A4, PageOrientation.LANDSCAPE);
+			report.pageFooter(DynamicReports.cmp.pageXslashY());
+			report.setTitleSplitType(SplitType.PREVENT);
+			report.setSummarySplitType(SplitType.PREVENT);
+			report.setSummaryWithPageHeaderAndFooter(true);
 
-    /**
-     * Imprimir.
-     *
-     * @param item
-     *            the item
-     * @param entiDetail
-     *            the enti detail
-     * @param entiHijasMap
-     *            the enti hijas map
-     * @param itemHijosMap
-     *            the item hijos map
-     * @param i18nMap
-     *            the i18n map
-     * @param stream
-     *            the stream
-     * @throws ApplicationException
-     *             the ApplicationException
-     */
-    public void imprimir(@NonNull final ParametroVO item, @NonNull final TipoParametroDetailVO entiDetail,
-            final Map<Long, TipoSubparametroDetailVO> entiHijasMap, final Map<Long, List<SubparametroVO>> itemHijosMap,
-            final Map<String, I18nVO> i18nMap, final OutputStream stream) throws ApplicationException {
-        try {
-            final JasperReportBuilder report = DynamicReports.report();
+			final MultiPageListBuilder entiHijasList = DynamicReports.cmp.multiPageList();
 
-            report.setPageFormat(PageType.A4, PageOrientation.LANDSCAPE);
-            report.pageFooter(DynamicReports.cmp.pageXslashY());
-            report.setTitleSplitType(SplitType.PREVENT);
-            report.setSummarySplitType(SplitType.PREVENT);
-            report.setSummaryWithPageHeaderAndFooter(true);
+			if (entiDetail.getEntiHijasList() != null) {
+				for (final Long entiId : entiDetail.getEntiHijasList()) {
+					if (!itemHijosMap.get(entiId).isEmpty()) {
+						entiHijasList.add(DynamicReports.cmp.verticalGap(17), DynamicReports.cmp
+								.subreport(getSubreport(entiHijasMap.get(entiId), itemHijosMap.get(entiId))));
+					}
+				}
+			}
 
-            final MultiPageListBuilder entiHijasList = DynamicReports.cmp.multiPageList();
+			report.title(DynamicReports.cmp.subreport(getSubreport(entiDetail, item, i18nMap))).summary(entiHijasList);
 
-            if (entiDetail.getEntiHijasList() != null) {
-                for (final Long entiId : entiDetail.getEntiHijasList()) {
-                    if (!itemHijosMap.get(entiId).isEmpty()) {
-                        entiHijasList.add(
-                                DynamicReports.cmp.verticalGap(17),
-                                DynamicReports.cmp.subreport(getSubreport(entiHijasMap.get(entiId),
-                                        itemHijosMap.get(entiId))));
-                    }
-                }
-            }
+			report.toPdf(stream);
+		} catch (final DRException ex) {
+			throw new InternalErrorException(ex);
+		}
+	}
 
-            report.title(DynamicReports.cmp.subreport(getSubreport(entiDetail, item, i18nMap))).summary(entiHijasList);
+	/**
+	 * Gets the subreport.
+	 *
+	 * @param entiDetail
+	 *            the enti detail
+	 * @param item
+	 *            the item
+	 * @param i18nMap
+	 *            the i18n map
+	 * @return the subreport
+	 */
+	private JasperReportBuilder getSubreport(final TipoParametroDetailVO entiDetail, final ParametroVO item,
+			final Map<String, I18nVO> i18nMap) {
+		final String tpprLabel = bundle.getString("enti_" + entiDetail.getEnti().getId());
+		final String prmtFiniLabel = bundle.getString(MessageI18nKey.fini.name());
+		final String prmtFfinLabel = bundle.getString(MessageI18nKey.ffin.name());
+		final String prmtLatLabel = bundle.getString(MessageI18nKey.prmt_lat.name());
+		final String prmtLonLabel = bundle.getString(MessageI18nKey.prmt_lon.name());
 
-            report.toPdf(stream);
-        } catch (final DRException ex) {
-            throw new InternalErrorException(ex);
-        }
-    }
+		final JasperReportBuilder report = DynamicReports.report();
 
-    /**
-     * Gets the subreport.
-     *
-     * @param entiDetail
-     *            the enti detail
-     * @param item
-     *            the item
-     * @param i18nMap
-     *            the i18n map
-     * @return the subreport
-     */
-    private JasperReportBuilder getSubreport(final TipoParametroDetailVO entiDetail, final ParametroVO item,
-            final Map<String, I18nVO> i18nMap) {
-        final String tpprLabel = bundle.getString("enti_" + entiDetail.getEnti().getId());
-        final String prmtFiniLabel = bundle.getString(MessageI18nKey.fini.name());
-        final String prmtFfinLabel = bundle.getString(MessageI18nKey.ffin.name());
-        final String prmtLatLabel = bundle.getString(MessageI18nKey.prmt_lat.name());
-        final String prmtLonLabel = bundle.getString(MessageI18nKey.prmt_lon.name());
+		{
+			final List<List<PdfCell>> listCells = new ArrayList<>();
+			List<PdfCell> rowCells = new ArrayList<>();
 
-        final JasperReportBuilder report = DynamicReports.report();
+			final int accWidth = 0;
 
-        {
-            final List<List<PdfCell>> listCells = new ArrayList<>();
-            List<PdfCell> rowCells = new ArrayList<>();
+			if (entiDetail.getEnti().getPuerto()) {
+				rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.prto.name()), item.getPrto().getEtiqueta(), 2,
+						TipoElemento.TX));
+			}
 
-            final int accWidth = 0;
+			rowCells.add(new PdfCell(tpprLabel, item.getEtiqueta(), 6, TipoElemento.TX));
 
-            if (entiDetail.getEnti().getPuerto()) {
-                rowCells.add(new PdfCell(bundle.getString(MessageI18nKey.prto.name()), item.getPrto().getEtiqueta(), 2,
-                        TipoElemento.TX));
-            }
+			rowCells.add(new PdfCell(prmtFiniLabel, formatDate(item.getVersion().getFini()), 1, TipoElemento.FE));
+			rowCells.add(new PdfCell(prmtFfinLabel, formatDate(item.getVersion().getFfin()), 1, TipoElemento.FE));
 
-            rowCells.add(new PdfCell(tpprLabel, item.getEtiqueta(), 6, TipoElemento.TX));
+			if (entiDetail.getEnti().getGis()) {
+				rowCells.add(new PdfCell(prmtLatLabel, formatDouble(item.getVersion().getLat()), 1, TipoElemento.ND));
+				rowCells.add(new PdfCell(prmtLonLabel, formatDouble(item.getVersion().getLon()), 1, TipoElemento.ND));
+			}
 
-            rowCells.add(new PdfCell(prmtFiniLabel, formatDate(item.getVersion().getFini()), 1, TipoElemento.FE));
-            rowCells.add(new PdfCell(prmtFfinLabel, formatDate(item.getVersion().getFfin()), 1, TipoElemento.FE));
+			listCells.add(rowCells);
 
-            if (entiDetail.getEnti().getGis()) {
-                rowCells.add(new PdfCell(prmtLatLabel, formatDouble(item.getVersion().getLat()), 1, TipoElemento.ND));
-                rowCells.add(new PdfCell(prmtLonLabel, formatDouble(item.getVersion().getLon()), 1, TipoElemento.ND));
-            }
+			if (entiDetail.getEnti().isI18n()) {
+				for (final I18nVO i18nVO : i18nMap.values()) {
+					rowCells = new ArrayList<>();
 
-            listCells.add(rowCells);
+					rowCells.add(new PdfCell(i18nVO.getLanguage(), i18nVO.getText(), 10, TipoElemento.TX));
+					listCells.add(rowCells);
+				}
+			}
 
-            if (entiDetail.getEnti().isI18n()) {
-                for (final I18nVO i18nVO : i18nMap.values()) {
-                    rowCells = new ArrayList<>();
+			report.title(DynamicReports.cmp.text(tpprLabel).setStyle(PdfConstants.H1_STYLE), getForm(listCells));
+		}
 
-                    rowCells.add(new PdfCell(i18nVO.getLanguage(), i18nVO.getText(), 10, TipoElemento.TX));
-                    listCells.add(rowCells);
-                }
-            }
+		final MultiPageListBuilder engdList = DynamicReports.cmp.multiPageList();
 
-            report.title(DynamicReports.cmp.text(tpprLabel).setStyle(PdfConstants.H1_STYLE), getForm(listCells));
-        }
+		{
+			if (entiDetail.getEngdList() != null) {
+				for (final EntidadGrupoDatoVO engd : entiDetail.getEngdList()) {
+					final List<List<PdfCell>> listCells = new ArrayList<>();
+					List<PdfCell> rowCells = new ArrayList<>();
 
-        final MultiPageListBuilder engdList = DynamicReports.cmp.multiPageList();
+					int accWidth = 0;
 
-        {
-            if (entiDetail.getEngdList() != null) {
-                for (final EntidadGrupoDatoVO engd : entiDetail.getEngdList()) {
-                    final List<List<PdfCell>> listCells = new ArrayList<>();
-                    List<PdfCell> rowCells = new ArrayList<>();
+					if (entiDetail.getEntdList() != null) {
+						for (final Long tpdtId : entiDetail.getEntdList()) {
+							final EntidadTipoDatoVO entd = entiDetail.getEntdMap().get(tpdtId);
 
-                    int accWidth = 0;
+							if (entd.getGrupo() == engd.getNumero()) {
+								final ItemDatoVO itdt = item.getItdtMap().get(entd.getTpdt().getId());
 
-                    if (entiDetail.getEntdList() != null) {
-                        for (final Long tpdtId : entiDetail.getEntdList()) {
-                            final EntidadTipoDatoVO entd = entiDetail.getEntdMap().get(tpdtId);
+								if (accWidth + entd.getSpan() > PdfConstants.MAX_SPAN) {
+									listCells.add(rowCells);
+									rowCells = new ArrayList<>();
+									accWidth = 0;
+								}
 
-                            if (entd.getGrupo() == engd.getNumero()) {
-                                final ItemDatoVO itdt = item.getItdtMap().get(entd.getTpdt().getId());
+								final String entdLabel = bundle.getString("entd_" + entd.getId());
 
-                                if (accWidth + entd.getSpan() > PdfConstants.MAX_SPAN) {
-                                    listCells.add(rowCells);
-                                    rowCells = new ArrayList<>();
-                                    accWidth = 0;
-                                }
+								rowCells.add(new PdfCell(entdLabel, getItdtValue(entd, itdt), entd.getSpan(),
+										entd.getTpdt().getTipoElemento()));
+								accWidth += entd.getSpan();
+							}
+						}
+					}
 
-                                final String entdLabel = bundle.getString("entd_" + entd.getId());
+					if (!rowCells.isEmpty()) {
+						listCells.add(rowCells);
+					}
 
-                                rowCells.add(new PdfCell(entdLabel, getItdtValue(entd, itdt), entd.getSpan(), entd
-                                        .getTpdt().getTipoElemento()));
-                                accWidth += entd.getSpan();
-                            }
-                        }
-                    }
+					final String engdLabel = bundle.getString("engd_" + engd.getId());
 
-                    if (!rowCells.isEmpty()) {
-                        listCells.add(rowCells);
-                    }
+					engdList.add(DynamicReports.cmp.verticalGap(17), getForm(engdLabel, listCells));
+				}
+			}
+		}
 
-                    final String engdLabel = bundle.getString("engd_" + engd.getId());
+		report.summary(engdList);
 
-                    engdList.add(DynamicReports.cmp.verticalGap(17), getForm(engdLabel, listCells));
-                }
-            }
-        }
+		return report;
+	}
 
-        report.summary(engdList);
+	/**
+	 * Gets the data source.
+	 *
+	 * @param entiDetail
+	 *            the enti detail
+	 * @param itemList
+	 *            the item list
+	 * @return the data source
+	 */
+	private JasperReportBuilder getSubreport(@NonNull final TipoSubparametroDetailVO entiDetail,
+			@NonNull final List<SubparametroVO> itemList) {
+		final String tpspLabel = bundle.getString("enti_" + entiDetail.getEnti().getId());
+		final String tpprAsociadoLabel = bundle.getString("enti_" + entiDetail.getEnti().getTpprAsociado().getId());
+		final String sprmFiniLabel = bundle.getString(MessageI18nKey.fini.name());
+		final String sprmFfinLabel = bundle.getString(MessageI18nKey.ffin.name());
 
-        return report;
-    }
+		final JasperReportBuilder report = DynamicReports.report();
+		final List<String> columns = new ArrayList<>();
 
-    /**
-     * Gets the data source.
-     *
-     * @param entiDetail
-     *            the enti detail
-     * @param itemList
-     *            the item list
-     * @return the data source
-     */
-    private JasperReportBuilder getSubreport(@NonNull final TipoSubparametroDetailVO entiDetail,
-            @NonNull final List<SubparametroVO> itemList) {
-        final String tpspLabel = bundle.getString("enti_" + entiDetail.getEnti().getId());
-        final String tpprAsociadoLabel = bundle.getString("enti_" + entiDetail.getEnti().getTpprAsociado().getId());
-        final String sprmFiniLabel = bundle.getString(MessageI18nKey.fini.name());
-        final String sprmFfinLabel = bundle.getString(MessageI18nKey.ffin.name());
+		report.setTemplate(DynamicReports.template());
+		report.setColumnTitleStyle(PdfConstants.TH_STYLE);
+		report.setColumnStyle(PdfConstants.TD_STYLE);
+		report.addTitle(DynamicReports.cmp.text(tpspLabel).setStyle(PdfConstants.H1_STYLE));
 
-        final JasperReportBuilder report = DynamicReports.report();
-        final List<String> columns = new ArrayList<>();
+		columns.add(tpprAsociadoLabel);
 
-        report.setTemplate(DynamicReports.template());
-        report.setColumnTitleStyle(PdfConstants.TH_STYLE);
-        report.setColumnStyle(PdfConstants.TD_STYLE);
-        report.addTitle(DynamicReports.cmp.text(tpspLabel).setStyle(PdfConstants.H1_STYLE));
+		report.addColumn(DynamicReports.col
+				.column(tpprAsociadoLabel, tpprAsociadoLabel, DynamicReports.type.stringType()).setWidth(4));
 
-        columns.add(tpprAsociadoLabel);
+		columns.add(MessageI18nKey.fini.name());
+		columns.add(MessageI18nKey.ffin.name());
 
-        report.addColumn(DynamicReports.col.column(tpprAsociadoLabel, tpprAsociadoLabel,
-                DynamicReports.type.stringType()).setWidth(4));
+		report.addColumn(DynamicReports.col
+				.column(sprmFiniLabel, MessageI18nKey.fini.name(), DynamicReports.type.stringType()).setWidth(2));
+		report.addColumn(DynamicReports.col
+				.column(sprmFfinLabel, MessageI18nKey.ffin.name(), DynamicReports.type.stringType()).setWidth(2));
 
-        columns.add(MessageI18nKey.fini.name());
-        columns.add(MessageI18nKey.ffin.name());
+		if (entiDetail.getEntdList() != null) {
+			for (final Long tpdtId : entiDetail.getEntdList()) {
+				final EntidadTipoDatoVO entd = entiDetail.getEntdMap().get(tpdtId);
+				final String entdLabel = bundle.getString("entd_" + entd.getId());
 
-        report.addColumn(DynamicReports.col.column(sprmFiniLabel, MessageI18nKey.fini.name(),
-                DynamicReports.type.stringType()).setWidth(2));
-        report.addColumn(DynamicReports.col.column(sprmFfinLabel, MessageI18nKey.ffin.name(),
-                DynamicReports.type.stringType()).setWidth(2));
+				columns.add(entdLabel);
 
-        if (entiDetail.getEntdList() != null) {
-            for (final Long tpdtId : entiDetail.getEntdList()) {
-                final EntidadTipoDatoVO entd = entiDetail.getEntdMap().get(tpdtId);
-                final String entdLabel = bundle.getString("entd_" + entd.getId());
+				report.addColumn(DynamicReports.col.column(entdLabel, entdLabel, DynamicReports.type.stringType())
+						.setWidth(entd.getSpan()));
+			}
+		}
 
-                columns.add(entdLabel);
+		final DRDataSource dataSource = new DRDataSource(columns.toArray(new String[] {}));
 
-                report.addColumn(DynamicReports.col.column(entdLabel, entdLabel, DynamicReports.type.stringType())
-                        .setWidth(entd.getSpan()));
-            }
-        }
+		for (final SubparametroVO itemVO : itemList) {
+			final Object[] objects = new Object[columns.size()];
+			int i = 0;
 
-        final DRDataSource dataSource = new DRDataSource(columns.toArray(new String[] {}));
+			objects[i++] = itemVO.getPrmtAsociado().getEtiqueta();
 
-        for (final SubparametroVO itemVO : itemList) {
-            final Object[] objects = new Object[columns.size()];
-            int i = 0;
+			objects[i++] = formatDate(itemVO.getVersion().getFini());
+			objects[i++] = formatDate(itemVO.getVersion().getFfin());
 
-            objects[i++] = itemVO.getPrmtAsociado().getEtiqueta();
+			if (entiDetail.getEntdList() != null) {
+				for (final Long tpdtId : entiDetail.getEntdList()) {
+					final EntidadTipoDatoVO entd = entiDetail.getEntdMap().get(tpdtId);
 
-            objects[i++] = formatDate(itemVO.getVersion().getFini());
-            objects[i++] = formatDate(itemVO.getVersion().getFfin());
+					objects[i++] = getItdtValue(entd, itemVO.getItdtMap().get(entd.getTpdt().getId()));
+				}
+			}
 
-            if (entiDetail.getEntdList() != null) {
-                for (final Long tpdtId : entiDetail.getEntdList()) {
-                    final EntidadTipoDatoVO entd = entiDetail.getEntdMap().get(tpdtId);
+			dataSource.add(objects);
+		}
 
-                    objects[i++] = getItdtValue(entd, itemVO.getItdtMap().get(entd.getTpdt().getId()));
-                }
-            }
+		report.setDataSource(dataSource);
 
-            dataSource.add(objects);
-        }
-
-        report.setDataSource(dataSource);
-
-        return report;
-    }
+		return report;
+	}
 }
