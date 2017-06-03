@@ -19,8 +19,19 @@ import xeredi.argo.model.facturacion.vo.ValoracionImpuestoVO;
 public class ValoracionImpuestoService {
 
 	/** The vlri DAO. */
+	private final ValoracionImpuestoDAO vlriDAO;
+
+	/**
+	 * Instantiates a new valoracion impuesto service.
+	 *
+	 * @param vlriDAO
+	 *            the vlri DAO
+	 */
 	@Inject
-	private ValoracionImpuestoDAO vlriDAO;
+	public ValoracionImpuestoService(final ValoracionImpuestoDAO vlriDAO) {
+		super();
+		this.vlriDAO = vlriDAO;
+	}
 
 	/**
 	 * Select list.

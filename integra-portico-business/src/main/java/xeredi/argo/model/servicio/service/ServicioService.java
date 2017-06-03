@@ -14,20 +14,15 @@ import javax.inject.Inject;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
-import org.apache.ibatis.session.SqlSession;
 import org.mybatis.guice.transactional.Transactional;
 
 import com.google.common.base.Preconditions;
 
 import lombok.NonNull;
-import xeredi.argo.model.auditoria.bo.EventoAuditoriaUtils;
-import xeredi.argo.model.auditoria.vo.AuditoriaAccion;
 import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.ModelException;
-import xeredi.argo.model.comun.proxy.ConfigurationProxy;
-import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.item.dao.ItemTramiteDAO;
 import xeredi.argo.model.item.dao.ItemTramiteDatoDAO;
@@ -58,7 +53,6 @@ import xeredi.argo.model.servicio.vo.SubservicioSubservicioCriterioVO;
 import xeredi.argo.model.servicio.vo.SubservicioSubservicioVO;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
 import xeredi.argo.model.util.PaginatedList;
-import xeredi.argo.model.util.SqlMapperLocator;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -68,52 +62,89 @@ import xeredi.argo.model.util.SqlMapperLocator;
 public class ServicioService {
 
 	/** The srvc DAO. */
-	@Inject
-	private ServicioDAO srvcDAO;
+	private final ServicioDAO srvcDAO;
 
 	/** The srdt DAO. */
-	@Inject
-	private ServicioDatoDAO srdtDAO;
+	private final ServicioDatoDAO srdtDAO;
 
 	/** The ssrv DAO. */
-	@Inject
-	private SubservicioDAO ssrvDAO;
+	private final SubservicioDAO ssrvDAO;
 
 	/** The ssdt DAO. */
-	@Inject
-	private SubservicioDatoDAO ssdtDAO;
+	private final SubservicioDatoDAO ssdtDAO;
 
 	/** The ssss DAO. */
-	@Inject
-	private SubservicioSubservicioDAO ssssDAO;
+	private final SubservicioSubservicioDAO ssssDAO;
 
 	/** The ittr DAO. */
-	@Inject
-	private ItemTramiteDAO ittrDAO;
+	private final ItemTramiteDAO ittrDAO;
 
 	/** The srtr DAO. */
-	@Inject
-	private ServicioTramiteDAO srtrDAO;
+	private final ServicioTramiteDAO srtrDAO;
 
 	/** The ittd DAO. */
-	@Inject
-	private ItemTramiteDatoDAO ittdDAO;
+	private final ItemTramiteDatoDAO ittdDAO;
 
 	/** The srac DAO. */
-	@Inject
-	private ServicioActorDAO sracDAO;
+	private final ServicioActorDAO sracDAO;
 
 	/** The srar DAO. */
-	@Inject
-	private ServicioArchivoDAO srarDAO;
+	private final ServicioArchivoDAO srarDAO;
 
 	/** The srsc DAO. */
-	@Inject
-	private ServicioSecuenciaDAO srscDAO;
+	private final ServicioSecuenciaDAO srscDAO;
 
 	/** The trmt service. */
+	private final TramiteProxyService trmtService;
+
+	/**
+	 * Instantiates a new servicio service.
+	 *
+	 * @param srvcDAO
+	 *            the srvc DAO
+	 * @param srdtDAO
+	 *            the srdt DAO
+	 * @param ssrvDAO
+	 *            the ssrv DAO
+	 * @param ssdtDAO
+	 *            the ssdt DAO
+	 * @param ssssDAO
+	 *            the ssss DAO
+	 * @param ittrDAO
+	 *            the ittr DAO
+	 * @param srtrDAO
+	 *            the srtr DAO
+	 * @param ittdDAO
+	 *            the ittd DAO
+	 * @param sracDAO
+	 *            the srac DAO
+	 * @param srarDAO
+	 *            the srar DAO
+	 * @param srscDAO
+	 *            the srsc DAO
+	 * @param trmtService
+	 *            the trmt service
+	 */
 	@Inject
-	private TramiteProxyService trmtService;
+	public ServicioService(final ServicioDAO srvcDAO, final ServicioDatoDAO srdtDAO, final SubservicioDAO ssrvDAO,
+			final SubservicioDatoDAO ssdtDAO, final SubservicioSubservicioDAO ssssDAO, final ItemTramiteDAO ittrDAO,
+			final ServicioTramiteDAO srtrDAO, final ItemTramiteDatoDAO ittdDAO, final ServicioActorDAO sracDAO,
+			final ServicioArchivoDAO srarDAO, final ServicioSecuenciaDAO srscDAO,
+			final TramiteProxyService trmtService) {
+		super();
+		this.srvcDAO = srvcDAO;
+		this.srdtDAO = srdtDAO;
+		this.ssrvDAO = ssrvDAO;
+		this.ssdtDAO = ssdtDAO;
+		this.ssssDAO = ssssDAO;
+		this.ittrDAO = ittrDAO;
+		this.srtrDAO = srtrDAO;
+		this.ittdDAO = ittdDAO;
+		this.sracDAO = sracDAO;
+		this.srarDAO = srarDAO;
+		this.srscDAO = srscDAO;
+		this.trmtService = trmtService;
+	}
 
 	/**
 	 * Select.

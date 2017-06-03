@@ -32,16 +32,31 @@ import xeredi.argo.model.util.PaginatedList;
 public class ValoracionService {
 
 	/** The vlrc DAO. */
-	@Inject
-	private ValoracionDAO vlrcDAO;
+	private final ValoracionDAO vlrcDAO;
 
 	/** The vlrl DAO. */
-	@Inject
-	private ValoracionLineaDAO vlrlDAO;
+	private final ValoracionLineaDAO vlrlDAO;
 
 	/** The vlrd DAO. */
+	private final ValoracionDetalleDAO vlrdDAO;
+
+	/**
+	 * Instantiates a new valoracion service.
+	 *
+	 * @param vlrcDAO
+	 *            the vlrc DAO
+	 * @param vlrlDAO
+	 *            the vlrl DAO
+	 * @param vlrdDAO
+	 *            the vlrd DAO
+	 */
 	@Inject
-	private ValoracionDetalleDAO vlrdDAO;
+	public ValoracionService(ValoracionDAO vlrcDAO, ValoracionLineaDAO vlrlDAO, ValoracionDetalleDAO vlrdDAO) {
+		super();
+		this.vlrcDAO = vlrcDAO;
+		this.vlrlDAO = vlrlDAO;
+		this.vlrdDAO = vlrdDAO;
+	}
 
 	/**
 	 * Insert.

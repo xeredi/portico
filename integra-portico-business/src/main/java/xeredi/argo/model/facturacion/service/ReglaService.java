@@ -34,12 +34,25 @@ import xeredi.argo.model.util.PaginatedList;
 public class ReglaService {
 
 	/** The rgla DAO. */
-	@Inject
-	private ReglaDAO rglaDAO;
+	private final ReglaDAO rglaDAO;
 
 	/** The i 18 n DAO. */
+	private final I18nService i18nService;
+
+	/**
+	 * Instantiates a new regla service.
+	 *
+	 * @param rglaDAO
+	 *            the rgla DAO
+	 * @param i18nService
+	 *            the i 18 n service
+	 */
 	@Inject
-	private I18nService i18nService;
+	public ReglaService(final ReglaDAO rglaDAO, final I18nService i18nService) {
+		super();
+		this.rglaDAO = rglaDAO;
+		this.i18nService = i18nService;
+	}
 
 	/**
 	 * Select list.

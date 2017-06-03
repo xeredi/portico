@@ -49,24 +49,44 @@ import xeredi.argo.model.util.PaginatedList;
 @Transactional(executorType = ExecutorType.BATCH)
 public class ParametroService {
 	/** The prmt DAO. */
-	@Inject
-	private ParametroDAO prmtDAO;
+	private final ParametroDAO prmtDAO;
 
 	/** The prdt DAO. */
-	@Inject
-	private ParametroDatoDAO prdtDAO;
+	private final ParametroDatoDAO prdtDAO;
 
 	/** The sprm DAO. */
-	@Inject
-	private SubparametroDAO sprmDAO;
+	private final SubparametroDAO sprmDAO;
 
 	/** The spdt DAO. */
-	@Inject
-	private SubparametroDatoDAO spdtDAO;
+	private final SubparametroDatoDAO spdtDAO;
 
 	/** The i 18 n DAO. */
+	private final I18nService i18nService;
+
+	/**
+	 * Instantiates a new parametro service.
+	 *
+	 * @param prmtDAO
+	 *            the prmt DAO
+	 * @param prdtDAO
+	 *            the prdt DAO
+	 * @param sprmDAO
+	 *            the sprm DAO
+	 * @param spdtDAO
+	 *            the spdt DAO
+	 * @param i18nService
+	 *            the i 18 n service
+	 */
 	@Inject
-	private I18nService i18nService;
+	public ParametroService(final ParametroDAO prmtDAO, final ParametroDatoDAO prdtDAO, final SubparametroDAO sprmDAO,
+			final SubparametroDatoDAO spdtDAO, final I18nService i18nService) {
+		super();
+		this.prmtDAO = prmtDAO;
+		this.prdtDAO = prdtDAO;
+		this.sprmDAO = sprmDAO;
+		this.spdtDAO = spdtDAO;
+		this.i18nService = i18nService;
+	}
 
 	/**
 	 * Insert.

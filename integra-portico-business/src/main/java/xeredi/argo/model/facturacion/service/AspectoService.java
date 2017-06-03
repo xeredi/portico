@@ -35,12 +35,25 @@ import xeredi.argo.model.util.PaginatedList;
 public class AspectoService {
 
 	/** The aspc DAO. */
-	@Inject
-	private AspectoDAO aspcDAO;
+	private final AspectoDAO aspcDAO;
 
 	/** The i 18 n DAO. */
+	private final I18nService i18nService;
+
+	/**
+	 * Instantiates a new aspecto service.
+	 *
+	 * @param aspcDAO
+	 *            the aspc DAO
+	 * @param i18nService
+	 *            the i 18 n service
+	 */
 	@Inject
-	private I18nService i18nService;
+	public AspectoService(final AspectoDAO aspcDAO, final I18nService i18nService) {
+		super();
+		this.aspcDAO = aspcDAO;
+		this.i18nService = i18nService;
+	}
 
 	/**
 	 * Select list.

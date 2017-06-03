@@ -16,8 +16,19 @@ import xeredi.argo.model.seguridad.vo.UsuarioPermisoCriterioVO;
 public class UsuarioPermisoService {
 
 	/** The uspr DAO. */
+	private final UsuarioPermisoDAO usprDAO;
+
+	/**
+	 * Instantiates a new usuario permiso service.
+	 *
+	 * @param usprDAO
+	 *            the uspr DAO
+	 */
 	@Inject
-	private UsuarioPermisoDAO usprDAO;
+	public UsuarioPermisoService(final UsuarioPermisoDAO usprDAO) {
+		super();
+		this.usprDAO = usprDAO;
+	}
 
 	/**
 	 * Checks for fncd.

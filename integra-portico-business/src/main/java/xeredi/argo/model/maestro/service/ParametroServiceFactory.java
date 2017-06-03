@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,6 +19,7 @@ import xeredi.argo.model.metamodelo.vo.TipoParametroVO;
 /**
  * A factory for creating ParametroService objects.
  */
+@Singleton
 public class ParametroServiceFactory {
 	/** The Constant LOG. */
 	private static final Log LOG = LogFactory.getLog(ParametroServiceFactory.class);
@@ -26,12 +28,25 @@ public class ParametroServiceFactory {
 	private static final Map<Long, Class<? extends ParametroService>> MAP = new HashMap<Long, Class<? extends ParametroService>>();
 
 	/** The injector. */
-	@Inject
-	private Injector injector;
+	private final Injector injector;
 
 	/** The enti service. */
+	private final TipoParametroService entiService;
+
+	/**
+	 * Instantiates a new parametro service factory.
+	 *
+	 * @param injector
+	 *            the injector
+	 * @param entiService
+	 *            the enti service
+	 */
 	@Inject
-	private TipoParametroService entiService;
+	public ParametroServiceFactory(final Injector injector, final TipoParametroService entiService) {
+		super();
+		this.injector = injector;
+		this.entiService = entiService;
+	}
 
 	/**
 	 * Gets the single instance of ParametroServiceFactory.
@@ -54,6 +69,15 @@ public class ParametroServiceFactory {
 		}
 
 		return injector.getInstance(MAP.get(entiId));
+	}
+
+	/**
+	 * Gets the generic instance.
+	 *
+	 * @return the generic instance
+	 */
+	public ParametroService getGenericInstance() {
+		return injector.getInstance(ParametroService.class);
 	}
 
 	/**

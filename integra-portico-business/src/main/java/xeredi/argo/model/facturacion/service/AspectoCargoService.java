@@ -29,8 +29,19 @@ import xeredi.argo.model.util.DateUtil;
 public class AspectoCargoService {
 
 	/** The ascr DAO. */
+	private final AspectoCargoDAO ascrDAO;
+
+	/**
+	 * Instantiates a new aspecto cargo service.
+	 *
+	 * @param ascrDAO
+	 *            the ascr DAO
+	 */
 	@Inject
-	private AspectoCargoDAO ascrDAO;
+	public AspectoCargoService(final AspectoCargoDAO ascrDAO) {
+		super();
+		this.ascrDAO = ascrDAO;
+	}
 
 	/**
 	 * Select list.

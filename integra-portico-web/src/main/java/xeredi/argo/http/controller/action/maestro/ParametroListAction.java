@@ -6,7 +6,7 @@ import javax.inject.Inject;
 
 import xeredi.argo.http.controller.action.item.ItemListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.maestro.service.ParametroService;
+import xeredi.argo.model.maestro.service.ParametroServiceFactory;
 import xeredi.argo.model.maestro.vo.ParametroCriterioVO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.metamodelo.service.EntidadProxyService;
@@ -22,7 +22,7 @@ public final class ParametroListAction extends ItemListAction<ParametroCriterioV
 	private static final long serialVersionUID = 9015729508898215168L;
 
 	@Inject
-	private ParametroService prmtService;
+	private ParametroServiceFactory prmtFactory;
 
 	@Inject
 	private EntidadProxyService entiProxy;
@@ -37,6 +37,6 @@ public final class ParametroListAction extends ItemListAction<ParametroCriterioV
 		}
 
 		enti = entiProxy.selectTppr(model.getEntiId());
-		resultList = prmtService.selectList(model, getOffset(), limit);
+		resultList = prmtFactory.getInstance(model.getEntiId()).selectList(model, getOffset(), limit);
 	}
 }

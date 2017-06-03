@@ -25,8 +25,7 @@ import xeredi.argo.model.comun.service.ConfigurationProxyService;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.item.vo.ItemDatoCriterioVO;
-import xeredi.argo.model.maestro.bo.ParametroBO;
-import xeredi.argo.model.maestro.bo.ParametroBOFactory;
+import xeredi.argo.model.maestro.service.ParametroService;
 import xeredi.argo.model.maestro.vo.ParametroCriterioVO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.metamodelo.proxy.TipoParametroProxy;
@@ -58,6 +57,9 @@ public abstract class ProcesoTemplate {
 
 	@Inject
 	protected ConfigurationProxyService confService;
+
+	@Inject
+	protected ParametroService prmtService;
 
 	/** The prbt data. */
 	@Getter
@@ -123,7 +125,6 @@ public abstract class ProcesoTemplate {
 
 		for (final Entidad entidad : prbtData.getCodigoMaestroMap().keySet()) {
 			final TipoParametroDetailVO tpprDetail = TipoParametroProxy.select(entidad.getId());
-			final ParametroBO prmtBO = ParametroBOFactory.newInstance(entidad.getId());
 
 			prbtData.getMaestroMap().put(entidad, new HashMap<String, ParametroVO>());
 			prbtData.getMaestroPrtoMap().put(entidad, new HashMap<Long, Map<String, ParametroVO>>());
@@ -142,7 +143,7 @@ public abstract class ProcesoTemplate {
 					prmtCriterio.setFechaVigencia(fechaVigencia);
 					prmtCriterio.setIdioma(confService.getString(ConfigurationKey.language_default));
 
-					for (final ParametroVO prmt : prmtBO.selectList(prmtCriterio)) {
+					for (final ParametroVO prmt : prmtService.selectList(prmtCriterio)) {
 						if (tpprDetail.getEnti().getPuerto()) {
 							if (!prbtData.getMaestroPrtoMap().get(entidad).containsKey(prmt.getPrto().getId())) {
 								prbtData.getMaestroPrtoMap().get(entidad).put(prmt.getPrto().getId(),
@@ -185,7 +186,6 @@ public abstract class ProcesoTemplate {
 				LOG.info("Busqueda de Organizaciones");
 			}
 
-			final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.ORGANIZACION.getId());
 			final Set<String> batchNifSet = new HashSet<>();
 			final Iterator<String> nifIterator = prbtData.getNifSet().iterator();
 
@@ -206,7 +206,7 @@ public abstract class ProcesoTemplate {
 
 					prmtCriterioVO.getItdtMap().put(TipoDato.CADENA_02.getId(), itdtCriterioVO);
 
-					final List<ParametroVO> prmtList = prmtBO.selectList(prmtCriterioVO);
+					final List<ParametroVO> prmtList = prmtService.selectList(prmtCriterioVO);
 
 					for (final ParametroVO prmtVO : prmtList) {
 						prbtData.getOrganizacionesMap()

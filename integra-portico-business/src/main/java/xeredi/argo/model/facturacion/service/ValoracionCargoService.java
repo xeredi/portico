@@ -19,8 +19,19 @@ import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;
 public class ValoracionCargoService {
 
 	/** The vlrg DAO. */
+	private final ValoracionCargoDAO vlrgDAO;
+
+	/**
+	 * Instantiates a new valoracion cargo service.
+	 *
+	 * @param vlrgDAO
+	 *            the vlrg DAO
+	 */
 	@Inject
-	private ValoracionCargoDAO vlrgDAO;
+	public ValoracionCargoService(final ValoracionCargoDAO vlrgDAO) {
+		super();
+		this.vlrgDAO = vlrgDAO;
+	}
 
 	/**
 	 * Select list.

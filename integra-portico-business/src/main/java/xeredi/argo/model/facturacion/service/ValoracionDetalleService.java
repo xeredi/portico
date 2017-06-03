@@ -24,8 +24,19 @@ import xeredi.argo.model.util.PaginatedList;
 public class ValoracionDetalleService {
 
 	/** The vlrd DAO. */
+	private final ValoracionDetalleDAO vlrdDAO;
+
+	/**
+	 * Instantiates a new valoracion detalle service.
+	 *
+	 * @param vlrdDAO
+	 *            the vlrd DAO
+	 */
 	@Inject
-	private ValoracionDetalleDAO vlrdDAO;
+	public ValoracionDetalleService(final ValoracionDetalleDAO vlrdDAO) {
+		super();
+		this.vlrdDAO = vlrdDAO;
+	}
 
 	/**
 	 * Select.

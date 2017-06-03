@@ -38,12 +38,25 @@ import xeredi.argo.model.util.PaginatedList;
 public class SubparametroService {
 
 	/** The sprm DAO. */
-	@Inject
-	private SubparametroDAO sprmDAO;
+	private final SubparametroDAO sprmDAO;
 
 	/** The spdt DAO. */
+	private final SubparametroDatoDAO spdtDAO;
+
+	/**
+	 * Instantiates a new subparametro service.
+	 *
+	 * @param sprmDAO
+	 *            the sprm DAO
+	 * @param spdtDAO
+	 *            the spdt DAO
+	 */
 	@Inject
-	private SubparametroDatoDAO spdtDAO;
+	public SubparametroService(final SubparametroDAO sprmDAO, final SubparametroDatoDAO spdtDAO) {
+		super();
+		this.sprmDAO = sprmDAO;
+		this.spdtDAO = spdtDAO;
+	}
 
 	/**
 	 * Insert.

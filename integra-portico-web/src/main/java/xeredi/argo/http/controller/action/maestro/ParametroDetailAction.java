@@ -9,7 +9,7 @@ import xeredi.argo.http.controller.action.item.ItemDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
-import xeredi.argo.model.maestro.service.ParametroService;
+import xeredi.argo.model.maestro.service.ParametroServiceFactory;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
@@ -28,7 +28,7 @@ public final class ParametroDetailAction extends ItemDetailAction<ParametroVO, T
 	private Map<String, I18nVO> i18nMap;
 
 	@Inject
-	private ParametroService prmtService;
+	private ParametroServiceFactory prmtFactory;
 
 	@Inject
 	private I18nService i18nService;
@@ -42,7 +42,7 @@ public final class ParametroDetailAction extends ItemDetailAction<ParametroVO, T
 	@Override
 	public void doSpecificDetail() throws ApplicationException {
 		enti = entiProxy.selectTppr(model.getEntiId());
-		model = prmtService.select(model.getId(), getIdioma(), model.getFref());
+		model = prmtFactory.getInstance(model.getEntiId()).select(model.getId(), getIdioma(), model.getFref());
 
 		if (enti.getEnti().isI18n()) {
 			i18nMap = i18nService.selectMap(model);

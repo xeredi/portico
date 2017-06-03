@@ -10,7 +10,12 @@ import org.mybatis.guice.transactional.Transactional;
 import lombok.NonNull;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
 import xeredi.argo.model.comun.exception.OverlapException;
+import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
+import xeredi.argo.model.maestro.dao.ParametroDAO;
+import xeredi.argo.model.maestro.dao.ParametroDatoDAO;
+import xeredi.argo.model.maestro.dao.SubparametroDAO;
+import xeredi.argo.model.maestro.dao.SubparametroDatoDAO;
 import xeredi.argo.model.maestro.dao.embdeportivas.AmarreDeportivoDAO;
 import xeredi.argo.model.maestro.service.ParametroService;
 import xeredi.argo.model.maestro.vo.ParametroCriterioVO;
@@ -25,8 +30,32 @@ import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
 public class AmarreDeportivoService extends ParametroService {
 
 	/** The amad DAO. */
+	private final AmarreDeportivoDAO amadDAO;
+
+	/**
+	 * Instantiates a new amarre deportivo service.
+	 *
+	 * @param prmtDAO
+	 *            the prmt DAO
+	 * @param prdtDAO
+	 *            the prdt DAO
+	 * @param sprmDAO
+	 *            the sprm DAO
+	 * @param spdtDAO
+	 *            the spdt DAO
+	 * @param i18nService
+	 *            the i 18 n service
+	 * @param amadDAO
+	 *            the amad DAO
+	 */
 	@Inject
-	private AmarreDeportivoDAO amadDAO;
+	public AmarreDeportivoService(final ParametroDAO prmtDAO, final ParametroDatoDAO prdtDAO,
+			final SubparametroDAO sprmDAO, final SubparametroDatoDAO spdtDAO, final I18nService i18nService,
+			final AmarreDeportivoDAO amadDAO) {
+		super(prmtDAO, prdtDAO, sprmDAO, spdtDAO, i18nService);
+
+		this.amadDAO = amadDAO;
+	}
 
 	/**
 	 * Update recalcular estado.

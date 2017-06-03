@@ -44,28 +44,51 @@ import xeredi.argo.model.util.PaginatedList;
 public class ValoracionLineaService {
 
 	/** The vlrc DAO. */
-	@Inject
-	private ValoracionDAO vlrcDAO;
+	private final ValoracionDAO vlrcDAO;
 
 	/** The vlrl DAO. */
-	@Inject
-	private ValoracionLineaDAO vlrlDAO;
+	private final ValoracionLineaDAO vlrlDAO;
 
 	/** The vlrd DAO. */
-	@Inject
-	private ValoracionDetalleDAO vlrdDAO;
+	private final ValoracionDetalleDAO vlrdDAO;
 
 	/** The rgla DAO. */
-	@Inject
-	private ReglaDAO rglaDAO;
+	private final ReglaDAO rglaDAO;
 
 	/** The aspc DAO. */
-	@Inject
-	private AspectoDAO aspcDAO;
+	private final AspectoDAO aspcDAO;
 
 	/** The ssrv DAO. */
+	private final SubservicioDAO ssrvDAO;
+
+	/**
+	 * Instantiates a new valoracion linea service.
+	 *
+	 * @param vlrcDAO
+	 *            the vlrc DAO
+	 * @param vlrlDAO
+	 *            the vlrl DAO
+	 * @param vlrdDAO
+	 *            the vlrd DAO
+	 * @param rglaDAO
+	 *            the rgla DAO
+	 * @param aspcDAO
+	 *            the aspc DAO
+	 * @param ssrvDAO
+	 *            the ssrv DAO
+	 */
 	@Inject
-	private SubservicioDAO ssrvDAO;
+	public ValoracionLineaService(final ValoracionDAO vlrcDAO, final ValoracionLineaDAO vlrlDAO,
+			final ValoracionDetalleDAO vlrdDAO, final ReglaDAO rglaDAO, final AspectoDAO aspcDAO,
+			final SubservicioDAO ssrvDAO) {
+		super();
+		this.vlrcDAO = vlrcDAO;
+		this.vlrlDAO = vlrlDAO;
+		this.vlrdDAO = vlrdDAO;
+		this.rglaDAO = rglaDAO;
+		this.aspcDAO = aspcDAO;
+		this.ssrvDAO = ssrvDAO;
+	}
 
 	/**
 	 * Select object.

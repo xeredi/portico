@@ -35,12 +35,25 @@ import xeredi.argo.model.util.PaginatedList;
 public class CargoService {
 
 	/** The crgo DAO. */
-	@Inject
-	private CargoDAO crgoDAO;
+	private final CargoDAO crgoDAO;
 
 	/** The i 18 n DAO. */
+	private final I18nService i18nService;
+
+	/**
+	 * Instantiates a new cargo service.
+	 *
+	 * @param crgoDAO
+	 *            the crgo DAO
+	 * @param i18nService
+	 *            the i 18 n service
+	 */
 	@Inject
-	private I18nService i18nService;
+	public CargoService(final CargoDAO crgoDAO, final I18nService i18nService) {
+		super();
+		this.crgoDAO = crgoDAO;
+		this.i18nService = i18nService;
+	}
 
 	/**
 	 * Select list.

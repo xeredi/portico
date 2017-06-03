@@ -28,8 +28,18 @@ import xeredi.argo.model.util.DateUtil;
 public class ReglaIncompatibleService {
 
 	/** The rgin DAO. */
+	private final ReglaIncompatibleDAO rginDAO;
+
+	/**
+	 * Instantiates a new regla incompatible service.
+	 *
+	 * @param rginDAO the rgin DAO
+	 */
 	@Inject
-	private ReglaIncompatibleDAO rginDAO;
+	public ReglaIncompatibleService(final ReglaIncompatibleDAO rginDAO) {
+		super();
+		this.rginDAO = rginDAO;
+	}
 
 	/**
 	 * Insert.
