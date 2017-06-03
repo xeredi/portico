@@ -8,24 +8,24 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import xeredi.argo.model.comun.bo.ArchivoBO;
-import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
-import xeredi.argo.model.comun.proxy.ConfigurationProxy;
+import xeredi.argo.model.comun.service.ArchivoService;
+import xeredi.argo.model.comun.service.PuertoService;
 import xeredi.argo.model.comun.vo.ArchivoInfoVO;
 import xeredi.argo.model.comun.vo.ArchivoSentido;
 import xeredi.argo.model.comun.vo.ArchivoVO;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
-import xeredi.argo.model.maestro.bo.ParametroBO;
-import xeredi.argo.model.maestro.bo.ParametroBOFactory;
+import xeredi.argo.model.maestro.service.ParametroService;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.metamodelo.vo.Entidad;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
@@ -33,7 +33,7 @@ import xeredi.argo.model.proceso.vo.ItemTipo;
 import xeredi.argo.model.proceso.vo.MensajeCodigo;
 import xeredi.argo.model.proceso.vo.ProcesoItemVO;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
-import xeredi.argo.model.seguridad.bo.UsuarioBO;
+import xeredi.argo.model.seguridad.service.UsuarioService;
 import xeredi.argo.model.seguridad.vo.UsuarioCriterioVO;
 import xeredi.argo.model.seguridad.vo.UsuarioVO;
 import xeredi.argo.model.servicio.bo.escala.EscalaBO;
@@ -54,23 +54,32 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 	/** The Constant LOG. */
 	private static final Log LOG = LogFactory.getLog(ProcesoCargaManifiesto.class);
 
+	@Inject
+	private ArchivoService archService;
+
+	@Inject
+	private UsuarioService usroService;
+
+	@Inject
+	private PuertoService prtoService;
+
+	@Inject
+	private ParametroService prmtService;
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	protected void prepararProcesos() {
-		final ArchivoBO archBO = new ArchivoBO();
-
 		final String folderPath = confService.getString(ConfigurationKey.manifiesto_files_entrada_home);
 		final String userBatch = confService.getString(ConfigurationKey.user_batch);
 
-		final UsuarioBO usroBO = new UsuarioBO();
 		final UsuarioCriterioVO usroCriterio = new UsuarioCriterioVO();
 
 		usroCriterio.setLogin(userBatch);
 
 		try {
-			final UsuarioVO usro = usroBO.selectObject(usroCriterio);
+			final UsuarioVO usro = usroService.selectObject(usroCriterio);
 
 			final File folder = new File(folderPath);
 			final File[] files = folder.listFiles();
@@ -84,7 +93,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 							LOG.info("Crear proceso para archivo: " + file.getCanonicalPath());
 						}
 
-						final ArchivoVO arch = archBO.create(file, ArchivoSentido.E);
+						final ArchivoVO arch = archService.create(file, ArchivoSentido.E);
 
 						prbtService.crear(usro.getId(), ProcesoTipo.MAN_CARGA, null, ItemTipo.arch,
 								Arrays.asList(arch.getArin().getId()));
@@ -109,12 +118,11 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 	protected void ejecutarProceso() {
 		for (final ProcesoItemVO prit : prbtData.getPritEntradaList()) {
 			try {
-				final ArchivoBO flsrBO = new ArchivoBO();
-				final ArchivoInfoVO arin = flsrBO.select(prit.getItemId());
+				final ArchivoInfoVO arin = archService.select(prit.getItemId());
 
 				LOG.info("Importar: " + arin.getNombre());
 
-				try (final InputStream stream = flsrBO.selectStream(arin.getId())) {
+				try (final InputStream stream = archService.selectStream(arin.getId())) {
 					final ManifiestoFileImport fileImport = new ManifiestoFileImport(this);
 					final List<String> lines = IOUtils.readLines(stream);
 					final int primeraLinea = fileImport.findPrimeraLinea(lines);
@@ -204,13 +212,12 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 		if (recintoAduaneroCode == null) {
 			addError(MensajeCodigo.G_001, Entidad.RECINTO_ADUANERO.name() + ": " + recintoAduaneroCode);
 		} else {
-			final PuertoBO prtoBO = new PuertoBO();
 			final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
 			prtoCriterio.setRecAduanero(recintoAduaneroCode);
 
 			try {
-				prto = prtoBO.selectObject(prtoCriterio);
+				prto = prtoService.selectObject(prtoCriterio);
 
 				if (prbtData.getPrmnList().isEmpty()) {
 					// Busqueda de la escala
@@ -229,8 +236,7 @@ public final class ProcesoCargaManifiesto extends ProcesoTemplate {
 
 						try {
 							// Busqueda del buque de la escala
-							final ParametroBO prmtBO = ParametroBOFactory.newInstance(Entidad.BUQUE.getId());
-							final ParametroVO buque = prmtBO.select(
+							final ParametroVO buque = prmtService.select(
 									escala.getItdtMap().get(TipoDato.BUQUE.getId()).getPrmt().getId(), null,
 									fechaVigencia);
 

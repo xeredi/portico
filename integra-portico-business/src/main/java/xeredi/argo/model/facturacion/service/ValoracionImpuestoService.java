@@ -2,10 +2,10 @@ package xeredi.argo.model.facturacion.service;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.mybatis.guice.transactional.Transactional;
-
-import com.google.inject.Inject;
 
 import xeredi.argo.model.facturacion.dao.ValoracionImpuestoDAO;
 import xeredi.argo.model.facturacion.vo.ValoracionCriterioVO;

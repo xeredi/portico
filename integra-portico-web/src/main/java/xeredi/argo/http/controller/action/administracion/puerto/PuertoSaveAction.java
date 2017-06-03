@@ -2,8 +2,9 @@ package xeredi.argo.http.controller.action.administracion.puerto;
 
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import com.google.common.base.Preconditions;
-import com.google.inject.Inject;
 
 import lombok.Setter;
 import xeredi.argo.http.controller.action.comun.CrudSaveAction;

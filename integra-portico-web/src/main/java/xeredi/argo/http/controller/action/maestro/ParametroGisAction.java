@@ -3,7 +3,7 @@ package xeredi.argo.http.controller.action.maestro;
 import java.util.HashMap;
 import java.util.List;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 import xeredi.argo.http.controller.action.item.ItemGisAction;
 import xeredi.argo.model.comun.exception.ApplicationException;

@@ -4,7 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 import xeredi.argo.http.controller.action.item.ItemXlsExportAction;
 import xeredi.argo.model.comun.exception.ApplicationException;

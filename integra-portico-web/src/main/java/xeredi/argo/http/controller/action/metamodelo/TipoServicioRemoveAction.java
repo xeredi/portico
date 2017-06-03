@@ -1,7 +1,8 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
+import javax.inject.Inject;
+
 import com.google.common.base.Preconditions;
-import com.google.inject.Inject;
 
 import xeredi.argo.http.controller.action.comun.CrudRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -14,19 +15,19 @@ import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
  */
 public final class TipoServicioRemoveAction extends CrudRemoveAction<TipoServicioVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 5096593722337875752L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 5096593722337875752L;
 
 	@Inject
 	private TipoServicioService tpsrService;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doRemove() throws ApplicationException {
-        Preconditions.checkNotNull(model.getId());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doRemove() throws ApplicationException {
+		Preconditions.checkNotNull(model.getId());
 
-        tpsrService.delete(model);
-    }
+		tpsrService.delete(model);
+	}
 }

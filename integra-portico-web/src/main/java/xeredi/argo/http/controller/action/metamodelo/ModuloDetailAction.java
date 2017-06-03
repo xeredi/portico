@@ -3,7 +3,7 @@ package xeredi.argo.http.controller.action.metamodelo;
 import java.util.List;
 import java.util.Map;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;

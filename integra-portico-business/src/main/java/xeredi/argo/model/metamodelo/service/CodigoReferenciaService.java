@@ -3,7 +3,6 @@ package xeredi.argo.model.metamodelo.service;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.mybatis.guice.transactional.Transactional;
@@ -26,7 +25,6 @@ import xeredi.argo.model.metamodelo.vo.CodigoReferenciaVO;
  * The Class CodigoReferenciaServiceImpl.
  */
 @Transactional(executorType = ExecutorType.REUSE)
-@Singleton
 public class CodigoReferenciaService {
 
 	/** The cdrf DAO. */

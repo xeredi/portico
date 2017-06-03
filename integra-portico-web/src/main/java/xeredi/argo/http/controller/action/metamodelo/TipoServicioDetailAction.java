@@ -2,7 +2,7 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.List;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 import lombok.Getter;
 import xeredi.argo.model.comun.exception.ApplicationException;
@@ -24,25 +24,25 @@ import xeredi.argo.model.metamodelo.vo.TramiteVO;
  */
 public final class TipoServicioDetailAction extends EntidadDetailAction<TipoServicioVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 3574420037025529065L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 3574420037025529065L;
 
-    /** The tpss list. */
-    @Getter
-    private List<TipoSubservicioVO> subentiList;
+	/** The tpss list. */
+	@Getter
+	private List<TipoSubservicioVO> subentiList;
 
-    /** The enti hijas list. */
-    @Getter
-    private List<EntidadVO> entiHijasList;
+	/** The enti hijas list. */
+	@Getter
+	private List<EntidadVO> entiHijasList;
 
-    /** The trmt list. */
-    @Getter
-    private List<TramiteVO> trmtList;
+	/** The trmt list. */
+	@Getter
+	private List<TramiteVO> trmtList;
 
 	@Inject
 	private TipoServicioService tpsrService;
 
-    @Inject
+	@Inject
 	private EntidadService entiService;
 
 	@Inject
@@ -51,34 +51,34 @@ public final class TipoServicioDetailAction extends EntidadDetailAction<TipoServ
 	@Inject
 	private TipoSubservicioService tpssService;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSpecificDetail() throws ApplicationException {
-        model = tpsrService.select(model.getId(), getIdioma());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSpecificDetail() throws ApplicationException {
+		model = tpsrService.select(model.getId(), getIdioma());
 
-        final TipoSubservicioCriterioVO tpssCriterio = new TipoSubservicioCriterioVO();
+		final TipoSubservicioCriterioVO tpssCriterio = new TipoSubservicioCriterioVO();
 
-        tpssCriterio.setTpsrId(model.getId());
-        tpssCriterio.setIdioma(getIdioma());
+		tpssCriterio.setTpsrId(model.getId());
+		tpssCriterio.setIdioma(getIdioma());
 
-        subentiList = tpssService.selectList(tpssCriterio);
+		subentiList = tpssService.selectList(tpssCriterio);
 
-        if (subentiList != null && !subentiList.isEmpty()) {
-            final EntidadCriterioVO entiCriterio = new EntidadCriterioVO();
+		if (subentiList != null && !subentiList.isEmpty()) {
+			final EntidadCriterioVO entiCriterio = new EntidadCriterioVO();
 
-            entiCriterio.setEntiPadreId(model.getId());
-            entiCriterio.setIdioma(getIdioma());
+			entiCriterio.setEntiPadreId(model.getId());
+			entiCriterio.setIdioma(getIdioma());
 
-            entiHijasList = entiService.selectList(entiCriterio);
-        }
+			entiHijasList = entiService.selectList(entiCriterio);
+		}
 
-        final TramiteCriterioVO trmtCriterio = new TramiteCriterioVO();
+		final TramiteCriterioVO trmtCriterio = new TramiteCriterioVO();
 
-        trmtCriterio.setEntiId(model.getId());
-        trmtCriterio.setIdioma(getIdioma());
+		trmtCriterio.setEntiId(model.getId());
+		trmtCriterio.setIdioma(getIdioma());
 
-        trmtList = trmtService.selectList(trmtCriterio);
-    }
+		trmtList = trmtService.selectList(trmtCriterio);
+	}
 }

@@ -8,11 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.inject.Inject;
+
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
-
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
@@ -28,7 +27,6 @@ import xeredi.argo.model.util.PaginatedList;
 /**
  * The Class EstadisticaServiceImpl.
  */
-@Singleton
 @Transactional
 public class EstadisticaService {
 

@@ -6,14 +6,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Singleton;
+import javax.inject.Inject;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
 
 import com.google.common.base.Preconditions;
-import com.google.inject.Inject;
 
 import xeredi.argo.model.comun.bo.IgUtilBO;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
@@ -32,7 +31,6 @@ import xeredi.argo.model.util.PaginatedList;
  * The Class ReglaServiceImpl.
  */
 @Transactional(executorType = ExecutorType.REUSE)
-@Singleton
 public class ReglaService {
 
 	/** The rgla DAO. */

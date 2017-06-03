@@ -3,7 +3,7 @@ package xeredi.argo.http.controller.action.maestro;
 import java.util.Calendar;
 import java.util.Map;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 import lombok.Setter;
 import xeredi.argo.http.controller.action.item.ItemSaveAction;

@@ -3,7 +3,6 @@ package xeredi.argo.model.comun.service;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.mybatis.guice.transactional.Transactional;
@@ -21,7 +20,6 @@ import xeredi.argo.model.comun.vo.MessageI18nKey;
  * The Class ConfigurationServiceImpl.
  */
 @Transactional(executorType = ExecutorType.REUSE)
-@Singleton
 public class ConfigurationService {
 
 	/** The conf DAO. */

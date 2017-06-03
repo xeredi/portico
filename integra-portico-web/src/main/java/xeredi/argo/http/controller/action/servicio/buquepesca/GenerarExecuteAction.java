@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 import lombok.Setter;
 import xeredi.argo.http.controller.action.comun.BaseAction;

@@ -1,7 +1,6 @@
 package xeredi.argo.model.comun.service;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import org.apache.commons.configuration.CombinedConfiguration;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -11,7 +10,6 @@ import org.mybatis.guice.transactional.Transactional;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.dao.ConfigurationDAO;
-import xeredi.argo.model.comun.proxy.ConfigurationProxy;
 import xeredi.argo.model.comun.vo.ConfigurationCriterioVO;
 import xeredi.argo.model.comun.vo.ConfigurationKey;
 import xeredi.argo.model.comun.vo.ConfigurationVO;
@@ -20,7 +18,6 @@ import xeredi.argo.model.comun.vo.ConfigurationVO;
 /**
  * The Class ConfigurationProxyService.
  */
-@Singleton
 public class ConfigurationProxyService {
 
 	/** The Constant LOG. */

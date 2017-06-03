@@ -2,7 +2,7 @@ package xeredi.argo.http.controller.action.servicio;
 
 import java.util.List;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;

@@ -11,7 +11,6 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.guice.transactional.Transactional;
 
 import com.google.common.base.Preconditions;
-import com.google.inject.Singleton;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.bo.IgUtilBO;
@@ -33,7 +32,6 @@ import xeredi.argo.model.util.PaginatedList;
 /**
  * The Class UsuarioServiceImpl.
  */
-@Singleton
 @Transactional(executorType = ExecutorType.REUSE)
 public class UsuarioService {
 

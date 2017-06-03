@@ -5,8 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.inject.Inject;
+
 import com.google.common.base.Preconditions;
-import com.google.inject.Inject;
 import com.opensymphony.xwork2.ModelDriven;
 
 import lombok.Getter;

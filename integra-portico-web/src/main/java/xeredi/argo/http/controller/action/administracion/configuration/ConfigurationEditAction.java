@@ -1,7 +1,8 @@
 package xeredi.argo.http.controller.action.administracion.configuration;
 
+import javax.inject.Inject;
+
 import com.google.common.base.Preconditions;
-import com.google.inject.Inject;
 
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;

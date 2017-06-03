@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.mybatis.guice.transactional.Transactional;
@@ -40,7 +39,6 @@ import xeredi.argo.model.seguridad.vo.UsuarioVO;
  * The Class UsuarioAccesoService.
  */
 @Transactional(executorType = ExecutorType.REUSE)
-@Singleton
 public class UsuarioAccesoService {
 
 	/** The usro DAO. */

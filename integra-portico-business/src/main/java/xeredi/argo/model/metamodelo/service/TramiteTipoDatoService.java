@@ -3,7 +3,6 @@ package xeredi.argo.model.metamodelo.service;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.mybatis.guice.transactional.Transactional;
@@ -23,7 +22,6 @@ import xeredi.argo.model.metamodelo.vo.TramiteTipoDatoVO;
  * The Class TramiteTipoDatoServiceImpl.
  */
 @Transactional(executorType = ExecutorType.REUSE)
-@Singleton
 public class TramiteTipoDatoService {
 
 	/** The trtd DAO. */

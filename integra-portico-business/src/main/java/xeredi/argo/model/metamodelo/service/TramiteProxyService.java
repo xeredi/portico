@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
@@ -23,7 +22,6 @@ import xeredi.argo.model.metamodelo.vo.TramiteVO;
 /**
  * The Class TramiteProxyServiceImpl.
  */
-@Singleton
 public class TramiteProxyService {
 
 	/** The Constant LOG. */

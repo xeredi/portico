@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 import lombok.Getter;
 import lombok.Setter;

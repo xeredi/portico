@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.mybatis.guice.transactional.Transactional;
@@ -32,7 +31,6 @@ import xeredi.argo.model.metamodelo.vo.TipoSubparametroVO;
  * The Class TipoSubparametroServiceImpl.
  */
 @Transactional(executorType = ExecutorType.REUSE)
-@Singleton
 public class TipoSubparametroService {
 
 	/** The tpsp DAO. */

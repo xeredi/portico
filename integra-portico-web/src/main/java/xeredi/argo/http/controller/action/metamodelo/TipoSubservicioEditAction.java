@@ -2,8 +2,9 @@ package xeredi.argo.http.controller.action.metamodelo;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import com.google.common.base.Preconditions;
-import com.google.inject.Inject;
 
 import lombok.Getter;
 import xeredi.argo.model.comun.exception.ApplicationException;

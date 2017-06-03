@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Locale;
 
+import javax.inject.Singleton;
 import javax.servlet.ServletContextEvent;
 
 import org.apache.commons.logging.Log;
@@ -12,7 +13,6 @@ import org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.google.inject.Singleton;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.google.inject.servlet.ServletModule;
 import com.google.inject.struts2.Struts2GuicePluginModule;

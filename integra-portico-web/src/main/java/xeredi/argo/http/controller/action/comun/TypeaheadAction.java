@@ -2,8 +2,9 @@ package xeredi.argo.http.controller.action.comun;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import com.google.common.base.Preconditions;
-import com.google.inject.Inject;
 import com.opensymphony.xwork2.ModelDriven;
 
 import lombok.Getter;

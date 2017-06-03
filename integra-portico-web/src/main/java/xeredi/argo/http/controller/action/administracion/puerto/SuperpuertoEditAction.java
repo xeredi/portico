@@ -2,7 +2,7 @@ package xeredi.argo.http.controller.action.administracion.puerto;
 
 import java.util.Map;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;

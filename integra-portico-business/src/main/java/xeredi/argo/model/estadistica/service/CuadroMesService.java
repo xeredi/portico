@@ -5,10 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.mybatis.guice.transactional.Transactional;
+import javax.inject.Inject;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
+import org.mybatis.guice.transactional.Transactional;
 
 import xeredi.argo.model.estadistica.dao.CuadroMesDAO;
 import xeredi.argo.model.estadistica.vo.CuadroMesVO;
@@ -18,7 +17,6 @@ import xeredi.argo.model.estadistica.vo.PeriodoProcesoCriterioVO;
 /**
  * The Class CuadroMesServiceImpl.
  */
-@Singleton
 @Transactional
 public class CuadroMesService {
 

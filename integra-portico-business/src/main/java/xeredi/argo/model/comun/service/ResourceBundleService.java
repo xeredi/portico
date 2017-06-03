@@ -5,11 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.Set;
 import java.util.ResourceBundle.Control;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,7 +29,6 @@ import xeredi.argo.model.comun.vo.MessageI18nVO;
  * The Class ResourceBundleService.
  */
 @Transactional(executorType = ExecutorType.REUSE)
-@Singleton
 public class ResourceBundleService extends Control {
 
 	/** The Constant LOG. */

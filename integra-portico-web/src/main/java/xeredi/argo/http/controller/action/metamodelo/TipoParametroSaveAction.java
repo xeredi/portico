@@ -1,6 +1,6 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 import xeredi.argo.http.util.FieldValidator;
 import xeredi.argo.model.comun.exception.ApplicationException;

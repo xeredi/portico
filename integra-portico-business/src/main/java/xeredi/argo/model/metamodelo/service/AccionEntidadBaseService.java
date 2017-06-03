@@ -2,10 +2,10 @@ package xeredi.argo.model.metamodelo.service;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.apache.ibatis.session.ExecutorType;
 import org.mybatis.guice.transactional.Transactional;
-
-import com.google.inject.Inject;
 
 import xeredi.argo.model.metamodelo.dao.AccionEntidadBaseDAO;
 import xeredi.argo.model.metamodelo.vo.AccionEntidadBaseCriterioVO;

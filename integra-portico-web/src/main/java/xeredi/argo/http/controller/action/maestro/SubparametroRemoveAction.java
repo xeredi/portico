@@ -1,6 +1,6 @@
 package xeredi.argo.http.controller.action.maestro;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 import xeredi.argo.http.controller.action.item.ItemRemoveAction;
 import xeredi.argo.model.comun.exception.ApplicationException;

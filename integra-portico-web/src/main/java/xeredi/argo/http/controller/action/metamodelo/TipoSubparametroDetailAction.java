@@ -1,6 +1,6 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.service.TipoSubparametroService;

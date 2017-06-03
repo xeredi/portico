@@ -13,7 +13,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -63,7 +62,6 @@ import xeredi.argo.model.util.PaginatedList;
 /**
  * The Class PeriodoProcesoService.
  */
-@Singleton
 @Transactional
 public class PeriodoProcesoService {
 

@@ -1,11 +1,11 @@
 package xeredi.argo.http.controller.action.metamodelo;
 
+import javax.inject.Inject;
+
 import com.google.common.base.Preconditions;
-import com.google.inject.Inject;
 
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.metamodelo.bo.EntidadEntidadBO;
 import xeredi.argo.model.metamodelo.service.EntidadEntidadService;
 import xeredi.argo.model.metamodelo.vo.EntidadEntidadVO;
 

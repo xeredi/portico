@@ -1,6 +1,6 @@
 package xeredi.argo.http.controller.action.facturacion;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 import xeredi.argo.http.controller.action.comun.TypeaheadAction;
 import xeredi.argo.model.comun.exception.ApplicationException;

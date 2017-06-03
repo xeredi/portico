@@ -2,7 +2,7 @@ package xeredi.argo.http.controller.action.maestro;
 
 import java.util.Map;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 import lombok.Getter;
 import xeredi.argo.http.controller.action.item.ItemDetailAction;

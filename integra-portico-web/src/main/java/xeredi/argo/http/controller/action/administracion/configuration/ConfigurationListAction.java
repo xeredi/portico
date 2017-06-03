@@ -1,6 +1,6 @@
 package xeredi.argo.http.controller.action.administracion.configuration;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 import xeredi.argo.http.controller.action.comun.ListAction;
 import xeredi.argo.model.comun.service.ConfigurationService;

@@ -3,10 +3,9 @@ package xeredi.argo.model.maestro.service.embdeportivas;
 import java.util.Calendar;
 import java.util.Map;
 
-import org.mybatis.guice.transactional.Transactional;
+import javax.inject.Inject;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
+import org.mybatis.guice.transactional.Transactional;
 
 import lombok.NonNull;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
@@ -22,7 +21,6 @@ import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
 /**
  * The Class AmarreDeportivoServiceImpl.
  */
-@Singleton
 @Transactional
 public class AmarreDeportivoService extends ParametroService {
 

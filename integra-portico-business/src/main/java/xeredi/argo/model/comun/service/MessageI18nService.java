@@ -7,7 +7,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.mybatis.guice.transactional.Transactional;
@@ -26,7 +25,6 @@ import xeredi.argo.model.comun.vo.MessageVO;
  * The Class MessageI18nServiceImpl.
  */
 @Transactional(executorType = ExecutorType.REUSE)
-@Singleton
 public class MessageI18nService {
 
 	@Inject

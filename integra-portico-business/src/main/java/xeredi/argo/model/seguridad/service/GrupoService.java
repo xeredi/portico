@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
@@ -34,7 +33,6 @@ import xeredi.argo.model.util.PaginatedList;
  * The Class GrupoServiceImpl.
  */
 @Transactional(executorType = ExecutorType.REUSE)
-@Singleton
 public class GrupoService {
 
 	/** The grpo DAO. */

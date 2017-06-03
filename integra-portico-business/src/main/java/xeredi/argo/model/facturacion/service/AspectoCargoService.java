@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.mybatis.guice.transactional.Transactional;
@@ -27,7 +26,6 @@ import xeredi.argo.model.util.DateUtil;
  * The Class AspectoCargoServiceImpl.
  */
 @Transactional(executorType = ExecutorType.REUSE)
-@Singleton
 public class AspectoCargoService {
 
 	/** The ascr DAO. */

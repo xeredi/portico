@@ -2,8 +2,9 @@ package xeredi.argo.http.controller.action.maestro;
 
 import java.util.Calendar;
 
+import javax.inject.Inject;
+
 import com.google.common.base.Preconditions;
-import com.google.inject.Inject;
 
 import xeredi.argo.http.controller.action.item.ItemTypeaheadAction;
 import xeredi.argo.model.comun.exception.ApplicationException;

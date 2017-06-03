@@ -1,9 +1,8 @@
 package xeredi.argo.model.seguridad.service;
 
-import org.mybatis.guice.transactional.Transactional;
+import javax.inject.Inject;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
+import org.mybatis.guice.transactional.Transactional;
 
 import lombok.NonNull;
 import xeredi.argo.model.seguridad.dao.UsuarioPermisoDAO;
@@ -13,7 +12,6 @@ import xeredi.argo.model.seguridad.vo.UsuarioPermisoCriterioVO;
 /**
  * The Class UsuarioPermisoServiceImpl.
  */
-@Singleton
 @Transactional
 public class UsuarioPermisoService {
 

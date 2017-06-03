@@ -3,7 +3,7 @@ package xeredi.argo.http.controller.action.servicio;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 import lombok.Getter;
 import lombok.Setter;

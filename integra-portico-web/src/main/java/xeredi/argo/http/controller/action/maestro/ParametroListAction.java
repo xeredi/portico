@@ -2,7 +2,7 @@ package xeredi.argo.http.controller.action.maestro;
 
 import java.util.Calendar;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 import xeredi.argo.http.controller.action.item.ItemListAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
