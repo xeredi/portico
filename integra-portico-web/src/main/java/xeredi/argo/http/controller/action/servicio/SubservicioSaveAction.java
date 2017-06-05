@@ -11,8 +11,8 @@ import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
-import xeredi.argo.model.servicio.bo.SubservicioBO;
-import xeredi.argo.model.servicio.bo.SubservicioBOFactory;
+import xeredi.argo.model.servicio.service.SubservicioService;
+import xeredi.argo.model.servicio.service.SubservicioServiceFactory;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
 
 // TODO: Auto-generated Javadoc
@@ -23,6 +23,9 @@ public final class SubservicioSaveAction extends ItemSaveAction<SubservicioVO> {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 7087277709727877248L;
+
+	@Inject
+	private SubservicioServiceFactory ssrvFactory;
 
 	@Inject
 	private EntidadProxyService entiProxy;
@@ -62,19 +65,19 @@ public final class SubservicioSaveAction extends ItemSaveAction<SubservicioVO> {
 	@Override
 	public void doSave() throws ApplicationException {
 		final TipoSubservicioDetailVO enti = entiProxy.selectTpss(model.getEntiId());
-		final SubservicioBO itemBO = SubservicioBOFactory.newInstance(model.getEntiId(), usroId);
+		final SubservicioService ssrvService = ssrvFactory.getInstance(model.getEntiId(), usroId);
 
 		switch (accion) {
 		case create:
-			itemBO.insert(model, enti, null);
+			ssrvService.insert(model, enti, null);
 
 			break;
 		case edit:
-			itemBO.update(model);
+			ssrvService.update(model);
 
 			break;
 		case duplicate:
-			itemBO.duplicate(model);
+			ssrvService.duplicate(model);
 
 			break;
 		default:

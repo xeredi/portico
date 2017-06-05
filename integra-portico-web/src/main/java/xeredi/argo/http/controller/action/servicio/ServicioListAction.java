@@ -7,8 +7,8 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.OrderByElement.OrderByType;
 import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
-import xeredi.argo.model.servicio.bo.ServicioBO;
-import xeredi.argo.model.servicio.bo.ServicioBOFactory;
+import xeredi.argo.model.servicio.service.ServicioService;
+import xeredi.argo.model.servicio.service.ServicioServiceFactory;
 import xeredi.argo.model.servicio.vo.ServicioCriterioVO;
 import xeredi.argo.model.servicio.vo.ServicioVO;
 
@@ -21,6 +21,11 @@ public final class ServicioListAction extends ItemListAction<ServicioCriterioVO,
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1069829008412284361L;
 
+	/** The srvc factory. */
+	@Inject
+	private ServicioServiceFactory srvcFactory;
+
+	/** The enti proxy. */
 	@Inject
 	private EntidadProxyService entiProxy;
 
@@ -35,8 +40,8 @@ public final class ServicioListAction extends ItemListAction<ServicioCriterioVO,
 			model.addOrderBy(ServicioCriterioVO.OrderByColumn.srvc_fref.name(), OrderByType.DESC);
 		}
 
-		final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId(), usroId);
+		final ServicioService srvcService = srvcFactory.getInstance(model.getEntiId(), usroId);
 
-		resultList = srvcBO.selectList(model, getOffset(), limit);
+		resultList = srvcService.selectList(model, getOffset(), limit);
 	}
 }

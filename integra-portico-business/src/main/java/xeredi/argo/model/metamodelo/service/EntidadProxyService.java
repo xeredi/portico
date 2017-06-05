@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -48,68 +49,110 @@ import xeredi.argo.model.metamodelo.vo.TramiteVO;
 /**
  * The Class EntidadProxyServiceImpl.
  */
+@Singleton
 public class EntidadProxyService {
 
 	/** The Constant LOG. */
 	private static final Log LOG = LogFactory.getLog(EntidadProxyService.class);
 
 	/** The Constant LABEL_VALUE_LIST. */
-	private static final List<LabelValueVO> LABEL_VALUE_LIST = new ArrayList<>();
+	private final List<LabelValueVO> LABEL_VALUE_LIST = new ArrayList<>();
 
 	/** The Constant ENTIDAD_MAP. */
-	private static final Map<Long, AbstractEntidadDetailVO> MAP = new HashMap<>();
+	private final Map<Long, AbstractEntidadDetailVO> MAP = new HashMap<>();
 
 	/** The enti service. */
-	@Inject
-	private EntidadService entiService;
+	private final EntidadService entiService;
 
 	/** The tppr service. */
-	@Inject
-	private TipoParametroService tpprService;
+	private final TipoParametroService tpprService;
 
 	/** The tpsp service. */
-	@Inject
-	private TipoSubparametroService tpspService;
+	private final TipoSubparametroService tpspService;
 
 	/** The tpsr service. */
-	@Inject
-	private TipoServicioService tpsrService;
+	private final TipoServicioService tpsrService;
 
 	/** The tpss service. */
-	@Inject
-	private TipoSubservicioService tpssService;
+	private final TipoSubservicioService tpssService;
 
 	/** The tpes service. */
-	@Inject
-	private TipoEstadisticaService tpesService;
+	private final TipoEstadisticaService tpesService;
 
 	/** The engd service. */
-	@Inject
-	private EntidadGrupoDatoService engdService;
+	private final EntidadGrupoDatoService engdService;
 
 	/** The entd service. */
-	@Inject
-	private EntidadTipoDatoService entdService;
+	private final EntidadTipoDatoService entdService;
 
 	/** The enen service. */
-	@Inject
-	private EntidadEntidadService enenService;
+	private final EntidadEntidadService enenService;
 
 	/** The acen service. */
-	@Inject
-	private AccionEntidadService acenService;
+	private final AccionEntidadService acenService;
 
 	/** The aces service. */
-	@Inject
-	private AccionEspecialService acesService;
+	private final AccionEspecialService acesService;
 
 	/** The trmt service. */
-	@Inject
-	private TramiteService trmtService;
+	private final TramiteService trmtService;
 
 	/** The tpdt proxy. */
+	private final TipoDatoProxyService tpdtProxy;
+
+	/**
+	 * Instantiates a new entidad proxy service.
+	 *
+	 * @param entiService
+	 *            the enti service
+	 * @param tpprService
+	 *            the tppr service
+	 * @param tpspService
+	 *            the tpsp service
+	 * @param tpsrService
+	 *            the tpsr service
+	 * @param tpssService
+	 *            the tpss service
+	 * @param tpesService
+	 *            the tpes service
+	 * @param engdService
+	 *            the engd service
+	 * @param entdService
+	 *            the entd service
+	 * @param enenService
+	 *            the enen service
+	 * @param acenService
+	 *            the acen service
+	 * @param acesService
+	 *            the aces service
+	 * @param trmtService
+	 *            the trmt service
+	 * @param tpdtProxy
+	 *            the tpdt proxy
+	 */
 	@Inject
-	private TipoDatoProxyService tpdtProxy;
+	public EntidadProxyService(final EntidadService entiService, final TipoParametroService tpprService,
+			final TipoSubparametroService tpspService, final TipoServicioService tpsrService,
+			final TipoSubservicioService tpssService, final TipoEstadisticaService tpesService,
+			final EntidadGrupoDatoService engdService, final EntidadTipoDatoService entdService,
+			final EntidadEntidadService enenService, final AccionEntidadService acenService,
+			final AccionEspecialService acesService, final TramiteService trmtService,
+			final TipoDatoProxyService tpdtProxy) {
+		super();
+		this.entiService = entiService;
+		this.tpprService = tpprService;
+		this.tpspService = tpspService;
+		this.tpsrService = tpsrService;
+		this.tpssService = tpssService;
+		this.tpesService = tpesService;
+		this.engdService = engdService;
+		this.entdService = entdService;
+		this.enenService = enenService;
+		this.acenService = acenService;
+		this.acesService = acesService;
+		this.trmtService = trmtService;
+		this.tpdtProxy = tpdtProxy;
+	}
 
 	/**
 	 * Select.

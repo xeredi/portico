@@ -4,15 +4,17 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
-import xeredi.argo.model.comun.bo.PuertoBO;
-import xeredi.argo.model.comun.bo.SuperpuertoBO;
+import javax.inject.Inject;
+
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
+import xeredi.argo.model.comun.service.PuertoService;
+import xeredi.argo.model.comun.service.SuperpuertoService;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
-import xeredi.argo.model.estadistica.bo.PeriodoProcesoBO;
+import xeredi.argo.model.estadistica.service.PeriodoProcesoService;
 import xeredi.argo.model.estadistica.vo.PeriodoProcesoVO;
 import xeredi.argo.model.metamodelo.vo.Entidad;
 import xeredi.argo.model.proceso.vo.MensajeCodigo;
@@ -25,104 +27,107 @@ import xeredi.argo.proceso.ProcesoTemplate;
  */
 public final class ProcesoAgregacionAp extends ProcesoTemplate {
 
-    /**
-     * The Enum params.
-     */
-    public enum params {
-        /** The autp. */
-        autp,
+	@Inject
+	private SuperpuertoService sprtService;
 
-        /** The mes. */
-        mes,
+	@Inject
+	private PuertoService prtoService;
 
-        /** The anio. */
-        anio,
+	@Inject
+	private PeriodoProcesoService peprService;
 
-        /** The sobreescribir. */
-        sobreescribir
-    }
+	/**
+	 * The Enum params.
+	 */
+	public enum params {
+		/** The autp. */
+		autp,
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void prepararProcesos() {
-        // noop
-    }
+		/** The mes. */
+		mes,
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void ejecutarProceso() {
-        // Validacion de parametros
+		/** The anio. */
+		anio,
 
-        final String autpCodigo = findStringParameter(params.autp.name());
-        final Integer anio = findIntegerParameter(params.anio.name());
-        final Integer mes = findIntegerParameter(params.mes.name());
-        final Boolean sobreescribir = findBooleanParameter(params.sobreescribir.name());
+		/** The sobreescribir. */
+		sobreescribir
+	}
 
-        if (prbtData.getPrmnList().isEmpty()) {
-            try {
-                // Comprobar que existe la AP
-                final SuperpuertoBO sprtBO = new SuperpuertoBO();
-                final SuperpuertoCriterioVO sprtCriterio = new SuperpuertoCriterioVO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void prepararProcesos() {
+		// noop
+	}
 
-                sprtCriterio.setCodigo(autpCodigo);
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void ejecutarProceso() {
+		// Validacion de parametros
 
-                final SuperpuertoVO sprt = sprtBO.selectObject(sprtCriterio);
+		final String autpCodigo = findStringParameter(params.autp.name());
+		final Integer anio = findIntegerParameter(params.anio.name());
+		final Integer mes = findIntegerParameter(params.mes.name());
+		final Boolean sobreescribir = findBooleanParameter(params.sobreescribir.name());
 
-                final Calendar calendar = Calendar.getInstance();
+		if (prbtData.getPrmnList().isEmpty()) {
+			try {
+				// Comprobar que existe la AP
+				final SuperpuertoCriterioVO sprtCriterio = new SuperpuertoCriterioVO();
 
-                calendar.setTimeInMillis(0);
-                calendar.set(Calendar.DAY_OF_MONTH, 1);
-                calendar.set(Calendar.MONTH, mes - 1);
-                calendar.set(Calendar.YEAR, anio);
+				sprtCriterio.setCodigo(autpCodigo);
 
-                // Busqueda de los subpuertos de la AP
-                final PuertoBO prtoBO = new PuertoBO();
-                final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+				final SuperpuertoVO sprt = sprtService.selectObject(sprtCriterio);
 
-                prtoCriterio.setSprtId(sprt.getId());
+				final Calendar calendar = Calendar.getInstance();
 
-                final List<PuertoVO> prtoList = prtoBO.selectList(prtoCriterio);
+				calendar.setTimeInMillis(0);
+				calendar.set(Calendar.DAY_OF_MONTH, 1);
+				calendar.set(Calendar.MONTH, mes - 1);
+				calendar.set(Calendar.YEAR, anio);
 
-                final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
+				// Busqueda de los subpuertos de la AP
+				final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
-                if (prtoList.isEmpty()) {
-                    addError(MensajeCodigo.E_002, Entidad.AUTORIDAD_PORTUARIA.name() + ": " + autpCodigo);
-                } else {
-                    final PeriodoProcesoVO pepr = new PeriodoProcesoVO();
+				prtoCriterio.setSprtId(sprt.getId());
 
-                    pepr.setSprt(sprt);
-                    pepr.setAnio(anio);
-                    pepr.setMes(mes);
-                    pepr.setFreferencia(calendar.getTime());
+				final List<PuertoVO> prtoList = prtoService.selectList(prtoCriterio);
 
-                    try {
-                        peprBO.agregarServicios(pepr, sobreescribir);
+				if (prtoList.isEmpty()) {
+					addError(MensajeCodigo.E_002, Entidad.AUTORIDAD_PORTUARIA.name() + ": " + autpCodigo);
+				} else {
+					final PeriodoProcesoVO pepr = new PeriodoProcesoVO();
 
-                        prbtData.getItemSalidaList().add(pepr.getId());
-                    } catch (final DuplicateInstanceException ex) {
-                        addError(
-                                MensajeCodigo.E_001,
-                                "Periodo de Proceso: " + pepr.getSprt().getCodigo() + " " + pepr.getAnio() + " "
-                                        + pepr.getMes());
-                    } catch (final IOException ex) {
-                        addError(MensajeCodigo.G_000, ex.getMessage());
-                    }
-                }
-            } catch (final InstanceNotFoundException ex) {
-                addError(MensajeCodigo.G_001, Entidad.AUTORIDAD_PORTUARIA.name() + ": " + autpCodigo);
-            }
-        }
-    }
+					pepr.setSprt(sprt);
+					pepr.setAnio(anio);
+					pepr.setMes(mes);
+					pepr.setFreferencia(calendar.getTime());
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected ProcesoTipo getProcesoTipo() {
-        return ProcesoTipo.EST_CREACION;
-    }
+					try {
+						peprService.agregarServicios(pepr, sobreescribir);
+
+						prbtData.getItemSalidaList().add(pepr.getId());
+					} catch (final DuplicateInstanceException ex) {
+						addError(MensajeCodigo.E_001, "Periodo de Proceso: " + pepr.getSprt().getCodigo() + " "
+								+ pepr.getAnio() + " " + pepr.getMes());
+					} catch (final IOException ex) {
+						addError(MensajeCodigo.G_000, ex.getMessage());
+					}
+				}
+			} catch (final InstanceNotFoundException ex) {
+				addError(MensajeCodigo.G_001, Entidad.AUTORIDAD_PORTUARIA.name() + ": " + autpCodigo);
+			}
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected ProcesoTipo getProcesoTipo() {
+		return ProcesoTipo.EST_CREACION;
+	}
 }

@@ -14,8 +14,8 @@ import xeredi.argo.model.item.vo.ItemTramiteCriterioVO;
 import xeredi.argo.model.item.vo.ItemTramiteVO;
 import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
-import xeredi.argo.model.servicio.bo.SubservicioBO;
-import xeredi.argo.model.servicio.bo.SubservicioBOFactory;
+import xeredi.argo.model.servicio.service.SubservicioService;
+import xeredi.argo.model.servicio.service.SubservicioServiceFactory;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
 
 // TODO: Auto-generated Javadoc
@@ -35,6 +35,9 @@ public final class SubservicioDetailAction extends ItemDetailAction<SubservicioV
 	private EntidadProxyService entiProxy;
 
 	@Inject
+	private SubservicioServiceFactory ssrvFactory;
+
+	@Inject
 	private ItemTramiteService ittrService;
 
 	/**
@@ -46,9 +49,9 @@ public final class SubservicioDetailAction extends ItemDetailAction<SubservicioV
 
 		enti = entiProxy.selectTpss(model.getEntiId());
 
-		final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getEntiId(), usroId);
+		final SubservicioService ssrvService = ssrvFactory.getInstance(model.getEntiId(), usroId);
 
-		model = ssrvBO.select(model.getId(), getIdioma());
+		model = ssrvService.select(model.getId(), getIdioma());
 
 		if (enti.getEnti().getTpdtEstado() != null) {
 			final ItemTramiteCriterioVO ittrCriterio = new ItemTramiteCriterioVO();

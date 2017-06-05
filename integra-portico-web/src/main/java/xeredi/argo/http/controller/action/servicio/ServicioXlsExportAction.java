@@ -11,9 +11,9 @@ import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
-import xeredi.argo.model.servicio.bo.ServicioBO;
-import xeredi.argo.model.servicio.bo.ServicioBOFactory;
 import xeredi.argo.model.servicio.report.ServicioXls;
+import xeredi.argo.model.servicio.service.ServicioService;
+import xeredi.argo.model.servicio.service.ServicioServiceFactory;
 import xeredi.argo.model.servicio.vo.ServicioCriterioVO;
 
 // TODO: Auto-generated Javadoc
@@ -24,6 +24,10 @@ public final class ServicioXlsExportAction extends ItemXlsExportAction<ServicioC
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 4791188932107630324L;
+
+	/** The srvc factory. */
+	@Inject
+	private ServicioServiceFactory srvcFactory;
 
 	@Inject
 	private EntidadProxyService entiProxy;
@@ -36,8 +40,8 @@ public final class ServicioXlsExportAction extends ItemXlsExportAction<ServicioC
 		final TipoServicioDetailVO enti = entiProxy.selectTpsr(criterio.getEntiId());
 
 		try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-			final ServicioBO itemBO = ServicioBOFactory.newInstance(criterio.getEntiId(), usroId);
-			final ServicioXls excelUtil = new ServicioXls(getBundle(), baos, itemBO.selectList(criterio), enti);
+			final ServicioService srvcService = srvcFactory.getInstance(criterio.getEntiId(), usroId);
+			final ServicioXls excelUtil = new ServicioXls(getBundle(), baos, srvcService.selectList(criterio), enti);
 
 			excelUtil.generate();
 

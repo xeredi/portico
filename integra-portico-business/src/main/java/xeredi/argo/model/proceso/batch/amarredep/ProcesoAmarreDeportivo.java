@@ -3,15 +3,18 @@ package xeredi.argo.model.proceso.batch.amarredep;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.inject.Inject;
+
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.maestro.vo.ParametroVO;
-import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.Entidad;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.argo.model.proceso.vo.MensajeCodigo;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
-import xeredi.argo.model.servicio.bo.amarredep.AmarreDeportivoServicioBO;
+import xeredi.argo.model.servicio.service.ServicioServiceFactory;
+import xeredi.argo.model.servicio.service.amarredep.AmarreDeportivoServicioService;
 import xeredi.argo.model.servicio.vo.ServicioCriterioVO;
 import xeredi.argo.model.servicio.vo.ServicioMaestroVO;
 import xeredi.argo.model.servicio.vo.ServicioVO;
@@ -23,90 +26,97 @@ import xeredi.argo.proceso.ProcesoTemplate;
  */
 public final class ProcesoAmarreDeportivo extends ProcesoTemplate {
 
-    /**
-     * The Enum params.
-     */
-    public enum params {
-        /** The ffin. */
-        ffin
-    }
+	@Inject
+	private ServicioServiceFactory srvcFactory;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void prepararProcesos() {
-        // noop
-    }
+	@Inject
+	private EntidadProxyService entiProxy;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void ejecutarProceso() {
-        final Date ffin = findDateParameter(params.ffin.name());
+	/**
+	 * The Enum params.
+	 */
+	public enum params {
+		/** The ffin. */
+		ffin
+	}
 
-        if (prbtData.getPrmnList().isEmpty()) {
-            final TipoServicioDetailVO enti = TipoServicioProxy.select(Entidad.AMARRE_DEP_SRV.getId());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void prepararProcesos() {
+		// noop
+	}
 
-            final AmarreDeportivoServicioBO bo = new AmarreDeportivoServicioBO(prbtData.getPrbt().getUsro().getId());
-            final ServicioCriterioVO criterio = new ServicioCriterioVO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void ejecutarProceso() {
+		final Date ffin = findDateParameter(params.ffin.name());
 
-            criterio.setFrefMax(ffin);
+		if (prbtData.getPrmnList().isEmpty()) {
+			final TipoServicioDetailVO enti = entiProxy.selectTpsr(Entidad.AMARRE_DEP_SRV.getId());
 
-            for (final ServicioMaestroVO maestro : bo.selectGenerate(criterio)) {
-                final ServicioVO srvc = enti.createItem();
+			final AmarreDeportivoServicioService srvcService = (AmarreDeportivoServicioService) srvcFactory
+					.getInstance(Entidad.AMARRE_DEP_SRV.getId(), prbtData.getPrbt().getUsro().getId());
+			final ServicioCriterioVO criterio = new ServicioCriterioVO();
 
-                try {
-                    srvc.setPrto(maestro.getPrmt().getPrto());
-                    srvc.setFini(maestro.getFini());
-                    srvc.setFfin(maestro.getFfin());
-                    srvc.setFref(maestro.getFini());
+			criterio.setFrefMax(ffin);
 
-                    final Calendar calendar = Calendar.getInstance();
+			for (final ServicioMaestroVO maestro : srvcService.selectGenerate(criterio)) {
+				final ServicioVO srvc = enti.createItem();
 
-                    calendar.setTime(maestro.getFini());
+				try {
+					srvc.setPrto(maestro.getPrmt().getPrto());
+					srvc.setFini(maestro.getFini());
+					srvc.setFfin(maestro.getFfin());
+					srvc.setFref(maestro.getFini());
 
-                    srvc.setAnno(String.valueOf(calendar.get(Calendar.YEAR)));
+					final Calendar calendar = Calendar.getInstance();
 
-                    final ParametroVO amarre = new ParametroVO();
+					calendar.setTime(maestro.getFini());
 
-                    amarre.setId(Long.parseLong(maestro.getItdtMap().get(TipoDato.AMARRE_DEP.name()).toString()));
-                    amarre.setParametro(maestro.getItdtMap().get(TipoDato.AMARRE_DEP.name() + "_prmt").toString());
+					srvc.setAnno(String.valueOf(calendar.get(Calendar.YEAR)));
 
-                    srvc.addItdt(TipoDato.AMARRE_DEP.getId(), amarre);
+					final ParametroVO amarre = new ParametroVO();
 
-                    final ParametroVO embarcacion = new ParametroVO();
+					amarre.setId(Long.parseLong(maestro.getItdtMap().get(TipoDato.AMARRE_DEP.name()).toString()));
+					amarre.setParametro(maestro.getItdtMap().get(TipoDato.AMARRE_DEP.name() + "_prmt").toString());
 
-                    embarcacion.setId(
-                            Long.parseLong(maestro.getItdtMap().get(TipoDato.EMBARCACION_DEP.name()).toString()));
-                    embarcacion.setParametro(
-                            maestro.getItdtMap().get(TipoDato.EMBARCACION_DEP.name() + "_prmt").toString());
+					srvc.addItdt(TipoDato.AMARRE_DEP.getId(), amarre);
 
-                    srvc.addItdt(TipoDato.EMBARCACION_DEP.getId(), embarcacion);
+					final ParametroVO embarcacion = new ParametroVO();
 
-                    final ParametroVO tipoIva = new ParametroVO();
+					embarcacion.setId(
+							Long.parseLong(maestro.getItdtMap().get(TipoDato.EMBARCACION_DEP.name()).toString()));
+					embarcacion.setParametro(
+							maestro.getItdtMap().get(TipoDato.EMBARCACION_DEP.name() + "_prmt").toString());
 
-                    tipoIva.setId(Long.parseLong(maestro.getItdtMap().get(TipoDato.TIPO_IVA.name()).toString()));
+					srvc.addItdt(TipoDato.EMBARCACION_DEP.getId(), embarcacion);
 
-                    srvc.addItdt(TipoDato.TIPO_IVA.getId(), tipoIva);
+					final ParametroVO tipoIva = new ParametroVO();
 
-                    bo.insert(srvc, null, null, null);
+					tipoIva.setId(Long.parseLong(maestro.getItdtMap().get(TipoDato.TIPO_IVA.name()).toString()));
 
-                    addPritSalida(srvc.getId());
-                } catch (final DuplicateInstanceException ex) {
-                    addError(MensajeCodigo.G_011, srvc.getItdt(TipoDato.AMARRE_DEP.getId()).getPrmt().getParametro()
-                            + " - " + srvc.getItdt(TipoDato.EMBARCACION_DEP.getId()).getPrmt().getParametro());
-                }
-            }
-        }
-    }
+					srvc.addItdt(TipoDato.TIPO_IVA.getId(), tipoIva);
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected ProcesoTipo getProcesoTipo() {
-        return ProcesoTipo.SAMD_CREACION;
-    }
+					srvcService.insert(srvc, null, null, null);
+
+					addPritSalida(srvc.getId());
+				} catch (final DuplicateInstanceException ex) {
+					addError(MensajeCodigo.G_011, srvc.getItdt(TipoDato.AMARRE_DEP.getId()).getPrmt().getParametro()
+							+ " - " + srvc.getItdt(TipoDato.EMBARCACION_DEP.getId()).getPrmt().getParametro());
+				}
+			}
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected ProcesoTipo getProcesoTipo() {
+		return ProcesoTipo.SAMD_CREACION;
+	}
 }

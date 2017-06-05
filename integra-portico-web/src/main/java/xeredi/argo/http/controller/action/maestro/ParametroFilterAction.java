@@ -9,8 +9,8 @@ import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
 import xeredi.argo.http.controller.action.item.ItemFilterAction;
-import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.PuertoService;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.maestro.vo.ParametroCriterioVO;
@@ -38,6 +38,9 @@ public final class ParametroFilterAction extends ItemFilterAction<ParametroCrite
 	@Inject
 	private EntidadProxyService entiProxy;
 
+	@Inject
+	private PuertoService prtoService;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -56,13 +59,12 @@ public final class ParametroFilterAction extends ItemFilterAction<ParametroCrite
 	@Override
 	public void doSpecificLoadDependencies() throws ApplicationException {
 		if (enti.getEnti().getPuerto()) {
-			final PuertoBO prtoBO = new PuertoBO();
 			final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
 			prtoCriterio.setSprtId(getSprtId());
 			prtoCriterio.setIdioma(getIdioma());
 
-			prtoList = prtoBO.selectList(prtoCriterio);
+			prtoList = prtoService.selectList(prtoCriterio);
 		}
 	}
 }

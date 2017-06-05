@@ -25,10 +25,10 @@ import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoHtml;
 import xeredi.argo.model.metamodelo.vo.TramiteDetailVO;
 import xeredi.argo.model.metamodelo.vo.TramiteTipoDatoVO;
-import xeredi.argo.model.servicio.bo.ServicioBO;
-import xeredi.argo.model.servicio.bo.ServicioBOFactory;
-import xeredi.argo.model.servicio.bo.SubservicioBO;
-import xeredi.argo.model.servicio.bo.SubservicioBOFactory;
+import xeredi.argo.model.servicio.service.ServicioService;
+import xeredi.argo.model.servicio.service.ServicioServiceFactory;
+import xeredi.argo.model.servicio.service.SubservicioService;
+import xeredi.argo.model.servicio.service.SubservicioServiceFactory;
 import xeredi.argo.model.servicio.vo.ServicioVO;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
 
@@ -65,6 +65,14 @@ public final class ItemTramiteEditAction extends BaseAction implements ModelDriv
 	@Getter
 	private Long prtoId;
 
+	/** The srvc factory. */
+	@Inject
+	private ServicioServiceFactory srvcFactory;
+
+	/** The ssrv factory. */
+	@Inject
+	private SubservicioServiceFactory ssrvFactory;
+
 	@Inject
 	private TramiteProxyService trmtProxy;
 
@@ -90,8 +98,8 @@ public final class ItemTramiteEditAction extends BaseAction implements ModelDriv
 
 		switch (enti.getEnti().getTipo()) {
 		case T:
-			final ServicioBO srvcBO = ServicioBOFactory.newInstance(enti.getEnti().getId(), usroId);
-			final ServicioVO srvc = srvcBO.select(model.getItemId(), getIdioma());
+			final ServicioService srvcService = srvcFactory.getInstance(enti.getEnti().getId(), usroId);
+			final ServicioVO srvc = srvcService.select(model.getItemId(), getIdioma());
 
 			prtoId = srvc.getPrto().getId();
 
@@ -101,8 +109,8 @@ public final class ItemTramiteEditAction extends BaseAction implements ModelDriv
 
 			break;
 		case S:
-			final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(enti.getEnti().getId(), usroId);
-			final SubservicioVO ssrv = ssrvBO.select(model.getItemId(), getIdioma());
+			final SubservicioService ssrvService = ssrvFactory.getInstance(enti.getEnti().getId(), usroId);
+			final SubservicioVO ssrv = ssrvService.select(model.getItemId(), getIdioma());
 
 			prtoId = ssrv.getSrvc().getPrto().getId();
 

@@ -1,9 +1,11 @@
 package xeredi.argo.http.controller.action.servicio;
 
+import javax.inject.Inject;
+
 import xeredi.argo.http.controller.action.item.ItemTypeaheadAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.servicio.bo.ServicioBO;
-import xeredi.argo.model.servicio.bo.ServicioBOFactory;
+import xeredi.argo.model.servicio.service.ServicioService;
+import xeredi.argo.model.servicio.service.ServicioServiceFactory;
 import xeredi.argo.model.servicio.vo.ServicioTypeaheadCriterioVO;
 import xeredi.argo.model.servicio.vo.ServicioVO;
 
@@ -13,16 +15,20 @@ import xeredi.argo.model.servicio.vo.ServicioVO;
  */
 public final class ServicioTypeaheadAction extends ItemTypeaheadAction<ServicioTypeaheadCriterioVO, ServicioVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -3651561999872993795L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -3651561999872993795L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doSpecificTypeahead() throws ApplicationException {
-        final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId(), usroId);
+	/** The srvc factory. */
+	@Inject
+	private ServicioServiceFactory srvcFactory;
 
-        resultList = srvcBO.selectTypeaheadList(model, limit);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doSpecificTypeahead() throws ApplicationException {
+		final ServicioService srvcService = srvcFactory.getInstance(model.getEntiId(), usroId);
+
+		resultList = srvcService.selectTypeaheadList(model, limit);
+	}
 }

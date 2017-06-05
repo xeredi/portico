@@ -15,8 +15,8 @@ import xeredi.argo.model.item.vo.ItemTramiteCriterioVO;
 import xeredi.argo.model.item.vo.ItemTramiteVO;
 import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
-import xeredi.argo.model.servicio.bo.ServicioBO;
-import xeredi.argo.model.servicio.bo.ServicioBOFactory;
+import xeredi.argo.model.servicio.service.ServicioService;
+import xeredi.argo.model.servicio.service.ServicioServiceFactory;
 import xeredi.argo.model.servicio.vo.ServicioVO;
 
 // TODO: Auto-generated Javadoc
@@ -37,6 +37,9 @@ public final class ServicioDetailAction extends ItemDetailAction<ServicioVO, Tip
 	private List<ItemTramiteVO> ittrList;
 
 	@Inject
+	private ServicioServiceFactory srvcFactory;
+
+	@Inject
 	private ArchivoService archService;
 
 	@Inject
@@ -52,9 +55,9 @@ public final class ServicioDetailAction extends ItemDetailAction<ServicioVO, Tip
 	public void doSpecificDetail() throws ApplicationException {
 		enti = entiProxy.selectTpsr(model.getEntiId());
 
-		final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId(), usroId);
+		final ServicioService srvcService = srvcFactory.getInstance(model.getEntiId(), usroId);
 
-		model = srvcBO.select(model.getId(), getIdioma());
+		model = srvcService.select(model.getId(), getIdioma());
 
 		final ArchivoCriterioVO archCriterio = new ArchivoCriterioVO();
 

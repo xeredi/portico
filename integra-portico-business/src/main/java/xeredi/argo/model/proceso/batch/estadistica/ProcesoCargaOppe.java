@@ -9,17 +9,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import xeredi.argo.model.comun.bo.ArchivoBO;
-import xeredi.argo.model.comun.bo.PuertoBO;
-import xeredi.argo.model.comun.bo.SuperpuertoBO;
 import xeredi.argo.model.comun.exception.DuplicateInstanceException;
 import xeredi.argo.model.comun.exception.InstanceNotFoundException;
+import xeredi.argo.model.comun.service.ArchivoService;
+import xeredi.argo.model.comun.service.PuertoService;
+import xeredi.argo.model.comun.service.SuperpuertoService;
 import xeredi.argo.model.comun.vo.ArchivoInfoVO;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
@@ -43,6 +45,15 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
 
 	/** The Constant LOG. */
 	private static final Log LOG = LogFactory.getLog(ProcesoCargaOppe.class);
+
+	@Inject
+	private SuperpuertoService sprtService;
+
+	@Inject
+	private PuertoService prtoService;
+
+	@Inject
+	private ArchivoService archService;
 
 	/**
 	 * The Enum params.
@@ -77,7 +88,6 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
 	 */
 	@Override
 	protected void ejecutarProceso() {
-		final ArchivoBO flsrBO = new ArchivoBO();
 		final OppeFileImport fileImport = new OppeFileImport(this);
 		final PeriodoProcesoVO pepr = new PeriodoProcesoVO();
 		final Map<String, PuertoVO> prtoMap = new HashMap<>();
@@ -92,19 +102,17 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
 		LOG.info("Carga estadisticas: " + sprtCodigo + ", " + anio + ", " + mes);
 
 		try {
-			final SuperpuertoBO sprtBO = new SuperpuertoBO();
 			final SuperpuertoCriterioVO sprtCriterio = new SuperpuertoCriterioVO();
 
 			sprtCriterio.setCodigo(sprtCodigo);
 
-			final SuperpuertoVO sprt = sprtBO.selectObject(sprtCriterio);
+			final SuperpuertoVO sprt = sprtService.selectObject(sprtCriterio);
 
-			final PuertoBO prtoBO = new PuertoBO();
 			final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
 			prtoCriterio.setSprtId(sprt.getId());
 
-			for (final PuertoVO prto : prtoBO.selectList(prtoCriterio)) {
+			for (final PuertoVO prto : prtoService.selectList(prtoCriterio)) {
 				prtoMap.put(prto.getCodigo(), prto);
 			}
 
@@ -127,7 +135,7 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
 
 				pepr.setArin(arin);
 
-				try (final InputStream stream = flsrBO.selectStream(arin.getId())) {
+				try (final InputStream stream = archService.selectStream(arin.getId())) {
 					final Map<EstadisticaFileType, List<String>> mapFiles = readFile(stream);
 
 					if (prbtData.getPrmnList().isEmpty()) {

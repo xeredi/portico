@@ -10,10 +10,10 @@ import xeredi.argo.http.controller.action.item.ItemEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
 import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
-import xeredi.argo.model.servicio.bo.ServicioBO;
-import xeredi.argo.model.servicio.bo.ServicioBOFactory;
-import xeredi.argo.model.servicio.bo.SubservicioBO;
-import xeredi.argo.model.servicio.bo.SubservicioBOFactory;
+import xeredi.argo.model.servicio.service.ServicioService;
+import xeredi.argo.model.servicio.service.ServicioServiceFactory;
+import xeredi.argo.model.servicio.service.SubservicioService;
+import xeredi.argo.model.servicio.service.SubservicioServiceFactory;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
 
 // TODO: Auto-generated Javadoc
@@ -25,6 +25,14 @@ public final class SubservicioEditAction extends ItemEditAction<SubservicioVO, T
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -3286199992331373729L;
 
+	/** The srvc factory. */
+	@Inject
+	private ServicioServiceFactory srvcFactory;
+
+	@Inject
+	private SubservicioServiceFactory ssrvFactory;
+
+	/** The enti proxy. */
 	@Inject
 	private EntidadProxyService entiProxy;
 
@@ -35,22 +43,20 @@ public final class SubservicioEditAction extends ItemEditAction<SubservicioVO, T
 	public void doSpecificEdit() throws ApplicationException {
 		enti = entiProxy.selectTpss(model.getEntiId());
 
-		final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getEntiId(), usroId);
-
 		switch (accion) {
 		case create:
 			if (model.getSrvc() != null && model.getSrvc().getId() != null) {
-				final ServicioBO srvcBO = ServicioBOFactory.newInstance(enti.getEnti().getTpsrId(), usroId);
+				final ServicioService srvcService = srvcFactory.getInstance(enti.getEnti().getTpsrId(), usroId);
 
-				model.setSrvc(srvcBO.select(model.getSrvc().getId(), getIdioma()));
+				model.setSrvc(srvcService.select(model.getSrvc().getId(), getIdioma()));
 				model.setFref(model.getSrvc().getFref());
 
 				// Si viene de un subservicio padre, lo buscamos
 				for (final Long entiId : model.getSsrvPadreMap().keySet()) {
-					final SubservicioBO ssrvPadreBO = SubservicioBOFactory.newInstance(entiId, getUsroId());
+					final SubservicioService ssrvPadreService = ssrvFactory.getInstance(entiId, usroId);
 
 					model.getSsrvPadreMap().put(entiId,
-							ssrvPadreBO.select(model.getSsrvPadreMap().get(entiId).getId(), getIdioma()));
+							ssrvPadreService.select(model.getSsrvPadreMap().get(entiId).getId(), getIdioma()));
 				}
 			} else {
 				model.setFref(Calendar.getInstance().getTime());
@@ -61,10 +67,12 @@ public final class SubservicioEditAction extends ItemEditAction<SubservicioVO, T
 			break;
 		case edit:
 		case duplicate:
+			final SubservicioService ssrvService = ssrvFactory.getInstance(model.getEntiId(), usroId);
+
 			Preconditions.checkNotNull(model.getSrvc());
 			Preconditions.checkNotNull(model.getSrvc().getId());
 
-			model = ssrvBO.select(model.getId(), getIdioma());
+			model = ssrvService.select(model.getId(), getIdioma());
 
 			break;
 		default:

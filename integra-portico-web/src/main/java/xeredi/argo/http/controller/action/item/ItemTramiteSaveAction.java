@@ -16,18 +16,14 @@ import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
 import xeredi.argo.model.metamodelo.vo.TramiteDetailVO;
-import xeredi.argo.model.servicio.bo.ServicioBO;
-import xeredi.argo.model.servicio.bo.ServicioBOFactory;
-import xeredi.argo.model.servicio.bo.SubservicioBO;
-import xeredi.argo.model.servicio.bo.SubservicioBOFactory;
+import xeredi.argo.model.servicio.service.ServicioService;
+import xeredi.argo.model.servicio.service.ServicioServiceFactory;
+import xeredi.argo.model.servicio.service.SubservicioService;
+import xeredi.argo.model.servicio.service.SubservicioServiceFactory;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ItemTramiteSaveAction.
- */
-
-/**
- * Instantiates a new item tramite save action.
  */
 public final class ItemTramiteSaveAction extends BaseAction implements FuncionalidadAction {
 
@@ -37,6 +33,14 @@ public final class ItemTramiteSaveAction extends BaseAction implements Funcional
 	/** The model. */
 	@Setter
 	protected ItemTramiteVO model;
+
+	/** The srvc factory. */
+	@Inject
+	private ServicioServiceFactory srvcFactory;
+
+	/** The ssrv factory. */
+	@Inject
+	private SubservicioServiceFactory ssrvFactory;
 
 	@Inject
 	private TramiteProxyService trmtProxy;
@@ -56,15 +60,15 @@ public final class ItemTramiteSaveAction extends BaseAction implements Funcional
 		if (!hasErrors()) {
 			switch (enti.getEnti().getTipo()) {
 			case T:
-				final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getTrmt().getEntiId(), usroId);
+				final ServicioService srvcService = srvcFactory.getInstance(model.getTrmt().getEntiId(), usroId);
 
-				srvcBO.statechange(model);
+				srvcService.statechange(model);
 
 				break;
 			case S:
-				final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(model.getTrmt().getEntiId(), usroId);
+				final SubservicioService ssrvService = ssrvFactory.getInstance(model.getTrmt().getEntiId(), usroId);
 
-				ssrvBO.statechange(model);
+				ssrvService.statechange(model);
 
 				break;
 			case P:

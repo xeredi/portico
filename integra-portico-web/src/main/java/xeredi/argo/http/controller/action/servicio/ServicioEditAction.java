@@ -10,14 +10,14 @@ import com.google.common.base.Preconditions;
 import lombok.Getter;
 import xeredi.argo.http.controller.action.item.ItemEditAction;
 import xeredi.argo.http.util.FieldFiller;
-import xeredi.argo.model.comun.bo.PuertoBO;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.PuertoService;
 import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
-import xeredi.argo.model.servicio.bo.ServicioBO;
-import xeredi.argo.model.servicio.bo.ServicioBOFactory;
+import xeredi.argo.model.servicio.service.ServicioService;
+import xeredi.argo.model.servicio.service.ServicioServiceFactory;
 import xeredi.argo.model.servicio.vo.ServicioVO;
 
 // TODO: Auto-generated Javadoc
@@ -33,15 +33,24 @@ public final class ServicioEditAction extends ItemEditAction<ServicioVO, TipoSer
 	@Getter
 	private List<PuertoVO> prtoList;
 
+	/** The srvc factory. */
+	@Inject
+	private ServicioServiceFactory srvcFactory;
+
+	/** The enti proxy. */
 	@Inject
 	private EntidadProxyService entiProxy;
+
+	/** The prto service. */
+	@Inject
+	private PuertoService prtoService;
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void doSpecificEdit() throws ApplicationException {
-		final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getEntiId(), usroId);
+		final ServicioService srvcService = srvcFactory.getInstance(model.getEntiId(), usroId);
 
 		enti = entiProxy.selectTpsr(model.getEntiId());
 
@@ -57,14 +66,14 @@ public final class ServicioEditAction extends ItemEditAction<ServicioVO, TipoSer
 		case duplicate:
 			Preconditions.checkNotNull(model.getId());
 
-			model = srvcBO.select(model.getId(), getIdioma());
+			model = srvcService.select(model.getId(), getIdioma());
 			model.setEstado(enti.getEnti().getEstadoDef());
 
 			break;
 		case edit:
 			Preconditions.checkNotNull(model.getId());
 
-			model = srvcBO.select(model.getId(), getIdioma());
+			model = srvcService.select(model.getId(), getIdioma());
 
 			break;
 		default:
@@ -77,12 +86,11 @@ public final class ServicioEditAction extends ItemEditAction<ServicioVO, TipoSer
 	 */
 	@Override
 	public void doLoadSpecificDependencies() throws ApplicationException {
-		final PuertoBO prtoBO = new PuertoBO();
 		final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
 
 		prtoCriterio.setSprtId(getSprtId());
 		prtoCriterio.setIdioma(getIdioma());
 
-		prtoList = prtoBO.selectList(prtoCriterio);
+		prtoList = prtoService.selectList(prtoCriterio);
 	}
 }

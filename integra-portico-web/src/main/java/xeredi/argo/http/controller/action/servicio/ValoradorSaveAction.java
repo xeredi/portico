@@ -21,8 +21,8 @@ import xeredi.argo.model.proceso.service.ProcesoService;
 import xeredi.argo.model.proceso.vo.ItemTipo;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
 import xeredi.argo.model.proceso.vo.ProcesoVO;
-import xeredi.argo.model.servicio.bo.ServicioBO;
-import xeredi.argo.model.servicio.bo.ServicioBOFactory;
+import xeredi.argo.model.servicio.service.ServicioService;
+import xeredi.argo.model.servicio.service.ServicioServiceFactory;
 import xeredi.argo.model.servicio.vo.ServicioVO;
 import xeredi.argo.model.servicio.vo.ValoradorVO;
 import xeredi.argo.proceso.facturacion.ProcesoValorador;
@@ -35,6 +35,10 @@ public final class ValoradorSaveAction extends CrudSaveAction<ValoradorVO> {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 8899968426612094160L;
+
+	/** The srvc factory. */
+	@Inject
+	private ServicioServiceFactory srvcFactory;
 
 	@Inject
 	private ProcesoService prbtService;
@@ -72,8 +76,8 @@ public final class ValoradorSaveAction extends CrudSaveAction<ValoradorVO> {
 
 		final TipoServicioDetailVO tpsr = entiProxy.selectTpsr(model.getSrvc().getEntiId());
 
-		final ServicioBO srvcBO = ServicioBOFactory.newInstance(model.getSrvc().getEntiId(), usroId);
-		final ServicioVO srvc = srvcBO.select(model.getSrvc().getId(), getIdioma());
+		final ServicioService srvcService = srvcFactory.getInstance(model.getSrvc().getEntiId(), usroId);
+		final ServicioVO srvc = srvcService.select(model.getSrvc().getId(), getIdioma());
 
 		if (!tpsr.getEnti().getEstadosVlrcSet().contains(srvc.getEstado())) {
 			addActionError(MessageI18nKey.E00016, srvc.getEstado());

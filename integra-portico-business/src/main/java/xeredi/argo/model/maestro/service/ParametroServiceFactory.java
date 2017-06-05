@@ -25,7 +25,7 @@ public class ParametroServiceFactory {
 	private static final Log LOG = LogFactory.getLog(ParametroServiceFactory.class);
 
 	/** The Constant MAP. */
-	private static final Map<Long, Class<? extends ParametroService>> MAP = new HashMap<Long, Class<? extends ParametroService>>();
+	private final Map<Long, Class<? extends ParametroService>> MAP = new HashMap<Long, Class<? extends ParametroService>>();
 
 	/** The injector. */
 	private final Injector injector;

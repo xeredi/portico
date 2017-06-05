@@ -1,6 +1,7 @@
 package xeredi.argo.http.controller.action.comun;
 
 import java.text.MessageFormat;
+import java.util.Calendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -30,6 +31,7 @@ import xeredi.argo.model.comun.vo.MessageI18nKey;
  */
 @ParentPackage("default")
 @Result(type = "json", params = { "excludeNullProperties", "true", "ignoreHierarchy", "false", "enableGZIP", "true" })
+// @InterceptorRef("timer")
 public abstract class BaseAction extends ActionSupport {
 
 	/** The Constant serialVersionUID. */
@@ -102,6 +104,8 @@ public abstract class BaseAction extends ActionSupport {
 	 */
 	@Override
 	public final String execute() {
+		final long startMs = Calendar.getInstance().getTimeInMillis();
+
 		try {
 			usroId = SessionManager.getUsroId();
 			sprtId = SessionManager.getSprtId();
@@ -115,6 +119,10 @@ public abstract class BaseAction extends ActionSupport {
 			LOG.fatal(ex, ex);
 
 			addActionError(MessageI18nKey.E00000, ex.getMessage());
+		}
+
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(getClass().getName() + ": " + (Calendar.getInstance().getTimeInMillis() - startMs) + " mseg.");
 		}
 
 		return SUCCESS;

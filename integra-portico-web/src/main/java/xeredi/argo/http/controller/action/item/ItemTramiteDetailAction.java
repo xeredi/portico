@@ -16,20 +16,16 @@ import xeredi.argo.model.metamodelo.service.TramiteProxyService;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.TramiteDetailVO;
-import xeredi.argo.model.servicio.bo.ServicioBO;
-import xeredi.argo.model.servicio.bo.ServicioBOFactory;
-import xeredi.argo.model.servicio.bo.SubservicioBO;
-import xeredi.argo.model.servicio.bo.SubservicioBOFactory;
+import xeredi.argo.model.servicio.service.ServicioService;
+import xeredi.argo.model.servicio.service.ServicioServiceFactory;
+import xeredi.argo.model.servicio.service.SubservicioService;
+import xeredi.argo.model.servicio.service.SubservicioServiceFactory;
 import xeredi.argo.model.servicio.vo.ServicioVO;
 import xeredi.argo.model.servicio.vo.SubservicioVO;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ItemTramiteDetailAction.
- */
-
-/**
- * Instantiates a new item tramite detail action.
  */
 public final class ItemTramiteDetailAction extends BaseAction
 		implements ModelDriven<ItemTramiteVO>, ProtectedItemAction {
@@ -57,12 +53,23 @@ public final class ItemTramiteDetailAction extends BaseAction
 	@Getter
 	protected ItemVO item;
 
+	/** The srvc factory. */
+	@Inject
+	private ServicioServiceFactory srvcFactory;
+
+	/** The ssrv factory. */
+	@Inject
+	private SubservicioServiceFactory ssrvFactory;
+
+	/** The ittr service. */
 	@Inject
 	private ItemTramiteService ittrService;
 
+	/** The trmt proxy. */
 	@Inject
 	private TramiteProxyService trmtProxy;
 
+	/** The enti proxy. */
 	@Inject
 	private EntidadProxyService entiProxy;
 
@@ -81,15 +88,15 @@ public final class ItemTramiteDetailAction extends BaseAction
 
 		switch (enti.getEnti().getTipo()) {
 		case T:
-			final ServicioBO srvcBO = ServicioBOFactory.newInstance(enti.getEnti().getId(), usroId);
-			final ServicioVO srvc = srvcBO.select(model.getItemId(), getIdioma());
+			final ServicioService srvcService = srvcFactory.getInstance(enti.getEnti().getId(), usroId);
+			final ServicioVO srvc = srvcService.select(model.getItemId(), getIdioma());
 
 			item = srvc;
 
 			break;
 		case S:
-			final SubservicioBO ssrvBO = SubservicioBOFactory.newInstance(enti.getEnti().getId(), usroId);
-			final SubservicioVO ssrv = ssrvBO.select(model.getItemId(), getIdioma());
+			final SubservicioService ssrvService = ssrvFactory.getInstance(enti.getEnti().getId(), usroId);
+			final SubservicioVO ssrv = ssrvService.select(model.getItemId(), getIdioma());
 
 			item = ssrv;
 

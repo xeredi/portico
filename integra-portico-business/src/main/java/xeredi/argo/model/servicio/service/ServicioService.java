@@ -29,12 +29,14 @@ import xeredi.argo.model.item.dao.ItemTramiteDatoDAO;
 import xeredi.argo.model.item.vo.ItemDatoVO;
 import xeredi.argo.model.item.vo.ItemTramiteDatoVO;
 import xeredi.argo.model.item.vo.ItemTramiteVO;
-import xeredi.argo.model.metamodelo.proxy.TipoServicioProxy;
-import xeredi.argo.model.metamodelo.proxy.TipoSubservicioProxy;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.service.TramiteProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoServicioDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
 import xeredi.argo.model.metamodelo.vo.TramiteDetailVO;
+import xeredi.argo.model.seguridad.dao.UsuarioDAO;
+import xeredi.argo.model.seguridad.vo.UsuarioCriterioVO;
+import xeredi.argo.model.seguridad.vo.UsuarioVO;
 import xeredi.argo.model.servicio.dao.ServicioActorDAO;
 import xeredi.argo.model.servicio.dao.ServicioArchivoDAO;
 import xeredi.argo.model.servicio.dao.ServicioDAO;
@@ -94,8 +96,20 @@ public class ServicioService {
 	/** The srsc DAO. */
 	private final ServicioSecuenciaDAO srscDAO;
 
+	/** The usro DAO. */
+	private final UsuarioDAO usroDAO;
+
+	/** The enti proxy. */
+	private final EntidadProxyService entiProxy;
+
 	/** The trmt service. */
-	private final TramiteProxyService trmtService;
+	private final TramiteProxyService trmtProxy;
+
+	/** The enti id. */
+	private Long entiId;
+
+	/** The usro id. */
+	private Long usroId;
 
 	/**
 	 * Instantiates a new servicio service.
@@ -122,15 +136,17 @@ public class ServicioService {
 	 *            the srar DAO
 	 * @param srscDAO
 	 *            the srsc DAO
+	 * @param usroDAO
+	 *            the usro DAO
 	 * @param trmtService
 	 *            the trmt service
 	 */
 	@Inject
-	public ServicioService(final ServicioDAO srvcDAO, final ServicioDatoDAO srdtDAO, final SubservicioDAO ssrvDAO,
+	protected ServicioService(final ServicioDAO srvcDAO, final ServicioDatoDAO srdtDAO, final SubservicioDAO ssrvDAO,
 			final SubservicioDatoDAO ssdtDAO, final SubservicioSubservicioDAO ssssDAO, final ItemTramiteDAO ittrDAO,
 			final ServicioTramiteDAO srtrDAO, final ItemTramiteDatoDAO ittdDAO, final ServicioActorDAO sracDAO,
-			final ServicioArchivoDAO srarDAO, final ServicioSecuenciaDAO srscDAO,
-			final TramiteProxyService trmtService) {
+			final ServicioArchivoDAO srarDAO, final ServicioSecuenciaDAO srscDAO, final UsuarioDAO usroDAO,
+			final EntidadProxyService entiProxy, final TramiteProxyService trmtProxy) {
 		super();
 		this.srvcDAO = srvcDAO;
 		this.srdtDAO = srdtDAO;
@@ -143,7 +159,29 @@ public class ServicioService {
 		this.sracDAO = sracDAO;
 		this.srarDAO = srarDAO;
 		this.srscDAO = srscDAO;
-		this.trmtService = trmtService;
+		this.usroDAO = usroDAO;
+		this.entiProxy = entiProxy;
+		this.trmtProxy = trmtProxy;
+	}
+
+	/**
+	 * Sets the enti id.
+	 *
+	 * @param entiId
+	 *            the new enti id
+	 */
+	protected void setEntiId(final Long entiId) {
+		this.entiId = entiId;
+	}
+
+	/**
+	 * Sets the usro id.
+	 *
+	 * @param usroId
+	 *            the new usro id
+	 */
+	protected void setUsroId(final Long usroId) {
+		this.usroId = usroId;
 	}
 
 	/**
@@ -177,7 +215,7 @@ public class ServicioService {
 	 */
 	public final ServicioVO selectObject(@NonNull final ServicioCriterioVO srvcCriterio)
 			throws InstanceNotFoundException {
-		// fillUserSpecificFilter(session, srvcCriterio);
+		fillUserSpecificFilter(srvcCriterio);
 
 		final ServicioVO srvcVO = srvcDAO.selectObject(srvcCriterio);
 
@@ -203,7 +241,7 @@ public class ServicioService {
 	 */
 	public final PaginatedList<ServicioVO> selectList(@NonNull final ServicioCriterioVO srvcCriterio, final int offset,
 			final int limit) {
-		// fillUserSpecificFilter(session, srvcCriterio);
+		fillUserSpecificFilter(srvcCriterio);
 
 		final int count = srvcDAO.count(srvcCriterio);
 		final List<ServicioVO> srvcList = new ArrayList<>();
@@ -225,7 +263,7 @@ public class ServicioService {
 	 * @return the list
 	 */
 	public final List<ServicioVO> selectList(@NonNull final ServicioCriterioVO srvcCriterio) {
-		// fillUserSpecificFilter(srvcCriterio);
+		fillUserSpecificFilter(srvcCriterio);
 
 		final List<ServicioVO> srvcList = srvcDAO.selectList(srvcCriterio);
 
@@ -283,7 +321,7 @@ public class ServicioService {
 
 		final Map<Long, Long> ssrvDepsMap = new HashMap<Long, Long>();
 
-		final TipoServicioDetailVO tpsrDetail = TipoServicioProxy.select(srvc.getEntiId());
+		final TipoServicioDetailVO tpsrDetail = entiProxy.selectTpsr(srvc.getEntiId());
 
 		if (tpsrDetail.getEntdList() != null) {
 			if (srvc.getItdtMap() == null) {
@@ -339,7 +377,7 @@ public class ServicioService {
 				ssrvVO.setSrvc(srvc);
 				ssrvDAO.insert(ssrvVO);
 
-				final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(ssrvVO.getEntiId());
+				final TipoSubservicioDetailVO tpssDetail = entiProxy.selectTpss(ssrvVO.getEntiId());
 
 				if (tpssDetail.getEntdList() != null) {
 					if (ssrvVO.getItdtMap() == null) {
@@ -432,7 +470,7 @@ public class ServicioService {
 			final List<SubservicioVO> ssrvList = ssrvMap == null ? null : ssrvMap.get(key);
 			final List<SubservicioSubservicioVO> ssssList = ssssMap == null ? null : ssssMap.get(key);
 
-			final TipoServicioDetailVO tpsrDetail = TipoServicioProxy.select(srvc.getEntiId());
+			final TipoServicioDetailVO tpsrDetail = entiProxy.selectTpsr(srvc.getEntiId());
 
 			if (tpsrDetail.getEntdList() != null) {
 				if (srvc.getItdtMap() == null) {
@@ -488,7 +526,7 @@ public class ServicioService {
 					ssrvVO.setSrvc(srvc);
 					ssrvDAO.insert(ssrvVO);
 
-					final TipoSubservicioDetailVO tpssDetail = TipoSubservicioProxy.select(ssrvVO.getEntiId());
+					final TipoSubservicioDetailVO tpssDetail = entiProxy.selectTpss(ssrvVO.getEntiId());
 
 					if (tpssDetail.getEntdList() != null) {
 						if (ssrvVO.getItdtMap() == null) {
@@ -743,7 +781,7 @@ public class ServicioService {
 			throw new InstanceNotFoundException(ittr.getTrmt().getEntiId(), ittr.getItemId());
 		}
 
-		final TramiteDetailVO trmtDetail = trmtService.select(ittr.getTrmt().getId());
+		final TramiteDetailVO trmtDetail = trmtProxy.select(ittr.getTrmt().getId());
 
 		IgUtilBO.assignNextVal(ittr);
 
@@ -842,34 +880,38 @@ public class ServicioService {
 		}
 	}
 
-	// private void fillUserSpecificFilter(@NonNull final SqlSession session,
-	// @NonNull final ServicioCriterioVO srvcCriterio) {
-	// srvcCriterio.setEntiId(entiId);
-	//
-	// final UsuarioDAO usroDAO = session.getMapper(UsuarioDAO.class);
-	// final UsuarioCriterioVO usroCriterio = new UsuarioCriterioVO();
-	//
-	// usroCriterio.setId(usroId);
-	//
-	// final UsuarioVO usro = usroDAO.selectObject(usroCriterio);
-	//
-	// if (usro == null) {
-	// throw new Error("Usuario no encontrado: " + usroId);
-	// }
-	//
-	// srvcCriterio.setUsroId(usro.getId());
-	//
-	// if (usro.getSprt() != null) {
-	// srvcCriterio.setUsroSprtId(usro.getSprt().getId());
-	// }
-	//
-	// if (usro.getPrto() != null) {
-	// srvcCriterio.setUsroPrtoId(usro.getPrto().getId());
-	// }
-	//
-	// if (usro.getOrga() != null) {
-	// srvcCriterio.setUsroOrgaId(usro.getPrto().getId());
-	// }
-	// }
+	/**
+	 * Fill user specific filter.
+	 *
+	 * @param srvcCriterio
+	 *            the srvc criterio
+	 */
+	private void fillUserSpecificFilter(@NonNull final ServicioCriterioVO srvcCriterio) {
+		srvcCriterio.setEntiId(entiId);
+
+		final UsuarioCriterioVO usroCriterio = new UsuarioCriterioVO();
+
+		usroCriterio.setId(usroId);
+
+		final UsuarioVO usro = usroDAO.selectObject(usroCriterio);
+
+		if (usro == null) {
+			throw new Error("Usuario no encontrado: " + usroId);
+		}
+
+		srvcCriterio.setUsroId(usro.getId());
+
+		if (usro.getSprt() != null) {
+			srvcCriterio.setUsroSprtId(usro.getSprt().getId());
+		}
+
+		if (usro.getPrto() != null) {
+			srvcCriterio.setUsroPrtoId(usro.getPrto().getId());
+		}
+
+		if (usro.getOrga() != null) {
+			srvcCriterio.setUsroOrgaId(usro.getPrto().getId());
+		}
+	}
 
 }

@@ -70,9 +70,18 @@ public class SuperpuertoService {
 	 * @param sprtCriterio
 	 *            the sprt criterio
 	 * @return the superpuerto VO
+	 * @throws InstanceNotFoundException
+	 *             the instance not found exception
 	 */
-	public SuperpuertoVO selectObject(@NonNull final SuperpuertoCriterioVO sprtCriterio) {
-		return sprtDAO.selectObject(sprtCriterio);
+	public SuperpuertoVO selectObject(@NonNull final SuperpuertoCriterioVO sprtCriterio)
+			throws InstanceNotFoundException {
+		final SuperpuertoVO sprt = sprtDAO.selectObject(sprtCriterio);
+
+		if (sprt == null) {
+			throw new InstanceNotFoundException(MessageI18nKey.sprt, sprtCriterio);
+		}
+
+		return sprt;
 	}
 
 	/**

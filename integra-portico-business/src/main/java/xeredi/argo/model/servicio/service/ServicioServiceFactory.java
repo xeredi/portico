@@ -8,9 +8,11 @@ import javax.inject.Singleton;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.poi.ss.formula.functions.T;
 
 import com.google.inject.Injector;
 
+import lombok.NonNull;
 import xeredi.argo.model.metamodelo.service.TipoServicioService;
 import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
@@ -25,7 +27,7 @@ public class ServicioServiceFactory {
 	private static final Log LOG = LogFactory.getLog(ServicioServiceFactory.class);
 
 	/** The Constant MAP. */
-	private static final Map<Long, Class<? extends ServicioService>> MAP = new HashMap<Long, Class<? extends ServicioService>>();
+	private final Map<Long, Class<? extends ServicioService>> MAP = new HashMap<Long, Class<? extends ServicioService>>();
 
 	/** The injector. */
 	private final Injector injector;
@@ -42,7 +44,7 @@ public class ServicioServiceFactory {
 	 *            the enti service
 	 */
 	@Inject
-	public ServicioServiceFactory(final Injector injector, final TipoServicioService entiService) {
+	private ServicioServiceFactory(final Injector injector, final TipoServicioService entiService) {
 		super();
 		this.injector = injector;
 		this.entiService = entiService;
@@ -53,9 +55,11 @@ public class ServicioServiceFactory {
 	 *
 	 * @param entiId
 	 *            the enti id
+	 * @param usroId
+	 *            the usro id
 	 * @return single instance of ParametroServiceFactory
 	 */
-	public ServicioService getInstance(final Long entiId) {
+	public <T extends ServicioService> T getInstance(final @NonNull Long entiId, final @NonNull Long usroId) {
 		if (MAP.isEmpty()) {
 			init();
 		}
@@ -68,7 +72,12 @@ public class ServicioServiceFactory {
 			throw new Error(errorMessage);
 		}
 
-		return injector.getInstance(MAP.get(entiId));
+		final ServicioService srvcService = injector.getInstance(MAP.get(entiId));
+
+		srvcService.setEntiId(entiId);
+		srvcService.setUsroId(usroId);
+
+		return (T) srvcService;
 	}
 
 	/**
@@ -76,8 +85,8 @@ public class ServicioServiceFactory {
 	 *
 	 * @return the generic instance
 	 */
-	public ServicioService getGenericInstance() {
-		return injector.getInstance(ServicioService.class);
+	public <T extends ServicioService> T getGenericInstance() {
+		return (T) injector.getInstance(ServicioService.class);
 	}
 
 	/**
