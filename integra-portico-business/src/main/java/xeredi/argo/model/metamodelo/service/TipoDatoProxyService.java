@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,16 +19,27 @@ import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
 /**
  * The Class TipoDatoProxyService.
  */
+@Singleton
 public class TipoDatoProxyService {
 	/** The Constant LOG. */
 	private static final Log LOG = LogFactory.getLog(TipoDatoProxyService.class);
 
 	/** The Constant TIPO_DATO_MAP. */
-	private static final Map<Long, TipoDatoVO> MAP = new HashMap<>();
+	private final Map<Long, TipoDatoVO> MAP = new HashMap<>();
 
 	/** The tpdt service. */
+	private final TipoDatoService tpdtService;
+
+	/**
+	 * Instantiates a new tipo dato proxy service.
+	 *
+	 * @param tpdtService the tpdt service
+	 */
 	@Inject
-	private TipoDatoService tpdtService;
+	private TipoDatoProxyService(TipoDatoService tpdtService) {
+		super();
+		this.tpdtService = tpdtService;
+	}
 
 	/**
 	 * Select.

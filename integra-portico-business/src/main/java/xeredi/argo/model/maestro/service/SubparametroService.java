@@ -52,7 +52,7 @@ public class SubparametroService {
 	 *            the spdt DAO
 	 */
 	@Inject
-	public SubparametroService(final SubparametroDAO sprmDAO, final SubparametroDatoDAO spdtDAO) {
+	protected SubparametroService(final SubparametroDAO sprmDAO, final SubparametroDatoDAO spdtDAO) {
 		super();
 		this.sprmDAO = sprmDAO;
 		this.spdtDAO = spdtDAO;

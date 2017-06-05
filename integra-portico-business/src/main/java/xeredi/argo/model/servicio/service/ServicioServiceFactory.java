@@ -53,6 +53,8 @@ public class ServicioServiceFactory {
 	/**
 	 * Gets the single instance of ParametroServiceFactory.
 	 *
+	 * @param <T>
+	 *            the generic type
 	 * @param entiId
 	 *            the enti id
 	 * @param usroId
@@ -83,6 +85,8 @@ public class ServicioServiceFactory {
 	/**
 	 * Gets the generic instance.
 	 *
+	 * @param <T>
+	 *            the generic type
 	 * @return the generic instance
 	 */
 	public <T extends ServicioService> T getGenericInstance() {

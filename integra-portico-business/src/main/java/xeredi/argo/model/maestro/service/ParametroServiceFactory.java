@@ -42,7 +42,7 @@ public class ParametroServiceFactory {
 	 *            the enti service
 	 */
 	@Inject
-	public ParametroServiceFactory(final Injector injector, final TipoParametroService entiService) {
+	private ParametroServiceFactory(final Injector injector, final TipoParametroService entiService) {
 		super();
 		this.injector = injector;
 		this.entiService = entiService;

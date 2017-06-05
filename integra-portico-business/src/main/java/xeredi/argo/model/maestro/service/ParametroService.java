@@ -78,7 +78,7 @@ public class ParametroService {
 	 *            the i 18 n service
 	 */
 	@Inject
-	public ParametroService(final ParametroDAO prmtDAO, final ParametroDatoDAO prdtDAO, final SubparametroDAO sprmDAO,
+	protected ParametroService(final ParametroDAO prmtDAO, final ParametroDatoDAO prdtDAO, final SubparametroDAO sprmDAO,
 			final SubparametroDatoDAO spdtDAO, final I18nService i18nService) {
 		super();
 		this.prmtDAO = prmtDAO;

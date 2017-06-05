@@ -138,8 +138,10 @@ public class ServicioService {
 	 *            the srsc DAO
 	 * @param usroDAO
 	 *            the usro DAO
-	 * @param trmtService
-	 *            the trmt service
+	 * @param entiProxy
+	 *            the enti proxy
+	 * @param trmtProxy
+	 *            the trmt proxy
 	 */
 	@Inject
 	protected ServicioService(final ServicioDAO srvcDAO, final ServicioDatoDAO srdtDAO, final SubservicioDAO ssrvDAO,

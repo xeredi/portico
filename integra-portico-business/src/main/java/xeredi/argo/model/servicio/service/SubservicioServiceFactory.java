@@ -52,13 +52,15 @@ public class SubservicioServiceFactory {
 	/**
 	 * Gets the single instance of SubservicioServiceFactory.
 	 *
+	 * @param <T>
+	 *            the generic type
 	 * @param entiId
 	 *            the enti id
 	 * @param usroId
 	 *            the usro id
 	 * @return single instance of SubservicioServiceFactory
 	 */
-	public SubservicioService getInstance(final @NonNull Long entiId, final @NonNull Long usroId) {
+	public <T extends SubservicioService> T getInstance(final @NonNull Long entiId, final @NonNull Long usroId) {
 		if (MAP.isEmpty()) {
 			init();
 		}
@@ -76,7 +78,7 @@ public class SubservicioServiceFactory {
 		ssrvService.setEntiId(entiId);
 		ssrvService.setUsroId(usroId);
 
-		return ssrvService;
+		return (T) ssrvService;
 	}
 
 	/**

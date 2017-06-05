@@ -41,16 +41,32 @@ import xeredi.argo.model.util.PaginatedList;
 public class TipoDatoService {
 
 	/** The tpdt DAO. */
-	@Inject
 	private TipoDatoDAO tpdtDAO;
 
 	/** The cdrf DAO. */
-	@Inject
 	private CodigoReferenciaDAO cdrfDAO;
 
 	/** The i 18 n DAO. */
-	@Inject
 	private I18nService i18nService;
+
+	/**
+	 * Instantiates a new tipo dato service.
+	 *
+	 * @param tpdtDAO
+	 *            the tpdt DAO
+	 * @param cdrfDAO
+	 *            the cdrf DAO
+	 * @param i18nService
+	 *            the i 18 n service
+	 */
+	@Inject
+	public TipoDatoService(final TipoDatoDAO tpdtDAO, final CodigoReferenciaDAO cdrfDAO,
+			final I18nService i18nService) {
+		super();
+		this.tpdtDAO = tpdtDAO;
+		this.cdrfDAO = cdrfDAO;
+		this.i18nService = i18nService;
+	}
 
 	/**
 	 * Select.
@@ -75,24 +91,7 @@ public class TipoDatoService {
 			throw new InstanceNotFoundException(MessageI18nKey.tpdt, id);
 		}
 
-		// Si el tipo de dato es un codigo de referencia, se buscan los
-		// valores posibles
-		if (tpdt.getTipoElemento() == TipoElemento.CR) {
-			final CodigoReferenciaCriterioVO cdrfCriterio = new CodigoReferenciaCriterioVO();
-
-			cdrfCriterio.setIdioma(idioma);
-			cdrfCriterio.setTpdtIds(new HashSet<>(Arrays.asList(new Long[] { tpdt.getId() })));
-
-			tpdt.setCdrfList(cdrfDAO.selectList(cdrfCriterio));
-
-			final Set<String> cdrfCodeSet = new HashSet<>();
-
-			for (final CodigoReferenciaVO cdrf : tpdt.getCdrfList()) {
-				cdrfCodeSet.add(cdrf.getValor());
-			}
-
-			tpdt.setCdrfCodeSet(cdrfCodeSet);
-		}
+		fillDependencies(Arrays.asList(new TipoDatoVO[] { tpdt }));
 
 		return tpdt;
 	}
@@ -172,7 +171,11 @@ public class TipoDatoService {
 	 * @return the list
 	 */
 	public List<TipoDatoVO> selectList(@NonNull final TipoDatoCriterioVO tpdtCriterio) {
-		return tpdtDAO.selectList(tpdtCriterio);
+		final List<TipoDatoVO> list = tpdtDAO.selectList(tpdtCriterio);
+
+		fillDependencies(list);
+
+		return list;
 	}
 
 	/**
@@ -189,9 +192,15 @@ public class TipoDatoService {
 	public PaginatedList<TipoDatoVO> selectList(@NonNull final TipoDatoCriterioVO tpdtCriterio, int offset, int limit) {
 		final int count = tpdtDAO.count(tpdtCriterio);
 
-		return new PaginatedList<>(
-				count > offset ? tpdtDAO.selectList(tpdtCriterio, new RowBounds(offset, limit)) : new ArrayList<>(),
-				offset, limit, count);
+		if (count > offset) {
+			final List<TipoDatoVO> list = tpdtDAO.selectList(tpdtCriterio, new RowBounds(offset, limit));
+
+			fillDependencies(list);
+
+			return new PaginatedList<>(list, offset, limit, count);
+		}
+
+		return new PaginatedList<>(new ArrayList<>(), offset, limit, count);
 	}
 
 	/**
@@ -202,33 +211,9 @@ public class TipoDatoService {
 	 * @return the map
 	 */
 	public Map<Long, TipoDatoVO> selectMap(TipoDatoCriterioVO tpdtCriterio) {
-		final Map<Long, TipoDatoVO> tpdtMap = tpdtDAO.selectMap(tpdtCriterio);
-		final Map<Long, List<CodigoReferenciaVO>> cdrfMap = new HashMap<>();
+		final Map<Long, TipoDatoVO> tpdtMap = new HashMap<>();
 
-		for (final CodigoReferenciaVO cdrf : cdrfDAO.selectList(new CodigoReferenciaCriterioVO())) {
-			if (!cdrfMap.containsKey(cdrf.getTpdtId())) {
-				cdrfMap.put(cdrf.getTpdtId(), new ArrayList<CodigoReferenciaVO>());
-			}
-
-			cdrfMap.get(cdrf.getTpdtId()).add(cdrf);
-
-			cdrf.setTpdtId(null);
-			cdrf.setOrden(null);
-		}
-
-		for (final TipoDatoVO tpdt : tpdtMap.values()) {
-			if (cdrfMap.containsKey(tpdt.getId())) {
-				tpdt.setCdrfList(cdrfMap.get(tpdt.getId()));
-
-				final Set<String> cdrfCodeSet = new HashSet<>();
-
-				for (final CodigoReferenciaVO cdrf : cdrfMap.get(tpdt.getId())) {
-					cdrfCodeSet.add(cdrf.getValor());
-				}
-
-				tpdt.setCdrfCodeSet(cdrfCodeSet);
-			}
-
+		for (final TipoDatoVO tpdt : selectList(tpdtCriterio)) {
 			tpdtMap.put(tpdt.getId(), tpdt);
 		}
 
@@ -250,5 +235,46 @@ public class TipoDatoService {
 		}
 
 		return list;
+	}
+
+	/**
+	 * Fill dependencies.
+	 *
+	 * @param list
+	 *            the list
+	 */
+	private void fillDependencies(final @NonNull List<TipoDatoVO> list) {
+		final Set<Long> tpdtIds = new HashSet<>();
+		final Map<Long, List<CodigoReferenciaVO>> cdrfMap = new HashMap<>();
+
+		for (final TipoDatoVO tpdt : list) {
+			if (tpdt.getTipoElemento() == TipoElemento.CR) {
+				tpdtIds.add(tpdt.getId());
+				cdrfMap.put(tpdt.getId(), new ArrayList<CodigoReferenciaVO>());
+
+				tpdt.setCdrfList(new ArrayList<>());
+				tpdt.setCdrfCodeSet(new HashSet<>());
+			}
+		}
+
+		if (!tpdtIds.isEmpty()) {
+			final CodigoReferenciaCriterioVO cdfrCriterio = new CodigoReferenciaCriterioVO();
+
+			cdfrCriterio.setTpdtIds(tpdtIds);
+
+			for (final CodigoReferenciaVO cdrf : cdrfDAO.selectList(cdfrCriterio)) {
+				cdrfMap.get(cdrf.getTpdtId()).add(cdrf);
+			}
+
+			for (final TipoDatoVO tpdt : list) {
+				if (cdrfMap.containsKey(tpdt.getId())) {
+					tpdt.setCdrfList(cdrfMap.get(tpdt.getId()));
+
+					for (final CodigoReferenciaVO cdrf : cdrfMap.get(tpdt.getId())) {
+						tpdt.getCdrfCodeSet().add(cdrf.getTexto());
+					}
+				}
+			}
+		}
 	}
 }

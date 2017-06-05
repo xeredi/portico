@@ -27,11 +27,11 @@ import xeredi.argo.model.comun.vo.PuertoCriterioVO;
 import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.comun.vo.SuperpuertoCriterioVO;
 import xeredi.argo.model.comun.vo.SuperpuertoVO;
-import xeredi.argo.model.estadistica.bo.PeriodoProcesoBO;
 import xeredi.argo.model.estadistica.io.EstadisticaFileType;
 import xeredi.argo.model.estadistica.io.OppeFileImport;
+import xeredi.argo.model.estadistica.service.PeriodoProcesoService;
 import xeredi.argo.model.estadistica.vo.PeriodoProcesoVO;
-import xeredi.argo.model.metamodelo.proxy.TipoEstadisticaProxy;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.Entidad;
 import xeredi.argo.model.proceso.vo.MensajeCodigo;
 import xeredi.argo.model.proceso.vo.ProcesoTipo;
@@ -53,7 +53,13 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
 	private PuertoService prtoService;
 
 	@Inject
+	private PeriodoProcesoService peprService;
+
+	@Inject
 	private ArchivoService archService;
+
+	@Inject
+	private EntidadProxyService entiProxy;
 
 	/**
 	 * The Enum params.
@@ -156,17 +162,17 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
 
 					if (prbtData.getPrmnList().isEmpty()) {
 						fileImport.readEPP(mapFiles.get(EstadisticaFileType.EPP));
-						fileImport.readEAP(TipoEstadisticaProxy.select(Entidad.ACTIVIDAD_PESQUERA.getId()),
+						fileImport.readEAP(entiProxy.selectTpes(Entidad.ACTIVIDAD_PESQUERA.getId()),
 								mapFiles.get(EstadisticaFileType.EAP));
-						fileImport.readEAV(TipoEstadisticaProxy.select(Entidad.AVITUALLAMIENTO.getId()),
+						fileImport.readEAV(entiProxy.selectTpes(Entidad.AVITUALLAMIENTO.getId()),
 								mapFiles.get(EstadisticaFileType.EAV));
-						fileImport.readEAE(TipoEstadisticaProxy.select(Entidad.AGREGACION_ESCALA.getId()),
+						fileImport.readEAE(entiProxy.selectTpes(Entidad.AGREGACION_ESCALA.getId()),
 								mapFiles.get(EstadisticaFileType.EAE));
-						fileImport.readEMM(TipoEstadisticaProxy.select(Entidad.MOVIMIENTO_MERCANCIA.getId()),
+						fileImport.readEMM(entiProxy.selectTpes(Entidad.MOVIMIENTO_MERCANCIA.getId()),
 								mapFiles.get(EstadisticaFileType.EMM));
-						fileImport.readEME(TipoEstadisticaProxy.select(Entidad.MOVIMIENTO_MERCANCIA_EEE.getId()),
+						fileImport.readEME(entiProxy.selectTpes(Entidad.MOVIMIENTO_MERCANCIA_EEE.getId()),
 								mapFiles.get(EstadisticaFileType.EME), isSigma);
-						fileImport.readEMT(TipoEstadisticaProxy.select(Entidad.MOVIMIENTO_TIPO_BUQUE_EEE.getId()),
+						fileImport.readEMT(entiProxy.selectTpes(Entidad.MOVIMIENTO_TIPO_BUQUE_EEE.getId()),
 								mapFiles.get(EstadisticaFileType.EMT));
 					}
 				} catch (final IOException ex) {
@@ -182,10 +188,8 @@ public final class ProcesoCargaOppe extends ProcesoTemplate {
 		if (prbtData.getPrmnList().isEmpty()) {
 			LOG.info("Guardar Datos");
 
-			final PeriodoProcesoBO peprBO = new PeriodoProcesoBO();
-
 			try {
-				peprBO.cargarArchivo(pepr, prtoMap, fileImport.getEstdList(), sobreescribir);
+				peprService.cargarArchivo(pepr, prtoMap, fileImport.getEstdList(), sobreescribir);
 
 				prbtData.getItemSalidaList().add(pepr.getId());
 			} catch (final DuplicateInstanceException ex) {

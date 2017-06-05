@@ -32,16 +32,32 @@ import xeredi.argo.model.util.PaginatedList;
 public class AccionBaseService {
 
 	/** The acbs DAO. */
-	@Inject
-	private AccionBaseDAO acbsDAO;
+	private final AccionBaseDAO acbsDAO;
 
 	/** The fncd DAO. */
-	@Inject
-	private FuncionalidadDAO fncdDAO;
+	private final FuncionalidadDAO fncdDAO;
 
 	/** The fngr DAO. */
+	private final FuncionalidadGrupoDAO fngrDAO;
+
+	/**
+	 * Instantiates a new accion base service.
+	 *
+	 * @param acbsDAO
+	 *            the acbs DAO
+	 * @param fncdDAO
+	 *            the fncd DAO
+	 * @param fngrDAO
+	 *            the fngr DAO
+	 */
 	@Inject
-	private FuncionalidadGrupoDAO fngrDAO;
+	private AccionBaseService(final AccionBaseDAO acbsDAO, final FuncionalidadDAO fncdDAO,
+			final FuncionalidadGrupoDAO fngrDAO) {
+		super();
+		this.acbsDAO = acbsDAO;
+		this.fncdDAO = fncdDAO;
+		this.fngrDAO = fngrDAO;
+	}
 
 	/**
 	 * Insert.
