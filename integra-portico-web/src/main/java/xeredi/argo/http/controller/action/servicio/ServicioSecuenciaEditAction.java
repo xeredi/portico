@@ -16,7 +16,7 @@ import xeredi.argo.model.metamodelo.service.TipoServicioService;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.TipoServicioCriterioVO;
 import xeredi.argo.model.metamodelo.vo.TipoServicioVO;
-import xeredi.argo.model.servicio.bo.ServicioSecuenciaBO;
+import xeredi.argo.model.servicio.service.ServicioSecuenciaService;
 import xeredi.argo.model.servicio.vo.ServicioSecuenciaCriterioVO;
 import xeredi.argo.model.servicio.vo.ServicioSecuenciaVO;
 
@@ -43,6 +43,9 @@ public final class ServicioSecuenciaEditAction extends CrudEditAction<ServicioSe
 	@Inject
 	private PuertoService prtoService;
 
+	@Inject
+	private ServicioSecuenciaService srscService;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -55,7 +58,6 @@ public final class ServicioSecuenciaEditAction extends CrudEditAction<ServicioSe
 			Preconditions.checkNotNull(model.getTpsr().getId());
 			Preconditions.checkNotNull(model.getAnno());
 
-			final ServicioSecuenciaBO srscBO = new ServicioSecuenciaBO();
 			final ServicioSecuenciaCriterioVO srscCriterio = new ServicioSecuenciaCriterioVO();
 
 			srscCriterio.setPrtoId(model.getPrto().getId());
@@ -63,7 +65,7 @@ public final class ServicioSecuenciaEditAction extends CrudEditAction<ServicioSe
 			srscCriterio.setAnno(model.getAnno());
 			srscCriterio.setIdioma(getIdioma());
 
-			model = srscBO.select(srscCriterio);
+			model = srscService.select(srscCriterio);
 		}
 	}
 

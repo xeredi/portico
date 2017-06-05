@@ -28,6 +28,9 @@ public final class ServicioDetailAction extends ItemDetailAction<ServicioVO, Tip
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -8504526234230863854L;
 
+	@Getter
+	private List<ServicioVO> srvcDepsList;
+
 	/** The arin list. */
 	@Getter
 	private List<ArchivoInfoVO> arinList;
@@ -58,6 +61,7 @@ public final class ServicioDetailAction extends ItemDetailAction<ServicioVO, Tip
 		final ServicioService srvcService = srvcFactory.getInstance(model.getEntiId(), usroId);
 
 		model = srvcService.select(model.getId(), getIdioma());
+		srvcDepsList = srvcService.selectDepsList(model.getId(), getIdioma());
 
 		final ArchivoCriterioVO archCriterio = new ArchivoCriterioVO();
 

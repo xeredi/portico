@@ -1,12 +1,14 @@
 package xeredi.argo.http.controller.action.servicio;
 
+import javax.inject.Inject;
+
 import com.google.common.base.Preconditions;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import xeredi.argo.http.controller.action.comun.CrudDetailAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.servicio.bo.ServicioSecuenciaBO;
+import xeredi.argo.model.servicio.service.ServicioSecuenciaService;
 import xeredi.argo.model.servicio.vo.ServicioSecuenciaCriterioVO;
 import xeredi.argo.model.servicio.vo.ServicioSecuenciaVO;
 
@@ -18,28 +20,30 @@ import xeredi.argo.model.servicio.vo.ServicioSecuenciaVO;
 @EqualsAndHashCode(callSuper = true)
 public final class ServicioSecuenciaDetailAction extends CrudDetailAction<ServicioSecuenciaVO> {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -2738862112087523687L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -2738862112087523687L;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void doDetail() throws ApplicationException {
-        Preconditions.checkNotNull(model.getPrto());
-        Preconditions.checkNotNull(model.getPrto().getId());
-        Preconditions.checkNotNull(model.getTpsr());
-        Preconditions.checkNotNull(model.getTpsr().getId());
-        Preconditions.checkNotNull(model.getAnno());
+	@Inject
+	private ServicioSecuenciaService srscService;
 
-        final ServicioSecuenciaBO srscBO = new ServicioSecuenciaBO();
-        final ServicioSecuenciaCriterioVO srscCriterio = new ServicioSecuenciaCriterioVO();
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doDetail() throws ApplicationException {
+		Preconditions.checkNotNull(model.getPrto());
+		Preconditions.checkNotNull(model.getPrto().getId());
+		Preconditions.checkNotNull(model.getTpsr());
+		Preconditions.checkNotNull(model.getTpsr().getId());
+		Preconditions.checkNotNull(model.getAnno());
 
-        srscCriterio.setPrtoId(model.getPrto().getId());
-        srscCriterio.setTpsrId(model.getTpsr().getId());
-        srscCriterio.setAnno(model.getAnno());
-        srscCriterio.setIdioma(getIdioma());
+		final ServicioSecuenciaCriterioVO srscCriterio = new ServicioSecuenciaCriterioVO();
 
-        model = srscBO.select(srscCriterio);
-    }
+		srscCriterio.setPrtoId(model.getPrto().getId());
+		srscCriterio.setTpsrId(model.getTpsr().getId());
+		srscCriterio.setAnno(model.getAnno());
+		srscCriterio.setIdioma(getIdioma());
+
+		model = srscService.select(srscCriterio);
+	}
 }

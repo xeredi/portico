@@ -198,12 +198,13 @@ public class ServicioService {
 	 *             the instance not found exception
 	 */
 	public final ServicioVO select(@NonNull final Long srvcId, final String idioma) throws InstanceNotFoundException {
-		final ServicioCriterioVO srvcCriterioVO = new ServicioCriterioVO();
+		final ServicioCriterioVO srvcCriterio = new ServicioCriterioVO();
 
-		srvcCriterioVO.setId(srvcId);
-		srvcCriterioVO.setIdioma(idioma);
+		srvcCriterio.setEntiId(entiId);
+		srvcCriterio.setId(srvcId);
+		srvcCriterio.setIdioma(idioma);
 
-		return selectObject(srvcCriterioVO);
+		return selectObject(srvcCriterio);
 	}
 
 	/**
@@ -217,6 +218,8 @@ public class ServicioService {
 	 */
 	public final ServicioVO selectObject(@NonNull final ServicioCriterioVO srvcCriterio)
 			throws InstanceNotFoundException {
+		srvcCriterio.setEntiId(entiId);
+
 		fillUserSpecificFilter(srvcCriterio);
 
 		final ServicioVO srvcVO = srvcDAO.selectObject(srvcCriterio);
@@ -243,6 +246,8 @@ public class ServicioService {
 	 */
 	public final PaginatedList<ServicioVO> selectList(@NonNull final ServicioCriterioVO srvcCriterio, final int offset,
 			final int limit) {
+		srvcCriterio.setEntiId(entiId);
+
 		fillUserSpecificFilter(srvcCriterio);
 
 		final int count = srvcDAO.count(srvcCriterio);
@@ -265,6 +270,8 @@ public class ServicioService {
 	 * @return the list
 	 */
 	public final List<ServicioVO> selectList(@NonNull final ServicioCriterioVO srvcCriterio) {
+		srvcCriterio.setEntiId(entiId);
+
 		fillUserSpecificFilter(srvcCriterio);
 
 		final List<ServicioVO> srvcList = srvcDAO.selectList(srvcCriterio);
@@ -285,6 +292,8 @@ public class ServicioService {
 	 */
 	public final List<ServicioVO> selectTypeaheadList(@NonNull final ServicioTypeaheadCriterioVO criterio,
 			final int limit) {
+		criterio.setEntiId(entiId);
+
 		if (criterio.getTextoBusqueda() == null) {
 			criterio.setTextoBusqueda("");
 		}
@@ -302,6 +311,26 @@ public class ServicioService {
 		}
 
 		return srvcDAO.selectTypeaheadList(criterio, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
+	}
+
+	/**
+	 * Select deps list.
+	 *
+	 * @param srvcDeoId
+	 *            the srvc deo id
+	 * @param idioma
+	 *            the idioma
+	 * @return the list
+	 */
+	public final List<ServicioVO> selectDepsList(@NonNull final Long srvcDeoId, final String idioma) {
+		final ServicioCriterioVO srvcCriterio = new ServicioCriterioVO();
+
+		srvcCriterio.setSrvcDepId(srvcDeoId);
+		srvcCriterio.setIdioma(idioma);
+
+		fillUserSpecificFilter(srvcCriterio);
+
+		return srvcDAO.selectList(srvcCriterio);
 	}
 
 	/**
@@ -889,8 +918,6 @@ public class ServicioService {
 	 *            the srvc criterio
 	 */
 	private void fillUserSpecificFilter(@NonNull final ServicioCriterioVO srvcCriterio) {
-		srvcCriterio.setEntiId(entiId);
-
 		final UsuarioCriterioVO usroCriterio = new UsuarioCriterioVO();
 
 		usroCriterio.setId(usroId);

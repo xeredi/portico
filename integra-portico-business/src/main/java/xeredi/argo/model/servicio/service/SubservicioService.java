@@ -165,6 +165,8 @@ public class SubservicioService {
 	 * @return the int
 	 */
 	public final int count(@NonNull final SubservicioCriterioVO ssrvCriterio) {
+		ssrvCriterio.setEntiId(entiId);
+
 		fillUserSpecificFilter(ssrvCriterio);
 
 		return ssrvDAO.count(ssrvCriterio);
@@ -183,6 +185,8 @@ public class SubservicioService {
 	 */
 	public final PaginatedList<SubservicioVO> selectList(@NonNull final SubservicioCriterioVO ssrvCriterio,
 			final int offset, final int limit) {
+		ssrvCriterio.setEntiId(entiId);
+
 		fillUserSpecificFilter(ssrvCriterio);
 
 		final int count = ssrvDAO.count(ssrvCriterio);
@@ -202,6 +206,8 @@ public class SubservicioService {
 	 * @return the list
 	 */
 	public final List<SubservicioVO> selectList(@NonNull final SubservicioCriterioVO ssrvCriterio) {
+		ssrvCriterio.setEntiId(entiId);
+
 		fillUserSpecificFilter(ssrvCriterio);
 
 		final List<SubservicioVO> ssrvList = ssrvDAO.selectList(ssrvCriterio);
@@ -242,6 +248,7 @@ public class SubservicioService {
 			throws InstanceNotFoundException {
 		final SubservicioCriterioVO ssrvCriterio = new SubservicioCriterioVO();
 
+		ssrvCriterio.setEntiId(entiId);
 		ssrvCriterio.setId(ssrvId);
 		ssrvCriterio.setIdioma(idioma);
 
@@ -259,6 +266,8 @@ public class SubservicioService {
 	 */
 	public final SubservicioVO selectObject(@NonNull final SubservicioCriterioVO ssrvCriterio)
 			throws InstanceNotFoundException {
+		ssrvCriterio.setEntiId(entiId);
+
 		fillUserSpecificFilter(ssrvCriterio);
 
 		final SubservicioVO ssrv = ssrvDAO.selectObject(ssrvCriterio);
@@ -294,6 +303,7 @@ public class SubservicioService {
 	 */
 	public final List<SubservicioVO> selectTypeaheadList(@NonNull final SubservicioLupaCriterioVO ssrvTypeaheadCriterio,
 			final int limit) {
+		ssrvTypeaheadCriterio.setEntiId(entiId);
 		ssrvTypeaheadCriterio.setNumero(Integer.valueOf(ssrvTypeaheadCriterio.getTextoBusqueda()));
 
 		return ssrvDAO.selectLupaList(ssrvTypeaheadCriterio, new RowBounds(RowBounds.NO_ROW_OFFSET, limit));
@@ -388,6 +398,7 @@ public class SubservicioService {
 	 *            the ssrv vo
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
+	 * @see #updatePostOperations(SubservicioVO)
 	 */
 	public final void update(@NonNull final SubservicioVO ssrvVO) throws InstanceNotFoundException {
 		Preconditions.checkNotNull(ssrvVO.getSrvc());
@@ -432,7 +443,7 @@ public class SubservicioService {
 	 * @param ssrv
 	 *            the ssrv vo
 	 *
-	 * @see SubservicioService#duplicatePostOperations(SubservicioVO)
+	 * @see #duplicatePostOperations(SubservicioVO)
 	 */
 	public final void duplicate(@NonNull final SubservicioVO ssrv) {
 		Preconditions.checkNotNull(ssrv.getId());
@@ -626,6 +637,7 @@ public class SubservicioService {
 	 *            the ssrv
 	 * @throws InstanceNotFoundException
 	 *             the instance not found exception
+	 * @see #deletePostOperations(SubservicioVO)
 	 */
 	public final void delete(@NonNull final SubservicioVO ssrv) throws InstanceNotFoundException {
 		Preconditions.checkNotNull(ssrv.getId());
@@ -886,8 +898,6 @@ public class SubservicioService {
 	 *            the ssrv criterio
 	 */
 	private void fillUserSpecificFilter(@NonNull final SubservicioCriterioVO ssrvCriterio) {
-		ssrvCriterio.setEntiId(entiId);
-
 		final UsuarioCriterioVO usroCriterio = new UsuarioCriterioVO();
 
 		usroCriterio.setId(usroId);
