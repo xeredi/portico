@@ -13,6 +13,7 @@ import com.google.common.base.Preconditions;
 
 import xeredi.argo.http.controller.action.item.ItemFileExportAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.report.PdfServiceFactory;
 import xeredi.argo.model.comun.service.I18nService;
 import xeredi.argo.model.comun.vo.I18nVO;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
@@ -47,6 +48,9 @@ public final class ParametroPdfExportAction extends ItemFileExportAction<Paramet
 
 	@Inject
 	private EntidadProxyService entiProxy;
+
+	@Inject
+	private PdfServiceFactory pdfFactory;
 
 	/**
 	 * {@inheritDoc}
@@ -85,7 +89,7 @@ public final class ParametroPdfExportAction extends ItemFileExportAction<Paramet
 				: new HashMap<>();
 
 		try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
-			final ParametroPdf prmtPdf = new ParametroPdf(getBundle());
+			final ParametroPdf prmtPdf = pdfFactory.getInstance(ParametroPdf.class, getLocale());
 
 			prmtPdf.imprimir(model, entiDetail, entiHijasMap, itemHijosMap, i18nMap, baos);
 

@@ -11,6 +11,7 @@ import com.google.common.base.Preconditions;
 
 import xeredi.argo.http.controller.action.comun.CrudFileExportAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.report.PdfServiceFactory;
 import xeredi.argo.model.comun.vo.MessageI18nKey;
 import xeredi.argo.model.facturacion.report.ValoracionPdf;
 import xeredi.argo.model.facturacion.service.ValoracionCargoService;
@@ -56,6 +57,9 @@ public final class ValoracionPdfExportAction extends CrudFileExportAction<Valora
 	@Inject
 	private TipoDatoProxyService tpdtProxy;
 
+	@Inject
+	private PdfServiceFactory pdfFactory;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -88,7 +92,7 @@ public final class ValoracionPdfExportAction extends CrudFileExportAction<Valora
 		}
 
 		try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
-			final ValoracionPdf vlrcPdf = new ValoracionPdf(getBundle());
+			final ValoracionPdf vlrcPdf = pdfFactory.getInstance(ValoracionPdf.class, getLocale());
 
 			vlrcPdf.imprimir(model, pagador, tpdtCodExencion, vlrgList, vlriList, vlrlList, baos);
 

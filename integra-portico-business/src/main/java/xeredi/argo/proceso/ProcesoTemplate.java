@@ -28,7 +28,7 @@ import xeredi.argo.model.item.vo.ItemDatoCriterioVO;
 import xeredi.argo.model.maestro.service.ParametroService;
 import xeredi.argo.model.maestro.vo.ParametroCriterioVO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
-import xeredi.argo.model.metamodelo.proxy.TipoParametroProxy;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.Entidad;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
 import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
@@ -60,6 +60,9 @@ public abstract class ProcesoTemplate {
 
 	@Inject
 	protected ParametroService prmtService;
+
+	@Inject
+	protected EntidadProxyService entiProxy;
 
 	/** The prbt data. */
 	@Getter
@@ -124,7 +127,7 @@ public abstract class ProcesoTemplate {
 		}
 
 		for (final Entidad entidad : prbtData.getCodigoMaestroMap().keySet()) {
-			final TipoParametroDetailVO tpprDetail = TipoParametroProxy.select(entidad.getId());
+			final TipoParametroDetailVO tpprDetail = entiProxy.selectTppr(entidad.getId());
 
 			prbtData.getMaestroMap().put(entidad, new HashMap<String, ParametroVO>());
 			prbtData.getMaestroPrtoMap().put(entidad, new HashMap<Long, Map<String, ParametroVO>>());

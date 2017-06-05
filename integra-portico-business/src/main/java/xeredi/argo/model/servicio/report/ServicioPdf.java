@@ -4,9 +4,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 
-import lombok.NonNull;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.DynamicReports;
 import net.sf.dynamicreports.report.builder.component.Components;
@@ -32,17 +30,6 @@ import xeredi.argo.model.servicio.vo.SubservicioVO;
  * The Class ServicioPdf.
  */
 public final class ServicioPdf extends BasePdf {
-
-	/**
-	 * Instantiates a new servicio pdf.
-	 *
-	 * @param abundle
-	 *            the abundle
-	 */
-	public ServicioPdf(@NonNull final ResourceBundle abundle) {
-		super(abundle);
-	}
-
 	/**
 	 * Imprimir.
 	 *

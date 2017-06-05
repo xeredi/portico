@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import com.google.common.base.Preconditions;
 
@@ -39,16 +38,6 @@ public final class FacturaPdf extends BasePdf {
 
 	/** The Constant FIRMA. */
 	private static final ImageBuilder FIRMA = DynamicReports.cmp.image("/temp/FirmaAP.png");
-
-	/**
-	 * Instantiates a new factura pdf.
-	 *
-	 * @param abundle
-	 *            the abundle
-	 */
-	public FacturaPdf(@NonNull final ResourceBundle abundle) {
-		super(abundle);
-	}
 
 	/**
 	 * Imprimir.

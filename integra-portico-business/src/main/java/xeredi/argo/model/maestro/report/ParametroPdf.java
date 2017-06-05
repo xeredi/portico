@@ -4,7 +4,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import lombok.NonNull;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
@@ -36,16 +35,6 @@ import xeredi.argo.model.metamodelo.vo.TipoSubparametroDetailVO;
  * The Class ParametroPdf.
  */
 public final class ParametroPdf extends BasePdf {
-
-	/**
-	 * Instantiates a new parametro pdf.
-	 *
-	 * @param abundle
-	 *            the abundle
-	 */
-	public ParametroPdf(@NonNull final ResourceBundle abundle) {
-		super(abundle);
-	}
 
 	/**
 	 * Imprimir.

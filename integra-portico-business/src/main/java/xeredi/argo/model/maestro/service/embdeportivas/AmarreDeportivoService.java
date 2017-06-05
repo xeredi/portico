@@ -20,6 +20,7 @@ import xeredi.argo.model.maestro.dao.embdeportivas.AmarreDeportivoDAO;
 import xeredi.argo.model.maestro.service.ParametroService;
 import xeredi.argo.model.maestro.vo.ParametroCriterioVO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
 
 // TODO: Auto-generated Javadoc
@@ -45,14 +46,16 @@ public class AmarreDeportivoService extends ParametroService {
 	 *            the spdt DAO
 	 * @param i18nService
 	 *            the i 18 n service
+	 * @param entiProxy
+	 *            the enti proxy
 	 * @param amadDAO
 	 *            the amad DAO
 	 */
 	@Inject
 	public AmarreDeportivoService(final ParametroDAO prmtDAO, final ParametroDatoDAO prdtDAO,
 			final SubparametroDAO sprmDAO, final SubparametroDatoDAO spdtDAO, final I18nService i18nService,
-			final AmarreDeportivoDAO amadDAO) {
-		super(prmtDAO, prdtDAO, sprmDAO, spdtDAO, i18nService);
+			final EntidadProxyService entiProxy, final AmarreDeportivoDAO amadDAO) {
+		super(prmtDAO, prdtDAO, sprmDAO, spdtDAO, i18nService, entiProxy);
 
 		this.amadDAO = amadDAO;
 	}

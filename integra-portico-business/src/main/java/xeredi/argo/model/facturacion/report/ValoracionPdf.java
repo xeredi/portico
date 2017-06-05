@@ -7,7 +7,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
+
+import javax.inject.Inject;
 
 import lombok.NonNull;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
@@ -31,7 +32,7 @@ import xeredi.argo.model.facturacion.vo.ValoracionImpuestoVO;
 import xeredi.argo.model.facturacion.vo.ValoracionLineaVO;
 import xeredi.argo.model.facturacion.vo.ValoracionVO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
-import xeredi.argo.model.metamodelo.proxy.EntidadProxy;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoDato;
 import xeredi.argo.model.metamodelo.vo.TipoDatoVO;
@@ -41,17 +42,10 @@ import xeredi.argo.model.metamodelo.vo.TipoElemento;
 /**
  * The Class ValoracionPdf.
  */
-public final class ValoracionPdf extends BasePdf {
+public class ValoracionPdf extends BasePdf {
 
-	/**
-	 * The Constructor.
-	 *
-	 * @param abundle
-	 *            the abundle
-	 */
-	public ValoracionPdf(@NonNull final ResourceBundle abundle) {
-		super(abundle);
-	}
+	@Inject
+	private EntidadProxyService entiProxy;
 
 	/**
 	 * Imprimir.
@@ -217,7 +211,7 @@ public final class ValoracionPdf extends BasePdf {
 	 */
 	private ComponentBuilder<?, ?> getSubreportPagador(@NonNull final ParametroVO pagador,
 			@NonNull final ValoracionVO vlrc) {
-		final AbstractEntidadDetailVO entiPagador = EntidadProxy.select(pagador.getEntiId());
+		final AbstractEntidadDetailVO entiPagador = entiProxy.select(pagador.getEntiId());
 		final List<List<PdfCell>> listCells = new ArrayList<>();
 
 		{

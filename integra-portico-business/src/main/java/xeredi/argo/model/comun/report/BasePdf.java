@@ -5,7 +5,10 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
+
+import javax.inject.Inject;
 
 import com.google.common.base.Preconditions;
 
@@ -15,6 +18,7 @@ import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
 import net.sf.dynamicreports.report.builder.component.TextFieldBuilder;
 import net.sf.dynamicreports.report.constant.HorizontalTextAlignment;
+import xeredi.argo.model.comun.service.ResourceBundleService;
 import xeredi.argo.model.item.vo.ItemDatoVO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoElemento;
@@ -40,27 +44,29 @@ public abstract class BasePdf {
 	private static final DecimalFormat CURRENCY_FORMAT = new DecimalFormat("###,###,##0.00");
 
 	/** The bundle. */
-	protected final ResourceBundle bundle;
+	protected ResourceBundle bundle;
+
+	/** The locale. */
+	protected Locale locale;
 
 	/**
-	 * Instantiates a new pdf util.
+	 * Sets the bundle.
 	 *
-	 * @param abundle
-	 *            the abundle
+	 * @param bundle
+	 *            the new bundle
 	 */
-	public BasePdf(@NonNull final ResourceBundle abundle) {
-		super();
-
-		bundle = abundle;
+	void setBundle(final ResourceBundle bundle) {
+		this.bundle = bundle;
 	}
 
 	/**
-	 * Gets the bundle.
+	 * Sets the locale.
 	 *
-	 * @return the bundle
+	 * @param locale
+	 *            the new locale
 	 */
-	protected final ResourceBundle getBundle() {
-		return bundle;
+	void setLocale(final Locale locale) {
+		this.locale = locale;
 	}
 
 	/**

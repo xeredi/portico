@@ -36,7 +36,7 @@ import xeredi.argo.model.maestro.vo.ParametroCriterioVO;
 import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.maestro.vo.SubparametroCriterioVO;
 import xeredi.argo.model.maestro.vo.SubparametroVO;
-import xeredi.argo.model.metamodelo.proxy.TipoSubparametroProxy;
+import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoParametroDetailVO;
 import xeredi.argo.model.metamodelo.vo.TipoSubparametroDetailVO;
@@ -63,6 +63,9 @@ public class ParametroService {
 	/** The i 18 n DAO. */
 	private final I18nService i18nService;
 
+	/** The enti proxy. */
+	private final EntidadProxyService entiProxy;
+
 	/**
 	 * Instantiates a new parametro service.
 	 *
@@ -76,16 +79,20 @@ public class ParametroService {
 	 *            the spdt DAO
 	 * @param i18nService
 	 *            the i 18 n service
+	 * @param entiProxy
+	 *            the enti proxy
 	 */
 	@Inject
-	protected ParametroService(final ParametroDAO prmtDAO, final ParametroDatoDAO prdtDAO, final SubparametroDAO sprmDAO,
-			final SubparametroDatoDAO spdtDAO, final I18nService i18nService) {
+	protected ParametroService(final ParametroDAO prmtDAO, final ParametroDatoDAO prdtDAO,
+			final SubparametroDAO sprmDAO, final SubparametroDatoDAO spdtDAO, final I18nService i18nService,
+			final EntidadProxyService entiProxy) {
 		super();
 		this.prmtDAO = prmtDAO;
 		this.prdtDAO = prdtDAO;
 		this.sprmDAO = sprmDAO;
 		this.spdtDAO = spdtDAO;
 		this.i18nService = i18nService;
+		this.entiProxy = entiProxy;
 	}
 
 	/**
@@ -268,7 +275,7 @@ public class ParametroService {
 				final Set<Long> spvrIds = new HashSet<>();
 
 				for (final SubparametroVO sprmVO : sprmList) {
-					final TipoSubparametroDetailVO tpspDetail = TipoSubparametroProxy.select(sprmVO.getEntiId());
+					final TipoSubparametroDetailVO tpspDetail = entiProxy.selectTpsp(sprmVO.getEntiId());
 
 					if (tpspDetail.getEnti().getCmdDuplicado()) {
 						sprmMap.put(sprmVO.getVersion().getId(), sprmVO);
