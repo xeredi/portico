@@ -43,13 +43,13 @@ export class InterceptedHttp extends Http {
 
         console.log( "jsonResponse: " + JSON.stringify( json ) );
 
-        console.log( "Checking errors" );
+        // console.log( "Checking errors" );
         if ( json.actionErrors && Object.keys( json.actionErrors ).length > 0 ) {
             console.log( "has Errors!!!" );
             throw res;
         }
 
-        console.log( "Checking login" );
+        // console.log( "Checking login" );
         if ( json.responseCode && json.responseCode == "login" ) {
             console.log( "Needs login!!!" );
             this.router.navigate( ['/login'] );
@@ -57,7 +57,7 @@ export class InterceptedHttp extends Http {
             return Observable.empty();
         }
 
-        console.log( "All OK" );
+        // console.log( "All OK" );
 
         return res;
     }

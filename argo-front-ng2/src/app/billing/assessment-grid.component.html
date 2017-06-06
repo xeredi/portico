@@ -97,11 +97,11 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-1 form-group-sm">
-                        <label>ID</label> <input type="text" [(ngModel)]="model.id" name="model.id"
-                            class="form-control form-control-sm" />
+                        <label [translate]="'vlrc_id'"></label> <input type="text" [(ngModel)]="model.id"
+                            name="model.id" class="form-control form-control-sm" />
                     </div>
-                    <div class="col-lg-3 col-xl-2 form-group-sm">
-                        <label>Tipo de Servicio</label> <select [(ngModel)]="model.tpsrId" name="model.tpsrId"
+                    <div class="col-lg-4 col-xl-3 form-group-sm">
+                        <label [translate]="'tpsr'"></label> <select [(ngModel)]="model.tpsrId" name="model.tpsrId"
                             class="form-control form-control-sm">
                             <option></option>
                             <option *ngFor="let item of tpsrList" [value]="item.value"
@@ -109,11 +109,16 @@
                         </select>
                     </div>
                     <div class="col-lg-3 col-xl-2 form-group-sm">
-                        <label>Puerto</label> <select [(ngModel)]="model.prtoId" name="model.prtoId"
+                        <label [translate]="'prto'"></label> <select [(ngModel)]="model.prtoId" name="model.prtoId"
                             class="form-control form-control-sm">
                             <option></option>
                             <option *ngFor="let item of prtoList" [value]="item.id" [innerHTML]="item.etiqueta"></option>
                         </select>
+                    </div>
+                    <div *ngIf="model.tpsrId" class="col-lg-4 col-xl-3 form-group-sm">
+                        <label [translate]="'crgo'"></label>
+
+                        <app-charge-typeahead [tpsrId]="model.tpsrId"></app-charge-typeahead>
                     </div>
                 </div>
             </div>

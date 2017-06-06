@@ -52,6 +52,7 @@ import { AspectChargeService } from './aspect-charge.service';
 import { AspectChargeGridFragmentComponent } from './aspect-charge-grid-fragment.component';
 import { AspectChargeDetailComponent } from './aspect-charge-detail.component';
 import { AspectChargeEditComponent } from './aspect-charge-edit.component';
+import { ChargeTypeaheadComponent } from './charge-typeahead.component';
 
 @NgModule( {
     imports: [
@@ -91,7 +92,7 @@ import { AspectChargeEditComponent } from './aspect-charge-edit.component';
         , AspectEditComponent
         , AspectChargeGridFragmentComponent
         , AspectChargeDetailComponent
-        , AspectChargeEditComponent
+        , AspectChargeEditComponent, ChargeTypeaheadComponent
     ]
     , providers: [
         AssessmentService
