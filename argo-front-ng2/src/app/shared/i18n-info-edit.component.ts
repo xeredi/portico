@@ -18,7 +18,6 @@ export class I18nInfoEditComponent implements OnInit {
     @Input() i18nMap: Map<string, any>;
 
     ngOnInit() {
-        console.log( 'ngOnInit I18nInfoEditComponent' );
         for ( let availableLanguage of this.availableLanguages ) {
             this.i18nMap[availableLanguage] = this.i18nMap[availableLanguage] ? this.i18nMap[availableLanguage] : {}
         }

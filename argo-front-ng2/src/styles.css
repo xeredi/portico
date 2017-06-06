@@ -29,6 +29,7 @@ pre {
 
 .jumbotron {
 	/*height: 100vh;*/
+
 }
 
 .form-control:FOCUS {
@@ -77,7 +78,7 @@ pre {
 }
 
 .modal-lg {
-	max-width: 80%;
+	max-width: 90%;
 }
 
 .modal-header {

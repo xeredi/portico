@@ -308,6 +308,7 @@ ng g component billing/Home --flat
 ng g component billing/ChargeGrid --flat
 ng g component billing/ChargeDetail --flat
 ng g component billing/ChargeEdit --flat
+ng g component billing/ChargeTypeahead --flat
 ng g component billing/RuleGridFragment --flat
 ng g component billing/RuleDetail --flat
 ng g component billing/RuleEdit --flat

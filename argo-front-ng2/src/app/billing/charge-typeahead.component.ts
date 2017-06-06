@@ -1,4 +1,19 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+    Component,
+    Optional,
+    Inject,
+    Input,
+    ViewChild,
+    OnInit
+} from '@angular/core';
+
+import {
+    NgModel,
+    NG_VALUE_ACCESSOR,
+    NG_VALIDATORS,
+    NG_ASYNC_VALIDATORS,
+} from '@angular/forms';
+
 import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/map';
@@ -9,12 +24,21 @@ import { ChargeService } from './charge.service';
 
 @Component( {
     selector: 'app-charge-typeahead',
-    templateUrl: './charge-typeahead.component.html'
+    templateUrl: './charge-typeahead.component.html',
+    providers: [{
+        provide: NG_VALUE_ACCESSOR,
+        useExisting: ChargeTypeaheadComponent,
+        multi: true,
+    }]
 } )
 export class ChargeTypeaheadComponent implements OnInit {
     @Input() public tpsrId: number;
 
-    public model: any;
+    @ViewChild( NgModel ) model: NgModel;
+
+    private innerValue: any;
+    private changed = new Array<(value: any) => void>();
+    private touched = new Array<() => void>();
 
     constructor( private chrgService: ChargeService ) { }
 
@@ -28,8 +52,6 @@ export class ChargeTypeaheadComponent implements OnInit {
             .switchMap( term => {
                 return this.chrgService.typeahead( { tpsrId: this.tpsrId, textoBusqueda: term } )
                     .map(( response ) => {
-                        console.log( "Search OK!!: " + JSON.stringify( response.resultList ) );
-
                         return response.resultList;
                     } );
             } );
@@ -39,4 +61,30 @@ export class ChargeTypeaheadComponent implements OnInit {
 
     inputFormatter = ( result: any ) => result.etiqueta;
 
+    get value(): any {
+        return this.innerValue;
+    }
+
+    set value( value: any ) {
+        if ( this.innerValue !== value ) {
+            this.innerValue = value;
+            this.changed.forEach( f => f( value ) );
+        }
+    }
+
+    writeValue( value: any ) {
+        this.innerValue = value;
+    }
+
+    registerOnChange( fn: ( value: any ) => void ) {
+        this.changed.push( fn );
+    }
+
+    registerOnTouched( fn: () => void ) {
+        this.touched.push( fn );
+    }
+
+    touch() {
+        this.touched.forEach( f => f() );
+    }
 }

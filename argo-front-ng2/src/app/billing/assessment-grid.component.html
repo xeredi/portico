@@ -100,7 +100,7 @@
                         <label [translate]="'vlrc_id'"></label> <input type="text" [(ngModel)]="model.id"
                             name="model.id" class="form-control form-control-sm" />
                     </div>
-                    <div class="col-lg-4 col-xl-3 form-group-sm">
+                    <div class="col-lg-3 col-xl-2 form-group-sm">
                         <label [translate]="'tpsr'"></label> <select [(ngModel)]="model.tpsrId" name="model.tpsrId"
                             class="form-control form-control-sm">
                             <option></option>
@@ -118,7 +118,7 @@
                     <div *ngIf="model.tpsrId" class="col-lg-4 col-xl-3 form-group-sm">
                         <label [translate]="'crgo'"></label>
 
-                        <app-charge-typeahead [tpsrId]="model.tpsrId"></app-charge-typeahead>
+                        <app-charge-typeahead [(ngModel)]="model.crgo" [tpsrId]="model.tpsrId"></app-charge-typeahead>
                     </div>
                 </div>
             </div>
