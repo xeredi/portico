@@ -9,9 +9,7 @@ import {
 
 import {
     NgModel,
-    NG_VALUE_ACCESSOR,
-    NG_VALIDATORS,
-    NG_ASYNC_VALIDATORS,
+    NG_VALUE_ACCESSOR
 } from '@angular/forms';
 
 import { Observable } from 'rxjs/Observable';
@@ -37,7 +35,7 @@ export class ChargeTypeaheadComponent implements OnInit {
     @ViewChild( NgModel ) model: NgModel;
 
     private innerValue: any;
-    private changed = new Array<(value: any) => void>();
+    private changed = new Array<( value: any ) => void>();
     private touched = new Array<() => void>();
 
     constructor( private chrgService: ChargeService ) { }
@@ -51,9 +49,7 @@ export class ChargeTypeaheadComponent implements OnInit {
             .distinctUntilChanged()
             .switchMap( term => {
                 return this.chrgService.typeahead( { tpsrId: this.tpsrId, textoBusqueda: term } )
-                    .map(( response ) => {
-                        return response.resultList;
-                    } );
+                    .map(( response ) => response.resultList );
             } );
     }
 
