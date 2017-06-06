@@ -15,13 +15,13 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public final class TipoServicioVO extends EntidadVO {
     /** The temporal. */
-    private boolean temporal;
+    private Boolean temporal;
 
     /** The facturable. */
-    private boolean facturable;
+    private Boolean facturable;
 
     /** The exencionable. */
-    private boolean exencionable;
+    private Boolean exencionable;
 
     /** The tpdt estado. */
     private TipoDatoVO tpdtEstado;

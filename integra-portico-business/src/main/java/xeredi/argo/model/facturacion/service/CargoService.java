@@ -91,7 +91,7 @@ public class CargoService {
 			crgoCriterio.setFechaVigencia(Calendar.getInstance().getTime());
 		}
 
-		return crgoDAO.selectList(crgoCriterio, new RowBounds(PaginatedList.MIN_OFFSET, limit));
+		return crgoDAO.selectTypeaheadList(crgoCriterio, new RowBounds(PaginatedList.MIN_OFFSET, limit));
 	}
 
 	/**

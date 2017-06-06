@@ -71,7 +71,7 @@ public final class ServicioXls extends BaseXls {
 			setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.srvc_estado.name()));
 		}
 
-		if (tpsrDetail.getEnti().isTemporal()) {
+		if (tpsrDetail.getEnti().getTemporal()) {
 			setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.fini.name()));
 			setCellValue(rowhead, i++, getBundle().getString(MessageI18nKey.ffin.name()));
 		}
@@ -99,7 +99,7 @@ public final class ServicioXls extends BaseXls {
 				setCellValue(row, j++, srvcVO.getEstado());
 			}
 
-			if (tpsrDetail.getEnti().isTemporal()) {
+			if (tpsrDetail.getEnti().getTemporal()) {
 				setCellValue(row, j++, srvcVO.getFini());
 				setCellValue(row, j++, srvcVO.getFfin());
 			}

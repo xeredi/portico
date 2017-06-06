@@ -51,7 +51,7 @@ public final class ServicioSaveAction extends ItemSaveAction<ServicioVO> {
 			FieldValidator.validateRequired(this, MessageI18nKey.srvc_estado, model.getEstado());
 		}
 
-		if (enti.getEnti().isTemporal()) {
+		if (enti.getEnti().getTemporal()) {
 			FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getFini());
 			FieldValidator.validateRequired(this, MessageI18nKey.ffin, model.getFfin());
 

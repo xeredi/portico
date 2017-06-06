@@ -104,7 +104,7 @@ public class AspectoService {
 			criterio.setFechaVigencia(Calendar.getInstance().getTime());
 		}
 
-		return aspcDAO.selectList(criterio, new RowBounds(PaginatedList.MIN_OFFSET, limit));
+		return aspcDAO.selectTypeaheadList(criterio, new RowBounds(PaginatedList.MIN_OFFSET, limit));
 	}
 
 	/**

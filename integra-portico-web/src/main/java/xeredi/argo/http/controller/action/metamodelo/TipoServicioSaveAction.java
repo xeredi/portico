@@ -25,9 +25,9 @@ public final class TipoServicioSaveAction extends EntidadSaveAction<TipoServicio
 	 */
 	@Override
 	public void doSpecificValidate() throws ApplicationException {
-		FieldValidator.validateRequired(this, MessageI18nKey.enti_temporal, model.isTemporal());
-		FieldValidator.validateRequired(this, MessageI18nKey.enti_exencionable, model.isExencionable());
-		FieldValidator.validateRequired(this, MessageI18nKey.enti_facturable, model.isFacturable());
+		FieldValidator.validateRequired(this, MessageI18nKey.enti_temporal, model.getTemporal());
+		FieldValidator.validateRequired(this, MessageI18nKey.enti_exencionable, model.getExencionable());
+		FieldValidator.validateRequired(this, MessageI18nKey.enti_facturable, model.getFacturable());
 	}
 
 	/**

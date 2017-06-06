@@ -13,102 +13,104 @@ import xeredi.argo.model.facturacion.vo.AspectoVO;
  */
 public interface AspectoDAO {
 
-    /**
-     * Count.
-     *
-     * @param aspcCriterio
-     *            the aspc criterio
-     * @return the int
-     */
-    int count(final AspectoCriterioVO aspcCriterio);
+	/**
+	 * Count.
+	 *
+	 * @param aspcCriterio
+	 *            the aspc criterio
+	 * @return the int
+	 */
+	int count(final AspectoCriterioVO aspcCriterio);
 
-    /**
-     * Select list.
-     *
-     * @param aspcCriterio
-     *            the aspc criterio
-     * @return the list
-     */
-    List<AspectoVO> selectList(final AspectoCriterioVO aspcCriterio);
+	/**
+	 * Select list.
+	 *
+	 * @param aspcCriterio
+	 *            the aspc criterio
+	 * @return the list
+	 */
+	List<AspectoVO> selectList(final AspectoCriterioVO aspcCriterio);
 
-    /**
-     * Select list.
-     *
-     * @param aspcCriterio
-     *            the aspc criterio
-     * @param bounds
-     *            the bounds
-     * @return the list
-     */
-    List<AspectoVO> selectList(final AspectoCriterioVO aspcCriterio, final RowBounds bounds);
+	/**
+	 * Select list.
+	 *
+	 * @param aspcCriterio
+	 *            the aspc criterio
+	 * @param bounds
+	 *            the bounds
+	 * @return the list
+	 */
+	List<AspectoVO> selectList(final AspectoCriterioVO aspcCriterio, final RowBounds bounds);
 
-    /**
-     * Select object.
-     *
-     * @param aspcCriterio
-     *            the aspc criterio
-     * @return the aspecto VO
-     */
-    AspectoVO selectObject(final AspectoCriterioVO aspcCriterio);
+	List<AspectoVO> selectTypeaheadList(final AspectoCriterioVO aspcCriterio, final RowBounds bounds);
 
-    /**
-     * Exists.
-     *
-     * @param aspc
-     *            the aspc
-     * @return true, if successful
-     */
-    boolean exists(final AspectoVO aspc);
+	/**
+	 * Select object.
+	 *
+	 * @param aspcCriterio
+	 *            the aspc criterio
+	 * @return the aspecto VO
+	 */
+	AspectoVO selectObject(final AspectoCriterioVO aspcCriterio);
 
-    /**
-     * Exists overlap.
-     *
-     * @param aspc
-     *            the aspc
-     * @return true, if successful
-     */
-    boolean existsOverlap(final AspectoVO aspc);
+	/**
+	 * Exists.
+	 *
+	 * @param aspc
+	 *            the aspc
+	 * @return true, if successful
+	 */
+	boolean exists(final AspectoVO aspc);
 
-    /**
-     * Insert.
-     *
-     * @param aspc
-     *            the aspc
-     */
-    void insert(final AspectoVO aspc);
+	/**
+	 * Exists overlap.
+	 *
+	 * @param aspc
+	 *            the aspc
+	 * @return true, if successful
+	 */
+	boolean existsOverlap(final AspectoVO aspc);
 
-    /**
-     * Insert version.
-     *
-     * @param aspc
-     *            the aspc
-     */
-    void insertVersion(final AspectoVO aspc);
+	/**
+	 * Insert.
+	 *
+	 * @param aspc
+	 *            the aspc
+	 */
+	void insert(final AspectoVO aspc);
 
-    /**
-     * Update version.
-     *
-     * @param aspc
-     *            the aspc
-     * @return the int
-     */
-    int updateVersion(final AspectoVO aspc);
+	/**
+	 * Insert version.
+	 *
+	 * @param aspc
+	 *            the aspc
+	 */
+	void insertVersion(final AspectoVO aspc);
 
-    /**
-     * Delete version.
-     *
-     * @param aspc
-     *            the aspc
-     * @return the int
-     */
-    int deleteVersion(final AspectoVO aspc);
+	/**
+	 * Update version.
+	 *
+	 * @param aspc
+	 *            the aspc
+	 * @return the int
+	 */
+	int updateVersion(final AspectoVO aspc);
 
-    /**
-     * Select id.
-     *
-     * @param aspc
-     *            the aspc
-     * @return the long
-     */
-    Long selectId(final AspectoVO aspc);
+	/**
+	 * Delete version.
+	 *
+	 * @param aspc
+	 *            the aspc
+	 * @return the int
+	 */
+	int deleteVersion(final AspectoVO aspc);
+
+	/**
+	 * Select id.
+	 *
+	 * @param aspc
+	 *            the aspc
+	 * @return the long
+	 */
+	Long selectId(final AspectoVO aspc);
 }

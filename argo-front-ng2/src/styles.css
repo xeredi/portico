@@ -17,13 +17,14 @@ table {
 	color: red;
 }
 
-body {
-	font-size: 0.9rem;
-	line-height: 1.2;
-	color: black;
+body, input, select, textarea, button, a.button, .btn {
+	font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI",
+		Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
-pre {
+body, input, select, textarea, button, a.button, .btn, pre {
+	font-size: 0.9rem;
+	line-height: 1.2;
 	color: black;
 }
 
@@ -35,15 +36,11 @@ pre {
 .form-control:FOCUS {
 	background-color: orange;
 }
-
-.btn {
+/*
+.form-control-sm, input.form-control-sm, select.form-control-sm {
 	font-size: 0.9rem;
 }
-
-.form-control-sm {
-	font-size: 0.9rem;
-}
-
+*/
 .btn-toolbar {
 	margin-bottom: .7em;
 }

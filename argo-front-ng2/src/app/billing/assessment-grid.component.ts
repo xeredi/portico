@@ -35,7 +35,7 @@ export class AssessmentGridComponent implements OnInit {
         this.route.params.subscribe
             (( params: Params ) => {
                 this.page = params['page'] ? +params['page'] : 1;
-                this.model = params['model'] ? JSON.parse( params['model'] ) : {};
+                this.model = params['model'] ? JSON.parse( decodeURIComponent( params['model'] ) ) : {};
 
                 this.doSearch();
             } );

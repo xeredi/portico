@@ -150,8 +150,8 @@ public final class DocbookMetamodelo {
                 writer.println("<entry>" + entiDetail.getEnti().getNombre() + "</entry>");
                 writer.println("<entry>" + entiDetail.getEnti().getCodigo() + "</entry>");
                 writer.println("<entry>" + (entiDetail.getEnti().getCmdDuplicado() ? "S" : "") + "</entry>");
-                writer.println("<entry>" + (entiDetail.getEnti().isTemporal() ? "S" : "") + "</entry>");
-                writer.println("<entry>" + (entiDetail.getEnti().isFacturable() ? "S" : "") + "</entry>");
+                writer.println("<entry>" + (entiDetail.getEnti().getTemporal() ? "S" : "") + "</entry>");
+                writer.println("<entry>" + (entiDetail.getEnti().getFacturable() ? "S" : "") + "</entry>");
                 writer.println("<entry>"
                         + (entiDetail.getEnti().getTpdtEstado() == null ? "" : entiDetail.getEnti().getTpdtEstado()
                                 .getNombre()) + "</entry>");
@@ -391,10 +391,10 @@ public final class DocbookMetamodelo {
                         + "</entry></row>");
                 writer.println("<row><entry>Etiqueta</entry><entry>" + entiDetail.getEnti().getEtiqueta()
                         + "</entry></row>");
-                writer.println("<row><entry>Temporal?</entry><entry>" + (entiDetail.getEnti().isTemporal() ? "S" : "N")
+                writer.println("<row><entry>Temporal?</entry><entry>" + (entiDetail.getEnti().getTemporal() ? "S" : "N")
                         + "</entry></row>");
                 writer.println("<row><entry>Facturable?</entry><entry>"
-                        + (entiDetail.getEnti().isFacturable() ? "S" : "N") + "</entry></row>");
+                        + (entiDetail.getEnti().getFacturable() ? "S" : "N") + "</entry></row>");
                 writer.println("<row><entry>Cmd. Alta?</entry><entry>"
                         + (entiDetail.getEnti().getCmdAlta() ? "S" : "N") + "</entry></row>");
                 writer.println("<row><entry>Cmd. Baja?</entry><entry>"

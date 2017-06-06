@@ -116,9 +116,14 @@
                         </select>
                     </div>
                     <div *ngIf="model.tpsrId" class="col-lg-4 col-xl-3 form-group-sm">
+                        <label [translate]="'aspc'"></label>
+
+                        <app-aspect-typeahead [(ngModel)]="model.aspc" [srtpId]="model.tpsrId"></app-aspect-typeahead>
+                    </div>
+                    <div *ngIf="model.tpsrId" class="col-lg-4 col-xl-3 form-group-sm">
                         <label [translate]="'crgo'"></label>
 
-                        <app-charge-typeahead [(ngModel)]="model.crgo" [tpsrId]="model.tpsrId"></app-charge-typeahead>
+                        <app-charge-typeahead [(ngModel)]="model.crgo" [srtpId]="model.tpsrId"></app-charge-typeahead>
                     </div>
                 </div>
             </div>

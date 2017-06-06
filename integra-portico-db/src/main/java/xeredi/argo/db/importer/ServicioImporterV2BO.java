@@ -158,7 +158,7 @@ public final class ServicioImporterV2BO extends EntityImporterBO {
 
                 srvc.setFref(rs.getDate(i++));
 
-                if (entityDetail.getEnti().isTemporal()) {
+                if (entityDetail.getEnti().getTemporal()) {
                     srvc.setFini(rs.getDate(i++));
                     srvc.setFfin(rs.getDate(i++));
                 }

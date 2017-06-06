@@ -99,7 +99,7 @@ public final class ItemTramiteSaveAction extends BaseAction implements Funcional
 		case T:
 			final TipoServicioDetailVO tpsr = (TipoServicioDetailVO) entiProxy.select(model.getTrmt().getEntiId());
 
-			if (tpsr.getEnti().isTemporal()) {
+			if (tpsr.getEnti().getTemporal()) {
 				FieldValidator.validateRequired(this, MessageI18nKey.fini, model.getDitemFini());
 				FieldValidator.validatePeriod(this, model.getDitemFini(), model.getDitemFfin());
 			}

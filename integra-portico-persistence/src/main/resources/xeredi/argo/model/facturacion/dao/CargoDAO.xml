@@ -276,6 +276,33 @@
 		ORDER BY crgo_tpsr_pk, crgo_codigo
 	</select>
 
+	<select id="selectTypeaheadList" parameterType="CargoCriterioVO" resultMap="ResultMap">
+    <![CDATA[
+		SELECT
+		    crgo_pk, crgo_codigo
+
+		    , crgv_pk
+    ]]>
+		<if test="idioma != null">
+        <![CDATA[
+            , (
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_pref = 'crgv'
+                    AND i18n_ext_pk = crgv_pk
+                    AND i18n_lang = #{idioma}
+            ) AS crgv_descripcion
+        ]]>
+		</if>
+    <![CDATA[
+		FROM
+		    tbl_cargo_crgo
+		    INNER JOIN tbl_cargo_version_crgv ON
+		        crgv_crgo_pk = crgo_pk
+    ]]>
+		<include refid="SelectWhere" />
+		ORDER BY crgo_tpsr_pk, crgo_codigo
+	</select>
+
 	<select id="selectObject" parameterType="CargoCriterioVO" resultMap="ResultMap">
 		<include refid="SelectPrefix" />
 		<include refid="SelectWhere" />

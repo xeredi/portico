@@ -42,6 +42,17 @@ public interface CargoDAO {
 	List<CargoVO> selectList(final CargoCriterioVO criterio, final RowBounds bounds);
 
 	/**
+	 * Select typeahead list.
+	 *
+	 * @param criterio
+	 *            the criterio
+	 * @param bounds
+	 *            the bounds
+	 * @return the list
+	 */
+	List<CargoVO> selectTypeaheadList(final CargoCriterioVO criterio, final RowBounds bounds);
+
+	/**
 	 * Select list.
 	 *
 	 * @param criterio

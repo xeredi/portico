@@ -338,6 +338,7 @@ ng g component billing/IncompatibleRuleEdit --flat
 ng g component billing/AspectGrid --flat
 ng g component billing/AspectDetail --flat
 ng g component billing/AspectEdit --flat
+ng g component billing/AspectTypeahead --flat
 ng g component billing/AspectChargeGridFragment --flat
 ng g component billing/AspectChargeDetail --flat
 ng g component billing/AspectChargeEdit --flat

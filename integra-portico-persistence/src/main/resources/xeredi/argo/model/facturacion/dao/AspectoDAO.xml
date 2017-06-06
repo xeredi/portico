@@ -154,6 +154,33 @@
         ORDER BY aspc_tpsr_pk, aspv_prioridad
     </select>
 
+    <select id="selectTypeaheadList" parameterType="AspectoCriterioVO" resultMap="ResultMap">
+    <![CDATA[
+		SELECT
+		    aspc_pk, aspc_codigo
+
+		    , aspv_pk
+    ]]>
+        <if test="idioma != null">
+        <![CDATA[
+            , (
+                SELECT i18n_text FROM tbl_i18n_i18n
+                WHERE i18n_pref = 'aspv'
+                    AND i18n_ext_pk = aspv_pk
+                    AND i18n_lang = #{idioma}
+            ) AS aspv_descripcion
+        ]]>
+        </if>
+    <![CDATA[
+		FROM
+		    tbl_aspecto_aspc
+		    INNER JOIN tbl_aspecto_version_aspv ON
+		        aspv_aspc_pk = aspc_pk
+    ]]>
+        <include refid="SelectWhere" />
+        ORDER BY aspc_tpsr_pk, aspv_prioridad
+    </select>
+
     <select id="selectObject" parameterType="AspectoCriterioVO" resultMap="ResultMap">
         <include refid="SelectPrefix" />
         <include refid="SelectWhere" />
