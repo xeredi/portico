@@ -18,27 +18,29 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
+import { ValueAccessor } from '../shared/value-accessor';
 import { ChargeService } from './charge.service';
 
 @Component( {
-    selector: 'app-charge-typeahead',
-    templateUrl: './charge-typeahead.component.html',
-    providers: [{
+    selector: 'app-charge-typeahead'
+    , template: `
+<input type="text" class="form-control form-control-sm" [(ngModel)]="value" [ngbTypeahead]="search"
+    [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" [editable]="false" />
+    `
+    , providers: [{
         provide: NG_VALUE_ACCESSOR,
         useExisting: ChargeTypeaheadComponent,
         multi: true,
     }]
 } )
-export class ChargeTypeaheadComponent implements OnInit {
+export class ChargeTypeaheadComponent extends ValueAccessor<any> implements OnInit {
     @Input() public tpsrId: number;
 
     @ViewChild( NgModel ) model: NgModel;
 
-    private innerValue: any;
-    private changed = new Array<( value: any ) => void>();
-    private touched = new Array<() => void>();
-
-    constructor( private chrgService: ChargeService ) { }
+    constructor( private chrgService: ChargeService ) {
+        super();
+    }
 
     ngOnInit() {
     }
@@ -56,31 +58,4 @@ export class ChargeTypeaheadComponent implements OnInit {
     resultFormatter = ( result: any ) => result.etiqueta;
 
     inputFormatter = ( result: any ) => result.etiqueta;
-
-    get value(): any {
-        return this.innerValue;
-    }
-
-    set value( value: any ) {
-        if ( this.innerValue !== value ) {
-            this.innerValue = value;
-            this.changed.forEach( f => f( value ) );
-        }
-    }
-
-    writeValue( value: any ) {
-        this.innerValue = value;
-    }
-
-    registerOnChange( fn: ( value: any ) => void ) {
-        this.changed.push( fn );
-    }
-
-    registerOnTouched( fn: () => void ) {
-        this.touched.push( fn );
-    }
-
-    touch() {
-        this.touched.forEach( f => f() );
-    }
 }

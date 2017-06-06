@@ -91,6 +91,25 @@ $ ng generate module [name]
 
 
 
+CREATE CLASS
+
+$ ng generate class [name]
+
+	Options
+
+	app
+		--app (aliases: -a) default value: 1st app
+		Specifies app name to use.
+	spec
+		--spec
+		Specifies if a spec file is generated.
+
+	EJEMPLO ARGO
+	$ ng g class shared/ValueAccessor
+
+
+
+
 CREATE SERVICE
 
 $ ng generate service [name]
@@ -239,6 +258,7 @@ ng g component shared/Alert --flat
 ng g service shared/I18nInfo
 ng g component shared/I18nInfoDetail --flat
 ng g component shared/I18nInfoEdit --flat
+ng g class shared/ValueAccessor
 
 ng g module security --routing
 ng g service security/Group
