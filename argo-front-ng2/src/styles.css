@@ -103,8 +103,7 @@ legend {
 }
 
 td span {
-	/*display: block;*/
-
+	display: block;
 }
 
 td i.fa {

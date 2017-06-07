@@ -252,13 +252,15 @@ ng g component Home --flat
 
 ng g module shared
 ng g guard shared/Permission --flat
-ng g service shared/Crud
-ng g service shared/Alert
-ng g component shared/Alert --flat
-ng g service shared/I18nInfo
-ng g component shared/I18nInfoDetail --flat
-ng g component shared/I18nInfoEdit --flat
 ng g class shared/ValueAccessor
+ng g service shared/Crud --spec false
+ng g service shared/Alert --spec false
+ng g component shared/Alert --flat --spec false
+ng g component shared/I18nInfoDetail --flat --spec false
+ng g component shared/I18nInfoEdit --flat --spec false
+ng g component shared/ItemDetailFragment --flat --spec false
+ng g component shared/ItemEditFragment --flat --spec false
+ng g component shared/ItemFilterFragment --flat --spec false
 
 ng g module security --routing
 ng g service security/Group

@@ -1,3 +1,79 @@
-<p>
-  parameter-grid works!
-</p>
+<div *ngIf="resultList">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group mr-2" role="group">
+            <ngb-pagination [collectionSize]="resultList.count" [(page)]="page" [pageSize]="pageSize" [maxSize]="1"
+                [size]="sm" [boundaryLinks]="false" [ellipses]="false" (pageChange)="pageChange()"></ngb-pagination>
+        </div>
+        <div class="btn-group mr-2" role="group">
+            <button class="btn btn-secondary" (click)="editFilter(filter)">
+                <i class="fa fa-filter"></i> Filter
+            </button>
+            <a class="btn btn-secondary" [routerLink]="['/master/parameter/edit', 'create', model.entiId]"><i
+                class="fa fa-file-o"></i> New</a>
+        </div>
+    </div>
+
+    <span [translate]="'grid_count'" [translateParams]="{count: resultList.count}"></span>
+
+    <div class="table-responsive">
+        <table class="table table-sm table-bordered table-hover table-condensed table-nonfluid">
+            <thead class="thead-inverse">
+                <tr>
+                    <th></th>
+                    <th *ngIf="enti.enti.puerto" [translate]="'prto'"></th>
+                    <th [translate]="'prmt_parametro'"></th>
+                    <th [translate]="'fini'"></th>
+                    <th [translate]="'ffin'"></th>
+                    <th *ngIf="enti.enti.i18n" [translate]="'prmt_texto'"></th>
+                    <th *ngFor="let entdId of enti.entdGridList" [translate]="'entd_' + enti.entdMap[entdId].id"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of resultList.list; trackBy:trackByFn">
+                    <td><a [routerLink]="['/master/parameter/detail', item.entiId, item.id, item.fref]"><i
+                            class="fa fa-search"></i></a></td>
+                    <td nowrap="nowrap" *ngIf="enti.enti.puerto" [innerHTML]="item.prto.etiqueta"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.parametro"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.version.fini | date: 'dd/MM/yyyy'"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.version.ffin | date: 'dd/MM/yyyy'"></td>
+                    <td nowrap="nowrap" *ngIf="enti.enti.i18n" [innerHTML]="item.texto"></td>
+                    <td nowrap="nowrap" *ngFor="let entdId of enti.entdGridList"
+                        [ngSwitch]="enti.entdMap[entdId].tpdt.tipoElemento"><i *ngSwitchCase="'BO'" class="fa"
+                        [ngClass]="item.itdtMap[entdId].cantidadEntera == 1 ? 'fa-check' : 'fa-remove'"></i> <span
+                        *ngSwitchCase="'NE'" [innerHTML]="item.itdtMap[entdId].cantidadEntera | number"
+                        class="pull-right"></span> <span *ngSwitchCase="'ND'"
+                        [innerHTML]="item.itdtMap[entdId].cantidadDecimal | number : '1.6-6'" class="pull-right"></span>
+                        <span *ngSwitchCase="'CR'" [innerHTML]="item.itdtMap[entdId].cadena"></span> <span
+                        *ngSwitchCase="'PR'" [innerHTML]="item.itdtMap[entdId].prmt?.parametro"
+                        [ngbTooltip]="item.itdtMap[entdId].prmt?.etiqueta" container="body"></span> <span
+                        *ngSwitchCase="'SR'" [innerHTML]="item.itdtMap[entdId].srvc?.etiqueta"></span> <span
+                        *ngSwitchCase="'TX'" [innerHTML]="item.itdtMap[entdId].cadena"></span> <span *ngSwitchDefault>Tipo
+                            de Dato Desconocido!!!! {{enti.entdMap[entdId].tpdt.tipoElemento}}</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <ng-template #filter let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Search Filter</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <fieldset class="form-group">
+            <div class="container-fluid">
+                <div class="row"></div>
+            </div>
+        </fieldset>
+    </div>
+    <div class="modal-footer">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary" (click)="saveFilter();c()">Search</button>
+            <button type="button" class="btn btn-secondary" (click)="resetFilter()">Reset</button>
+            <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+        </div>
+    </div>
+    </ng-template>
+</div>

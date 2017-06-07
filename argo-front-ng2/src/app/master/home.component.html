@@ -1,3 +1,16 @@
-<p>
-  home works!
-</p>
+<p>Masters</p>
+
+<div *ngIf="resultList">
+    <!--
+    <div class="col-lg-3 col-xl-2 form-group-sm">
+        <label [translate]="'filter'"></label> <input type="text" [(ngModel)]="filter" name="filter"
+            class="form-control form-control-sm" />
+    </div>
+ -->
+
+    <div class="row">
+        <a class="btn btn-secondary col-lg-4 col-xl-3" *ngFor="let item of resultList"
+            [routerLink]="['/master/parameter/grid', item.value]" [translate]="'enti_' + item.value"></a>
+        <!--        *ngFor="let item of confList | configurationFilter: filter" -->
+    </div>
+</div>

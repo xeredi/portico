@@ -3,8 +3,6 @@ package xeredi.argo.model.util;
 import java.util.Calendar;
 import java.util.Date;
 
-import lombok.NonNull;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class DateUtil.
@@ -26,7 +24,7 @@ public final class DateUtil {
 	 * @param field
 	 *            the field
 	 */
-	public static void truncTime(final @NonNull Date date, final int field) {
+	public static void truncTime(final Date date, final int field) {
 		if (date != null) {
 			final Calendar calendar = Calendar.getInstance();
 

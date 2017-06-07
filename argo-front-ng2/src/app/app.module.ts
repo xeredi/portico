@@ -24,6 +24,7 @@ import { SecurityModule } from './security/security.module';
 import { SettingsModule } from './settings/settings.module';
 import { MetamodelModule } from './metamodel/metamodel.module';
 import { BillingModule } from './billing/billing.module';
+import { MasterModule } from './master/master.module';
 
 import { AlertService } from './shared/alert.service';
 
@@ -56,6 +57,7 @@ export function HttpLoaderFactory( http: Http ) {
         , SettingsModule
         , MetamodelModule
         , BillingModule
+        , MasterModule
     ]
     , providers: [
         AuthenticationService

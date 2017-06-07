@@ -13,6 +13,7 @@ const routes: Routes = [
     , { path: 'settings', loadChildren: './settings/settings.module#SettingsModule' }
     , { path: 'metamodel', loadChildren: './metamodel/metamodel.module#MetamodelModule' }
     , { path: 'billing', loadChildren: './billing/billing.module#BillingModule' }
+    , { path: 'master', loadChildren: './master/master.module#MasterModule' }
 
     // otherwise redirect to home
     , { path: '**', redirectTo: '' }

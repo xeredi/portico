@@ -16,6 +16,11 @@ export class CrudService {
         this._prefix = prefix;
     }
 
+    index() {
+        return this._http.post( this._urlBase + '-index.action', {} )
+            .map(( response: Response ) => response.json() );
+    }
+
     edit( accion: string, id: any ) {
         return this._http.post( this._urlBase + '-edit.action', { accion: accion, model: id, prefix: this._prefix } )
             .map(( response: Response ) => response.json() );

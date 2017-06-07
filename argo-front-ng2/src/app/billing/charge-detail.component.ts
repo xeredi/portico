@@ -7,8 +7,9 @@ import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { ChargeService } from './charge.service';
 
 @Component( {
-    selector: 'app-charge-detail',
-    templateUrl: './charge-detail.component.html'
+    selector: 'app-charge-detail'
+    , templateUrl: './charge-detail.component.html'
+    , providers: [ChargeService]
 } )
 export class ChargeDetailComponent implements OnInit {
     model: any;

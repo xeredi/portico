@@ -34,12 +34,12 @@
                     <th [translate]="'ffin'"></th>
                     <th [translate]="'vlrc_falta'"></th>
                     <th [translate]="'vlrc_codExencion'"></th>
-                    <th [translate]="'vlrc_info1'"></th>
-                    <th [translate]="'vlrc_info2'"></th>
-                    <th [translate]="'vlrc_info3'"></th>
-                    <th [translate]="'vlrc_info4'"></th>
-                    <th [translate]="'vlrc_info5'"></th>
-                    <th [translate]="'vlrc_info6'"></th>
+                    <th [translate]="'vlrc_info1'" colspan="2"></th>
+                    <th [translate]="'vlrc_info2'" colspan="2"></th>
+                    <th [translate]="'vlrc_info3'" colspan="2"></th>
+                    <th [translate]="'vlrc_info4'" colspan="2"></th>
+                    <th [translate]="'vlrc_info5'" colspan="2"></th>
+                    <th [translate]="'vlrc_info6'" colspan="2"></th>
                 </tr>
             </thead>
             <tbody>
@@ -62,24 +62,19 @@
                     <td nowrap="nowrap" [innerHTML]="item.ffin | date: 'dd/MM/yyyy HH:mm'"></td>
                     <td nowrap="nowrap" [innerHTML]="item.falta | date: 'dd/MM/yyyy HH:mm'"></td>
                     <td nowrap="nowrap" [innerHTML]="item.codExencion"></td>
-                    <td nowrap="nowrap"><span *ngIf="item.info1"> <span
-                            [innerHTML]="item.aspc.version.cetiqInfo1"></span>: <span [innerHTML]="item.info1"></span>
-                    </span></td>
-                    <td nowrap="nowrap"><span *ngIf="item.info2"> <span
-                            [innerHTML]="item.aspc.version.cetiqInfo2"></span>: <span [innerHTML]="item.info2"></span>
-                    </span></td>
-                    <td nowrap="nowrap"><span *ngIf="item.info3"> <span
-                            [innerHTML]="item.aspc.version.cetiqInfo3"></span>: <span [innerHTML]="item.info3"></span>
-                    </span></td>
-                    <td nowrap="nowrap"><span *ngIf="item.info4"> <span
-                            [innerHTML]="item.aspc.version.cetiqInfo4"></span>: <span [innerHTML]="item.info4"></span>
-                    </span></td>
-                    <td nowrap="nowrap"><span *ngIf="item.info5"> <span
-                            [innerHTML]="item.aspc.version.cetiqInfo5"></span>: <span [innerHTML]="item.info5"></span>
-                    </span></td>
-                    <td nowrap="nowrap"><span *ngIf="item.info6"> <span
-                            [innerHTML]="item.aspc.version.cetiqInfo6"></span>: <span [innerHTML]="item.info6"></span>
-                    </span></td>
+
+                    <td nowrap="nowrap"><span *ngIf="item.info1" [innerHTML]="item.aspc.version.cetiqInfo1"></span></td>
+                    <td nowrap="nowrap"><span [innerHTML]="item.info1"></span></td>
+                    <td nowrap="nowrap"><span *ngIf="item.info2" [innerHTML]="item.aspc.version.cetiqInfo2"></span></td>
+                    <td nowrap="nowrap"><span [innerHTML]="item.info2"></span></td>
+                    <td nowrap="nowrap"><span *ngIf="item.info3" [innerHTML]="item.aspc.version.cetiqInfo3"></span></td>
+                    <td nowrap="nowrap"><span [innerHTML]="item.info3"></span></td>
+                    <td nowrap="nowrap"><span *ngIf="item.info4" [innerHTML]="item.aspc.version.cetiqInfo4"></span></td>
+                    <td nowrap="nowrap"><span [innerHTML]="item.info4"></span></td>
+                    <td nowrap="nowrap"><span *ngIf="item.info5" [innerHTML]="item.aspc.version.cetiqInfo5"></span></td>
+                    <td nowrap="nowrap"><span [innerHTML]="item.info5"></span></td>
+                    <td nowrap="nowrap"><span *ngIf="item.info6" [innerHTML]="item.aspc.version.cetiqInfo6"></span></td>
+                    <td nowrap="nowrap"><span [innerHTML]="item.info6"></span></td>
                 </tr>
             </tbody>
         </table>

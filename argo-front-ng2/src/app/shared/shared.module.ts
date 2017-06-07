@@ -2,14 +2,19 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+import { PermissionGuard } from './permission.guard';
+
+import { CrudService } from './crud.service';
+
+import { AlertService } from './alert.service';
 import { AlertComponent } from './alert.component';
+
 import { I18nInfoDetailComponent } from './i18n-info-detail.component';
 import { I18nInfoEditComponent } from './i18n-info-edit.component';
 
-import { PermissionGuard } from './permission.guard';
-
-import { AlertService } from './alert.service';
-import { CrudService } from './crud.service';
+import { ItemDetailFragmentComponent } from './item-detail-fragment.component';
+import { ItemEditFragmentComponent } from './item-edit-fragment.component';
+import { ItemFilterFragmentComponent } from './item-filter-fragment.component';
 
 
 @NgModule( {
@@ -21,6 +26,9 @@ import { CrudService } from './crud.service';
         AlertComponent
         , I18nInfoDetailComponent
         , I18nInfoEditComponent
+        , ItemDetailFragmentComponent
+        , ItemEditFragmentComponent
+        , ItemFilterFragmentComponent
     ]
     , providers: [
         PermissionGuard
