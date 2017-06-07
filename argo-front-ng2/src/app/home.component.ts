@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
       <li class="list-group-item"><a [routerLink]="['/settings']">Settings</a></li>
       <li class="list-group-item"><a [routerLink]="['/metamodel']">Metamodel</a></li>
       <li class="list-group-item"><a [routerLink]="['/master']">Masters</a></li>
+      <li class="list-group-item"><a [routerLink]="['/service']">Services</a></li>
       <li class="list-group-item"><a [routerLink]="['/security']">Security</a></li>
       <li class="list-group-item"><a [routerLink]="['/billing']">Billing</a></li>
       <li class="list-group-item"><a [routerLink]="['/login']">Logout</a></li>

@@ -8,7 +8,7 @@
             <button class="btn btn-secondary" (click)="editFilter(filter)">
                 <i class="fa fa-filter"></i> Filter
             </button>
-            <a class="btn btn-secondary" [routerLink]="['/master/parameter/edit', 'create', model.entiId]"><i
+            <a class="btn btn-secondary" [routerLink]="['/service/service/edit', 'create', model.entiId]"><i
                 class="fa fa-file-o"></i> New</a>
         </div>
     </div>
@@ -20,23 +20,23 @@
             <thead class="thead-inverse">
                 <tr>
                     <th></th>
-                    <th *ngIf="enti.enti.puerto" [translate]="'prto'"></th>
-                    <th [translate]="'prmt_parametro'"></th>
+                    <th [translate]="'srvc'"></th>
+                    <th [translate]="'falta'"></th>
+                    <th [translate]="'fref'"></th>
                     <th [translate]="'fini'"></th>
                     <th [translate]="'ffin'"></th>
-                    <th *ngIf="enti.enti.i18n" [translate]="'prmt_texto'"></th>
                     <th *ngFor="let entdId of enti.entdGridList" [translate]="'entd_' + enti.entdMap[entdId].id"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let item of resultList.list; trackBy:trackByFn">
-                    <td><a [routerLink]="['/master/parameter/detail', item.entiId, item.id, item.fref]"><i
+                    <td><a [routerLink]="['/service/service/detail', item.entiId, item.id]"><i
                             class="fa fa-search"></i></a></td>
-                    <td nowrap="nowrap" *ngIf="enti.enti.puerto" [innerHTML]="item.prto.etiqueta"></td>
-                    <td nowrap="nowrap" [innerHTML]="item.parametro"></td>
-                    <td nowrap="nowrap" [innerHTML]="item.version.fini | date: 'dd/MM/yyyy'"></td>
-                    <td nowrap="nowrap" [innerHTML]="item.version.ffin | date: 'dd/MM/yyyy'"></td>
-                    <td nowrap="nowrap" *ngIf="enti.enti.i18n" [innerHTML]="item.texto"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.etiqueta"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.falta | date: 'dd/MM/yyyy HH:mm'"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.fref | date: 'dd/MM/yyyy HH:mm'"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.fini | date: 'dd/MM/yyyy HH:mm'"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.ffin | date: 'dd/MM/yyyy HH:mm'"></td>
                     <td nowrap="nowrap" *ngFor="let entdId of enti.entdGridList"
                         [ngSwitch]="enti.entdMap[entdId].tpdt.tipoElemento"><i *ngSwitchCase="'BO'" class="fa"
                         [ngClass]="item.itdtMap[entdId].cantidadEntera == 1 ? 'fa-check' : 'fa-remove'"></i> <span
@@ -49,8 +49,9 @@
                         *ngSwitchCase="'SR'" [innerHTML]="item.itdtMap[entdId].srvc?.etiqueta"></span> <span
                         *ngSwitchCase="'TX'" [innerHTML]="item.itdtMap[entdId].cadena"></span> <span
                         *ngSwitchCase="'FE'" [innerHTML]="item.itdtMap[entdId].fecha | date : 'dd/MM/yyyy'"></span> <span
-                        *ngSwitchCase="'FH'" [innerHTML]="item.itdtMap[entdId].fecha | date : 'dd/MM/yyyy HH:mm'"></span><span
-                        *ngSwitchDefault>Tipo de Dato Desconocido!!!! {{enti.entdMap[entdId].tpdt.tipoElemento}}</span></td>
+                        *ngSwitchCase="'FH'" [innerHTML]="item.itdtMap[entdId].fecha | date : 'dd/MM/yyyy HH:mm'"></span>
+                        <span *ngSwitchDefault>Tipo de Dato Desconocido!!!!
+                            {{enti.entdMap[entdId].tpdt.tipoElemento}}</span></td>
                 </tr>
             </tbody>
         </table>

@@ -1,0 +1,13 @@
+<p>Services</p>
+
+<div *ngIf="resultList">
+    <div class="row" *ngFor="let item of resultList">
+        <a class="btn btn-primary col-lg-4 col-xl-3" [routerLink]="['/service/service/grid', item.value]"
+            [translate]="'enti_' + item.value"></a>
+
+        <div class="col-lg-8 col-xl-9">
+            <a *ngFor="let subitem of tpssMap[item.value]" class="btn btn-secondary col-lg-4 col-xl-3"
+                [routerLink]="['/service/subservice/grid', subitem.value]" [translate]="'enti_' + subitem.value"></a>
+        </div>
+    </div>
+</div>

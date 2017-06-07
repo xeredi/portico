@@ -14,6 +14,7 @@ const routes: Routes = [
     , { path: 'metamodel', loadChildren: './metamodel/metamodel.module#MetamodelModule' }
     , { path: 'billing', loadChildren: './billing/billing.module#BillingModule' }
     , { path: 'master', loadChildren: './master/master.module#MasterModule' }
+    , { path: 'service', loadChildren: './service/service.module#ServiceModule' }
 
     // otherwise redirect to home
     , { path: '**', redirectTo: '' }

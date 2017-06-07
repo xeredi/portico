@@ -330,6 +330,21 @@ ng g component master/SubparameterGridFragment --flat --spec false
 ng g component master/SubparameterDetail --flat --spec false
 ng g component master/SubparameterEdit --flat --spec false
 
+ng g module service --routing
+ng g service service/ServiceHome --spec false
+ng g service service/Service --spec false
+ng g service service/Subservice --spec false
+ng g component service/Home --flat --spec false
+ng g component service/ServiceGrid --flat --spec false
+ng g component service/ServiceDetail --flat --spec false
+ng g component service/ServiceEdit --flat --spec false
+ng g component service/ServiceTypeahead --flat --spec false
+ng g component service/SubserviceGrid --flat --spec false
+ng g component service/SubserviceGridFragment --flat --spec false
+ng g component service/SubserviceDetail --flat --spec false
+ng g component service/SubserviceEdit --flat --spec false
+ng g component service/SubserviceTypeahead --flat --spec false
+
 ng g module billing --routing
 ng g service billing/Charge
 ng g service billing/Rule
