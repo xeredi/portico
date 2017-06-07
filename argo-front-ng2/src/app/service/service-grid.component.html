@@ -21,7 +21,7 @@
                 <tr>
                     <th></th>
                     <th [translate]="'srvc'"></th>
-                    <th [translate]="'falta'"></th>
+                    <th [translate]="'srvc_falta'"></th>
                     <th [translate]="'fref'"></th>
                     <th [translate]="'fini'"></th>
                     <th [translate]="'ffin'"></th>
@@ -50,8 +50,7 @@
                         *ngSwitchCase="'TX'" [innerHTML]="item.itdtMap[entdId].cadena"></span> <span
                         *ngSwitchCase="'FE'" [innerHTML]="item.itdtMap[entdId].fecha | date : 'dd/MM/yyyy'"></span> <span
                         *ngSwitchCase="'FH'" [innerHTML]="item.itdtMap[entdId].fecha | date : 'dd/MM/yyyy HH:mm'"></span>
-                        <span *ngSwitchDefault>Tipo de Dato Desconocido!!!!
-                            {{enti.entdMap[entdId].tpdt.tipoElemento}}</span></td>
+                        <span *ngSwitchDefault>Unknown Datatype!: {{enti.entdMap[entdId].tpdt.tipoElemento}}</span></td>
                 </tr>
             </tbody>
         </table>

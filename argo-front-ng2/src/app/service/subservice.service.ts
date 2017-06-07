@@ -8,6 +8,6 @@ export class SubserviceService extends CrudService {
     constructor( private http: Http ) {
         super( http );
 
-        this.setParams( '/servicio/servicio', 'aspc' );
+        this.setParams( '/servicio/subservicio', 'ssrv' );
     }
 }

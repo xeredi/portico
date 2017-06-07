@@ -20,7 +20,8 @@ const routes: Routes = [
     , { path: 'service/edit/:action/:entiId', component: ServiceEditComponent, canActivate: [PermissionGuard] }
     , { path: 'service/edit/:action/:entiId/:id', component: ServiceEditComponent, canActivate: [PermissionGuard] }
     , { path: 'subservice/grid/:entiId', component: SubserviceGridComponent, canActivate: [PermissionGuard] }
-    , { path: 'subservice/detail/:entiId/:id/:date', component: SubserviceDetailComponent, canActivate: [PermissionGuard] }
+    , { path: 'subservice/detail/:entiId/:id', component: SubserviceDetailComponent, canActivate: [PermissionGuard] }
+    , { path: 'subservice/edit/:action/:entiId', component: SubserviceEditComponent, canActivate: [PermissionGuard] }
     , { path: 'subservice/edit/:action/:entiId/:serviceId', component: SubserviceEditComponent, canActivate: [PermissionGuard] }
     , { path: 'subservice/edit/:action/:entiId/:serviceId/:id', component: SubserviceEditComponent, canActivate: [PermissionGuard] }
 ];
