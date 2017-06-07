@@ -315,12 +315,26 @@ ng g component metamodel/SubparameterTypeGridFragment --flat
 ng g component metamodel/SubparameterTypeDetail --flat
 ng g component metamodel/SubparameterTypeEdit --flat
 
+ng g module master --routing
+ng g service master/Master --spec false
+ng g service master/Parameter --spec false
+ng g service master/Subparameter --spec false
+ng g component master/Home --flat --spec false
+ng g component master/ParameterGrid --flat --spec false
+ng g component master/ParameterDetail --flat --spec false
+ng g component master/ParameterEdit --flat --spec false
+ng g component master/ParameterTypeahead --flat --spec false
+ng g component master/SubparameterGridFragment --flat --spec false
+ng g component master/SubparameterDetail --flat --spec false
+ng g component master/SubparameterEdit --flat --spec false
+
 ng g module billing --routing
 ng g service billing/Charge
 ng g service billing/Rule
 ng g service billing/IncompatibleRule
 ng g service billing/Aspect
 ng g service billing/AspectCharge
+ng g service billing/BillSeries
 ng g service billing/Assessment
 ng g service billing/AssessmentLine
 ng g service billing/AssessmentDetail
@@ -342,6 +356,9 @@ ng g component billing/AspectTypeahead --flat
 ng g component billing/AspectChargeGridFragment --flat
 ng g component billing/AspectChargeDetail --flat
 ng g component billing/AspectChargeEdit --flat
+ng g component billing/BillSeriesGrid --flat
+ng g component billing/BillSeriesDetail --flat
+ng g component billing/BillSeriesEdit --flat
 ng g component billing/AssessmentGrid --flat
 ng g component billing/AssessmentDetail --flat
 ng g component billing/AssessmentEdit --flat

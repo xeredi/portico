@@ -32,6 +32,7 @@ import { ChargeService } from './charge.service';
 import { ChargeGridComponent } from './charge-grid.component';
 import { ChargeDetailComponent } from './charge-detail.component';
 import { ChargeEditComponent } from './charge-edit.component';
+import { ChargeTypeaheadComponent } from './charge-typeahead.component';
 
 import { RuleService } from './rule.service';
 import { RuleGridFragmentComponent } from './rule-grid-fragment.component';
@@ -47,13 +48,17 @@ import { AspectService } from './aspect.service';
 import { AspectGridComponent } from './aspect-grid.component';
 import { AspectDetailComponent } from './aspect-detail.component';
 import { AspectEditComponent } from './aspect-edit.component';
+import { AspectTypeaheadComponent } from './aspect-typeahead.component';
 
 import { AspectChargeService } from './aspect-charge.service';
 import { AspectChargeGridFragmentComponent } from './aspect-charge-grid-fragment.component';
 import { AspectChargeDetailComponent } from './aspect-charge-detail.component';
 import { AspectChargeEditComponent } from './aspect-charge-edit.component';
-import { ChargeTypeaheadComponent } from './charge-typeahead.component';
-import { AspectTypeaheadComponent } from './aspect-typeahead.component';
+
+import { BillSeriesService } from './bill-series.service';
+import { BillSeriesGridComponent } from './bill-series-grid.component';
+import { BillSeriesDetailComponent } from './bill-series-detail.component';
+import { BillSeriesEditComponent } from './bill-series-edit.component';
 
 @NgModule( {
     imports: [
@@ -93,7 +98,12 @@ import { AspectTypeaheadComponent } from './aspect-typeahead.component';
         , AspectEditComponent
         , AspectChargeGridFragmentComponent
         , AspectChargeDetailComponent
-        , AspectChargeEditComponent, ChargeTypeaheadComponent, AspectTypeaheadComponent
+        , AspectChargeEditComponent
+        , ChargeTypeaheadComponent
+        , AspectTypeaheadComponent
+        , BillSeriesGridComponent
+        , BillSeriesDetailComponent
+        , BillSeriesEditComponent
     ]
     , providers: [
         AssessmentService
@@ -104,6 +114,7 @@ import { AspectTypeaheadComponent } from './aspect-typeahead.component';
         , IncompatibleRuleService
         , AspectService
         , AspectChargeService
+        , BillSeriesService
     ]
     , schemas: [CUSTOM_ELEMENTS_SCHEMA]
 } )

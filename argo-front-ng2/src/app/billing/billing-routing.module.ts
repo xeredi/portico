@@ -14,6 +14,9 @@ import { AssessmentDetailEditComponent } from './assessment-detail-edit.componen
 import { ChargeGridComponent } from './charge-grid.component';
 import { ChargeDetailComponent } from './charge-detail.component';
 import { ChargeEditComponent } from './charge-edit.component';
+import { BillSeriesGridComponent } from './bill-series-grid.component';
+import { BillSeriesDetailComponent } from './bill-series-detail.component';
+import { BillSeriesEditComponent } from './bill-series-edit.component';
 import { RuleDetailComponent } from './rule-detail.component';
 import { RuleEditComponent } from './rule-edit.component';
 import { IncompatibleRuleDetailComponent } from './incompatible-rule-detail.component';
@@ -53,6 +56,10 @@ const routes: Routes = [
     , { path: 'aspect-charge/detail/:id/:date', component: AspectChargeDetailComponent, canActivate: [PermissionGuard] }
     , { path: 'aspect-charge/edit/:action/:aspectId/:date', component: AspectChargeEditComponent, canActivate: [PermissionGuard] }
     , { path: 'aspect-charge/edit/:action/:aspectId/:date/:id', component: AspectChargeEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'bill-series/grid', component: BillSeriesGridComponent, canActivate: [PermissionGuard] }
+    , { path: 'bill-series/detail/:id', component: BillSeriesDetailComponent, canActivate: [PermissionGuard] }
+    , { path: 'bill-series/edit/:action', component: BillSeriesEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'bill-series/edit/:action/:id', component: BillSeriesEditComponent, canActivate: [PermissionGuard] }
 ];
 
 @NgModule( {

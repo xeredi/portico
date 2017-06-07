@@ -1,0 +1,66 @@
+<div *ngIf="resultList">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group mr-2" role="group">
+            <ngb-pagination [collectionSize]="resultList.count" [(page)]="page" [pageSize]="pageSize" [maxSize]="1"
+                [size]="sm" [boundaryLinks]="false" [ellipses]="false" (pageChange)="pageChange()"></ngb-pagination>
+        </div>
+        <div class="btn-group mr-2" role="group">
+            <button class="btn btn-secondary" (click)="editFilter(filter)">
+                <i class="fa fa-filter"></i> Filter
+            </button>
+            <a class="btn btn-secondary" [routerLink]="['/billing/bill-series/edit', 'create']"><i
+                class="fa fa-file-o"></i> New</a>
+        </div>
+    </div>
+
+    <span [translate]="'grid_count'" [translateParams]="{count: resultList.count}"></span>
+
+    <div class="table-responsive">
+        <table class="table table-sm table-bordered table-hover table-condensed table-nonfluid">
+            <thead class="thead-inverse">
+                <tr>
+                    <th></th>
+                    <th [translate]="'fcsr_serie'"></th>
+                    <th [translate]="'fcsr_anio'"></th>
+                    <th [translate]="'fcsr_numeroUltimo'"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of resultList.list; trackBy:trackByFn">
+                    <td><a [routerLink]="['/billing/bill-series/detail', item.id]"><i class="fa fa-search"></i></a></td>
+                    <td nowrap="nowrap" [innerHTML]="item.serie"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.anio" class="number"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.numeroUltimo" class="number"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <ng-template #filter let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Search Filter</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <fieldset class="form-group">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-1 form-group-sm">
+                        <label [translate]="'fcsr_anio'"></label> <input type="text" [(ngModel)]="model.anio"
+                            name="model.anio" class="form-control form-control-sm number" />
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div class="modal-footer">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary" (click)="saveFilter();c()">Search</button>
+            <button type="button" class="btn btn-secondary" (click)="resetFilter()">Reset</button>
+            <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+        </div>
+    </div>
+    </ng-template>
+</div>
