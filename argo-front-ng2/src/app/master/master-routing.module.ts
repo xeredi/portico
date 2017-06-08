@@ -14,7 +14,7 @@ import { SubparameterEditComponent } from './subparameter-edit.component';
 @NgModule( {
     imports: [
         RouterModule.forChild( [
-            { path: 'master-home', component: HomeComponent, canActivate: [PermissionGuard] }
+            { path: '', component: HomeComponent, canActivate: [PermissionGuard] }
             , { path: 'parameter/grid/:entiId', component: ParameterGridComponent, canActivate: [PermissionGuard] }
             , { path: 'parameter/detail/:entiId/:id/:date', component: ParameterDetailComponent, canActivate: [PermissionGuard] }
             , { path: 'parameter/edit/:action/:entiId', component: ParameterEditComponent, canActivate: [PermissionGuard] }

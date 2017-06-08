@@ -30,7 +30,7 @@ import { AspectChargeEditComponent } from './aspect-charge-edit.component';
 @NgModule( {
     imports: [
         RouterModule.forChild( [
-            { path: 'billing-home', component: HomeComponent, canActivate: [PermissionGuard] }
+            { path: '', component: HomeComponent, canActivate: [PermissionGuard] }
             , { path: 'assessment/grid', component: AssessmentGridComponent, canActivate: [PermissionGuard] }
             , { path: 'assessment/detail/:id', component: AssessmentDetailComponent, canActivate: [PermissionGuard] }
             , { path: 'assessment/edit/:action', component: AssessmentEditComponent, canActivate: [PermissionGuard] }

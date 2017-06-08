@@ -6,10 +6,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 
+import { BillingRoutingModule } from './billing-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { MasterModule } from '../master/master.module';
 
-import { BillingRoutingModule } from './billing-routing.module';
 import { HomeComponent } from './home.component';
 
 import { AssessmentService } from './assessment.service';
@@ -69,9 +69,9 @@ import { BillSeriesEditComponent } from './bill-series-edit.component';
         , TranslateModule
         , NguiDatetimePickerModule
 
+        , BillingRoutingModule
         , SharedModule
         , MasterModule
-        , BillingRoutingModule
     ]
     , declarations: [
         HomeComponent
