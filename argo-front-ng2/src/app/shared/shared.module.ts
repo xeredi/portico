@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
+import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 
 import { PermissionGuard } from './permission.guard';
 
@@ -21,6 +24,9 @@ import { ItemFilterFragmentComponent } from './item-filter-fragment.component';
     imports: [
         CommonModule
         , FormsModule
+        , NgbModule
+        , TranslateModule
+        , NguiDatetimePickerModule
     ]
     , declarations: [
         AlertComponent

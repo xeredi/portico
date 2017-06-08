@@ -1,6 +1,7 @@
 package xeredi.argo.model.maestro.vo;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -43,6 +44,13 @@ public final class ParametroCriterioVO extends ItemCriterioVO implements ItemTyp
 
     /** The sprm map. */
     private Map<Long, SubparametroVO> sprmMap;
+
+    public ParametroCriterioVO() {
+    	super();
+
+    	this.sprmMap = new HashMap<>();
+    	this.prto = new PuertoCriterioVO();
+    }
 
     /**
      * Sets the parametro.

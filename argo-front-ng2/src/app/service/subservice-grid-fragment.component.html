@@ -7,18 +7,19 @@
                 <th [translate]="'ssrv_numero'"></th>
                 <th *ngIf="enti.enti.temporal" [translate]="'fini'"></th>
                 <th *ngIf="enti.enti.temporal" [translate]="'ffin'"></th>
-                <th *ngFor="let entdId of enti.entdGridList" [translate]="'entd_' + enti.entdMap[entdId].id"></th>
+                <th *ngFor="let entdId of enti.entdGridList; trackBy:trackByFnEntd"
+                    [translate]="'entd_' + enti.entdMap[entdId].id"></th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of itemList; trackBy:trackByFn">
+            <tr *ngFor="let item of itemList; trackBy:trackByFnList">
                 <td><a [routerLink]="['/service/subservice/detail', item.entiId, item.id]"><i
                         class="fa fa-search"></i></a></td>
                 <td nowrap="nowrap" [innerHTML]="item.srvc.etiqueta"></td>
                 <td nowrap="nowrap" [innerHTML]="item.numero | number" class="number"></td>
                 <td *ngIf="enti.enti.temporal" nowrap="nowrap" [innerHTML]="item.fini | date: 'dd/MM/yyyy HH:mm'"></td>
                 <td *ngIf="enti.enti.temporal" nowrap="nowrap" [innerHTML]="item.ffin | date: 'dd/MM/yyyy HH:mm'"></td>
-                <td nowrap="nowrap" *ngFor="let entdId of enti.entdGridList"
+                <td nowrap="nowrap" *ngFor="let entdId of enti.entdGridList; trackBy:trackByFnEntd"
                     [ngSwitch]="enti.entdMap[entdId].tpdt.tipoElemento"><i *ngSwitchCase="'BO'" class="fa"
                     [ngClass]="item.itdtMap[entdId].cantidadEntera == 1 ? 'fa-check' : 'fa-remove'"></i> <span
                     *ngSwitchCase="'NE'" [innerHTML]="item.itdtMap[entdId].cantidadEntera | number" class="pull-right"></span>

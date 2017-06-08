@@ -48,5 +48,8 @@ import { SubparameterEditComponent } from './subparameter-edit.component';
         , ParameterService
         , SubparameterService
     ]
+    , exports: [
+        ParameterTypeaheadComponent
+    ]
 } )
 export class MasterModule { }

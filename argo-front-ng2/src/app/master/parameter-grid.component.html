@@ -8,7 +8,7 @@
             <ngb-pagination [collectionSize]="resultList.count" [(page)]="page" [pageSize]="pageSize" [maxSize]="1"
                 [size]="sm" [boundaryLinks]="false" [ellipses]="false" (pageChange)="pageChange()"></ngb-pagination>
         </div>
-        <div class="btn-group mr-2" role="group">
+        <div class="btn-group mr-2">
             <button class="btn btn-secondary" (click)="editFilter(filter)">
                 <i class="fa fa-filter"></i> Filter
             </button>
@@ -29,11 +29,12 @@
                     <th [translate]="'fini'"></th>
                     <th [translate]="'ffin'"></th>
                     <th *ngIf="enti.enti.i18n" [translate]="'prmt_texto'"></th>
-                    <th *ngFor="let entdId of enti.entdGridList" [translate]="'entd_' + enti.entdMap[entdId].id"></th>
+                    <th *ngFor="let entdId of enti.entdGridList; trackBy:trackByFnEntd"
+                        [translate]="'entd_' + enti.entdMap[entdId].id"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let item of resultList.list; trackBy:trackByFn">
+                <tr *ngFor="let item of resultList.list; trackBy:trackByFnList">
                     <td><a [routerLink]="['/master/parameter/detail', item.entiId, item.id, item.fref]"><i
                             class="fa fa-search"></i></a></td>
                     <td nowrap="nowrap" *ngIf="enti.enti.puerto" [innerHTML]="item.prto.etiqueta"></td>
@@ -41,7 +42,7 @@
                     <td nowrap="nowrap" [innerHTML]="item.version.fini | date: 'dd/MM/yyyy'"></td>
                     <td nowrap="nowrap" [innerHTML]="item.version.ffin | date: 'dd/MM/yyyy'"></td>
                     <td nowrap="nowrap" *ngIf="enti.enti.i18n" [innerHTML]="item.texto"></td>
-                    <td nowrap="nowrap" *ngFor="let entdId of enti.entdGridList"
+                    <td nowrap="nowrap" *ngFor="let entdId of enti.entdGridList; trackBy:trackByFnEntd"
                         [ngSwitch]="enti.entdMap[entdId].tpdt.tipoElemento"><i *ngSwitchCase="'BO'" class="fa"
                         [ngClass]="item.itdtMap[entdId].cantidadEntera == 1 ? 'fa-check' : 'fa-remove'"></i> <span
                         *ngSwitchCase="'NE'" [innerHTML]="item.itdtMap[entdId].cantidadEntera | number"
@@ -70,7 +71,18 @@
     <div class="modal-body">
         <fieldset class="form-group">
             <div class="container-fluid">
-                <div class="row"></div>
+                <div class="row">
+                    <div *ngIf="enti.enti.puerto" class="col-lg-3 col-xl-2 form-group-sm">
+                        <label [translate]="'prto'"></label> <select name="model.prto" [(ngModel)]="model.prto.id"
+                            class="form-control form-control-sm">
+                            <option></option>
+                            <option *ngFor="let item of prtoList" [value]="item.id" [innerHTML]="item.etiqueta"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <app-item-filter-fragment [enti]="enti" [itdtMap]="model.itdtMap" [labelValuesMap]="labelValuesMap"
+                    [port]=model.prto></app-item-filter-fragment>
             </div>
         </fieldset>
     </div>

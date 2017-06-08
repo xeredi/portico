@@ -8,7 +8,11 @@ export class SubserviceGridFragmentComponent {
     @Input() itemList: any[];
     @Input() enti: any;
 
-    trackByFn( index, item ) {
+    trackByFnList( index, item ) {
+        return index;
+    }
+
+    trackByFnEntd( index, item ) {
         return index;
     }
 }

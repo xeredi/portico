@@ -19,6 +19,7 @@ export class ParameterGridComponent implements OnInit {
     pageSize: number;
 
     prtoList: any[];
+    labelValuesMap: any;
 
     constructor(
         private route: ActivatedRoute
@@ -42,7 +43,11 @@ export class ParameterGridComponent implements OnInit {
             } );
     }
 
-    trackByFn( index, item ) {
+    trackByFnList( index, item ) {
+        return index;
+    }
+
+    trackByFnEntd( index, item ) {
         return index;
     }
 
@@ -53,6 +58,7 @@ export class ParameterGridComponent implements OnInit {
     editFilter( filter ) {
         this.prmtService.filter( this.model ).subscribe( resp => {
             this.prtoList = resp.prtoList;
+            this.labelValuesMap = resp.labelValuesMap;
 
             this.modalService.open( filter, { size: "lg" } );
         } );

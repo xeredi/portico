@@ -42,7 +42,11 @@ export class ServiceGridComponent implements OnInit {
             } );
     }
 
-    trackByFn( index, item ) {
+    trackByFnList( index, item ) {
+        return index;
+    }
+
+    trackByFnEntd( index, item ) {
         return index;
     }
 
