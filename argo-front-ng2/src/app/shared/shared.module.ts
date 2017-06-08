@@ -39,6 +39,9 @@ import { ItemFilterFragmentComponent } from './item-filter-fragment.component';
         AlertComponent
         , I18nInfoDetailComponent
         , I18nInfoEditComponent
+        , ItemDetailFragmentComponent
+        , ItemEditFragmentComponent
+        , ItemFilterFragmentComponent
     ]
 } )
 export class SharedModule { }

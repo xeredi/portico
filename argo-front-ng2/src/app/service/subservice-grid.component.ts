@@ -40,10 +40,6 @@ export class SubserviceGridComponent implements OnInit {
             } );
     }
 
-    trackByFn( index, item ) {
-        return index;
-    }
-
     pageChange() {
         this.doSearch();
     }
