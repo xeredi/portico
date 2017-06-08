@@ -102,6 +102,11 @@
                                 [translate]="'enti_' + item.value"></option>
                         </select>
                     </div>
+                    <div class="col-lg-4 col-xl-3 form-group-sm">
+                        <label [translate]="'vlrc_pagador'"></label>
+
+                        <app-parameter-typeahead [(ngModel)]="model.pagador" [entityId]="20010"></app-parameter-typeahead>
+                    </div>
                     <div class="col-lg-3 col-xl-2 form-group-sm">
                         <label [translate]="'prto'"></label> <select [(ngModel)]="model.prtoId" name="model.prtoId"
                             class="form-control form-control-sm">

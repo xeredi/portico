@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 
 import { SharedModule } from '../shared/shared.module';
+import { MasterModule } from '../master/master.module';
 
 import { BillingRoutingModule } from './billing-routing.module';
 import { HomeComponent } from './home.component';
@@ -69,6 +70,7 @@ import { BillSeriesEditComponent } from './bill-series-edit.component';
         , NguiDatetimePickerModule
 
         , SharedModule
+        , MasterModule
         , BillingRoutingModule
     ]
     , declarations: [
@@ -115,8 +117,6 @@ import { BillSeriesEditComponent } from './bill-series-edit.component';
         , AspectService
         , AspectChargeService
         , BillSeriesService
-    ]
-    , schemas: [
     ]
 } )
 export class BillingModule { }
