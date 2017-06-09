@@ -29,16 +29,12 @@ export class ParameterTypeGridComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log( "ngOnInit page: " + this.page );
-
         this.pageSize = 20;
 
         this.route.params.subscribe
             (( params: Params ) => {
                 this.page = params['page'] ? +params['page'] : 1;
                 this.model = params['model'] ? JSON.parse( params['model'] ) : {};
-
-                console.log( "after params page: " + this.page );
 
                 this.doSearch();
             } );
@@ -69,7 +65,6 @@ export class ParameterTypeGridComponent implements OnInit {
     }
 
     private doSearch() {
-        console.log( "Do Search page: " + this.page );
         this.prtpService.listPage( this.model, this.page, this.pageSize ).subscribe( resp => {
             this.model = resp.model;
             this.resultList = resp.resultList;

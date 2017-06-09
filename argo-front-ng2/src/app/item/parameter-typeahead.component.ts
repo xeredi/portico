@@ -63,7 +63,7 @@ export class ParameterTypeaheadComponent extends ValueAccessor<any> implements O
             } );
     }
 
-    resultFormatter = ( result: any ) => result.etiqueta;
+    resultFormatter = ( result: any ) => result && result.etiqueta ? result.etiqueta : null;
 
-    inputFormatter = ( result: any ) => result.etiqueta;
+    inputFormatter = ( result: any ) => result && result.etiqueta ? result.etiqueta : null;
 }

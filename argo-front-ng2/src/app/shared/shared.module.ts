@@ -41,6 +41,12 @@ import { I18nInfoEditComponent } from './i18n-info-edit.component';
         AlertComponent
         , I18nInfoDetailComponent
         , I18nInfoEditComponent
+
+        , CommonModule
+        , FormsModule
+        , TranslateModule
+        , NgbModule
+        , NguiDatetimePickerModule
     ]
 } )
 export class SharedModule { }

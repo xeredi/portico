@@ -59,7 +59,7 @@ export class ServiceTypeaheadComponent extends ValueAccessor<any> implements OnI
             } );
     }
 
-    resultFormatter = ( result: any ) => result.etiqueta;
+    resultFormatter = ( result: any ) => result && result.etiqueta ? result.etiqueta : null;
 
-    inputFormatter = ( result: any ) => result.etiqueta;
+    inputFormatter = ( result: any ) => result && result.etiqueta ? result.etiqueta : null;
 }

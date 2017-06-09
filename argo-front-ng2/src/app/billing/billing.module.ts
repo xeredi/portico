@@ -1,16 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateModule } from '@ngx-translate/core';
-import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 
 import { BillingRoutingModule } from './billing-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { ItemModule } from '../item/item.module';
-import { MasterModule } from '../master/master.module';
-import { ServiceModule } from '../service/service.module';
 
 import { HomeComponent } from './home.component';
 
@@ -65,17 +57,9 @@ import { BillSeriesEditComponent } from './bill-series-edit.component';
 
 @NgModule( {
     imports: [
-        FormsModule
-        , CommonModule
-        , NgbModule
-        , TranslateModule
-        , NguiDatetimePickerModule
-
-        , BillingRoutingModule
+        BillingRoutingModule
         , SharedModule
         , ItemModule
-        , MasterModule
-        , ServiceModule
     ]
     , declarations: [
         HomeComponent

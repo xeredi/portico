@@ -13,12 +13,12 @@ import com.opensymphony.xwork2.ModelDriven;
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.BaseAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.item.vo.ItemDatoVO;
 import xeredi.argo.model.item.vo.ItemTramiteDatoVO;
 import xeredi.argo.model.item.vo.ItemTramiteVO;
 import xeredi.argo.model.item.vo.ItemVO;
 import xeredi.argo.model.maestro.service.ParametroService;
+import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.service.TramiteProxyService;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
@@ -59,7 +59,7 @@ public final class ItemTramiteEditAction extends BaseAction implements ModelDriv
 
 	/** The label values map. */
 	@Getter
-	private HashMap<Long, List<LabelValueVO>> labelValuesMap;
+	private HashMap<Long, List<ParametroVO>> labelValuesMap;
 
 	/** The prto id. */
 	@Getter
@@ -170,7 +170,7 @@ public final class ItemTramiteEditAction extends BaseAction implements ModelDriv
 	public final void doLoadDependencies() throws ApplicationException {
 		Preconditions.checkNotNull(model.getTrmt().getEntiId());
 
-		labelValuesMap = new HashMap<Long, List<LabelValueVO>>();
+		labelValuesMap = new HashMap<Long, List<ParametroVO>>();
 
 		final Set<Long> tpprIds = new HashSet<>();
 

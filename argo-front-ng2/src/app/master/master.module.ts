@@ -1,10 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateModule } from '@ngx-translate/core';
-import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 
 import { SharedModule } from '../shared/shared.module';
 import { ItemModule } from '../item/item.module';
@@ -24,13 +18,7 @@ import { SubparameterEditComponent } from './subparameter-edit.component';
 
 @NgModule( {
     imports: [
-        FormsModule
-        , CommonModule
-        , NgbModule
-        , TranslateModule
-        , NguiDatetimePickerModule
-
-        , MasterRoutingModule
+        MasterRoutingModule
         , SharedModule
         , ItemModule
     ]

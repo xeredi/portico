@@ -14,9 +14,9 @@ import com.google.common.base.Preconditions;
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.GridFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.item.vo.ItemCriterioVO;
 import xeredi.argo.model.maestro.service.ParametroService;
+import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
 import xeredi.argo.model.metamodelo.vo.TipoHtml;
@@ -42,7 +42,7 @@ public abstract class ItemFilterAction<C extends ItemCriterioVO, E extends Abstr
 
 	/** The label values map. */
 	@Getter
-	protected Map<Long, List<LabelValueVO>> labelValuesMap;
+	protected Map<Long, List<ParametroVO>> labelValuesMap;
 
 	@Inject
 	private ParametroService prmtService;
@@ -65,7 +65,7 @@ public abstract class ItemFilterAction<C extends ItemCriterioVO, E extends Abstr
 		Preconditions.checkNotNull(enti);
 
 		if (enti.getEntdList() != null) {
-			labelValuesMap = new HashMap<Long, List<LabelValueVO>>();
+			labelValuesMap = new HashMap<Long, List<ParametroVO>>();
 
 			final Set<Long> tpprIds = new HashSet<>();
 

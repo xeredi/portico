@@ -21,6 +21,8 @@ export class InterceptedHttp extends Http {
     request( request: string | Request, options: RequestOptionsArgs = { headers: new Headers() } ): Observable<Response> {
         var url = ( typeof request === 'string' ? request : request['url'] );
 
+        console.log( "request: " + url );
+
         // FIXME Mirar si hay forma más elegante de hacer que funcione angular translate
         return url.startsWith( "/assets/i18n" ) ? super.request( request, options ) : this.interceptResponse( request, options );
     }
@@ -38,10 +40,11 @@ export class InterceptedHttp extends Http {
     }
 
     private handleResponse( res: Response ) {
+        console.log( "handleResponse: " );
         // console.log( "handleResponse: " + res.toString() );
         var json = res.json();
 
-        console.log( "jsonResponse: " + JSON.stringify( json ) );
+        // console.log( "jsonResponse: " + JSON.stringify( json ) );
 
         // console.log( "Checking errors" );
         if ( json.actionErrors && Object.keys( json.actionErrors ).length > 0 ) {

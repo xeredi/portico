@@ -8,7 +8,7 @@ export class ItemFilterFragmentComponent implements OnInit {
     @Input() itdtMap: any;
     @Input() enti: any;
     @Input() labelValuesMap: any;
-    @Input() port: any;
+    @Input() portId: number;
 
     entdFilterList: number[];
 
@@ -25,5 +25,9 @@ export class ItemFilterFragmentComponent implements OnInit {
                 this.entdFilterList.push( tpdtId );
             }
         } );
+    }
+
+    compareLabelValueFn( c1: any, c2: any ): boolean {
+        return c1 && c2 && c1.id === c2.id;
     }
 }

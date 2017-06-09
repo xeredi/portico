@@ -1,10 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateModule } from '@ngx-translate/core';
-import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 
 import { ItemRoutingModule } from './item-routing.module';
 import { SharedModule } from '../shared/shared.module';
@@ -22,14 +16,7 @@ import { ItemFilterFragmentComponent } from './item-filter-fragment.component';
 
 @NgModule( {
     imports: [
-        CommonModule
-        , FormsModule
-        , HttpModule
-        , NgbModule
-        , TranslateModule
-        , NguiDatetimePickerModule
-
-        , ItemRoutingModule
+        ItemRoutingModule
         , SharedModule
     ]
     , declarations: [

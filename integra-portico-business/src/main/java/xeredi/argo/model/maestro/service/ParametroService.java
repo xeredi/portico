@@ -701,22 +701,28 @@ public class ParametroService {
 	 *            the idioma
 	 * @return the map
 	 */
-	public Map<Long, List<LabelValueVO>> selectLabelValues(@NonNull final Set<Long> tpprIds,
+	public Map<Long, List<ParametroVO>> selectLabelValues(@NonNull final Set<Long> tpprIds,
 			@NonNull final Date fechaReferencia, final String idioma) {
-		final ParametroCriterioVO prmtCriterioVO = new ParametroCriterioVO();
+		final ParametroCriterioVO prmtCriterio = new ParametroCriterioVO();
 
-		prmtCriterioVO.setEntiIds(tpprIds);
-		prmtCriterioVO.setIdioma(idioma);
-		prmtCriterioVO.setFechaVigencia(fechaReferencia);
+		prmtCriterio.setEntiIds(tpprIds);
+		prmtCriterio.setIdioma(idioma);
+		prmtCriterio.setFechaVigencia(fechaReferencia);
 
-		final Map<Long, List<LabelValueVO>> map = new HashMap<>();
+		final Map<Long, List<ParametroVO>> map = new HashMap<>();
 
-		for (final ParametroVO prmtVO : prmtDAO.selectList(prmtCriterioVO)) {
-			if (!map.containsKey(prmtVO.getEntiId())) {
-				map.put(prmtVO.getEntiId(), new ArrayList<LabelValueVO>());
+		for (final ParametroVO prmt : prmtDAO.selectList(prmtCriterio)) {
+			if (!map.containsKey(prmt.getEntiId())) {
+				map.put(prmt.getEntiId(), new ArrayList<ParametroVO>());
 			}
 
-			map.get(prmtVO.getEntiId()).add(new LabelValueVO(prmtVO.getEtiqueta(), prmtVO.getId()));
+			final ParametroVO labelValue = new ParametroVO();
+
+			labelValue.setId(prmt.getId());
+			labelValue.setParametro(prmt.getParametro());
+			labelValue.setTexto(prmt.getTexto());
+
+			map.get(prmt.getEntiId()).add(labelValue);
 		}
 
 		return map;

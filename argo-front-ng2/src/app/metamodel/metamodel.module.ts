@@ -40,8 +40,8 @@ import { SubparameterTypeEditComponent } from './subparameter-type-edit.componen
         , CommonModule
         , NgbModule
 
-        , SharedModule
         , MetamodelRoutingModule
+        , SharedModule
     ]
     , declarations: [
         HomeComponent

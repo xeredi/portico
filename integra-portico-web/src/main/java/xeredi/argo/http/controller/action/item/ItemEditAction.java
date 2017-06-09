@@ -13,9 +13,9 @@ import com.google.common.base.Preconditions;
 import lombok.Getter;
 import xeredi.argo.http.controller.action.comun.CrudEditAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
-import xeredi.argo.model.comun.vo.LabelValueVO;
 import xeredi.argo.model.item.vo.ItemVO;
 import xeredi.argo.model.maestro.service.ParametroService;
+import xeredi.argo.model.maestro.vo.ParametroVO;
 import xeredi.argo.model.metamodelo.vo.AbstractEntidadDetailVO;
 import xeredi.argo.model.metamodelo.vo.AccionCodigo;
 import xeredi.argo.model.metamodelo.vo.EntidadTipoDatoVO;
@@ -42,7 +42,7 @@ public abstract class ItemEditAction<I extends ItemVO, E extends AbstractEntidad
 
 	/** The label values map. */
 	@Getter
-	protected Map<Long, List<LabelValueVO>> labelValuesMap;
+	protected Map<Long, List<ParametroVO>> labelValuesMap;
 
 	@Inject
 	private ParametroService prmtService;
@@ -69,7 +69,7 @@ public abstract class ItemEditAction<I extends ItemVO, E extends AbstractEntidad
 	public final void doLoadDependencies() throws ApplicationException {
 		Preconditions.checkNotNull(enti);
 
-		labelValuesMap = new HashMap<Long, List<LabelValueVO>>();
+		labelValuesMap = new HashMap<Long, List<ParametroVO>>();
 
 		if (enti.getEntdList() != null) {
 			final Set<Long> tpprIds = new HashSet<>();
