@@ -1,8 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { SharedModule } from '../shared/shared.module';
 
@@ -36,11 +32,7 @@ import { SubparameterTypeEditComponent } from './subparameter-type-edit.componen
 
 @NgModule( {
     imports: [
-        FormsModule
-        , CommonModule
-        , NgbModule
-
-        , MetamodelRoutingModule
+        MetamodelRoutingModule
         , SharedModule
     ]
     , declarations: [

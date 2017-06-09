@@ -18,6 +18,8 @@ export class SubserviceGridComponent implements OnInit {
     page: number;
     pageSize: number;
 
+    labelValuesMap: any;
+
     constructor(
         private route: ActivatedRoute
         , private router: Router
@@ -46,6 +48,8 @@ export class SubserviceGridComponent implements OnInit {
 
     editFilter( filter ) {
         this.ssrvService.filter( this.model ).subscribe( resp => {
+            this.labelValuesMap = resp.labelValuesMap;
+
             this.modalService.open( filter, { size: "lg" } );
         } );
     }

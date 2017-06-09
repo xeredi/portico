@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+
+import { SharedModule } from '../shared/shared.module';
 
 import { SecurityRoutingModule } from './security-routing.module';
 import { HomeComponent } from './home.component';
@@ -17,9 +16,8 @@ import { GroupService } from './group.service';
 
 @NgModule( {
     imports: [
-        FormsModule,
-        CommonModule,
         SecurityRoutingModule
+        , SharedModule
     ],
     declarations: [
         HomeComponent
