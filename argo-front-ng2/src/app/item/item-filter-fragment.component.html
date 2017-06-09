@@ -19,10 +19,10 @@
             class="form-control form-control-sm" /> <select *ngSwitchCase="'PR'" name="itdtMap[{{tpdtId}}].prmt"
             [(ngModel)]="itdtMap[tpdtId].prmt" class="form-control form-control-sm">
             <option></option>
-        </select><select *ngSwitchCase="'SR'" name="itdtMap[{{tpdtId}}].srvc" [(ngModel)]="itdtMap[tpdtId].srvc"
-            class="form-control form-control-sm">
-            <option></option>
-        </select> <input *ngSwitchCase="'FE'" class="form-control form-control-sm" [(ngModel)]="itdtMap[tpdtId].fecha"
+        </select>
+        <app-service-typeahead *ngSwitchCase="'SR'" name="itdtMap[{{tpdtId}}].srvc" [(ngModel)]="itdtMap[tpdtId].srvc"
+            [entityId]="enti.entdMap[tpdtId].tpdt.enti.id"></app-service-typeahead>
+        <input *ngSwitchCase="'FE'" class="form-control form-control-sm" [(ngModel)]="itdtMap[tpdtId].fecha"
             name="itdtMap[{{tpdtId}}].fecha" ngui-datetime-picker date-only="true" date-format="DD/MM/YYYY" /><input
             *ngSwitchCase="'FH'" class="form-control form-control-sm" [(ngModel)]="itdtMap[tpdtId].fecha"
             name="itdtMap[{{tpdtId}}].fecha" ngui-datetime-picker date-only="false" date-format="DD/MM/YYYY hh:mm" /> <span

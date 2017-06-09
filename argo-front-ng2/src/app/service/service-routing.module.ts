@@ -7,11 +7,9 @@ import { HomeComponent } from './home.component';
 import { ServiceGridComponent } from './service-grid.component';
 import { ServiceDetailComponent } from './service-detail.component';
 import { ServiceEditComponent } from './service-edit.component';
-import { ServiceTypeaheadComponent } from './service-typeahead.component';
 import { SubserviceGridComponent } from './subservice-grid.component';
 import { SubserviceDetailComponent } from './subservice-detail.component';
 import { SubserviceEditComponent } from './subservice-edit.component';
-import { SubserviceTypeaheadComponent } from './subservice-typeahead.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [PermissionGuard] }

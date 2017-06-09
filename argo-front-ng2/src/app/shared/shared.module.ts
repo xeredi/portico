@@ -5,6 +5,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 
+import { MasterModule } from '../master/master.module';
+import { ServiceModule } from '../service/service.module';
+
 import { PermissionGuard } from './permission.guard';
 
 import { CrudService } from './crud.service';
@@ -14,10 +17,6 @@ import { AlertComponent } from './alert.component';
 
 import { I18nInfoDetailComponent } from './i18n-info-detail.component';
 import { I18nInfoEditComponent } from './i18n-info-edit.component';
-
-import { ItemDetailFragmentComponent } from './item-detail-fragment.component';
-import { ItemEditFragmentComponent } from './item-edit-fragment.component';
-import { ItemFilterFragmentComponent } from './item-filter-fragment.component';
 
 
 @NgModule( {
@@ -32,9 +31,6 @@ import { ItemFilterFragmentComponent } from './item-filter-fragment.component';
         AlertComponent
         , I18nInfoDetailComponent
         , I18nInfoEditComponent
-        , ItemDetailFragmentComponent
-        , ItemEditFragmentComponent
-        , ItemFilterFragmentComponent
     ]
     , providers: [
         PermissionGuard
@@ -45,9 +41,6 @@ import { ItemFilterFragmentComponent } from './item-filter-fragment.component';
         AlertComponent
         , I18nInfoDetailComponent
         , I18nInfoEditComponent
-        , ItemDetailFragmentComponent
-        , ItemEditFragmentComponent
-        , ItemFilterFragmentComponent
     ]
 } )
 export class SharedModule { }

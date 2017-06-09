@@ -20,6 +20,7 @@ import { HomeComponent } from './home.component';
 import { AuthenticationService } from './authentication.service';
 
 import { SharedModule } from './shared/shared.module';
+import { ItemModule } from './item/item.module';
 import { SecurityModule } from './security/security.module';
 import { SettingsModule } from './settings/settings.module';
 import { MetamodelModule } from './metamodel/metamodel.module';
@@ -54,6 +55,7 @@ export function HttpLoaderFactory( http: Http ) {
         , NguiDatetimePickerModule
         , AppRoutingModule
         , SharedModule
+        , ItemModule
         , SecurityModule
         , SettingsModule
         , MetamodelModule

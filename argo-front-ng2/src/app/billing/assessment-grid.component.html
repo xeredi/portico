@@ -114,6 +114,11 @@
                             <option *ngFor="let item of prtoList" [value]="item.id" [innerHTML]="item.etiqueta"></option>
                         </select>
                     </div>
+                    <div *ngIf="model.tpsrId" class="col-lg-2 col-xl-1 form-group-sm">
+                        <label [translate]="'srvc'"></label>
+
+                        <app-service-typeahead [(ngModel)]="model.srvc" [entityId]="model.tpsrId"></app-service-typeahead>
+                    </div>
                     <div *ngIf="model.tpsrId" class="col-lg-4 col-xl-3 form-group-sm">
                         <label [translate]="'aspc'"></label>
 

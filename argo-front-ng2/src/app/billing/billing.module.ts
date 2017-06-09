@@ -8,7 +8,9 @@ import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 
 import { BillingRoutingModule } from './billing-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { ItemModule } from '../item/item.module';
 import { MasterModule } from '../master/master.module';
+import { ServiceModule } from '../service/service.module';
 
 import { HomeComponent } from './home.component';
 
@@ -71,7 +73,9 @@ import { BillSeriesEditComponent } from './bill-series-edit.component';
 
         , BillingRoutingModule
         , SharedModule
+        , ItemModule
         , MasterModule
+        , ServiceModule
     ]
     , declarations: [
         HomeComponent

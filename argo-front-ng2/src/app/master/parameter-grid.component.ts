@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ParameterService } from './parameter.service';
+import { ParameterService } from '../item/parameter.service';
 
 @Component( {
     selector: 'app-parameter-grid',

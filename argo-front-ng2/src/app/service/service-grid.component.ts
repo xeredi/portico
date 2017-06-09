@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ServiceService } from './service.service';
+import { ServiceService } from '../item/service.service';
 
 @Component( {
     selector: 'app-service-grid',
@@ -19,6 +19,7 @@ export class ServiceGridComponent implements OnInit {
     pageSize: number;
 
     prtoList: any[];
+    labelValuesMap: any;
 
     constructor(
         private route: ActivatedRoute
@@ -57,6 +58,7 @@ export class ServiceGridComponent implements OnInit {
     editFilter( filter ) {
         this.srvcService.filter( this.model ).subscribe( resp => {
             this.prtoList = resp.prtoList;
+            this.labelValuesMap = resp.labelValuesMap;
 
             this.modalService.open( filter, { size: "lg" } );
         } );

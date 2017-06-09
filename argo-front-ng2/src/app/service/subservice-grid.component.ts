@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { SubserviceService } from './subservice.service';
+import { SubserviceService } from '../item/subservice.service';
 
 @Component( {
     selector: 'app-subservice-grid',

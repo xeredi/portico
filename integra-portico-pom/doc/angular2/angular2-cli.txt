@@ -258,9 +258,6 @@ ng g service shared/Alert --spec false
 ng g component shared/Alert --flat --spec false
 ng g component shared/I18nInfoDetail --flat --spec false
 ng g component shared/I18nInfoEdit --flat --spec false
-ng g component shared/ItemDetailFragment --flat --spec false
-ng g component shared/ItemEditFragment --flat --spec false
-ng g component shared/ItemFilterFragment --flat --spec false
 
 ng g module security --routing
 ng g service security/Group
@@ -317,33 +314,38 @@ ng g component metamodel/SubparameterTypeGridFragment --flat
 ng g component metamodel/SubparameterTypeDetail --flat
 ng g component metamodel/SubparameterTypeEdit --flat
 
+ng g module item --routing
+ng g service item/Parameter --spec false
+ng g component item/ParameterTypeahead --flat --spec false
+ng g service item/Service --spec false
+ng g component item/ServiceTypeahead --flat --spec false
+ng g service item/Subservice --spec false
+ng g component item/SubserviceTypeahead --flat --spec false
+ng g component item/ItemDetailFragment --flat --spec false
+ng g component item/ItemEditFragment --flat --spec false
+ng g component item/ItemFilterFragment --flat --spec false
+
 ng g module master --routing
 ng g service master/Master --spec false
-ng g service master/Parameter --spec false
 ng g service master/Subparameter --spec false
 ng g component master/Home --flat --spec false
 ng g component master/ParameterGrid --flat --spec false
 ng g component master/ParameterDetail --flat --spec false
 ng g component master/ParameterEdit --flat --spec false
-ng g component master/ParameterTypeahead --flat --spec false
 ng g component master/SubparameterGridFragment --flat --spec false
 ng g component master/SubparameterDetail --flat --spec false
 ng g component master/SubparameterEdit --flat --spec false
 
 ng g module service --routing
 ng g service service/ServiceHome --spec false
-ng g service service/Service --spec false
-ng g service service/Subservice --spec false
 ng g component service/Home --flat --spec false
 ng g component service/ServiceGrid --flat --spec false
 ng g component service/ServiceDetail --flat --spec false
 ng g component service/ServiceEdit --flat --spec false
-ng g component service/ServiceTypeahead --flat --spec false
 ng g component service/SubserviceGrid --flat --spec false
 ng g component service/SubserviceGridFragment --flat --spec false
 ng g component service/SubserviceDetail --flat --spec false
 ng g component service/SubserviceEdit --flat --spec false
-ng g component service/SubserviceTypeahead --flat --spec false
 
 ng g module billing --routing
 ng g service billing/Charge

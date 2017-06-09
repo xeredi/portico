@@ -26,9 +26,9 @@
                     <th></th>
                     <th [translate]="'srvc'"></th>
                     <th [translate]="'srvc_falta'"></th>
-                    <th [translate]="'fref'"></th>
-                    <th [translate]="'fini'"></th>
-                    <th [translate]="'ffin'"></th>
+                    <th [translate]="'fref'" *ngIf="!enti.enti.temporal"></th>
+                    <th [translate]="'fini'" *ngIf="enti.enti.temporal"></th>
+                    <th [translate]="'ffin'" *ngIf="enti.enti.temporal"></th>
                     <th *ngFor="let entdId of enti.entdGridList; trackBy:trackByFnEntd"
                         [translate]="'entd_' + enti.entdMap[entdId].id"></th>
                 </tr>
@@ -39,9 +39,9 @@
                             class="fa fa-search"></i></a></td>
                     <td nowrap="nowrap" [innerHTML]="item.etiqueta"></td>
                     <td nowrap="nowrap" [innerHTML]="item.falta | date: 'dd/MM/yyyy HH:mm'"></td>
-                    <td nowrap="nowrap" [innerHTML]="item.fref | date: 'dd/MM/yyyy HH:mm'"></td>
-                    <td nowrap="nowrap" [innerHTML]="item.fini | date: 'dd/MM/yyyy HH:mm'"></td>
-                    <td nowrap="nowrap" [innerHTML]="item.ffin | date: 'dd/MM/yyyy HH:mm'"></td>
+                    <td *ngIf="!enti.enti.temporal" nowrap="nowrap" [innerHTML]="item.fref | date: 'dd/MM/yyyy HH:mm'"></td>
+                    <td *ngIf="enti.enti.temporal" nowrap="nowrap" [innerHTML]="item.fini | date: 'dd/MM/yyyy HH:mm'"></td>
+                    <td *ngIf="enti.enti.temporal" nowrap="nowrap" [innerHTML]="item.ffin | date: 'dd/MM/yyyy HH:mm'"></td>
                     <td nowrap="nowrap" *ngFor="let entdId of enti.entdGridList; trackBy:trackByFnEntd"
                         [ngSwitch]="enti.entdMap[entdId].tpdt.tipoElemento"><i *ngSwitchCase="'BO'" class="fa"
                         [ngClass]="item.itdtMap[entdId].cantidadEntera == 1 ? 'fa-check' : 'fa-remove'"></i> <span
@@ -72,10 +72,11 @@
         <fieldset class="form-group">
             <div class="container-fluid">
                 <div class="row"></div>
+
+                <app-item-filter-fragment [enti]="enti" [itdtMap]="model.itdtMap" [labelValuesMap]="labelValuesMap"
+                    [port]="model.prto"></app-item-filter-fragment>
             </div>
         </fieldset>
-
-        <app-item-filter-fragment></app-item-filter-fragment>
     </div>
     <div class="modal-footer">
         <div class="btn-group">

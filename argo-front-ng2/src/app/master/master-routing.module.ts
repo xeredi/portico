@@ -7,7 +7,6 @@ import { HomeComponent } from './home.component';
 import { ParameterGridComponent } from './parameter-grid.component';
 import { ParameterDetailComponent } from './parameter-detail.component';
 import { ParameterEditComponent } from './parameter-edit.component';
-import { ParameterTypeaheadComponent } from './parameter-typeahead.component';
 import { SubparameterDetailComponent } from './subparameter-detail.component';
 import { SubparameterEditComponent } from './subparameter-edit.component';
 

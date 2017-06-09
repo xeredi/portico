@@ -32,10 +32,11 @@
         <fieldset class="form-group">
             <div class="container-fluid">
                 <div class="row"></div>
+
+                <app-item-filter-fragment [enti]="enti" [itdtMap]="model.itdtMap" [labelValuesMap]="labelValuesMap"
+                    [port]="model.prto"></app-item-filter-fragment>
             </div>
         </fieldset>
-
-        <app-item-filter-fragment></app-item-filter-fragment>
     </div>
     <div class="modal-footer">
         <div class="btn-group">
