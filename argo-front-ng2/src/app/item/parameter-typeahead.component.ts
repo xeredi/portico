@@ -25,7 +25,7 @@ import { ParameterService } from './parameter.service';
     selector: 'app-parameter-typeahead'
     , template: `
 <input type="text" class="form-control form-control-sm" [(ngModel)]="value" [ngbTypeahead]="search"
-    [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" [editable]="false" />
+    [inputFormatter]="inputFormatter" [resultFormatter]="resultFormatter" [editable]="false" [readonly]="readonly" />
     `
     , providers: [{
         provide: NG_VALUE_ACCESSOR,
@@ -35,16 +35,29 @@ import { ParameterService } from './parameter.service';
 } )
 export class ParameterTypeaheadComponent extends ValueAccessor<any> implements OnInit {
     @Input() public entityId: number;
-    @Input() public portId: number;
     @Input() public date: any;
+    @Input() public readonly: boolean;
+    private _portId: number;
 
-    @ViewChild( NgModel ) model: NgModel;
+    value: any;
+
+    //    @ViewChild( NgModel ) model: NgModel;
 
     constructor( private prmtService: ParameterService ) {
         super();
     }
 
     ngOnInit() {
+    }
+
+    get portId(): number {
+        return this._portId;
+    }
+
+    @Input( 'portId' )
+    set portId( value: number ) {
+        this._portId = value;
+        this.value = {};
     }
 
     search = ( text$: Observable<any> ) => {

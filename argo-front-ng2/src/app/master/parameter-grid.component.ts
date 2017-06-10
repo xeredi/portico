@@ -72,7 +72,6 @@ export class ParameterGridComponent implements OnInit {
     resetFilter() {
         this.page = 1;
         this.model.prto = {};
-//        this.model.itdtMap = {};
     }
 
     private doSearch() {

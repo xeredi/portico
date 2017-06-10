@@ -71,9 +71,7 @@ export class ServiceGridComponent implements OnInit {
 
     resetFilter() {
         this.page = 1;
-        this.model = {
-            entiId: this.model.entiId
-        };
+        this.model.prto = {};
     }
 
     private doSearch() {

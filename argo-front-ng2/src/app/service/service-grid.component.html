@@ -73,15 +73,15 @@
             <div class="container-fluid">
                 <div class="row"></div>
 
-                <app-item-filter-fragment [enti]="enti" [itdtMap]="model.itdtMap" [labelValuesMap]="labelValuesMap"
-                    [portId]="model.prto?.id"></app-item-filter-fragment>
+                <app-item-filter-fragment #filterFragment [enti]="enti" [itdtMap]="model.itdtMap"
+                    [labelValuesMap]="labelValuesMap" [portId]="model.prto?.id"></app-item-filter-fragment>
             </div>
         </fieldset>
     </div>
     <div class="modal-footer">
         <div class="btn-group">
             <button type="button" class="btn btn-primary" (click)="saveFilter();c()">Search</button>
-            <button type="button" class="btn btn-secondary" (click)="resetFilter()">Reset</button>
+            <button type="button" class="btn btn-secondary" (click)="resetFilter();filterFragment.resetFilter();">Reset</button>
             <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
         </div>
     </div>

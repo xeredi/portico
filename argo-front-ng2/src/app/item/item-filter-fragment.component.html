@@ -29,8 +29,10 @@
                 *ngIf="enti.entdMap[tpdtId].tpdt.tpht == 'F' && !enti.entdMap[tpdtId].tpdt.enti.puerto"
                 name="itdtMap[{{tpdtId}}].prmt" [(ngModel)]="itdtMap[tpdtId].prmt"
                 [entityId]="enti.entdMap[tpdtId].tpdt.enti.id"></app-parameter-typeahead>
-            <span *ngIf="enti.entdMap[tpdtId].tpdt.tpht == 'F' && enti.entdMap[tpdtId].tpdt.enti.puerto">NOT
-                IMPLEMENTED!</span>
+            <app-parameter-typeahead
+                *ngIf="enti.entdMap[tpdtId].tpdt.tpht == 'F' && enti.entdMap[tpdtId].tpdt.enti.puerto"
+                name="itdtMap[{{tpdtId}}].prmt" [(ngModel)]="itdtMap[tpdtId].prmt"
+                [entityId]="enti.entdMap[tpdtId].tpdt.enti.id" [portId]="portId" [readonly]="!portId"></app-parameter-typeahead>
         </div>
         <app-service-typeahead *ngSwitchCase="'SR'" name="itdtMap[{{tpdtId}}].srvc" [(ngModel)]="itdtMap[tpdtId].srvc"
             [entityId]="enti.entdMap[tpdtId].tpdt.enti.id"></app-service-typeahead>
