@@ -51,7 +51,7 @@ public class AccionBaseService {
 	 *            the fngr DAO
 	 */
 	@Inject
-	private AccionBaseService(final AccionBaseDAO acbsDAO, final FuncionalidadDAO fncdDAO,
+	protected AccionBaseService(final AccionBaseDAO acbsDAO, final FuncionalidadDAO fncdDAO,
 			final FuncionalidadGrupoDAO fngrDAO) {
 		super();
 		this.acbsDAO = acbsDAO;

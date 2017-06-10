@@ -3,18 +3,64 @@ import { Component, OnInit } from '@angular/core';
 @Component( {
     moduleId: module.id,
     template: `
-<div class="col-md-6 col-md-offset-3">
-    <h1>Hi {{currentUser.firstName}}!</h1>
+<div class="row">
+  <div class="col-lg-4 col-xl-3">
+    <div class="card">
+      <div class="card-block">
+        <h3 class="card-title">
+            <a [routerLink]="['/service']">Services</a>
+        </h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4 col-xl-3">
+    <div class="card">
+      <div class="card-block">
+        <h3 class="card-title">
+            <a [routerLink]="['/billing']">Billing</a>
+        </h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4 col-xl-3">
+    <div class="card">
+      <div class="card-block">
+        <h3 class="card-title">
+            <a [routerLink]="['/master']">Masters</a>
+        </h3>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <ul class="list-group">
-      <li class="list-group-item"><a [routerLink]="['/settings']">Settings</a></li>
-      <li class="list-group-item"><a [routerLink]="['/metamodel']">Metamodel</a></li>
-      <li class="list-group-item"><a [routerLink]="['/master']">Masters</a></li>
-      <li class="list-group-item"><a [routerLink]="['/service']">Services</a></li>
-      <li class="list-group-item"><a [routerLink]="['/security']">Security</a></li>
-      <li class="list-group-item"><a [routerLink]="['/billing']">Billing</a></li>
-      <li class="list-group-item"><a [routerLink]="['/login']">Logout</a></li>
-    </ul>
+<div class="row">
+  <div class="col-lg-4 col-xl-3">
+    <div class="card">
+      <div class="card-block">
+        <h3 class="card-title">
+            <a [routerLink]="['/settings']">Settings</a>
+        </h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4 col-xl-3">
+    <div class="card">
+      <div class="card-block">
+        <h3 class="card-title">
+            <a [routerLink]="['/security']">Security</a>
+        </h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4 col-xl-3">
+    <div class="card">
+      <div class="card-block">
+        <h3 class="card-title">
+            <a [routerLink]="['/metamodel']">Metamodel</a>
+        </h3>
+      </div>
+    </div>
+  </div>
 </div>
     `
 } )

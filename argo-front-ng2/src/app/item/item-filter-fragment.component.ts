@@ -27,6 +27,16 @@ export class ItemFilterFragmentComponent implements OnInit {
         } );
     }
 
+    resetFilter() {
+        console.log( "Reset in child" );
+
+        this.enti.entdList.map( tpdtId => {
+            if ( this.enti.entdMap[tpdtId].filtrable ) {
+                this.itdtMap[tpdtId] = {};
+            }
+        } );
+    }
+
     compareLabelValueFn( c1: any, c2: any ): boolean {
         return c1 && c2 && c1.id === c2.id;
     }

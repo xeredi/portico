@@ -1,6 +1,6 @@
-<p>Services</p>
+<h3>Services</h3>
 
-<div *ngIf="resultList">
+<!-- div *ngIf="resultList">
     <div class="row" *ngFor="let item of resultList">
         <a class="btn btn-primary col-lg-4 col-xl-3" [routerLink]="['/service/service/grid', item.value]"
             [translate]="'enti_' + item.value"></a>
@@ -8,6 +8,25 @@
         <div class="col-lg-8 col-xl-9">
             <a *ngFor="let subitem of tpssMap[item.value]" class="btn btn-secondary col-lg-4 col-xl-3"
                 [routerLink]="['/service/subservice/grid', subitem.value]" [translate]="'enti_' + subitem.value"></a>
+        </div>
+    </div>
+</div -->
+
+<div class="row" *ngIf="resultList">
+    <div class="col-lg-5 col-xl-4" *ngFor="let item of resultList">
+        <div class="card">
+            <div class="card-block">
+                <h5 class="card-title" [translate]="'enti_' + item.value"></h5>
+                <a [routerLink]="['/service/service/grid', item.value]" class="btn btn-primary">Ver Servicios</a>
+                <div ngbDropdown class="d-inline-block" *ngIf="tpssMap[item.value]">
+                    <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Subservicios</button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownBasic1">
+                        <a *ngFor="let subitem of tpssMap[item.value]" class="dropdown-item"
+                            [routerLink]="['/service/subservice/grid', subitem.value]"
+                            [translate]="'enti_' + subitem.value"></a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
