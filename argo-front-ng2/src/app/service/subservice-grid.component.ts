@@ -18,6 +18,7 @@ export class SubserviceGridComponent implements OnInit {
     page: number;
     pageSize: number;
 
+    portList: any[];
     labelValuesMap: any;
 
     constructor(
@@ -48,6 +49,7 @@ export class SubserviceGridComponent implements OnInit {
 
     editFilter( filter ) {
         this.ssrvService.filter( this.model ).subscribe( resp => {
+            this.portList = resp.prtoList;
             this.labelValuesMap = resp.labelValuesMap;
 
             this.modalService.open( filter, { size: "lg" } );
@@ -61,7 +63,10 @@ export class SubserviceGridComponent implements OnInit {
 
     resetFilter() {
         this.page = 1;
-        this.model.prto = {};
+
+        this.model = {};
+        this.model.entiId = this.enti.enti.id;
+        this.model.itdtMap = {};
     }
 
     private doSearch() {

@@ -31,10 +31,19 @@
     <div class="modal-body">
         <fieldset class="form-group">
             <div class="container-fluid">
-                <div class="row"></div>
+                <div class="row">
+                    <div class="col-lg-3 col-xl-2 form-group-sm">
+                        <label [translate]="'prto'"></label> <select name="model.srvc.prto.id"
+                            [ngModel]="model.srvc?.prto?.id" (ngModelChange)="model.srvc = {prto: {id: $event}}"
+                            class="form-control form-control-sm">
+                            <option></option>
+                            <option *ngFor="let item of portList" [value]="item.id" [innerHTML]="item.etiqueta"></option>
+                        </select>
+                    </div>
+                </div>
 
                 <app-item-filter-fragment #filterFragment [enti]="enti" [itdtMap]="model.itdtMap"
-                    [labelValuesMap]="labelValuesMap" [portId]="model.prto?.id"></app-item-filter-fragment>
+                    [labelValuesMap]="labelValuesMap" [portId]="model.srvc?.prto?.id"></app-item-filter-fragment>
             </div>
         </fieldset>
     </div>

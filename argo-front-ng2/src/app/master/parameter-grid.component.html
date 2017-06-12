@@ -48,8 +48,10 @@
                         *ngSwitchCase="'NE'" [innerHTML]="item.itdtMap[entdId].cantidadEntera | number"
                         class="pull-right"></span> <span *ngSwitchCase="'ND'"
                         [innerHTML]="item.itdtMap[entdId].cantidadDecimal | number : '1.6-6'" class="pull-right"></span>
-                        <span *ngSwitchCase="'CR'" [innerHTML]="item.itdtMap[entdId].cadena"></span> <span
-                        *ngSwitchCase="'PR'" [innerHTML]="item.itdtMap[entdId].prmt?.parametro"
+                        <span *ngSwitchCase="'CR'" [innerHTML]="item.itdtMap[entdId].cadena"
+                        [ngbTooltip]="'cdrf_' + enti.entdMap[entdId].tpdt.id + '_' + item.itdtMap[entdId].cadena | translate"
+                        container="body"></span> <span *ngSwitchCase="'PR'"
+                        [innerHTML]="item.itdtMap[entdId].prmt?.parametro"
                         [ngbTooltip]="item.itdtMap[entdId].prmt?.etiqueta" container="body"></span> <span
                         *ngSwitchCase="'SR'" [innerHTML]="item.itdtMap[entdId].srvc?.etiqueta"></span> <span
                         *ngSwitchCase="'TX'" [innerHTML]="item.itdtMap[entdId].cadena"></span> <span
@@ -108,7 +110,7 @@
     <div class="modal-footer">
         <div class="btn-group">
             <button type="button" class="btn btn-primary" (click)="saveFilter();c()">Search</button>
-            <button type="button" class="btn btn-secondary" (click)="resetFilter();filterFragment.resetFilter();">Reset</button>
+            <button type="button" class="btn btn-secondary" (click)="resetFilter();">Reset</button>
             <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
         </div>
     </div>

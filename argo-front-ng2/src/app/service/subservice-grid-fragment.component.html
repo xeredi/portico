@@ -7,6 +7,7 @@
                 <th [translate]="'ssrv_numero'"></th>
                 <th *ngIf="enti.enti.temporal" [translate]="'fini'"></th>
                 <th *ngIf="enti.enti.temporal" [translate]="'ffin'"></th>
+                <th [translate]="'ssrv_estado'" *ngIf="enti.enti.tpdtEstado"></th>
                 <th *ngFor="let entdId of enti.entdGridList; trackBy:trackByFnEntd"
                     [translate]="'entd_' + enti.entdMap[entdId].id"></th>
             </tr>
@@ -19,13 +20,18 @@
                 <td nowrap="nowrap" [innerHTML]="item.numero | number" class="number"></td>
                 <td *ngIf="enti.enti.temporal" nowrap="nowrap" [innerHTML]="item.fini | date: 'dd/MM/yyyy HH:mm'"></td>
                 <td *ngIf="enti.enti.temporal" nowrap="nowrap" [innerHTML]="item.ffin | date: 'dd/MM/yyyy HH:mm'"></td>
+                <td *ngIf="enti.enti.tpdtEstado" nowrap="nowrap"
+                    [ngbTooltip]="'cdrf_' + enti.enti.tpdtEstado.id + '_' + item.estado | translate" container="body"
+                    [innerHTML]="item.estado"></td>
                 <td nowrap="nowrap" *ngFor="let entdId of enti.entdGridList; trackBy:trackByFnEntd"
                     [ngSwitch]="enti.entdMap[entdId].tpdt.tipoElemento"><i *ngSwitchCase="'BO'" class="fa"
                     [ngClass]="item.itdtMap[entdId].cantidadEntera == 1 ? 'fa-check' : 'fa-remove'"></i> <span
                     *ngSwitchCase="'NE'" [innerHTML]="item.itdtMap[entdId].cantidadEntera | number" class="pull-right"></span>
                     <span *ngSwitchCase="'ND'" [innerHTML]="item.itdtMap[entdId].cantidadDecimal | number : '1.6-6'"
-                    class="pull-right"></span> <span *ngSwitchCase="'CR'" [innerHTML]="item.itdtMap[entdId].cadena"></span>
-                    <span *ngSwitchCase="'PR'" [innerHTML]="item.itdtMap[entdId].prmt?.parametro"
+                    class="pull-right"></span> <span *ngSwitchCase="'CR'" [innerHTML]="item.itdtMap[entdId].cadena"
+                    [ngbTooltip]="'cdrf_' + enti.entdMap[entdId].tpdt.id + '_' + item.itdtMap[entdId].cadena | translate"
+                    container="body"></span> <span *ngSwitchCase="'PR'"
+                    [innerHTML]="item.itdtMap[entdId].prmt?.parametro"
                     [ngbTooltip]="item.itdtMap[entdId].prmt?.etiqueta" container="body"></span> <span
                     *ngSwitchCase="'SR'" [innerHTML]="item.itdtMap[entdId].srvc?.etiqueta"></span> <span
                     *ngSwitchCase="'TX'" [innerHTML]="item.itdtMap[entdId].cadena"></span> <span *ngSwitchCase="'FE'"

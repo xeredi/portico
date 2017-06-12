@@ -2,6 +2,7 @@ package xeredi.argo.http.controller.action.servicio;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -9,6 +10,9 @@ import lombok.Getter;
 import lombok.Setter;
 import xeredi.argo.http.controller.action.item.ItemFilterAction;
 import xeredi.argo.model.comun.exception.ApplicationException;
+import xeredi.argo.model.comun.service.PuertoService;
+import xeredi.argo.model.comun.vo.PuertoCriterioVO;
+import xeredi.argo.model.comun.vo.PuertoVO;
 import xeredi.argo.model.metamodelo.service.EntidadProxyService;
 import xeredi.argo.model.metamodelo.vo.TipoSubservicioDetailVO;
 import xeredi.argo.model.servicio.vo.SubservicioCriterioVO;
@@ -27,8 +31,15 @@ public final class SubservicioFilterAction extends ItemFilterAction<SubservicioC
 	@Setter
 	private Date fechaVigencia;
 
+	/** The subps. */
+	@Getter
+	private List<PuertoVO> prtoList;
+
 	@Inject
 	private EntidadProxyService entiProxy;
+
+	@Inject
+	private PuertoService prtoService;
 
 	/**
 	 * {@inheritDoc}
@@ -47,6 +58,11 @@ public final class SubservicioFilterAction extends ItemFilterAction<SubservicioC
 	 */
 	@Override
 	public void doSpecificLoadDependencies() throws ApplicationException {
-		// noop
+		final PuertoCriterioVO prtoCriterio = new PuertoCriterioVO();
+
+		prtoCriterio.setSprtId(sprtId);
+		prtoCriterio.setIdioma(getIdioma());
+
+		prtoList = prtoService.selectList(prtoCriterio);
 	}
 }
