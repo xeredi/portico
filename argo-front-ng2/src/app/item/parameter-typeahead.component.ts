@@ -1,15 +1,9 @@
 import {
-    Component,
-    Optional,
-    Inject,
-    Input,
-    ViewChild,
-    OnInit
+    Component, Input, OnChanges, SimpleChanges
 } from '@angular/core';
 
 import {
-    NgModel,
-    NG_VALUE_ACCESSOR
+    NgModel, NG_VALUE_ACCESSOR
 } from '@angular/forms';
 
 import { Observable } from 'rxjs/Observable';
@@ -33,11 +27,11 @@ import { ParameterService } from './parameter.service';
         multi: true,
     }]
 } )
-export class ParameterTypeaheadComponent extends ValueAccessor<any> implements OnInit {
-    @Input() public entityId: number;
-    @Input() public date: any;
-    @Input() public readonly: boolean;
-    private _portId: number;
+export class ParameterTypeaheadComponent extends ValueAccessor<any> implements OnChanges {
+    @Input() entityId: number;
+    @Input() date: any;
+    @Input() readonly: boolean;
+    @Input() portId: number;
 
     value: any;
 
@@ -47,16 +41,7 @@ export class ParameterTypeaheadComponent extends ValueAccessor<any> implements O
         super();
     }
 
-    ngOnInit() {
-    }
-
-    get portId(): number {
-        return this._portId;
-    }
-
-    @Input( 'portId' )
-    set portId( value: number ) {
-        this._portId = value;
+    ngOnChanges( changes: SimpleChanges ) {
         this.value = {};
     }
 

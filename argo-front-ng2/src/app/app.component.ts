@@ -28,6 +28,7 @@ import { TranslateService } from '@ngx-translate/core';
     </nav>
 
         <alert></alert>
+        <app-spinner></app-spinner>
         <router-outlet></router-outlet>
 </div>
     `

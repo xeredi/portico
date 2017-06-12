@@ -18,7 +18,7 @@ export class ParameterGridComponent implements OnInit {
     page: number;
     pageSize: number;
 
-    prtoList: any[];
+    portList: any[];
     labelValuesMap: any;
 
     constructor(
@@ -57,7 +57,9 @@ export class ParameterGridComponent implements OnInit {
 
     editFilter( filter ) {
         this.prmtService.filter( this.model ).subscribe( resp => {
-            this.prtoList = resp.prtoList;
+            console.log( 'editFilter' );
+
+            this.portList = resp.prtoList;
             this.labelValuesMap = resp.labelValuesMap;
 
             this.modalService.open( filter, { size: "lg" } );
@@ -71,7 +73,11 @@ export class ParameterGridComponent implements OnInit {
 
     resetFilter() {
         this.page = 1;
-        this.model.prto = {};
+
+        this.model = {};
+        this.model.entiId = this.enti.enti.id;
+        this.model.itdtMap = {}
+        this.model.sprmMap = {}
     }
 
     private doSearch() {

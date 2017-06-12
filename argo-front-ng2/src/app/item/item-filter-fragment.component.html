@@ -2,44 +2,48 @@
     <div *ngFor="let tpdtId of entdFilterList" [ngSwitch]="enti.entdMap[tpdtId].tpdt.tipoElemento" class="form-group-sm"
         [ngClass]="enti.entdMap[tpdtId].spanCss">
         <label [translate]="'entd_' + enti.entdMap[tpdtId].id"></label> <select *ngSwitchCase="'BO'"
-            name="itdtMap[{{tpdtId}}].cantidadEntera" [(ngModel)]="itdtMap[tpdtId].cantidadEntera"
-            class="form-control form-control-sm">
+            name="itdtMap[{{tpdtId}}].cantidadEntera" [ngModel]="itdtMap[tpdtId]?.cantidadEntera"
+            (ngModelChange)="itdtMap[tpdtId] = {cantidadEntera: $event}" class="form-control form-control-sm">
             <option></option>
             <option *ngFor="let item of [1, 0]" [value]="item" [translate]="'format_' + item"></option>
         </select> <input type="text" *ngSwitchCase="'NE'" name="itdtMap[{{tpdtId}}].cantidadEntera"
-            [(ngModel)]="itdtMap[tpdtId].cantidadEntera" class="form-control form-control-sm" /> <input type="text"
-            *ngSwitchCase="'ND'" name="itdtMap[{{tpdtId}}].cantidadDecimal"
-            [(ngModel)]="itdtMap[tpdtId].cantidadDecimal" class="form-control form-control-sm" /><select
-            *ngSwitchCase="'CR'" name="itdtMap[{{tpdtId}}].cadena" [(ngModel)]="itdtMap[tpdtId].cadena"
-            class="form-control form-control-sm">
+            [ngModel]="itdtMap[tpdtId]?.cantidadEntera" (ngModelChange)="itdtMap[tpdtId] = {cantidadEntera: $event}"
+            class="form-control form-control-sm" /> <input type="text" *ngSwitchCase="'ND'"
+            name="itdtMap[{{tpdtId}}].cantidadDecimal" [ngModel]="itdtMap[tpdtId]?.cantidadDecimal"
+            (ngModelChange)="itdtMap[tpdtId] = {cantidadDecimal: $event}" class="form-control form-control-sm" /><select
+            *ngSwitchCase="'CR'" name="itdtMap[{{tpdtId}}].cadena" [ngModel]="itdtMap[tpdtId]?.cadena"
+            (ngModelChange)="itdtMap[tpdtId] = {cadena: $event}" class="form-control form-control-sm">
             <option></option>
             <option *ngFor="let cdrf of enti.entdMap[tpdtId].tpdt.cdrfList" [value]="cdrf.valor"
                 [translate]="'cdrf_' + tpdtId + '_' + cdrf.valor"></option>
-        </select> <input type="text" *ngSwitchCase="'TX'" name="itdtMap[{{tpdtId}}].cadena" [(ngModel)]="itdtMap[tpdtId].cadena"
-            class="form-control form-control-sm" />
+        </select> <input type="text" *ngSwitchCase="'TX'" name="itdtMap[{{tpdtId}}].cadena" [ngModel]="itdtMap[tpdtId]?.cadena"
+            (ngModelChange)="itdtMap[tpdtId] = {cadena: $event}" class="form-control form-control-sm" />
         <div *ngSwitchCase="'PR'">
-            <select *ngIf="enti.entdMap[tpdtId].tpdt.tpht == 'S'" name="itdtMap[{{tpdtId}}].prmt"
-                [(ngModel)]="itdtMap[tpdtId].prmt" class="form-control form-control-sm"
-                [compareWith]="compareLabelValueFn">
+            <select *ngIf="enti.entdMap[tpdtId].tpdt.tpht == 'S'" name="itdtMap[{{tpdtId}}].prmt.id"
+                [ngModel]="itdtMap[tpdtId]?.prmt?.id" (ngModelChange)="itdtMap[tpdtId] = {prmt: {id: $event}}"
+                class="form-control form-control-sm">
                 <option></option>
                 <option *ngFor="let labelValue of labelValuesMap[enti.entdMap[tpdtId].tpdt.enti.id]"
-                    [ngValue]="labelValue" [innerHTML]="labelValue.etiqueta"></option>
+                    [ngValue]="labelValue.id" [innerHTML]="labelValue.etiqueta"></option>
             </select>
             <app-parameter-typeahead
                 *ngIf="enti.entdMap[tpdtId].tpdt.tpht == 'F' && !enti.entdMap[tpdtId].tpdt.enti.puerto"
-                name="itdtMap[{{tpdtId}}].prmt" [(ngModel)]="itdtMap[tpdtId].prmt"
-                [entityId]="enti.entdMap[tpdtId].tpdt.enti.id"></app-parameter-typeahead>
+                name="itdtMap[{{tpdtId}}].prmt" [ngModel]="itdtMap[tpdtId]?.prmt"
+                (ngModelChange)="itdtMap[tpdtId] = {prmt: $event}" [entityId]="enti.entdMap[tpdtId].tpdt.enti.id"></app-parameter-typeahead>
             <app-parameter-typeahead
                 *ngIf="enti.entdMap[tpdtId].tpdt.tpht == 'F' && enti.entdMap[tpdtId].tpdt.enti.puerto"
-                name="itdtMap[{{tpdtId}}].prmt" [(ngModel)]="itdtMap[tpdtId].prmt"
-                [entityId]="enti.entdMap[tpdtId].tpdt.enti.id" [portId]="portId" [readonly]="!portId"></app-parameter-typeahead>
+                name="itdtMap[{{tpdtId}}].prmt" [ngModel]="itdtMap[tpdtId]?.prmt"
+                (ngModelChange)="itdtMap[tpdtId] = {prmt: $event}" [entityId]="enti.entdMap[tpdtId].tpdt.enti.id"
+                [portId]="portId" [readonly]="!portId"></app-parameter-typeahead>
         </div>
-        <app-service-typeahead *ngSwitchCase="'SR'" name="itdtMap[{{tpdtId}}].srvc" [(ngModel)]="itdtMap[tpdtId].srvc"
-            [entityId]="enti.entdMap[tpdtId].tpdt.enti.id"></app-service-typeahead>
-        <input *ngSwitchCase="'FE'" class="form-control form-control-sm" [(ngModel)]="itdtMap[tpdtId].fecha"
-            name="itdtMap[{{tpdtId}}].fecha" ngui-datetime-picker date-only="true" date-format="DD/MM/YYYY" /><input
-            *ngSwitchCase="'FH'" class="form-control form-control-sm" [(ngModel)]="itdtMap[tpdtId].fecha"
-            name="itdtMap[{{tpdtId}}].fecha" ngui-datetime-picker date-only="false" date-format="DD/MM/YYYY hh:mm" /> <span
-            *ngSwitchDefault>Unknown Datatype!: {{enti.entdMap[tpdtId].tpdt.tipoElemento}}</span>
+        <app-service-typeahead *ngSwitchCase="'SR'" name="itdtMap[{{tpdtId}}].srvc" [ngModel]="itdtMap[tpdtId]?.srvc"
+            (ngModelChange)="itdtMap[tpdtId] = {srvc: $event}" [entityId]="enti.entdMap[tpdtId].tpdt.enti.id"></app-service-typeahead>
+        <input *ngSwitchCase="'FE'" class="form-control form-control-sm" [ngModel]="itdtMap[tpdtId]?.fecha"
+            (ngModelChange)="itdtMap[tpdtId] = {fecha: $event}" name="itdtMap[{{tpdtId}}].fecha" ngui-datetime-picker
+            date-only="true" date-format="DD/MM/YYYY" /><input *ngSwitchCase="'FH'"
+            class="form-control form-control-sm" [ngModel]="itdtMap[tpdtId]?.fecha"
+            (ngModelChange)="itdtMap[tpdtId] = {fecha: $event}" name="itdtMap[{{tpdtId}}].fecha" ngui-datetime-picker
+            date-only="false" date-format="DD/MM/YYYY hh:mm" /> <span *ngSwitchDefault>Unknown Datatype!:
+            {{enti.entdMap[tpdtId].tpdt.tipoElemento}}</span>
     </div>
 </div>

@@ -73,16 +73,35 @@
             <div class="container-fluid">
                 <div class="row">
                     <div *ngIf="enti.enti.puerto" class="col-lg-3 col-xl-2 form-group-sm">
-                        <label [translate]="'prto'"></label> <select name="model.prto" [(ngModel)]="model.prto.id"
-                            class="form-control form-control-sm">
+                        <label [translate]="'prto'"></label> <select name="model.prto.id" [ngModel]="model.prto?.id"
+                            (ngModelChange)="model.prto = {id: $event}" class="form-control form-control-sm">
                             <option></option>
-                            <option *ngFor="let item of prtoList" [value]="item.id" [innerHTML]="item.etiqueta"></option>
+                            <option *ngFor="let item of portList" [value]="item.id" [innerHTML]="item.etiqueta"></option>
                         </select>
+                    </div>
+                    <div class="col-lg-2 col-xl-1 form-group-sm">
+                        <label [translate]="'prmt_parametro'"></label> <input name="model.parametro"
+                            [(ngModel)]="model.parametro" class="form-control form-control-sm" />
+                    </div>
+                    <div class="col-lg-3 col-xl-2 form-group-sm">
+                        <label [translate]="'fref'"></label> <input name="model.fechaVigencia"
+                            [(ngModel)]="model.fechaVigencia" class="form-control form-control-sm" ngui-datetime-picker
+                            date-only="true" date-format="DD/MM/YYYY" />
                     </div>
                 </div>
 
                 <app-item-filter-fragment #filterFragment [enti]="enti" [itdtMap]="model.itdtMap"
                     [labelValuesMap]="labelValuesMap" [portId]="model.prto?.id"></app-item-filter-fragment>
+
+                <div class="row" *ngIf="enti.subentiList">
+                    <div class="col-lg-4 col-xl-3 form-group-sm" *ngFor="let subenti of enti.subentiList">
+                        <label [translate]="'enti_' + subenti.id"></label>
+                        <app-parameter-typeahead name="model.sprmMap[{{subenti.id}}].prmtAsociado"
+                            [ngModel]="model.sprmMap[subenti.id]?.prmtAsociado"
+                            (ngModelChange)="model.sprmMap[subenti.id] = {prmtAsociado: $event}"
+                            [entityId]="subenti.tpprAsociado.id"></app-parameter-typeahead>
+                    </div>
+                </div>
             </div>
         </fieldset>
     </div>

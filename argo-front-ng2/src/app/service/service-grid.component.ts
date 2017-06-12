@@ -18,7 +18,7 @@ export class ServiceGridComponent implements OnInit {
     page: number;
     pageSize: number;
 
-    prtoList: any[];
+    portList: any[];
     labelValuesMap: any;
 
     constructor(
@@ -57,7 +57,7 @@ export class ServiceGridComponent implements OnInit {
 
     editFilter( filter ) {
         this.srvcService.filter( this.model ).subscribe( resp => {
-            this.prtoList = resp.prtoList;
+            this.portList = resp.prtoList;
             this.labelValuesMap = resp.labelValuesMap;
 
             this.modalService.open( filter, { size: "lg" } );

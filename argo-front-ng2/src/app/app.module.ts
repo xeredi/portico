@@ -9,6 +9,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
+import { NgSpinKitModule } from 'ng-spin-kit'
 
 import { httpFactory } from "./http.factory";
 
@@ -53,6 +54,8 @@ export function HttpLoaderFactory( http: Http ) {
             }
         } )
         , NguiDatetimePickerModule
+        , NgSpinKitModule
+
         , AppRoutingModule
         , SharedModule
         , ItemModule

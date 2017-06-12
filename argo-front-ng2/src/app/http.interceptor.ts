@@ -4,17 +4,25 @@ import { Router } from "@angular/router";
 import { Observable } from "rxjs/Rx";
 
 import { AlertService } from "./shared/alert.service";
+import { SpinnerService } from "./shared/spinner.service";
 
 @Injectable()
 export class InterceptedHttp extends Http {
     alertService: AlertService;
+    spinnerService: SpinnerService;
     router: Router;
 
-    constructor( backend: ConnectionBackend, defaultOptions: RequestOptions,
-        alertService: AlertService, router: Router ) {
+    constructor(
+        backend: ConnectionBackend
+        , defaultOptions: RequestOptions
+        , alertService: AlertService
+        , spinnerService: SpinnerService
+        , router: Router
+    ) {
         super( backend, defaultOptions );
 
         this.alertService = alertService;
+        this.spinnerService = spinnerService;
         this.router = router;
     }
 
@@ -24,7 +32,13 @@ export class InterceptedHttp extends Http {
         console.log( "request: " + url );
 
         // FIXME Mirar si hay forma más elegante de hacer que funcione angular translate
-        return url.startsWith( "/assets/i18n" ) ? super.request( request, options ) : this.interceptResponse( request, options );
+        if ( url.startsWith( "/assets/i18n" ) ) {
+            return super.request( request, options );
+        } else {
+            //this.spinnerService.displayLoader( true );
+
+            return this.interceptResponse( request, options );
+        }
     }
 
     private interceptResponse( request: string | Request, options: RequestOptionsArgs ): Observable<Response> {
@@ -92,6 +106,8 @@ export class InterceptedHttp extends Http {
     }
 
     private onFinally() {
+        // this.spinnerService.displayLoader( false );
+
         return () => { };
     }
 }

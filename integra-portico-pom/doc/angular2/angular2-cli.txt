@@ -258,6 +258,8 @@ ng g service shared/Alert --spec false
 ng g component shared/Alert --flat --spec false
 ng g component shared/I18nInfoDetail --flat --spec false
 ng g component shared/I18nInfoEdit --flat --spec false
+ng g service shared/Spinner --spec false
+ng g component shared/Spinner --flat --spec false
 
 ng g module security --routing
 ng g service security/Group
@@ -585,5 +587,22 @@ En el archivo app.component.ts:
 	        translate.use('en');
 	    }
 	}
+
+
+AÑADIR ng-spin-kit (https://github.com/WoltersKluwerPL/ng-spin-kit)
+
+Instalar
+	$ npm install ng-spin-kit --save
+
+Modulo principal/resto de modulos:
+	import { NgSpinKitModule } from 'ng-spin-kit'
+
+	@NgModule( {
+    , imports: [
+        ...
+        , NgSpinKitModule
+        ...
+    ]
+
 
 
