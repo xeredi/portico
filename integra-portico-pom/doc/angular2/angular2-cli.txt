@@ -421,7 +421,7 @@ En archivo .angular-cli.json:
 
 AÑADIR TWITTER BOOTSTRAP 4
 
-$ npm install bootstrap@next
+$ npm install bootstrap@next --save
 
 En archivo .angular-cli.json:
 
@@ -434,7 +434,7 @@ En archivo .angular-cli.json:
 
 AÑADIR FONT AWESOME
 
-$ npm install font-awesome
+$ npm install font-awesome --save
 
 En archivo .angular-cli.json:
 
@@ -447,7 +447,7 @@ En archivo .angular-cli.json:
 
 AÑADIR ANGULAR UI BOOTSTRAP
 
-$ npm install @ng-bootstrap/ng-bootstrap
+$ npm install @ng-bootstrap/ng-bootstrap --save
 
 En el archivo app.module.ts:
 

@@ -36,8 +36,6 @@ public final class ValoracionListAction extends GridListAction<ValoracionCriteri
 	 */
 	@Override
 	public void doList() throws ApplicationException {
-		model.setPendienteFacturar(true);
-
 		resultList = vlrcService.selectList(model, getOffset(), limit);
 		tpdtCodExencion = tpdtProxy.select(TipoDato.COD_EXEN.getId());
 	}

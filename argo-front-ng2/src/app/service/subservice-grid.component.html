@@ -40,6 +40,22 @@
                             <option *ngFor="let item of portList" [value]="item.id" [innerHTML]="item.etiqueta"></option>
                         </select>
                     </div>
+                    <div class="col-lg-2 col-xl-1 form-group-sm">
+                        <label [translate]="'srvc'"></label>
+                        <app-service-typeahead name="model.srvc" [(ngModel)]="model.srvc" [entityId]="enti.enti.tpsrId"></app-service-typeahead>
+                    </div>
+                    <div class="col-lg-2 col-xl-1 form-group-sm">
+                        <label [translate]="'ssrv_numero'"></label> <input name="model.numero"
+                            [(ngModel)]="model.numero" class="form-control form-control-sm number" />
+                    </div>
+                    <div class="col-lg-2 col-xl-1 form-group-sm" *ngIf="enti.enti.tpdtEstado">
+                        <label [translate]="'ssrv_estado'"></label> <select name="model.estado"
+                            [(ngModel)]="model.estado" class="form-control form-control-sm">
+                            <option></option>
+                            <option *ngFor="let cdrf of enti.enti.tpdtEstado.cdrfList" [value]="cdrf.valor"
+                                [translate]="'cdrf_' + enti.enti.tpdtEstado.id + '_' + cdrf.valor"></option>
+                        </select>
+                    </div>
                 </div>
 
                 <app-item-filter-fragment #filterFragment [enti]="enti" [itdtMap]="model.itdtMap"
@@ -50,7 +66,7 @@
     <div class="modal-footer">
         <div class="btn-group">
             <button type="button" class="btn btn-primary" (click)="saveFilter();c()">Search</button>
-            <button type="button" class="btn btn-secondary" (click)="resetFilter();filterFragment.resetFilter();">Reset</button>
+            <button type="button" class="btn btn-secondary" (click)="resetFilter()">Reset</button>
             <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
         </div>
     </div>

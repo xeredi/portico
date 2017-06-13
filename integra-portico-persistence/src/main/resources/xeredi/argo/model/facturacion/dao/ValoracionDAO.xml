@@ -64,6 +64,12 @@
 
 		<association property="fctr" javaType="FacturaVO">
 			<result property="id" column="vlrc_fctr_pk" />
+			<result property="numero" column="fctr_numero" />
+
+			<association property="fcsr" javaType="FacturaSerieVO">
+				<result property="serie" column="fcsr_serie" />
+				<result property="anio" column="fcsr_anio" />
+			</association>
 		</association>
 
 		<association property="fctrRectificada" javaType="FacturaVO">
@@ -93,9 +99,45 @@
 
 		    , aspv_cetiq_info1, aspv_cetiq_info2, aspv_cetiq_info3, aspv_cetiq_info4, aspv_cetiq_info5, aspv_cetiq_info6
 
-		    , fcsrRect.fcsr_serie AS fcsrRect_serie
-		    , fcsrRect.fcsr_anio AS fcsrRect_anio
-		    , fctrRect.fctr_numero AS fctrRect_numero
+		    , (
+		    	SELECT fctr_numero FROM tbl_factura_fctr
+		    	WHERE fctr_pk = vlrc_fctr_rectificada_pk
+		    ) AS fctrRect_numero
+
+		    , (
+		    	SELECT fcsr_serie FROM tbl_factura_serie_fcsr
+		    	WHERE fcsr_pk = (
+			    	SELECT fctr_fcsr_pk FROM tbl_factura_fctr
+			    	WHERE fctr_pk = vlrc_fctr_rectificada_pk
+		    	)
+		    ) AS fcsrRect_serie
+		    , (
+		    	SELECT fcsr_anio FROM tbl_factura_serie_fcsr
+		    	WHERE fcsr_pk = (
+			    	SELECT fctr_fcsr_pk FROM tbl_factura_fctr
+			    	WHERE fctr_pk = vlrc_fctr_rectificada_pk
+		    	)
+		    ) AS fcsrRect_anio
+
+		    , (
+		    	SELECT fctr_numero FROM tbl_factura_fctr
+		    	WHERE fctr_pk = vlrc_fctr_pk
+		    ) AS fctr_numero
+
+		    , (
+		    	SELECT fcsr_serie FROM tbl_factura_serie_fcsr
+		    	WHERE fcsr_pk = (
+			    	SELECT fctr_fcsr_pk FROM tbl_factura_fctr
+			    	WHERE fctr_pk = vlrc_fctr_pk
+		    	)
+		    ) AS fcsr_serie
+		    , (
+		    	SELECT fcsr_anio FROM tbl_factura_serie_fcsr
+		    	WHERE fcsr_pk = (
+			    	SELECT fctr_fcsr_pk FROM tbl_factura_fctr
+			    	WHERE fctr_pk = vlrc_fctr_pk
+		    	)
+		    ) AS fcsr_anio
 
 			, (
 				SELECT prdt_cadena
@@ -149,10 +191,6 @@
 		    LEFT JOIN tbl_aspecto_version_aspv ON
 		    	aspv_aspc_pk = vlrc_aspc_pk
 	            AND vlrc_fref BETWEEN aspv_fini AND COALESCE(aspv_ffin, vlrc_fref)
-	        LEFT JOIN tbl_factura_fctr fctrRect ON
-	        	fctrRect.fctr_pk = vlrc_fctr_rectificada_pk
-	        LEFT JOIN tbl_factura_serie_fcsr fcsrRect ON
-	        	fcsrRect.fcsr_pk = fctrRect.fctr_fcsr_pk
     ]]>
 	</sql>
 

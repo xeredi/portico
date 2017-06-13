@@ -23,6 +23,7 @@
                     <th [translate]="'vlrc_id'"></th>
                     <th [translate]="'srvc'" colspan="2"></th>
                     <th [translate]="'aspc'"></th>
+                    <th [translate]="'fctr'"></th>
                     <th>Fac. Rectificada</th>
                     <th [translate]="'vlrc_pagador'"></th>
                     <th [translate]="'vlrc_sujPasivo'"></th>
@@ -49,6 +50,7 @@
                     <td nowrap="nowrap" [innerHTML]="item.srvc.etiqueta"></td>
                     <td nowrap="nowrap" [innerHTML]="item.aspc.codigo" [ngbTooltip]="item.aspc.etiqueta"
                         container="body"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.fctr?.etiqueta"></td>
                     <td nowrap="nowrap" [innerHTML]="item.fctrRectificada?.etiqueta"></td>
                     <td nowrap="nowrap" [innerHTML]="item.pagador.parametro" [ngbTooltip]="item.pagador.etiqueta"
                         container="body"></td>
@@ -128,6 +130,11 @@
                         <label [translate]="'crgo'"></label>
 
                         <app-charge-typeahead [(ngModel)]="model.crgo" [srtpId]="model.tpsrId"></app-charge-typeahead>
+                    </div>
+                    <div class="col-lg-2 col-xl-1 form-group-sm">
+                        <label for="model.pendienteFacturar">Sin Facturar</label> <input type="checkbox"
+                            class="form-control form-control-sm" name="model.pendienteFacturar"
+                            [(ngModel)]="model.pendienteFacturar" />
                     </div>
                 </div>
             </div>

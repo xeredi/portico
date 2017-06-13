@@ -30,6 +30,7 @@ import { MasterModule } from './master/master.module';
 import { ServiceModule } from './service/service.module';
 
 import { AlertService } from './shared/alert.service';
+import { SpinnerService } from './shared/spinner.service';
 
 export function HttpLoaderFactory( http: Http ) {
     return new TranslateHttpLoader( http );
@@ -71,7 +72,7 @@ export function HttpLoaderFactory( http: Http ) {
         , { provide: LocationStrategy, useClass: HashLocationStrategy }
         , {
             provide: Http,
-            deps: [XHRBackend, RequestOptions, AlertService, Router],
+            deps: [XHRBackend, RequestOptions, AlertService, SpinnerService, Router],
             useFactory: httpFactory
         }
         /*
