@@ -1,0 +1,50 @@
+<div *ngIf="resultList">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group mr-2" role="group">
+            <ngb-pagination [collectionSize]="resultList.count" [(page)]="page" [pageSize]="pageSize" [maxSize]="1"
+                [size]="sm" [boundaryLinks]="false" [ellipses]="false" (pageChange)="pageChange()"></ngb-pagination>
+        </div>
+        <div class="btn-group mr-2" role="group">
+            <argo-process-filter-fragment [model]="model" (onSearch)="search()" (onReset)="resetFilter()"></argo-process-filter-fragment>
+        </div>
+    </div>
+
+    <span [translate]="'grid_count'" [translateParams]="{count: resultList.count}"></span>
+
+    <div class="table-responsive">
+        <table class="table table-sm table-bordered table-hover table-condensed table-nonfluid">
+            <thead class="thead-inverse">
+                <tr>
+                    <th></th>
+                    <th [translate]="'prbt_modulo'"></th>
+                    <th [translate]="'prbt_tipo'"></th>
+                    <th [translate]="'prbt_estado'"></th>
+                    <th [translate]="'usro'"></th>
+                    <th [translate]="'prbt_falta'"></th>
+                    <th [translate]="'fini'"></th>
+                    <th [translate]="'ffin'"></th>
+                    <th [translate]="'prbt_duracion'"></th>
+                    <th [translate]="'prbt_erroresCnt'"></th>
+                    <th [translate]="'prbt_alertasCnt'"></th>
+                    <th [translate]="'prbt_mensajesCnt'"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of resultList.list; trackBy:trackByFn">
+                    <td><a [routerLink]="['/batch/process/detail', item.id]"><i class="fa fa-search"></i></a></td>
+                    <td nowrap="nowrap" [translate]="'ProcesoModulo_' + item.modulo"></td>
+                    <td nowrap="nowrap" [translate]="'ProcesoTipo_' + item.tipo"></td>
+                    <td nowrap="nowrap" [translate]="'ProcesoEstado_' + item.estado"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.usro.login"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.falta | date: 'dd/MM/yyyy HH:mm'"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.finicio | date: 'dd/MM/yyyy HH:mm'"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.ffin | date: 'dd/MM/yyyy HH:mm'"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.duracion | number" class="number"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.erroresCnt | number" class="number"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.alertasCnt | number" class="number"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.mensajesCnt | number" class="number"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

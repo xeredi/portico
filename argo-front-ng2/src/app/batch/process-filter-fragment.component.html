@@ -1,0 +1,48 @@
+<button class="btn btn-secondary" (click)="edit(filter)">
+    <i class="fa fa-filter"></i> Filter
+</button>
+
+<ng-template #filter let-c="close" let-d="dismiss">
+<div class="modal-header">
+    <h4 class="modal-title">Search Filter</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <fieldset class="form-group">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [translate]="'prbt_modulo'"></label> <select [(ngModel)]="model.modulo" name="model.modulo"
+                        class="form-control form-control-sm">
+                        <option></option>
+                        <option *ngFor="let item of procesoModulos" [value]="item" [translate]="'ProcesoModulo_' + item"></option>
+                    </select>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [translate]="'prbt_tipo'"></label> <select [(ngModel)]="model.tipo" name="model.tipo"
+                        class="form-control form-control-sm">
+                        <option></option>
+                        <option *ngFor="let item of procesoTipos" [value]="item" [translate]="'ProcesoTipo_' + item"></option>
+                    </select>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [translate]="'prbt_estado'"></label> <select [(ngModel)]="model.estado" name="model.estado"
+                        class="form-control form-control-sm">
+                        <option></option>
+                        <option *ngFor="let item of procesoEstados" [value]="item" [translate]="'ProcesoEstado_' + item"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>
+<div class="modal-footer">
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary" (click)="search();c()">Search</button>
+        <button type="button" class="btn btn-secondary" (click)="reset()">Reset</button>
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+    </div>
+</div>
+</ng-template>

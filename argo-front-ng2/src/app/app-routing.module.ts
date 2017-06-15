@@ -15,6 +15,7 @@ const routes: Routes = [
     , { path: 'billing', loadChildren: './billing/billing.module#BillingModule' }
     , { path: 'master', loadChildren: './master/master.module#MasterModule' }
     , { path: 'service', loadChildren: './service/service.module#ServiceModule' }
+    , { path: 'batch', loadChildren: './batch/batch.module#BatchModule' }
 
     // otherwise redirect to home
     , { path: '**', redirectTo: '' }

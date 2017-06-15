@@ -28,6 +28,7 @@ import { MetamodelModule } from './metamodel/metamodel.module';
 import { BillingModule } from './billing/billing.module';
 import { MasterModule } from './master/master.module';
 import { ServiceModule } from './service/service.module';
+import { BatchModule } from './batch/batch.module';
 
 import { AlertService } from './shared/alert.service';
 import { SpinnerService } from './shared/spinner.service';
@@ -66,6 +67,7 @@ export function HttpLoaderFactory( http: Http ) {
         , BillingModule
         , MasterModule
         , ServiceModule
+        , BatchModule
     ]
     , providers: [
         AuthenticationService

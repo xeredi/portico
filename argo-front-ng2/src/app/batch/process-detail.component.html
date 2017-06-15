@@ -1,0 +1,136 @@
+<div *ngIf="model">
+    <ngb-tabset #t="ngbTabset" type="pills" [activeId]="activeTab" (tabChange)="tabChange($event)"> <ngb-tab
+        id="mainTab"> <ng-template ngbTabTitle> <span [translate]="'prbt'"></span> </ng-template> <ng-template
+        ngbTabContent>
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <button class="btn btn-secondary" (click)="cancel()">
+                <i class="fa fa-remove"></i> <span [translate]="'btn_cancelar'"></span>
+            </button>
+        </div>
+    </div>
+
+    <form>
+        <fieldset class="form-group">
+            <div class="row">
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [translate]="'prbt_modulo'"></label>
+                    <p class="form-control-static form-control-sm" [translate]="'ProcesoModulo_' + model.modulo"></p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [translate]="'prbt_tipo'"></label>
+                    <p class="form-control-static form-control-sm" [translate]="'ProcesoTipo_' + model.tipo"></p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [translate]="'prbt_estado'"></label>
+                    <p class="form-control-static form-control-sm" [translate]="'ProcesoEstado_' + model.estado"></p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [translate]="'usro'"></label>
+                    <p class="form-control-static form-control-sm">
+                        <a [routerLink]="['/security/user/detail', model.usro.id]" [innerHTML]="model.usro.login"></a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [translate]="'prbt_falta'"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.falta | date:'dd/MM/yyyy HH:mm'"></p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [translate]="'fini'"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.finicio | date:'dd/MM/yyyy HH:mm'"></p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [translate]="'ffin'"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.ffin | date:'dd/MM/yyyy HH:mm'"></p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [translate]="'prbt_duracion'"></label>
+                    <p class="form-control-static form-control-sm number" [innerHTML]="model.duracion | number"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'prbt_erroresCnt'"></label>
+                    <p class="form-control-static form-control-sm number" [innerHTML]="model.erroresCnt | number"></p>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'prbt_alertasCnt'"></label>
+                    <p class="form-control-static form-control-sm number" [innerHTML]="model.alertasCnt | number"></p>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'prbt_mensajesCnt'"></label>
+                    <p class="form-control-static form-control-sm number" [innerHTML]="model.mensajesCnt | number"></p>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="row">
+            <div class="col-lg-6 col-xl-4 form-group-sm" *ngIf="pritEntradaList">
+                <fieldset>
+                    <legend>Elementos Entrada</legend>
+
+                    <argo-process-item-fragment [itemList]="pritEntradaList"></argo-process-item-fragment>
+                </fieldset>
+            </div>
+            <div class="col-lg-6 col-xl-4 form-group-sm" *ngIf="arinEntradaList">
+                <fieldset>
+                    <legend>Archivos Entrada</legend>
+
+                    <argo-file-info-fragment [itemList]="arinEntradaList"></argo-file-info-fragment>
+                </fieldset>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-lg-6 col-xl-4 form-group-sm" *ngIf="pritSalidaList">
+                <fieldset>
+                    <legend>Elementos Salida</legend>
+
+                    <argo-process-item-fragment [itemList]="pritSalidaList"></argo-process-item-fragment>
+                </fieldset>
+            </div>
+            <div class="col-lg-6 col-xl-4 form-group-sm" *ngIf="arinSalidaList">
+                <fieldset>
+                    <legend>Archivos Salida</legend>
+
+                    <argo-file-info-fragment [itemList]="arinSalidaList"></argo-file-info-fragment>
+                </fieldset>
+            </div>
+        </div>
+
+        <!--
+        <div class="row" *ngIf="prpmMap">
+            <div class="col-lg-6 col-xl-4 form-group-sm">
+                <fieldset>
+                    <legend>Parámetros</legend>
+
+                    <table class="table-bordered table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th [translate]="'prpm_nombre'"></th>
+                                <th [translate]="'prpm_valor'"></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let key of prpmMap">
+                                <td [translate]="key"></td>
+                                <td [innerHTML]="prpmMap[key].valor"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+            </div>
+        </div>
+ -->
+
+    </form>
+    </ng-template> </ngb-tab> <ngb-tab id="processMessagesTab"> <ng-template ngbTabTitle> Mensajes </ng-template> <ng-template
+        ngbTabContent> <argo-process-message-grid-fragment></argo-process-message-grid-fragment> </ng-template> </ngb-tab> </ngb-tabset>
+</div>
