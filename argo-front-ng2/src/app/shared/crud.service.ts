@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
+import { Http, Headers, Response, ResponseContentType, RequestMethod } from '@angular/http';
 
 @Injectable()
 export class CrudService {
@@ -64,5 +64,13 @@ export class CrudService {
     typeahead( searchCriteria: any ) {
         return this._http.post( this._urlBase + '-typeahead.action', { model: searchCriteria, prefix: this._prefix } )
             .map(( response: Response ) => response.json() );
+    }
+
+    xlsExport( searchCriteria: any, filename: string ) {
+        return this._http.post( this._urlBase + '-xls-export.action', { model: searchCriteria, prefix: this._prefix }, {
+            responseType: ResponseContentType.Blob,
+            headers: new Headers()
+        } )
+            .map(( response: Response ) => response.blob() );
     }
 }

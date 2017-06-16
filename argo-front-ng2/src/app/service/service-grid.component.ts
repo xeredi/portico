@@ -90,4 +90,8 @@ export class ServiceGridComponent implements OnInit {
             );
         } );
     }
+
+    xlsExport() {
+        this.srvcService.xlsExport( this.model, 'srvc_' + this.model.entiId );
+    }
 }

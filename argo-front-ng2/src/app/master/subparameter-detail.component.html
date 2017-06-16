@@ -1,3 +1,43 @@
-<p>
-  subparameter-detail works!
-</p>
+<div *ngIf="model">
+    <ngb-tabset #t="ngbTabset" type="pills"> <ngb-tab id="mainTab"> <ng-template ngbTabTitle>
+    <span [translate]="'enti_' + enti.enti.id"></span> </ng-template> <ng-template ngbTabContent>
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-primary"
+                [routerLink]="['/master/subparameter/edit', 'edit', model.entiId, model.id, model.fref]"><i
+                class="fa fa-edit"></i> Edit</a>
+            <button class="btn btn-secondary" (click)="remove()">
+                <i class="fa fa-remove"></i> Remove
+            </button>
+        </div>
+    </div>
+    <form>
+        <fieldset class="form-group">
+            <div class="row">
+                <div *ngIf="enti.enti.tpprAsociado.puerto" class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [translate]="'prto'"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.prmtAsociado.prto.etiqueta"></p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [translate]="'enti_' + enti.enti.tpprAsociado.id"></label>
+                    <p class="form-control-static form-control-sm">
+                        <a
+                            [routerLink]="['/master/parameter/detail', model.prmtAsociado.entiId, model.prmtAsociado.id, model.fref]"
+                            [innerHTML]="model.prmtAsociado.etiqueta"></a>
+                    </p>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'fini'"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.version.fini | date:'dd/MM/yyyy'"></p>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'ffin'"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.version.ffin | date:'dd/MM/yyyy'"></p>
+                </div>
+            </div>
+
+            <argo-item-detail-fragment [enti]="enti" [itemMap]="model.itdtMap" [date]="model.fref"></argo-item-detail-fragment>
+        </fieldset>
+    </form>
+    </ng-template> </ngb-tab> </ngb-tabset>
+</div>

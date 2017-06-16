@@ -22,7 +22,8 @@ body, input, select, textarea, button, a.button, .btn {
 		Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
-body, input, select, textarea, button, a.button, .btn, pre, .dropdown-menu {
+body, input, select, textarea, button, a.button, .btn, pre,
+	.dropdown-menu {
 	font-size: 0.9rem;
 	line-height: 1.2;
 	color: black;
@@ -108,6 +109,10 @@ td span {
 
 td i.fa {
 	display: block;
+	text-align: center;
+}
+
+.form-control-static  i.fa {
 	text-align: center;
 }
 

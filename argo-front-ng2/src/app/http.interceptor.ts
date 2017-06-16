@@ -26,10 +26,12 @@ export class InterceptedHttp extends Http {
         this.router = router;
     }
 
-    request( request: string | Request, options: RequestOptionsArgs = { headers: new Headers() } ): Observable<Response> {
+    request( request: string | Request, options: RequestOptionsArgs/* = { headers: new Headers() }*/ ): Observable<Response> {
         var url = ( typeof request === 'string' ? request : request['url'] );
 
         console.log( "request: " + url );
+        console.log( "request: " + JSON.stringify( request ) );
+        console.log( "options: " + JSON.stringify( options ) );
 
         // FIXME Mirar si hay forma más elegante de hacer que funcione angular translate
         if ( url.startsWith( "/assets/i18n" ) ) {
@@ -42,7 +44,8 @@ export class InterceptedHttp extends Http {
     }
 
     private interceptResponse( request: string | Request, options: RequestOptionsArgs ): Observable<Response> {
-        // console.log( "interceptResponse: " + ( typeof request === 'string' ? request : request['url'] ) );
+        console.log( "interceptResponse: " + ( typeof request === 'string' ? request : request['url'] ) );
+        console.log( "options: " + JSON.stringify( options ) );
 
         const observableRequest = super
             .request( request, options )

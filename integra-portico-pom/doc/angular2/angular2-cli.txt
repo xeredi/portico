@@ -349,6 +349,16 @@ ng g component service/SubserviceGridFragment --flat --spec false
 ng g component service/SubserviceDetail --flat --spec false
 ng g component service/SubserviceEdit --flat --spec false
 
+ng g module batch --routing
+ng g service batch/Process --spec false
+ng g component batch/Home --flat --spec false
+ng g component batch/ProcessGrid --flat --spec false
+ng g component batch/ProcessFilterFragment --flat --spec false
+ng g component batch/ProcessDetail --flat --spec false
+ng g component batch/ProcessItemFragment --flat --spec false
+ng g component batch/FileInfoFragment --flat --spec false
+ng g component batch/ProcessMessageGridFragment --flat --spec false
+
 ng g module billing --routing
 ng g service billing/Charge
 ng g service billing/Rule
@@ -408,7 +418,7 @@ $ npm update -D && npm update -S
 
 AÑADIR TWITTER BOOTSTRAP
 
-$ npm install bootstrap@3
+$ npm install bootstrap@3 --save
 
 En archivo .angular-cli.json:
 
@@ -521,7 +531,7 @@ Añadir moment para e formateo de fechas:
 AÑADIR ngx-translate (OJO!!! Choca con el interceptor de Http)
 
 $ npm install @ngx-translate/core --save
-$ npm install @ngx-translate/http-loader
+$ npm install @ngx-translate/http-loader --save
 
 En el archivo app.module.ts:
 

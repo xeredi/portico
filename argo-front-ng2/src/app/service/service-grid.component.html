@@ -12,6 +12,11 @@
             <button class="btn btn-secondary" (click)="editFilter(filter)">
                 <i class="fa fa-filter"></i> Filter
             </button>
+            <button class="btn btn-secondary" (click)="xlsExport()">
+                <i class="fa fa-file-excel-o"></i> Export
+            </button>
+        </div>
+        <div class="btn-group mr-2" role="group">
             <a class="btn btn-secondary" [routerLink]="['/service/service/edit', 'create', model.entiId]"><i
                 class="fa fa-file-o"></i> New</a>
         </div>
