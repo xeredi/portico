@@ -92,6 +92,8 @@ export class ServiceGridComponent implements OnInit {
     }
 
     xlsExport() {
-        this.srvcService.xlsExport( this.model, 'srvc_' + this.model.entiId );
+        this.srvcService.xlsExport( this.model, 'srvc_' + this.model.entiId ).subscribe( resp => {
+            console.log( "XLS generated" );
+        } );
     }
 }

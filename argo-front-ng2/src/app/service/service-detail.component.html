@@ -27,7 +27,7 @@
                     <p class="form-control-static form-control-sm number" [innerHTML]="model.numero | number"></p>
                 </div>
                 <div class="col-lg-3 col-xl-2 form-group-sm" *ngIf="enti.enti.tpdtEstado">
-                    <label [translate]="'fini'"></label>
+                    <label [translate]="'srvc_estado'"></label>
                     <p class="form-control-static form-control-sm"
                         [translate]="'cdrf_' + enti.enti.tpdtEstado.id + '_' + model.estado"></p>
                 </div>
@@ -43,20 +43,6 @@
                     <label [translate]="'srvc_fref'"></label>
                     <p class="form-control-static form-control-sm" [innerHTML]="model.fref | date: 'dd/MM/yyyy HH:mm'"></p>
                 </div>
-                <!--
-                <div class="col-lg-3 col-xl-2 form-group-sm">
-                    <label [translate]="'prmt_parametro'"></label>
-                    <p class="form-control-static form-control-sm" [innerHTML]="model.parametro"></p>
-                </div>
-                <div class="col-lg-2 col-xl-1 form-group-sm">
-                    <label [translate]="'fini'"></label>
-                    <p class="form-control-static form-control-sm" [innerHTML]="model.version.fini | date:'dd/MM/yyyy'"></p>
-                </div>
-                <div class="col-lg-2 col-xl-1 form-group-sm">
-                    <label [translate]="'ffin'"></label>
-                    <p class="form-control-static form-control-sm" [innerHTML]="model.version.ffin | date:'dd/MM/yyyy'"></p>
-                </div>
--->
             </div>
             <argo-item-detail-fragment [enti]="enti" [itemMap]="model.itdtMap" [date]="model.fref"></argo-item-detail-fragment>
         </fieldset>

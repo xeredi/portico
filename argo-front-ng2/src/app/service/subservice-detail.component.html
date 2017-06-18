@@ -1,3 +1,66 @@
-<p>
-  subservice-detail works!
-</p>
+<div *ngIf="model">
+    <ngb-tabset #t="ngbTabset" type="pills" [activeId]="activeTab" (tabChange)="tabChange($event)"> <ngb-tab
+        id="mainTab"> <ng-template ngbTabTitle> <span [translate]="'enti_' + enti.enti.id"></span>
+    </ng-template> <ng-template ngbTabContent>
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-primary" [routerLink]="['/service/subservice/edit', 'edit', model.entiId, model.id]"><i
+                class="fa fa-edit"></i> Edit</a>
+            <button class="btn btn-secondary" (click)="remove()">
+                <i class="fa fa-remove"></i> Remove
+            </button>
+        </div>
+    </div>
+    <form>
+        <fieldset class="form-group">
+            <div class="row">
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [translate]="'srvc'"></label>
+                    <p class="form-control-static form-control-sm">
+                        <a [routerLink]="['/service/service/detail', enti.enti.tpsrId, model.srvc.id]"
+                            [innerHTML]="model.srvc.etiqueta"></a>
+                    </p>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'ssrv_numero'"></label>
+                    <p class="form-control-static form-control-sm number" [innerHTML]="model.numero | number"></p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm" *ngIf="enti.enti.tpdtEstado">
+                    <label [translate]="'ssrv_estado'"></label>
+                    <p class="form-control-static form-control-sm"
+                        [translate]="'cdrf_' + enti.enti.tpdtEstado.id + '_' + model.estado"></p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm" *ngIf="enti.enti.temporal">
+                    <label [translate]="'fini'"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.fini | date: 'dd/MM/yyyy HH:mm'"></p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm" *ngIf="enti.enti.temporal">
+                    <label [translate]="'ffin'"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.ffin | date: 'dd/MM/yyyy HH:mm'"></p>
+                </div>
+            </div>
+            <argo-item-detail-fragment [enti]="enti" [itemMap]="model.itdtMap" [date]="model.fref"></argo-item-detail-fragment>
+        </fieldset>
+    </form>
+    </ng-template> </ngb-tab> <ngb-tab *ngFor="let entiHijaId of enti.entiHijasList" id="{{'enti_' + entiHijaId}}"> <ng-template
+        ngbTabTitle> <span [translate]="'enti_' + entiHijaId"></span> </ng-template> <ng-template ngbTabContent>
+
+    <div *ngIf="entiHijasMap[entiHijaId]">
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group mr-2" role="group">
+                <ngb-pagination [collectionSize]="itemHijosMap[entiHijaId].count" [(page)]="pageMap[entiHijaId]"
+                    [pageSize]="pageSize" [maxSize]="1" [size]="sm" [boundaryLinks]="false" [ellipses]="false"
+                    (pageChange)="pageChange(entiHijaId)"></ngb-pagination>
+            </div>
+            <div class="btn-group mr-2" role="group">
+                <a class="btn btn-primary" [routerLink]="['/service/subservice/edit', 'create', entiHijaId, model.id]"><i
+                    class="fa fa-file-o"></i> New</a>
+            </div>
+        </div>
+
+        <span>Nº Resultados: {{itemHijosMap[entiHijaId].count}}</span>
+
+        <app-subservice-grid-fragment [enti]="entiHijasMap[entiHijaId]" [itemList]="itemHijosMap[entiHijaId].list"></app-subservice-grid-fragment>
+    </div>
+    </ng-template> </ngb-tab> </ngb-tabset>
+</div>
