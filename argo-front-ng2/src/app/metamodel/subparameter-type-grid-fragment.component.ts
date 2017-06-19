@@ -39,12 +39,5 @@ import { Component, Input } from '@angular/core';
     `
 } )
 export class SubparameterTypeGridFragmentComponent {
-    private _itemList: any[];
-
-    @Input()
-    set itemList( itemList: any[] ) {
-        this._itemList = itemList;
-    }
-
-    get itemList(): any[] { return this._itemList; }
+    @Input() itemList: any[];
 }

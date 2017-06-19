@@ -30,6 +30,19 @@ import { SubparameterTypeGridFragmentComponent } from './subparameter-type-grid-
 import { SubparameterTypeDetailComponent } from './subparameter-type-detail.component';
 import { SubparameterTypeEditComponent } from './subparameter-type-edit.component';
 
+import { ServiceTypeService } from './service-type.service';
+import { SubserviceTypeService } from './subservice-type.service';
+import { ServiceTypeGridComponent } from './service-type-grid.component';
+import { ServiceTypeDetailComponent } from './service-type-detail.component';
+import { ServiceTypeEditComponent } from './service-type-edit.component';
+import { StatusChangeGridFragmentComponent } from './status-change-grid-fragment.component';
+import { SubserviceTypeGridFragmentComponent } from './subservice-type-grid-fragment.component';
+
+import { SpecialActionService } from './special-action.service';
+import { SpecialActionGridFragmentComponent } from './special-action-grid-fragment.component';
+import { SpecialActionDetailComponent } from './special-action-detail.component';
+import { SpecialActionEditComponent } from './special-action-edit.component';
+
 @NgModule( {
     imports: [
         MetamodelRoutingModule
@@ -52,6 +65,14 @@ import { SubparameterTypeEditComponent } from './subparameter-type-edit.componen
         , SubparameterTypeGridFragmentComponent
         , SubparameterTypeDetailComponent
         , SubparameterTypeEditComponent
+        , ServiceTypeGridComponent
+        , ServiceTypeDetailComponent
+        , ServiceTypeEditComponent
+        , StatusChangeGridFragmentComponent
+        , SubserviceTypeGridFragmentComponent
+        , SpecialActionGridFragmentComponent
+        , SpecialActionDetailComponent
+        , SpecialActionEditComponent
     ]
     , providers: [
         ParameterTypeService
@@ -59,6 +80,9 @@ import { SubparameterTypeEditComponent } from './subparameter-type-edit.componen
         , EntityDatatypeService
         , EntityActionService
         , SubparameterTypeService
+        , ServiceTypeService
+        , SubserviceTypeService
+        , SpecialActionService
     ]
     , schemas: [
     ]

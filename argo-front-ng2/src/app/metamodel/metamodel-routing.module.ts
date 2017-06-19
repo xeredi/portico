@@ -7,6 +7,9 @@ import { HomeComponent } from './home.component';
 import { ParameterTypeGridComponent } from './parameter-type-grid.component';
 import { ParameterTypeDetailComponent } from './parameter-type-detail.component';
 import { ParameterTypeEditComponent } from './parameter-type-edit.component';
+import { ServiceTypeGridComponent } from './service-type-grid.component';
+import { ServiceTypeDetailComponent } from './service-type-detail.component';
+import { ServiceTypeEditComponent } from './service-type-edit.component';
 import { EntityDatagroupDetailComponent } from './entity-datagroup-detail.component';
 import { EntityDatagroupEditComponent } from './entity-datagroup-edit.component';
 import { EntityDatatypeDetailComponent } from './entity-datatype-detail.component';
@@ -15,6 +18,8 @@ import { EntityActionDetailComponent } from './entity-action-detail.component';
 import { EntityActionEditComponent } from './entity-action-edit.component';
 import { SubparameterTypeDetailComponent } from './subparameter-type-detail.component';
 import { SubparameterTypeEditComponent } from './subparameter-type-edit.component';
+import { SpecialActionDetailComponent } from './special-action-detail.component';
+import { SpecialActionEditComponent } from './special-action-edit.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [PermissionGuard] }
@@ -34,6 +39,13 @@ const routes: Routes = [
     , { path: 'subparameter-type/detail/:id', component: SubparameterTypeDetailComponent, canActivate: [PermissionGuard] }
     , { path: 'subparameter-type/edit/:action/:entityId', component: SubparameterTypeEditComponent, canActivate: [PermissionGuard] }
     , { path: 'subparameter-type/edit/:action/:entityId/:id', component: SubparameterTypeEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'service-type/grid', component: ServiceTypeGridComponent, canActivate: [PermissionGuard] }
+    , { path: 'service-type/detail/:id', component: ServiceTypeDetailComponent, canActivate: [PermissionGuard] }
+    , { path: 'service-type/edit/:action', component: ServiceTypeEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'service-type/edit/:action/:id', component: ServiceTypeEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'special-action/detail/:id', component: SpecialActionDetailComponent, canActivate: [PermissionGuard] }
+    , { path: 'special-action/edit/:action/:entityId', component: SpecialActionEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'special-action/edit/:action/:entityId/:id', component: SpecialActionEditComponent, canActivate: [PermissionGuard] }
 ];
 
 @NgModule( {

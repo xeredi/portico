@@ -1,0 +1,22 @@
+<div class="table-responsive">
+    <table class="table table-sm table-bordered table-hover table-condensed table-nonfluid">
+        <thead class="thead-inverse">
+            <tr>
+                <th nowrap="nowrap"></th>
+                <th nowrap="nowrap" [translate]="'aces_orden'"></th>
+                <th nowrap="nowrap" [translate]="'aces_path'"></th>
+                <th nowrap="nowrap" [translate]="'aces_multiple'"></th>
+                <th nowrap="nowrap" [translate]="'aces_etiqueta'"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of itemList">
+                <td><a [routerLink]="['/metamodel/special-action/detail', item.id]"><i class="fa fa-search"></i></a></td>
+                <td nowrap="nowrap" [innerHTML]="item.orden"></td>
+                <td nowrap="nowrap" [innerHTML]="item.path"></td>
+                <td nowrap="nowrap"><i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[item.multiple]"></i></td>
+                <td nowrap="nowrap" [innerHTML]="item.etiqueta"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,27 @@
+<div class="table-responsive">
+    <table class="table table-sm table-bordered table-hover table-condensed table-nonfluid">
+        <thead class="thead-inverse">
+            <tr>
+                <th nowrap="nowrap"></th>
+                <th nowrap="nowrap" [translate]="'enti_codigo'"></th>
+                <th nowrap="nowrap" [translate]="'enti_temporal'"></th>
+                <th nowrap="nowrap" [translate]="'enti_facturable'"></th>
+                <th nowrap="nowrap" [translate]="'enti_exencionable'"></th>
+                <th nowrap="nowrap" [translate]="'enti_maxGrid'"></th>
+                <th nowrap="nowrap" [translate]="'enti_tpdtEstado'"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of itemList">
+                <td><a [routerLink]="['/metamodel/subservice-type/detail', item.id]"><i class="fa fa-search"></i></a></td>
+                <td nowrap="nowrap" [innerHTML]="item.codigo"></td>
+                <td nowrap="nowrap"><i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[item.temporal]"></i></td>
+                <td nowrap="nowrap"><i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[item.facturable]"></i></td>
+                <td nowrap="nowrap"><i class="fa"
+                    [ngClass]="{true:'fa-check', false:'fa-remove'}[item.exencionable]"></i></td>
+                <td nowrap="nowrap" [innerHTML]="item.maxGrid | number" class="number"></td>
+                <td nowrap="nowrap"><span *ngIf="item.tpdtEstado" [innerHTML]="item.tpdtEstado.nombre"></span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
