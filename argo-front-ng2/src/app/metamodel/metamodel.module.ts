@@ -43,6 +43,11 @@ import { SpecialActionGridFragmentComponent } from './special-action-grid-fragme
 import { SpecialActionDetailComponent } from './special-action-detail.component';
 import { SpecialActionEditComponent } from './special-action-edit.component';
 
+import { ModuleService } from './module.service';
+import { ModuleGridComponent } from './module-grid.component';
+import { ModuleDetailComponent } from './module-detail.component';
+import { ModuleEditComponent } from './module-edit.component';
+
 @NgModule( {
     imports: [
         MetamodelRoutingModule
@@ -73,6 +78,9 @@ import { SpecialActionEditComponent } from './special-action-edit.component';
         , SpecialActionGridFragmentComponent
         , SpecialActionDetailComponent
         , SpecialActionEditComponent
+        , ModuleGridComponent
+        , ModuleDetailComponent
+        , ModuleEditComponent
     ]
     , providers: [
         ParameterTypeService
@@ -83,6 +91,7 @@ import { SpecialActionEditComponent } from './special-action-edit.component';
         , ServiceTypeService
         , SubserviceTypeService
         , SpecialActionService
+        , ModuleService
     ]
     , schemas: [
     ]

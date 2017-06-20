@@ -1,3 +1,22 @@
-<p>
-  entity-action-detail works!
-</p>
+<div *ngIf="model">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-primary" [routerLink]="['/metamodel/entity-action/edit', 'edit', model.entiId, model.id]"><i
+                class="fa fa-edit"></i> Edit</a>
+            <button class="btn btn-secondary" (click)="remove()">
+                <i class="fa fa-remove"></i> Remove
+            </button>
+        </div>
+    </div>
+
+    <form>
+        <fieldset class="form-group">
+            <div class="row">
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'aebs'"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.aebs.codigo"></p>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

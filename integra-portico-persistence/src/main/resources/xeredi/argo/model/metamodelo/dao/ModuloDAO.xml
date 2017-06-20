@@ -48,7 +48,7 @@
                 AND mdlo_pk = #{id}
             </if>
             <if test="codigo != null">
-                AND mdlo_codigo = #{codigo}
+                AND mdlo_codigo LIKE #{codigo}
             </if>
             <if test="grpoId != null">
             <![CDATA[

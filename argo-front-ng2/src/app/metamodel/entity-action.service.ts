@@ -1,8 +1,13 @@
 import { Injectable } from '@angular/core';
+import { Http, Headers, Response } from '@angular/http';
+
+import { CrudService } from '../shared/crud.service';
 
 @Injectable()
-export class EntityActionService {
+export class EntityActionService extends CrudService {
+    constructor( private http: Http ) {
+        super( http );
 
-  constructor() { }
-
+        this.setParams( '/metamodelo/accion-entidad', 'acen' );
+    }
 }

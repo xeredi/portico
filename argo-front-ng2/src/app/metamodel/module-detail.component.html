@@ -1,0 +1,36 @@
+<div *ngIf="model">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-primary" [routerLink]="['/metamodel/module/edit', 'edit', model.id]"><i
+                class="fa fa-edit"></i> Edit</a>
+            <button class="btn btn-secondary" (click)="remove()">
+                <i class="fa fa-remove"></i> Remove
+            </button>
+        </div>
+    </div>
+
+    <form>
+        <fieldset class="form-group">
+            <div class="row">
+                <div class="col-sm-4 col-lg-3 col-xl-2 form-group-sm">
+                    <label>Código</label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.codigo"></p>
+                </div>
+            </div>
+
+            <app-i18n-info-detail [i18nMap]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-detail>
+        </fieldset>
+
+        <fieldset>
+            <legend>User Groups</legend>
+
+            <div class="row">
+                <div class="col-lg-3 col-xl-2 form-group-sm" *ngFor="let item of grpoList">
+                    <p class="form-control-static form-control-sm">
+                        <a [routerLink]="['/security/group/detail', item.id]" [innerHTML]="item.nombre"></a>
+                    </p>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

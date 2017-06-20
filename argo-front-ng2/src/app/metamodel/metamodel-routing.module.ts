@@ -4,6 +4,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { PermissionGuard } from '../shared/permission.guard';
 
 import { HomeComponent } from './home.component';
+import { ModuleGridComponent } from './module-grid.component';
+import { ModuleDetailComponent } from './module-detail.component';
+import { ModuleEditComponent } from './module-edit.component';
 import { ParameterTypeGridComponent } from './parameter-type-grid.component';
 import { ParameterTypeDetailComponent } from './parameter-type-detail.component';
 import { ParameterTypeEditComponent } from './parameter-type-edit.component';
@@ -23,6 +26,10 @@ import { SpecialActionEditComponent } from './special-action-edit.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [PermissionGuard] }
+    , { path: 'module/grid', component: ModuleGridComponent, canActivate: [PermissionGuard] }
+    , { path: 'module/detail/:id', component: ModuleDetailComponent, canActivate: [PermissionGuard] }
+    , { path: 'module/edit/:action', component: ModuleEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'module/edit/:action/:id', component: ModuleEditComponent, canActivate: [PermissionGuard] }
     , { path: 'parameter-type/grid', component: ParameterTypeGridComponent, canActivate: [PermissionGuard] }
     , { path: 'parameter-type/detail/:id', component: ParameterTypeDetailComponent, canActivate: [PermissionGuard] }
     , { path: 'parameter-type/edit/:action', component: ParameterTypeEditComponent, canActivate: [PermissionGuard] }

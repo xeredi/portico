@@ -303,7 +303,11 @@ ng g service metamodel/EntityAction --spec false
 ng g service metamodel/SubparameterType --spec false
 ng g service metamodel/StatusChange --spec false
 ng g service metamodel/SpecialAction --spec false
+ng g service metamodel/Module --spec false
 ng g component metamodel/Home --flat --spec false
+ng g component metamodel/ModuleGrid --flat --spec false
+ng g component metamodel/ModuleDetail --flat --spec false
+ng g component metamodel/ModuleEdit --flat --spec false
 ng g component metamodel/ParameterTypeGrid --flat --spec false
 ng g component metamodel/ParameterTypeDetail --flat --spec false
 ng g component metamodel/ParameterTypeEdit --flat --spec false
