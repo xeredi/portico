@@ -48,6 +48,11 @@ import { ModuleGridComponent } from './module-grid.component';
 import { ModuleDetailComponent } from './module-detail.component';
 import { ModuleEditComponent } from './module-edit.component';
 
+import { DataTypeService } from './data-type.service';
+import { DataTypeGridComponent } from './data-type-grid.component';
+import { DataTypeDetailComponent } from './data-type-detail.component';
+import { DataTypeEditComponent } from './data-type-edit.component';
+
 @NgModule( {
     imports: [
         MetamodelRoutingModule
@@ -81,6 +86,9 @@ import { ModuleEditComponent } from './module-edit.component';
         , ModuleGridComponent
         , ModuleDetailComponent
         , ModuleEditComponent
+        , DataTypeGridComponent
+        , DataTypeDetailComponent
+        , DataTypeEditComponent
     ]
     , providers: [
         ParameterTypeService
@@ -92,6 +100,7 @@ import { ModuleEditComponent } from './module-edit.component';
         , SubserviceTypeService
         , SpecialActionService
         , ModuleService
+        , DataTypeService
     ]
     , schemas: [
     ]

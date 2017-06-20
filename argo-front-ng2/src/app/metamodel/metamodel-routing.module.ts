@@ -7,6 +7,9 @@ import { HomeComponent } from './home.component';
 import { ModuleGridComponent } from './module-grid.component';
 import { ModuleDetailComponent } from './module-detail.component';
 import { ModuleEditComponent } from './module-edit.component';
+import { DataTypeGridComponent } from './data-type-grid.component';
+import { DataTypeDetailComponent } from './data-type-detail.component';
+import { DataTypeEditComponent } from './data-type-edit.component';
 import { ParameterTypeGridComponent } from './parameter-type-grid.component';
 import { ParameterTypeDetailComponent } from './parameter-type-detail.component';
 import { ParameterTypeEditComponent } from './parameter-type-edit.component';
@@ -30,6 +33,10 @@ const routes: Routes = [
     , { path: 'module/detail/:id', component: ModuleDetailComponent, canActivate: [PermissionGuard] }
     , { path: 'module/edit/:action', component: ModuleEditComponent, canActivate: [PermissionGuard] }
     , { path: 'module/edit/:action/:id', component: ModuleEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'data-type/grid', component: DataTypeGridComponent, canActivate: [PermissionGuard] }
+    , { path: 'data-type/detail/:id', component: DataTypeDetailComponent, canActivate: [PermissionGuard] }
+    , { path: 'data-type/edit/:action', component: DataTypeEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'data-type/edit/:action/:id', component: DataTypeEditComponent, canActivate: [PermissionGuard] }
     , { path: 'parameter-type/grid', component: ParameterTypeGridComponent, canActivate: [PermissionGuard] }
     , { path: 'parameter-type/detail/:id', component: ParameterTypeDetailComponent, canActivate: [PermissionGuard] }
     , { path: 'parameter-type/edit/:action', component: ParameterTypeEditComponent, canActivate: [PermissionGuard] }

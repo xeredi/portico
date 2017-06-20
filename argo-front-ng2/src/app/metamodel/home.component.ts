@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
     <a [routerLink]="['/metamodel/parameter-type/grid']">Parameter Types</a>
     - <a [routerLink]="['/metamodel/service-type/grid']">Service Types</a>
     - <a [routerLink]="['/metamodel/module/grid']">Modules</a>
+    - <a [routerLink]="['/metamodel/data-type/grid']">Data Types</a>
 </p>
     `
 } )

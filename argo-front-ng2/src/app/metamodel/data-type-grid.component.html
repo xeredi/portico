@@ -1,0 +1,106 @@
+<div *ngIf="resultList">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group mr-2" role="group">
+            <ngb-pagination [collectionSize]="count" [(page)]="page" [pageSize]="pageSize" [maxSize]="1" [size]="sm"
+                [boundaryLinks]="false" [ellipses]="false" (pageChange)="pageChange()"></ngb-pagination>
+        </div>
+        <div class="btn-group mr-2" role="group">
+            <button class="btn btn-secondary" (click)="editFilter(filter)">
+                <i class="fa fa-filter"></i> Filter
+            </button>
+            <a class="btn btn-secondary" [routerLink]="['/metamodel/data-type/edit', 'create']"><i
+                class="fa fa-file-o"></i> New</a>
+        </div>
+    </div>
+
+    <span>Nº Resultados: {{count}}</span>
+
+    <div class="table-responsive">
+        <table class="table table-sm table-bordered table-hover table-condensed table-nonfluid">
+            <thead class="thead-inverse">
+                <tr>
+                    <th nowrap="nowrap"></th>
+                    <th nowrap="nowrap" [translate]="'tpdt_codigo'"></th>
+                    <th nowrap="nowrap" [translate]="'tpdt_nombre'"></th>
+                    <th nowrap="nowrap" [translate]="'tpdt_tpht'"></th>
+                    <th nowrap="nowrap" [translate]="'tpdt_tpel'"></th>
+                    <th nowrap="nowrap" [translate]="'enti'"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of resultList.list">
+                    <td><a [routerLink]="['/metamodel/data-type/detail', item.id]"><i class="fa fa-search"></i></a></td>
+                    <td nowrap="nowrap" [innerHTML]="item.codigo"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.nombre"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.tpht"></td>
+                    <td nowrap="nowrap" [innerHTML]="item.tipoElemento"></td>
+                    <td nowrap="nowrap"><span *ngIf="item.enti" [ngSwitch]="item.enti.tipo"> <a
+                            *ngSwitchCase="'P'" [routerLink]="['/metamodel/parameter-type/detail', item.enti.id]"
+                            [innerHTML]="item.enti.nombre"></a> <a *ngSwitchCase="'B'"
+                            [routerLink]="['/metamodel/subparameter-type/detail', item.enti.id]"
+                            [innerHTML]="item.enti.nombre"></a><a *ngSwitchCase="'T'"
+                            [routerLink]="['/metamodel/service-type/detail', item.enti.id]"
+                            [innerHTML]="item.enti.nombre"></a><a *ngSwitchCase="'S'"
+                            [routerLink]="['/metamodel/subservice-type/detail', item.enti.id]"
+                            [innerHTML]="item.enti.nombre"></a> <a *ngSwitchCase="'E'"
+                            [routerLink]="['/metamodel/statistic-type/detail', item.enti.id]"
+                            [innerHTML]="item.enti.nombre"></a> <span *ngSwitchDefault> TIPO ENTIDAD DESCONOCIDA:
+                                {{item.enti.tipo}} </span>
+                    </span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <ng-template #filter let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Search Filter</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <fieldset class="form-group">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-2 col-xl-1 form-group-sm">
+                        <label [translate]="'tpdt_codigo'"></label> <input type="text" [(ngModel)]="model.codigo"
+                            name="model.codigo" class="form-control form-control-sm" />
+                    </div>
+                    <div class="col-lg-4 col-xl-3 form-group-sm">
+                        <label [translate]="'tpdt_nombre'"></label> <input type="text" [(ngModel)]="model.nombre"
+                            name="model.nombre" class="form-control form-control-sm" />
+                    </div>
+                    <div class="col-lg-3 col-xl-2 form-group-sm">
+                        <label [translate]="'tpdt_tpht'"></label> <select name="model.tpht" [(ngModel)]="model.tpht"
+                            class="form-control form-control-sm">
+                            <option></option>
+                            <option *ngFor="let item of tphtList" [value]="item" [translate]="'TipoHtml_' + item"></option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3 col-xl-2 form-group-sm">
+                        <label [translate]="'tpdt_tpel'"></label> <select name="model.tipoElemento"
+                            [(ngModel)]="model.tipoElemento" class="form-control form-control-sm">
+                            <option></option>
+                            <option *ngFor="let item of tpelList" [value]="item" [translate]="'TipoElemento_' + item"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div class="modal-footer">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary" (click)="saveFilter();c()">
+                <i class="fa fa-check"></i> <span [translate]="'btn_buscar'"></span>
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="resetFilter()">
+                <i class="fa fa-eraser"></i> <span [translate]="'btn_reset'"></span>
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="c('Close click')">
+                <i class="fa fa-close"></i> <span [translate]="'btn_cerrar'"></span>
+            </button>
+        </div>
+    </div>
+    </ng-template>
+</div>

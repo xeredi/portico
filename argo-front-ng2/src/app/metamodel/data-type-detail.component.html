@@ -1,0 +1,80 @@
+<div *ngIf="model">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-primary" [routerLink]="['/metamodel/data-type/edit', 'edit', model.id]"><i
+                class="fa fa-edit"></i> Edit</a>
+            <button class="btn btn-secondary" (click)="remove()">
+                <i class="fa fa-remove"></i> Remove
+            </button>
+        </div>
+    </div>
+
+    <form>
+        <fieldset class="form-group">
+            <div class="row">
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [translate]="'tpdt_codigo'"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.codigo"></p>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'tpdt_tpht'"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.tpht"></p>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'tpdt_tpel'"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.tipoElemento"></p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm" *ngIf="model.enti">
+                    <label [translate]="'enti'"></label>
+                    <p class="form-control-static form-control-sm" [ngSwitch]="model.enti.tipo">
+                        <a *ngSwitchCase="'P'" [routerLink]="['/metamodel/parameter-type/detail', model.enti.id]"
+                            [innerHTML]="model.enti.nombre"></a> <a *ngSwitchCase="'B'"
+                            [routerLink]="['/metamodel/subparameter-type/detail', model.enti.id]"
+                            [innerHTML]="model.enti.nombre"></a><a *ngSwitchCase="'T'"
+                            [routerLink]="['/metamodel/service-type/detail', model.enti.id]"
+                            [innerHTML]="model.enti.nombre"></a><a *ngSwitchCase="'S'"
+                            [routerLink]="['/metamodel/subservice-type/detail', model.enti.id]"
+                            [innerHTML]="model.enti.nombre"></a> <a *ngSwitchCase="'E'"
+                            [routerLink]="['/metamodel/statistic-type/detail', model.enti.id]"
+                            [innerHTML]="model.enti.nombre"></a> <span *ngSwitchDefault> TIPO ENTIDAD
+                            DESCONOCIDA: {{model.enti.tipo}} </span>
+                    </p>
+                </div>
+            </div>
+
+            <app-i18n-info-detail [i18nMap]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-detail>
+        </fieldset>
+    </form>
+
+    <fieldset *ngIf="model.tipoElemento == 'CR'">
+        <legend [translate]="'cdrfList'"></legend>
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group">
+                <a class="btn btn-primary" [routerLink]="['/metamodel/reference-code/edit', 'create', model.id]"><i
+                    class="fa fa-file-o"></i> <span [translate]="'btn_crear'"></span></a>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered table-hover table-condensed table-nonfluid">
+                <thead class="thead-inverse">
+                    <tr>
+                        <th nowrap="nowrap"></th>
+                        <th nowrap="nowrap" [translate]="'cdrf_valor'"></th>
+                        <th nowrap="nowrap" [translate]="'cdrf_etiqueta'"></th>
+                        <th nowrap="nowrap" [translate]="'cdrf_orden'"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of model.cdrfList">
+                        <td><a [routerLink]="['/metamodel/reference-code/detail', item.id]"><i
+                                class="fa fa-search"></i></a></td>
+                        <td nowrap="nowrap" [innerHTML]="item.valor"></td>
+                        <td nowrap="nowrap" [innerHTML]="item.etiqueta"></td>
+                        <td nowrap="nowrap" [innerHTML]="item.orden"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+</div>
