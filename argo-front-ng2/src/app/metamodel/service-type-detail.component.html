@@ -15,11 +15,11 @@
         <fieldset class="form-group">
             <div class="row">
                 <div class="col-lg-3 col-xl-2 form-group-sm">
-                    <label>Código</label>
+                    <label [translate]="'enti_codigo'"></label>
                     <p class="form-control-static form-control-sm" [innerHTML]="model.codigo"></p>
                 </div>
                 <div class="col-lg-2 col-xl-1 form-group-sm">
-                    <label>Grid Max. (Filas)</label>
+                    <label [translate]="'enti_maxGrid'"></label>
                     <p class="form-control-static form-control-sm number" [innerHTML]="model.maxGrid | number"></p>
                 </div>
                 <div class="col-lg-3 col-xl-2 form-group-sm" *ngIf="model.tpdtEstado">
@@ -42,32 +42,8 @@
             <app-i18n-info-detail [i18nMap]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-detail>
 
             <div class="row">
-                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
-                    <label>Alta?</label>
-                    <p class="form-control-static form-control-sm">
-                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.cmdAlta]"></i>
-                    </p>
-                </div>
-                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
-                    <label>Baja?</label>
-                    <p class="form-control-static form-control-sm">
-                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.cmdBaja]"></i>
-                    </p>
-                </div>
-                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
-                    <label>Edicion?</label>
-                    <p class="form-control-static form-control-sm">
-                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.cmdEdicion]"></i>
-                    </p>
-                </div>
-                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
-                    <label>Duplicado?</label>
-                    <p class="form-control-static form-control-sm">
-                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.cmdDuplicado]"></i>
-                    </p>
-                </div>
                 <div class="col-sm-4 col-lg-3 col-xl-2 form-group-sm">
-                    <label>Classpath</label>
+                    <label [translate]="'enti_classpath'"></label>
                     <p class="form-control-static form-control-sm" [innerHTML]="model.classpath"></p>
                 </div>
             </div>
@@ -79,7 +55,7 @@
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
                 <a class="btn btn-primary" [routerLink]="['/metamodel/subservice-type/edit', 'create', model.id]"><i
-                    class="fa fa-file-o"></i> New</a>
+                    class="fa fa-file-o"></i> <span [translate]="'btn_crear'"></span></a>
             </div>
         </div>
 
@@ -91,7 +67,7 @@
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
                 <a class="btn btn-primary" [routerLink]="['/metamodel/subservice-type/edit', 'create', model.id]"><i
-                    class="fa fa-file-o"></i> New</a>
+                    class="fa fa-file-o"></i> <span [translate]="'btn_crear'"></span></a>
             </div>
         </div>
 
@@ -104,7 +80,7 @@
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
                 <a class="btn btn-primary" [routerLink]="['/metamodel/entity-datagroup/edit', 'create', model.id]"><i
-                    class="fa fa-file-o"></i> New</a>
+                    class="fa fa-file-o"></i> <span [translate]="'btn_crear'"></span></a>
             </div>
         </div>
 
@@ -115,7 +91,7 @@
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
                 <a class="btn btn-primary" [routerLink]="['/metamodel/entity-datatype/edit', 'create', model.id]"><i
-                    class="fa fa-file-o"></i> New</a>
+                    class="fa fa-file-o"></i> <span [translate]="'btn_crear'"></span></a>
             </div>
         </div>
 
@@ -128,7 +104,7 @@
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
                 <a class="btn btn-primary" [routerLink]="['/metamodel/entity-action/edit', 'create', model.id]"><i
-                    class="fa fa-file-o"></i> New</a>
+                    class="fa fa-file-o"></i> <span [translate]="'btn_crear'"></span></a>
             </div>
         </div>
 
@@ -139,7 +115,7 @@
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
                 <a class="btn btn-primary" [routerLink]="['/metamodel/special-action/edit', 'create', model.id]"><i
-                    class="fa fa-file-o"></i> New</a>
+                    class="fa fa-file-o"></i> <span [translate]="'btn_crear'"></span></a>
             </div>
         </div>
 
@@ -150,7 +126,7 @@
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
                 <a class="btn btn-primary" [routerLink]="['/metamodel/status-change/edit', 'create', model.id]"><i
-                    class="fa fa-file-o"></i> New</a>
+                    class="fa fa-file-o"></i> <span [translate]="'btn_crear'"></span></a>
             </div>
         </div>
 

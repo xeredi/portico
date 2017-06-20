@@ -21,13 +21,9 @@
                 <tr>
                     <th nowrap="nowrap"></th>
                     <th nowrap="nowrap" [translate]="'enti_codigo'"></th>
-                    <th nowrap="nowrap">Nombre</th>
-                    <th nowrap="nowrap">Alta?</th>
-                    <th nowrap="nowrap">Baja?</th>
-                    <th nowrap="nowrap">Edicion?</th>
-                    <th nowrap="nowrap">Duplicado?</th>
-                    <th nowrap="nowrap">Grid Max.</th>
-                    <th nowrap="nowrap">Classpath</th>
+                    <th nowrap="nowrap" [translate]="'enti_nombre'"></th>
+                    <th nowrap="nowrap" [translate]="'enti_maxGrid'"></th>
+                    <th nowrap="nowrap" [translate]="'enti_classpath'">Classpath</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,14 +31,6 @@
                     <td><a [routerLink]="['/metamodel/service-type/detail', item.id]"><i class="fa fa-search"></i></a></td>
                     <td nowrap="nowrap" [innerHTML]="item.codigo"></td>
                     <td nowrap="nowrap" [innerHTML]="item.nombre"></td>
-                    <td nowrap="nowrap"><i class="fa"
-                        [ngClass]="{true:'fa-check', false:'fa-remove'}[item.cmdAlta]"></i></td>
-                    <td nowrap="nowrap"><i class="fa"
-                        [ngClass]="{true:'fa-check', false:'fa-remove'}[item.cmdBaja]"></i></td>
-                    <td nowrap="nowrap"><i class="fa"
-                        [ngClass]="{true:'fa-check', false:'fa-remove'}[item.cmdEdicion]"></i></td>
-                    <td nowrap="nowrap"><i class="fa"
-                        [ngClass]="{true:'fa-check', false:'fa-remove'}[item.cmdDuplicado]"></i></td>
                     <td nowrap="nowrap" [innerHTML]="item.maxGrid | number" class="number"></td>
                     <td nowrap="nowrap" [innerHTML]="item.classpath"></td>
                 </tr>

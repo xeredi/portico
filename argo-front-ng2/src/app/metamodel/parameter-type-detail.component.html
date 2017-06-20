@@ -15,15 +15,15 @@
         <fieldset class="form-group">
             <div class="row">
                 <div class="col-sm-4 col-lg-3 col-xl-2 form-group-sm">
-                    <label>Código</label>
+                    <label [translate]="'enti_codigo'"></label>
                     <p class="form-control-static form-control-sm" [innerHTML]="model.codigo"></p>
                 </div>
                 <div class="col-sm-3 col-lg-2 col-xl-1 form-group-sm">
-                    <label>Grid Max. (Filas)</label>
+                    <label [translate]="'enti_maxGrid'"></label>
                     <p class="form-control-static form-control-sm number" [innerHTML]="model.maxGrid"></p>
                 </div>
                 <div class="col-sm-4 col-lg-3 col-xl-2 form-group-sm">
-                    <label>Tipo de Dato</label>
+                    <label [translate]="'enti_tpdtNombre'"></label>
                     <p class="form-control-static form-control-sm">
                         <a *ngIf="model.tpdtNombre" [routerLink]="['/metamodel/data-type/detail', model.tpdtNombre.id]"
                             [innerHTML]="model.tpdtNombre.nombre"></a>
@@ -35,55 +35,31 @@
 
             <div class="row">
                 <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
-                    <label>Alta?</label>
-                    <p class="form-control-static form-control-sm">
-                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.cmdAlta]"></i>
-                    </p>
-                </div>
-                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
-                    <label>Baja?</label>
-                    <p class="form-control-static form-control-sm">
-                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.cmdBaja]"></i>
-                    </p>
-                </div>
-                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
-                    <label>Edicion?</label>
-                    <p class="form-control-static form-control-sm">
-                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.cmdEdicion]"></i>
-                    </p>
-                </div>
-                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
-                    <label>Duplicado?</label>
-                    <p class="form-control-static form-control-sm">
-                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.cmdDuplicado]"></i>
-                    </p>
-                </div>
-                <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
-                    <label>Gis?</label>
+                    <label [translate]="'enti_gis'"></label>
                     <p class="form-control-static form-control-sm">
                         <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.gis]"></i>
                     </p>
                 </div>
                 <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
-                    <label>Puerto?</label>
+                    <label [translate]="'enti_puerto'"></label>
                     <p class="form-control-static form-control-sm">
                         <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.puerto]"></i>
                     </p>
                 </div>
                 <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
-                    <label>I18n?</label>
+                    <label [translate]="'enti_i18n'"></label>
                     <p class="form-control-static form-control-sm">
                         <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.i18n]"></i>
                     </p>
                 </div>
                 <div class="col-sm-2 col-lg-2 col-xl-1 form-group-sm">
-                    <label>Temp Explicita?</label>
+                    <label [translate]="'enti_tempExp'"></label>
                     <p class="form-control-static form-control-sm">
                         <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.tempExp]"></i>
                     </p>
                 </div>
                 <div class="col-sm-4 col-lg-3 col-xl-2 form-group-sm">
-                    <label>Classpath</label>
+                    <label [translate]="'enti_classpath'"></label>
                     <p class="form-control-static form-control-sm" [innerHTML]="model.classpath"></p>
                 </div>
             </div>
@@ -95,7 +71,7 @@
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
                 <a class="btn btn-primary" [routerLink]="['/metamodel/entity-datagroup/edit', 'create', model.id]"><i
-                    class="fa fa-file-o"></i> New</a>
+                    class="fa fa-file-o"></i> <span [translate]="'btn_crear'"></span></a>
             </div>
         </div>
 
@@ -108,7 +84,7 @@
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
                 <a class="btn btn-primary" [routerLink]="['/metamodel/entity-datagroup/edit', 'create', model.id]"><i
-                    class="fa fa-file-o"></i> New</a>
+                    class="fa fa-file-o"></i> <span [translate]="'btn_crear'"></span></a>
             </div>
         </div>
 
@@ -119,7 +95,7 @@
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
                 <a class="btn btn-primary" [routerLink]="['/metamodel/entity-datatype/edit', 'create', model.id]"><i
-                    class="fa fa-file-o"></i> New</a>
+                    class="fa fa-file-o"></i> <span [translate]="'btn_crear'"></span></a>
             </div>
         </div>
 
@@ -132,7 +108,7 @@
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group">
                 <a class="btn btn-primary" [routerLink]="['/metamodel/entity-action/edit', 'create', model.id]"><i
-                    class="fa fa-file-o"></i> New</a>
+                    class="fa fa-file-o"></i> <span [translate]="'btn_crear'"></span></a>
             </div>
         </div>
 
