@@ -19,6 +19,8 @@ export class ServiceDetailComponent implements OnInit {
     entiHijasMap: any;
     pageMap: Map<string, number>;
 
+    srvcDepsList: any[];
+
     activeTab: string;
     pageSize: number;
 
@@ -42,6 +44,8 @@ export class ServiceDetailComponent implements OnInit {
                 .subscribe( resp => {
                     this.enti = resp.enti;
                     this.model = resp.model;
+
+                    this.srvcDepsList = resp.srvcDepsList;
 
                     this.entiHijasMap = {};
                     this.itemHijosMap = {};
@@ -85,6 +89,23 @@ export class ServiceDetailComponent implements OnInit {
 
     pageChange( pageId: string ) {
         this.doSsrvSearch( this.model.id, pageId );
+    }
+
+    assessmentList() {
+        console.log( "assessmentList" );
+
+        this.router.navigateByUrl( "/billing/assessment/grid"
+            + ";model=" + encodeURIComponent( JSON.stringify( {
+                tpsrId: this.model.entiId,
+                srvc: {
+                    id: this.model.id,
+                    entiId: this.model.entiId,
+                    anno: this.model.anno,
+                    numero: this.model.numero,
+                    prto: this.model.prto
+                }
+            } ) )
+        );
     }
 
     private replaceState() {

@@ -1,14 +1,34 @@
-<div *ngIf="model">
+<div *ngIf="enti">
     <ngb-tabset #t="ngbTabset" type="pills" [activeId]="activeTab" (tabChange)="tabChange($event)"> <ngb-tab
         id="mainTab"> <ng-template ngbTabTitle> <span [translate]="'enti_' + enti.enti.id"></span>
     </ng-template> <ng-template ngbTabContent>
     <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group">
+        <div class="btn-group mr-2" role="group">
             <a class="btn btn-primary" [routerLink]="['/service/service/edit', 'edit', model.entiId, model.id]"><i
-                class="fa fa-edit"></i> Edit</a>
+                class="fa fa-edit"></i> <span [translate]="'btn_editar'"></span></a> <a class="btn btn-secondary"
+                [routerLink]="['/service/service/edit', 'duplicate', model.entiId, model.id]"><i class="fa fa-copy"></i>
+                <span [translate]="'btn_duplicar'"></span> </a>
             <button class="btn btn-secondary" (click)="remove()">
-                <i class="fa fa-remove"></i> Remove
+                <i class="fa fa-remove"></i> <span [translate]="'btn_borrar'"></span>
             </button>
+        </div>
+        <div class="btn-group mr-2" role="group" *ngIf="enti.enti.facturable">
+            <a class="btn btn-secondary" [routerLink]="['/billing/valuator/edit', 'create', model.entiId, model.id]">
+                <i class="fa fa-eur"></i> <span [translate]="'btn_valorar'"></span>
+            </a>
+            <button class="btn btn-secondary" (click)="assessmentList()">
+                <span [translate]="'btn_valoraciones'"></span>
+            </button>
+        </div>
+        <div class="btn-group mr-2" role="group" *ngIf="enti.trmtList">
+            <span *ngFor="let trmt of enti.trmtList"> <a class="btn btn-secondary"
+                *ngIf="trmt.estadoOrig == model.estado"
+                [routerLink]="['/service/service-status-change/edit', 'create', model.entiId, trmt.id, model.id]"
+                [translate]="'trmt_' + trmt.id"> </a></span>
+        </div>
+        <div class="btn-group mr-2" role="group" *ngIf="enti.acesList">
+            <span *ngFor="let aces of enti.acesList"> <a class="btn btn-secondary" *ngIf="!aces.multiple"
+                [routerLink]="[aces.path, model.entiId, model.id]" [translate]="'fncd_' + aces.id"> </a></span>
         </div>
     </div>
     <form>
@@ -45,6 +65,36 @@
                 </div>
             </div>
             <argo-item-detail-fragment [enti]="enti" [itemMap]="model.itdtMap" [date]="model.fref"></argo-item-detail-fragment>
+        </fieldset>
+
+        <fieldset *ngIf="srvcDepsList.length > 0">
+            <legend>Servicios Dependientes</legend>
+
+            <div class="table-responsive">
+                <table class="table table-sm table-bordered table-hover table-condensed table-nonfluid">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th></th>
+                            <th [translate]="'tpsr'"></th>
+                            <th [translate]="'srvc'"></th>
+                            <th [translate]="'srvc_estado'"></th>
+                            <th [translate]="'srvc_falta'"></th>
+                            <th [translate]="'srvc_fref'"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of srvcDepsList">
+                            <td><a [routerLink]="['/service/service/detail', item.entiId, item.id]"><i
+                                    class="fa fa-search"></i></a></td>
+                            <td nowrap="nowrap" [translate]="'enti_' + item.entiId"></td>
+                            <td nowrap="nowrap" [innerHTML]="item.etiqueta"></td>
+                            <td nowrap="nowrap" [innerHTML]="item.estado"></td>
+                            <td nowrap="nowrap" [innerHTML]="item.falta | date: 'dd/MM/yyyy HH:mm'"></td>
+                            <td nowrap="nowrap" [innerHTML]="item.fref | date: 'dd/MM/yyyy HH:mm'"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </fieldset>
     </form>
     </ng-template> </ngb-tab> <ngb-tab *ngFor="let entiHijaId of enti.entiHijasList" id="{{'enti_' + entiHijaId}}"> <ng-template

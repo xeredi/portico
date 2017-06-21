@@ -26,6 +26,7 @@ import { AspectDetailComponent } from './aspect-detail.component';
 import { AspectEditComponent } from './aspect-edit.component';
 import { AspectChargeDetailComponent } from './aspect-charge-detail.component';
 import { AspectChargeEditComponent } from './aspect-charge-edit.component';
+import { ValuatorEditComponent } from './valuator-edit.component';
 
 
 const routes: Routes = [
@@ -61,6 +62,7 @@ const routes: Routes = [
     , { path: 'bill-series/detail/:id', component: BillSeriesDetailComponent, canActivate: [PermissionGuard] }
     , { path: 'bill-series/edit/:action', component: BillSeriesEditComponent, canActivate: [PermissionGuard] }
     , { path: 'bill-series/edit/:action/:id', component: BillSeriesEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'valuator/edit/:action/:entityId/:serviceId', component: ValuatorEditComponent, canActivate: [PermissionGuard] }
 ];
 
 @NgModule( {

@@ -55,6 +55,9 @@ import { BillSeriesGridComponent } from './bill-series-grid.component';
 import { BillSeriesDetailComponent } from './bill-series-detail.component';
 import { BillSeriesEditComponent } from './bill-series-edit.component';
 
+import { ValuatorService } from './valuator.service';
+import { ValuatorEditComponent } from './valuator-edit.component';
+
 @NgModule( {
     imports: [
         BillingRoutingModule
@@ -94,6 +97,7 @@ import { BillSeriesEditComponent } from './bill-series-edit.component';
         , BillSeriesGridComponent
         , BillSeriesDetailComponent
         , BillSeriesEditComponent
+        , ValuatorEditComponent
     ]
     , providers: [
         AssessmentService
@@ -105,6 +109,7 @@ import { BillSeriesEditComponent } from './bill-series-edit.component';
         , AspectService
         , AspectChargeService
         , BillSeriesService
+        , ValuatorService
     ]
 } )
 export class BillingModule { }

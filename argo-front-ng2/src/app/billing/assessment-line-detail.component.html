@@ -67,8 +67,8 @@
             </div>
 
             <div *ngIf="model.ssrv" class="row">
-                <div class="col-lg-4 col-xl-3 form-group-sm">
-                    <label [innerHTML]="model.rgla.enti.id"></label>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [translate]="'enti_' + model.rgla.enti.id"></label>
                     <p class="form-control-static form-control-sm">
                         <a [routerLink]="['/service/subservice/detail', model.rgla.enti.id, model.ssrv.id]"
                             [innerHTML]="model.ssrv.numero"></a>

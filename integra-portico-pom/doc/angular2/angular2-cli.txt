@@ -380,47 +380,49 @@ ng g component batch/FileInfoFragment --flat --spec false
 ng g component batch/ProcessMessageGridFragment --flat --spec false
 
 ng g module billing --routing
-ng g service billing/Charge
-ng g service billing/Rule
-ng g service billing/IncompatibleRule
-ng g service billing/Aspect
-ng g service billing/AspectCharge
-ng g service billing/BillSeries
-ng g service billing/Assessment
-ng g service billing/AssessmentLine
-ng g service billing/AssessmentDetail
-ng g component billing/Home --flat
-ng g component billing/ChargeGrid --flat
-ng g component billing/ChargeDetail --flat
-ng g component billing/ChargeEdit --flat
-ng g component billing/ChargeTypeahead --flat
-ng g component billing/RuleGridFragment --flat
-ng g component billing/RuleDetail --flat
-ng g component billing/RuleEdit --flat
-ng g component billing/IncompatibleRuleGridFragment --flat
-ng g component billing/IncompatibleRuleDetail --flat
-ng g component billing/IncompatibleRuleEdit --flat
-ng g component billing/AspectGrid --flat
-ng g component billing/AspectDetail --flat
-ng g component billing/AspectEdit --flat
-ng g component billing/AspectTypeahead --flat
-ng g component billing/AspectChargeGridFragment --flat
-ng g component billing/AspectChargeDetail --flat
-ng g component billing/AspectChargeEdit --flat
-ng g component billing/BillSeriesGrid --flat
-ng g component billing/BillSeriesDetail --flat
-ng g component billing/BillSeriesEdit --flat
-ng g component billing/AssessmentGrid --flat
-ng g component billing/AssessmentDetail --flat
-ng g component billing/AssessmentEdit --flat
-ng g component billing/AssessmentChargeGridFragment --flat
-ng g component billing/AssessmentTaxGridFragment --flat
-ng g component billing/AssessmentLineGridFragment --flat
-ng g component billing/AssessmentLineDetail --flat
-ng g component billing/AssessmentLineEdit --flat
-ng g component billing/AssessmentDetailGridFragment --flat
-ng g component billing/AssessmentDetailDetail --flat
-ng g component billing/AssessmentDetailEdit --flat
+ng g service billing/Charge --spec false
+ng g service billing/Rule --spec false
+ng g service billing/IncompatibleRule --spec false
+ng g service billing/Aspect --spec false
+ng g service billing/AspectCharge --spec false
+ng g service billing/BillSeries --spec false
+ng g service billing/Assessment --spec false
+ng g service billing/AssessmentLine --spec false
+ng g service billing/AssessmentDetail --spec false
+ng g service billing/Valuator --spec false
+ng g component billing/Home --flat --spec false
+ng g component billing/ChargeGrid --flat --spec false
+ng g component billing/ChargeDetail --flat --spec false
+ng g component billing/ChargeEdit --flat --spec false
+ng g component billing/ChargeTypeahead --flat --spec false
+ng g component billing/RuleGridFragment --flat --spec false
+ng g component billing/RuleDetail --flat --spec false
+ng g component billing/RuleEdit --flat --spec false
+ng g component billing/IncompatibleRuleGridFragment --flat --spec false
+ng g component billing/IncompatibleRuleDetail --flat --spec false
+ng g component billing/IncompatibleRuleEdit --flat --spec false
+ng g component billing/AspectGrid --flat --spec false
+ng g component billing/AspectDetail --flat --spec false
+ng g component billing/AspectEdit --flat --spec false
+ng g component billing/AspectTypeahead --flat --spec false
+ng g component billing/AspectChargeGridFragment --flat --spec false
+ng g component billing/AspectChargeDetail --flat --spec false
+ng g component billing/AspectChargeEdit --flat --spec false
+ng g component billing/BillSeriesGrid --flat --spec false
+ng g component billing/BillSeriesDetail --flat --spec false
+ng g component billing/BillSeriesEdit --flat --spec false
+ng g component billing/AssessmentGrid --flat --spec false
+ng g component billing/AssessmentDetail --flat --spec false
+ng g component billing/AssessmentEdit --flat --spec false
+ng g component billing/AssessmentChargeGridFragment --fla --spec falset
+ng g component billing/AssessmentTaxGridFragment --flat --spec false
+ng g component billing/AssessmentLineGridFragment --flat --spec false
+ng g component billing/AssessmentLineDetail --flat --spec false
+ng g component billing/AssessmentLineEdit --flat --spec false
+ng g component billing/AssessmentDetailGridFragment --flat --spec false
+ng g component billing/AssessmentDetailDetail --flat --spec false
+ng g component billing/AssessmentDetailEdit --flat --spec false
+ng g component billing/ValuatorEdit --flat --spec false
 
 
 

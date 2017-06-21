@@ -1,4 +1,4 @@
-<div *ngIf="model">
+<div *ngIf="enti">
     <ngb-tabset #t="ngbTabset" type="pills" [activeId]="activeTab" (tabChange)="tabChange($event)"> <ngb-tab
         id="mainTab"> <ng-template ngbTabTitle> <span [translate]="'enti_' + enti.enti.id"></span>
     </ng-template> <ng-template ngbTabContent>
