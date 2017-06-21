@@ -31,12 +31,9 @@ import { SubparameterTypeDetailComponent } from './subparameter-type-detail.comp
 import { SubparameterTypeEditComponent } from './subparameter-type-edit.component';
 
 import { ServiceTypeService } from './service-type.service';
-import { SubserviceTypeService } from './subservice-type.service';
 import { ServiceTypeGridComponent } from './service-type-grid.component';
 import { ServiceTypeDetailComponent } from './service-type-detail.component';
 import { ServiceTypeEditComponent } from './service-type-edit.component';
-import { StatusChangeGridFragmentComponent } from './status-change-grid-fragment.component';
-import { SubserviceTypeGridFragmentComponent } from './subservice-type-grid-fragment.component';
 
 import { SpecialActionService } from './special-action.service';
 import { SpecialActionGridFragmentComponent } from './special-action-grid-fragment.component';
@@ -52,6 +49,16 @@ import { DataTypeService } from './data-type.service';
 import { DataTypeGridComponent } from './data-type-grid.component';
 import { DataTypeDetailComponent } from './data-type-detail.component';
 import { DataTypeEditComponent } from './data-type-edit.component';
+
+import { StatusChangeService } from './status-change.service';
+import { StatusChangeGridFragmentComponent } from './status-change-grid-fragment.component';
+import { StatusChangeDetailComponent } from './status-change-detail.component';
+import { StatusChangeEditComponent } from './status-change-edit.component';
+
+import { SubserviceTypeService } from './subservice-type.service';
+import { SubserviceTypeGridFragmentComponent } from './subservice-type-grid-fragment.component';
+import { SubserviceTypeDetailComponent } from './subservice-type-detail.component';
+import { SubserviceTypeEditComponent } from './subservice-type-edit.component';
 
 @NgModule( {
     imports: [
@@ -79,7 +86,6 @@ import { DataTypeEditComponent } from './data-type-edit.component';
         , ServiceTypeDetailComponent
         , ServiceTypeEditComponent
         , StatusChangeGridFragmentComponent
-        , SubserviceTypeGridFragmentComponent
         , SpecialActionGridFragmentComponent
         , SpecialActionDetailComponent
         , SpecialActionEditComponent
@@ -89,6 +95,11 @@ import { DataTypeEditComponent } from './data-type-edit.component';
         , DataTypeGridComponent
         , DataTypeDetailComponent
         , DataTypeEditComponent
+        , StatusChangeDetailComponent
+        , StatusChangeEditComponent
+        , SubserviceTypeGridFragmentComponent
+        , SubserviceTypeDetailComponent
+        , SubserviceTypeEditComponent
     ]
     , providers: [
         ParameterTypeService
@@ -101,6 +112,7 @@ import { DataTypeEditComponent } from './data-type-edit.component';
         , SpecialActionService
         , ModuleService
         , DataTypeService
+        , StatusChangeService
     ]
     , schemas: [
     ]

@@ -26,6 +26,10 @@ import { SubparameterTypeDetailComponent } from './subparameter-type-detail.comp
 import { SubparameterTypeEditComponent } from './subparameter-type-edit.component';
 import { SpecialActionDetailComponent } from './special-action-detail.component';
 import { SpecialActionEditComponent } from './special-action-edit.component';
+import { StatusChangeDetailComponent } from './status-change-detail.component';
+import { StatusChangeEditComponent } from './status-change-edit.component';
+import { SubserviceTypeDetailComponent } from './subservice-type-detail.component';
+import { SubserviceTypeEditComponent } from './subservice-type-edit.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [PermissionGuard] }
@@ -60,6 +64,12 @@ const routes: Routes = [
     , { path: 'special-action/detail/:id', component: SpecialActionDetailComponent, canActivate: [PermissionGuard] }
     , { path: 'special-action/edit/:action/:entityId', component: SpecialActionEditComponent, canActivate: [PermissionGuard] }
     , { path: 'special-action/edit/:action/:entityId/:id', component: SpecialActionEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'status-change/detail/:id', component: StatusChangeDetailComponent, canActivate: [PermissionGuard] }
+    , { path: 'status-change/edit/:action/:entityId', component: StatusChangeEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'status-change/edit/:action/:entityId/:id', component: StatusChangeEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'subservice-type/detail/:id', component: SubserviceTypeDetailComponent, canActivate: [PermissionGuard] }
+    , { path: 'subservice-type/edit/:action/:serviceTypeId', component: SubserviceTypeEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'subservice-type/edit/:action/:serviceTypeId/:id', component: SubserviceTypeEditComponent, canActivate: [PermissionGuard] }
 ];
 
 @NgModule( {
