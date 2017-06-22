@@ -1,3 +1,105 @@
-<p>
-  entity-datatype-detail works!
-</p>
+<div *ngIf="model">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-primary"
+                [routerLink]="['/metamodel/entity-datatype/edit', 'edit', model.entiId, model.id]"><i
+                class="fa fa-edit"></i> Edit</a>
+            <button class="btn btn-secondary" (click)="remove()">
+                <i class="fa fa-remove"></i> Remove
+            </button>
+        </div>
+    </div>
+
+    <form>
+        <fieldset class="form-group">
+            <app-i18n-info-detail [i18nMap]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-detail>
+
+            <div class="row">
+                <div class="col-lg-4 col-xl-3 form-group-sm">
+                    <label [translate]="'tpdt'"></label>
+                    <p class="form-control-static form-control-sm">
+                        <a [routerLink]="['/metamodel/data-type/detail', model.tpdt.id]" [innerHTML]="model.tpdt.nombre"></a>
+                    </p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [translate]="'tpdt_tpel'"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.tpdt.tipoElemento"></p>
+                </div>
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [translate]="'tpdt_tpht'"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.tpdt.tpht"></p>
+                </div>
+                <div class="col-lg-4 col-xl-3 form-group-sm" *ngIf="model.tpdt.enti">
+                    <label [translate]="'enti'"></label>
+                    <p class="form-control-static form-control-sm">
+                        <span [ngSwitch]="model.tpdt.enti.tipo"> <a
+                            [routerLink]="['/metamodel/service-type/detail', model.tpdt.enti.id]"
+                            [innerHTML]="model.tpdt.enti.nombre" *ngSwitchCase="'T'"></a> <a
+                            [routerLink]="['/metamodel/subservice-type/detail', model.tpdt.enti.id]"
+                            [innerHTML]="model.tpdt.enti.nombre" *ngSwitchCase="'S'"></a> <a
+                            [routerLink]="['/metamodel/parameter-type/detail', model.tpdt.enti.id]"
+                            [innerHTML]="model.tpdt.enti.nombre" *ngSwitchCase="'P'"></a> <a
+                            [routerLink]="['/metamodel/subparameter-type/detail', model.tpdt.enti.id]"
+                            [innerHTML]="model.tpdt.enti.nombre" *ngSwitchCase="'B'"></a> <a
+                            [routerLink]="['/metamodel/statistic-type/detail', model.tpdt.enti.id]"
+                            [innerHTML]="model.tpdt.enti.nombre" *ngSwitchCase="'E'"></a> <span *ngSwitchDefault>UNKNOWN
+                                ENTITY TYPE {{model.tpdt.enti.tipo}}</span>
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4 col-xl-3 form-group-sm">
+                    <label [translate]="'entd_valorDefecto'"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.valorDefecto"></p>
+                </div>
+                <div class="col-lg-6 col-xl-5 form-group-sm">
+                    <label [translate]="'entd_validacion'"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.validacion"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-1 col-xl-1 form-group-sm">
+                    <label [translate]="'entd_grupo'"></label>
+                    <p class="form-control-static form-control-sm number" [innerHTML]="model.grupo"></p>
+                </div>
+                <div class="col-lg-1 col-xl-1 form-group-sm">
+                    <label [translate]="'entd_fila'"></label>
+                    <p class="form-control-static form-control-sm number" [innerHTML]="model.fila"></p>
+                </div>
+                <div class="col-lg-1 col-xl-1 form-group-sm">
+                    <label [translate]="'entd_orden'"></label>
+                    <p class="form-control-static form-control-sm number" [innerHTML]="model.orden"></p>
+                </div>
+                <div class="col-lg-1 col-xl-1 form-group-sm">
+                    <label [translate]="'entd_span'"></label>
+                    <p class="form-control-static form-control-sm number" [innerHTML]="model.span"></p>
+                </div>
+                <div class="col-lg-1 col-xl-1 form-group-sm">
+                    <label [translate]="'entd_spanLg'"></label>
+                    <p class="form-control-static form-control-sm number" [innerHTML]="model.spanLg"></p>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'entd_obligatorio'"></label>
+                    <p class="form-control-static form-control-sm">
+                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.obligatorio]"></i>
+                    </p>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'entd_gridable'"></label>
+                    <p class="form-control-static form-control-sm">
+                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.gridable]"></i>
+                    </p>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'entd_filtrable'"></label>
+                    <p class="form-control-static form-control-sm">
+                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.filtrable]"></i>
+                    </p>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

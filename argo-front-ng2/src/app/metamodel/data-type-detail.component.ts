@@ -42,8 +42,4 @@ export class DataTypeDetailComponent implements OnInit {
                 this.location.back();
             } );
     }
-
-    private replaceState() {
-        this.location.replaceState( "/metamodel/data-type/detail/" + this.model.id );
-    }
 }

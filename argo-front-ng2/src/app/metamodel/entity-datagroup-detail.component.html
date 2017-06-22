@@ -1,3 +1,25 @@
-<p>
-  entity-datagroup-detail works!
-</p>
+<div *ngIf="model">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-primary"
+                [routerLink]="['/metamodel/entity-datagroup/edit', 'edit', model.entiId, model.id]"><i
+                class="fa fa-edit"></i> Edit</a>
+            <button class="btn btn-secondary" (click)="remove()">
+                <i class="fa fa-remove"></i> Remove
+            </button>
+        </div>
+    </div>
+
+    <form>
+        <fieldset class="form-group">
+            <div class="row">
+                <div class="col-lg-1 col-xl-1 form-group-sm">
+                    <label [translate]="'engd_numero'"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.numero"></p>
+                </div>
+            </div>
+
+            <app-i18n-info-detail [i18nMap]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-detail>
+        </fieldset>
+    </form>
+</div>

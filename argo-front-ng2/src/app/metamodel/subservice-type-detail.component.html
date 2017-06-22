@@ -26,7 +26,7 @@
                 <div class="col-lg-3 col-xl-2 form-group-sm" *ngIf="model.tpdtEstado">
                     <label [translate]="'enti_tpdtEstado'"></label>
                     <p class="form-control-static form-control-sm">
-                        <a [routerLink]="['/metamodel/data-type/edit', 'edit', model.tpdtEstado.id]"
+                        <a [routerLink]="['/metamodel/data-type/detail', model.tpdtEstado.id]"
                             [innerHTML]="model.tpdtEstado.nombre"></a>
                     </p>
                 </div>
@@ -43,7 +43,25 @@
             <app-i18n-info-detail [i18nMap]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-detail>
 
             <div class="row">
-                <div class="col-sm-4 col-lg-3 col-xl-2 form-group-sm">
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'enti_temporal'"></label>
+                    <p class="form-control-static form-control-sm">
+                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.temporal]"></i>
+                    </p>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'enti_facturable'"></label>
+                    <p class="form-control-static form-control-sm">
+                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.facturable]"></i>
+                    </p>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'enti_exencionable'"></label>
+                    <p class="form-control-static form-control-sm">
+                        <i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[model.exencionable]"></i>
+                    </p>
+                </div>
+                <div class="col-lg-4 col-xl-3 form-group-sm">
                     <label [translate]="'enti_classpath'"></label>
                     <p class="form-control-static form-control-sm" [innerHTML]="model.classpath"></p>
                 </div>
