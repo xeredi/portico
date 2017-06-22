@@ -306,6 +306,7 @@ ng g service metamodel/SpecialAction --spec false
 ng g service metamodel/Module --spec false
 ng g service metamodel/DataType --spec false
 ng g service metamodel/StatusChange --spec false
+ng g service metamodel/ReferenceCode --spec false
 ng g component metamodel/Home --flat --spec false
 ng g component metamodel/ModuleGrid --flat --spec false
 ng g component metamodel/ModuleDetail --flat --spec false
@@ -341,6 +342,9 @@ ng g component metamodel/SpecialActionGridFragment --flat --spec false
 ng g component metamodel/SpecialActionDetail --flat --spec false
 ng g component metamodel/SpecialActionEdit --flat --spec false
 ng g component metamodel/EntityGridFragment --flat --spec false
+ng g component metamodel/ReferenceCodeGridFragment --flat --spec false
+ng g component metamodel/ReferenceCodeDetail --flat --spec false
+ng g component metamodel/ReferenceCodeEdit --flat --spec false
 
 ng g module item --routing
 ng g service item/Parameter --spec false

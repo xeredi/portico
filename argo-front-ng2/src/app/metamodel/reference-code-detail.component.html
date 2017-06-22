@@ -1,0 +1,28 @@
+<div *ngIf="model">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <a class="btn btn-primary" [routerLink]="['/metamodel/reference-code/edit', 'edit', model.tpdtId, model.id]"><i
+                class="fa fa-edit"></i> Edit</a>
+            <button class="btn btn-secondary" (click)="remove()">
+                <i class="fa fa-remove"></i> Remove
+            </button>
+        </div>
+    </div>
+
+    <form>
+        <fieldset class="form-group">
+            <div class="row">
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [translate]="'cdrf_valor'"></label>
+                    <p class="form-control-static form-control-sm" [innerHTML]="model.valor"></p>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'cdrf_orden'"></label>
+                    <p class="form-control-static form-control-sm number" [innerHTML]="model.orden"></p>
+                </div>
+            </div>
+
+            <app-i18n-info-detail [i18nMap]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-detail>
+        </fieldset>
+    </form>
+</div>

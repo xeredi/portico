@@ -61,6 +61,11 @@ import { SubserviceTypeDetailComponent } from './subservice-type-detail.componen
 import { SubserviceTypeEditComponent } from './subservice-type-edit.component';
 import { EntityGridFragmentComponent } from './entity-grid-fragment.component';
 
+import { ReferenceCodeService } from './reference-code.service';
+import { ReferenceCodeGridFragmentComponent } from './reference-code-grid-fragment.component';
+import { ReferenceCodeDetailComponent } from './reference-code-detail.component';
+import { ReferenceCodeEditComponent } from './reference-code-edit.component';
+
 @NgModule( {
     imports: [
         MetamodelRoutingModule
@@ -100,7 +105,11 @@ import { EntityGridFragmentComponent } from './entity-grid-fragment.component';
         , StatusChangeEditComponent
         , SubserviceTypeGridFragmentComponent
         , SubserviceTypeDetailComponent
-        , SubserviceTypeEditComponent, EntityGridFragmentComponent
+        , SubserviceTypeEditComponent
+        , EntityGridFragmentComponent
+        , ReferenceCodeGridFragmentComponent
+        , ReferenceCodeDetailComponent
+        , ReferenceCodeEditComponent
     ]
     , providers: [
         ParameterTypeService
@@ -114,6 +123,7 @@ import { EntityGridFragmentComponent } from './entity-grid-fragment.component';
         , ModuleService
         , DataTypeService
         , StatusChangeService
+        , ReferenceCodeService
     ]
     , schemas: [
     ]

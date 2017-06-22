@@ -30,6 +30,8 @@ import { StatusChangeDetailComponent } from './status-change-detail.component';
 import { StatusChangeEditComponent } from './status-change-edit.component';
 import { SubserviceTypeDetailComponent } from './subservice-type-detail.component';
 import { SubserviceTypeEditComponent } from './subservice-type-edit.component';
+import { ReferenceCodeDetailComponent } from './reference-code-detail.component';
+import { ReferenceCodeEditComponent } from './reference-code-edit.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, canActivate: [PermissionGuard] }
@@ -70,6 +72,9 @@ const routes: Routes = [
     , { path: 'subservice-type/detail/:id', component: SubserviceTypeDetailComponent, canActivate: [PermissionGuard] }
     , { path: 'subservice-type/edit/:action/:serviceTypeId', component: SubserviceTypeEditComponent, canActivate: [PermissionGuard] }
     , { path: 'subservice-type/edit/:action/:serviceTypeId/:id', component: SubserviceTypeEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'reference-code/detail/:id', component: ReferenceCodeDetailComponent, canActivate: [PermissionGuard] }
+    , { path: 'reference-code/edit/:action/:datatypeId', component: ReferenceCodeEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'reference-code/edit/:action/:datatypeId/:id', component: ReferenceCodeEditComponent, canActivate: [PermissionGuard] }
 ];
 
 @NgModule( {
