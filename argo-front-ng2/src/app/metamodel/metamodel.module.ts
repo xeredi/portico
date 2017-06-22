@@ -59,6 +59,7 @@ import { SubserviceTypeService } from './subservice-type.service';
 import { SubserviceTypeGridFragmentComponent } from './subservice-type-grid-fragment.component';
 import { SubserviceTypeDetailComponent } from './subservice-type-detail.component';
 import { SubserviceTypeEditComponent } from './subservice-type-edit.component';
+import { EntityGridFragmentComponent } from './entity-grid-fragment.component';
 
 @NgModule( {
     imports: [
@@ -99,7 +100,7 @@ import { SubserviceTypeEditComponent } from './subservice-type-edit.component';
         , StatusChangeEditComponent
         , SubserviceTypeGridFragmentComponent
         , SubserviceTypeDetailComponent
-        , SubserviceTypeEditComponent
+        , SubserviceTypeEditComponent, EntityGridFragmentComponent
     ]
     , providers: [
         ParameterTypeService

@@ -4,6 +4,7 @@
             <tr>
                 <th nowrap="nowrap"></th>
                 <th nowrap="nowrap" [translate]="'enti_codigo'"></th>
+                <th nowrap="nowrap" [translate]="'enti_nombre'"></th>
                 <th nowrap="nowrap" [translate]="'enti_temporal'"></th>
                 <th nowrap="nowrap" [translate]="'enti_facturable'"></th>
                 <th nowrap="nowrap" [translate]="'enti_exencionable'"></th>
@@ -15,6 +16,7 @@
             <tr *ngFor="let item of itemList">
                 <td><a [routerLink]="['/metamodel/subservice-type/detail', item.id]"><i class="fa fa-search"></i></a></td>
                 <td nowrap="nowrap" [innerHTML]="item.codigo"></td>
+                <td nowrap="nowrap" [innerHTML]="item.nombre"></td>
                 <td nowrap="nowrap"><i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[item.temporal]"></i></td>
                 <td nowrap="nowrap"><i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[item.facturable]"></i></td>
                 <td nowrap="nowrap"><i class="fa"

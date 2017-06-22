@@ -340,6 +340,7 @@ ng g component metamodel/SubserviceTypeEdit --flat --spec false
 ng g component metamodel/SpecialActionGridFragment --flat --spec false
 ng g component metamodel/SpecialActionDetail --flat --spec false
 ng g component metamodel/SpecialActionEdit --flat --spec false
+ng g component metamodel/EntityGridFragment --flat --spec false
 
 ng g module item --routing
 ng g service item/Parameter --spec false

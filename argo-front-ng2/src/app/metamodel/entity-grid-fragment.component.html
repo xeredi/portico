@@ -1,0 +1,29 @@
+<div class="table-responsive">
+    <table class="table table-sm table-bordered table-hover table-condensed table-nonfluid">
+        <thead class="thead-inverse">
+            <tr>
+                <th nowrap="nowrap"></th>
+                <th nowrap="nowrap" [translate]="'enti_codigo'"></th>
+                <th nowrap="nowrap" [translate]="'enti_nombre'"></th>
+                <th nowrap="nowrap" [translate]="'enti_tipo'"></th>
+                <th nowrap="nowrap" [translate]="'enti_maxGrid'"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of itemList">
+                <td [ngSwitch]="item.tipo"><a *ngSwitchCase="'T'"
+                    [routerLink]="['/metamodel/service-type/detail', item.id]"><i class="fa fa-search"></i></a><a
+                    *ngSwitchCase="'S'" [routerLink]="['/metamodel/subservice-type/detail', item.id]"><i
+                        class="fa fa-search"></i></a><a *ngSwitchCase="'P'"
+                    [routerLink]="['/metamodel/parameter-type/detail', item.id]"><i class="fa fa-search"></i></a><a
+                    *ngSwitchCase="'B'" [routerLink]="['/metamodel/subparameter-type/detail', item.id]"><i
+                        class="fa fa-search"></i></a><a *ngSwitchCase="'E'"
+                    [routerLink]="['/metamodel/statistic-type/detail', item.id]"><i class="fa fa-search"></i></a></td>
+                <td nowrap="nowrap" [innerHTML]="item.codigo"></td>
+                <td nowrap="nowrap" [innerHTML]="item.nombre"></td>
+                <td nowrap="nowrap" [innerHTML]="item.tipo"></td>
+                <td nowrap="nowrap" [innerHTML]="item.maxGrid | number" class="number"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
