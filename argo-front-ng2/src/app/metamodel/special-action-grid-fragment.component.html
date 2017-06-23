@@ -12,7 +12,7 @@
         <tbody>
             <tr *ngFor="let item of itemList">
                 <td><a [routerLink]="['/metamodel/special-action/detail', item.id]"><i class="fa fa-search"></i></a></td>
-                <td nowrap="nowrap" [innerHTML]="item.orden"></td>
+                <td nowrap="nowrap" [innerHTML]="item.orden" class="number"></td>
                 <td nowrap="nowrap" [innerHTML]="item.path"></td>
                 <td nowrap="nowrap"><i class="fa" [ngClass]="{true:'fa-check', false:'fa-remove'}[item.multiple]"></i></td>
                 <td nowrap="nowrap" [innerHTML]="item.etiqueta"></td>

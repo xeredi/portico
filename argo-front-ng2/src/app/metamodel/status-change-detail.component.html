@@ -17,12 +17,12 @@
                     <p class="form-control-static form-control-sm" [innerHTML]="enti.nombre"></p>
                 </div>
                 <div class="col-lg-3 col-xl-2 form-group-sm">
-                    <label [translate]="'trmt_estadoOrig'"></label>
+                    <label [translate]="'trmt_estado_orig'"></label>
                     <p class="form-control-static form-control-sm"
                         [innerHTML]="model.estadoOrig + ' - ' + model.estadoOrigTexto"></p>
                 </div>
                 <div class="col-lg-3 col-xl-2 form-group-sm">
-                    <label [translate]="'trmt_estadoDest'"></label>
+                    <label [translate]="'trmt_estado_dest'"></label>
                     <p class="form-control-static form-control-sm"
                         [innerHTML]="model.estadoDest + ' - ' + model.estadoDestTexto"></p>
                 </div>
@@ -36,37 +36,12 @@
             <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group">
                     <a class="btn btn-primary"
-                        [routerLink]="['/metamodel/status-change-data-type/edit', 'create', model.id]"><i
+                        [routerLink]="['/metamodel/status-change-datatype/edit', 'create', model.id]"><i
                         class="fa fa-file-o"></i> <span [translate]="'btn_crear'"></span></a>
                 </div>
             </div>
 
-            <div class="table-responsive">
-                <table class="table table-sm table-bordered table-hover table-condensed table-nonfluid">
-                    <thead class="thead-inverse">
-                        <tr>
-                            <th nowrap="nowrap"></th>
-                            <th nowrap="nowrap" [translate]="'trtd_etiqueta'"></th>
-                            <th nowrap="nowrap" [translate]="'trtd_obligatorio'"></th>
-                            <th nowrap="nowrap" [translate]="'tpdt'"></th>
-                            <th nowrap="nowrap" [translate]="'tpdt_tpel'"></th>
-                            <th nowrap="nowrap" [translate]="'tpdt_tpht'"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of trtdList">
-                            <td><a [routerLink]="['/metamodel/status-change-data-type/detail', item.id]"><i
-                                    class="fa fa-search"></i></a></td>
-                            <td nowrap="nowrap" [innerHTML]="item.entd.etiqueta"></td>
-                            <td nowrap="nowrap"><i class="fa"
-                                [ngClass]="{true:'fa-check', false:'fa-remove'}[item.obligatorio]"></i></td>
-                            <td nowrap="nowrap" [innerHTML]="item.entd.tpdt.nombre"></td>
-                            <td nowrap="nowrap" [innerHTML]="item.entd.tpdt.tipoElemento"></td>
-                            <td nowrap="nowrap" [innerHTML]="item.entd.tpdt.tpht"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <app-status-change-datatype-grid-fragment [itemList]="trtdList"></app-status-change-datatype-grid-fragment>
         </fieldset>
     </form>
 </div>

@@ -28,6 +28,8 @@ import { SpecialActionDetailComponent } from './special-action-detail.component'
 import { SpecialActionEditComponent } from './special-action-edit.component';
 import { StatusChangeDetailComponent } from './status-change-detail.component';
 import { StatusChangeEditComponent } from './status-change-edit.component';
+import { StatusChangeDatatypeDetailComponent } from './status-change-datatype-detail.component';
+import { StatusChangeDatatypeEditComponent } from './status-change-datatype-edit.component';
 import { SubserviceTypeDetailComponent } from './subservice-type-detail.component';
 import { SubserviceTypeEditComponent } from './subservice-type-edit.component';
 import { ReferenceCodeDetailComponent } from './reference-code-detail.component';
@@ -69,6 +71,9 @@ const routes: Routes = [
     , { path: 'status-change/detail/:id', component: StatusChangeDetailComponent, canActivate: [PermissionGuard] }
     , { path: 'status-change/edit/:action/:entityId', component: StatusChangeEditComponent, canActivate: [PermissionGuard] }
     , { path: 'status-change/edit/:action/:entityId/:id', component: StatusChangeEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'status-change-datatype/detail/:statusChangeId/:dataTypeId', component: StatusChangeDatatypeDetailComponent, canActivate: [PermissionGuard] }
+    , { path: 'status-change-datatype/edit/:action/:statusChangeId', component: StatusChangeDatatypeEditComponent, canActivate: [PermissionGuard] }
+    , { path: 'status-change-datatype/edit/:action/:statusChangeId/:dataTypeId', component: StatusChangeDatatypeEditComponent, canActivate: [PermissionGuard] }
     , { path: 'subservice-type/detail/:id', component: SubserviceTypeDetailComponent, canActivate: [PermissionGuard] }
     , { path: 'subservice-type/edit/:action/:serviceTypeId', component: SubserviceTypeEditComponent, canActivate: [PermissionGuard] }
     , { path: 'subservice-type/edit/:action/:serviceTypeId/:id', component: SubserviceTypeEditComponent, canActivate: [PermissionGuard] }

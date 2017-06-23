@@ -1,3 +1,25 @@
-<p>
-  entity-action-edit works!
-</p>
+<div *ngIf="model">
+    <form role="form" (ngSubmit)="save()">
+        <fieldset class="form-group">
+            <div class="row">
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [translate]="'aebs'"></label> <select [ngModel]="model.aebs?.id"
+                        (ngModelChange)="model.aebs = {id: $event}" name="model.aebs.id"
+                        class="form-control form-control-sm">
+                        <option></option>
+                        <option *ngFor="let item of aebsList" [value]="item.id" [innerHTML]="item.codigo"></option>
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="btn-group">
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-check"></i> <span [translate]="'btn_guardar'"></span>
+            </button>
+            <button type="button" (click)="cancel()" class="btn btn-secondary">
+                <i class="fa fa-close"></i> <span [translate]="'btn_cancelar'"></span>
+            </button>
+        </div>
+    </form>
+</div>

@@ -1,3 +1,34 @@
-<p>
-  special-action-edit works!
-</p>
+<div *ngIf="model">
+    <form role="form" (ngSubmit)="save()">
+        <fieldset class="form-group">
+            <div class="row">
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'aces_orden'"></label> <input type="text" [(ngModel)]="model.orden"
+                        name="model.orden" class="form-control form-control-sm number" />
+                </div>
+                <div class="col-lg-4 col-xl-3 form-group-sm">
+                    <label [translate]="'aces_path'"></label> <input type="text" [(ngModel)]="model.path"
+                        name="model.path" class="form-control form-control-sm" />
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'aces_multiple'"></label> <select [(ngModel)]="model.multiple"
+                        name="model.multiple" class="form-control form-control-sm">
+                        <option></option>
+                        <option *ngFor="let item of [true, false]" [value]="item" [translate]="'format_' + item"></option>
+                    </select>
+                </div>
+            </div>
+
+            <app-i18n-info-edit [(i18nMap)]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-edit>
+        </fieldset>
+
+        <div class="btn-group">
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-check"></i> <span [translate]="'btn_guardar'"></span>
+            </button>
+            <button type="button" (click)="cancel()" class="btn btn-secondary">
+                <i class="fa fa-close"></i> <span [translate]="'btn_cancelar'"></span>
+            </button>
+        </div>
+    </form>
+</div>

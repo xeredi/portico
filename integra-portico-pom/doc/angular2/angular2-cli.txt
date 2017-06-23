@@ -306,6 +306,7 @@ ng g service metamodel/SpecialAction --spec false
 ng g service metamodel/Module --spec false
 ng g service metamodel/DataType --spec false
 ng g service metamodel/StatusChange --spec false
+ng g service metamodel/StatusChangeDatatype --spec false
 ng g service metamodel/ReferenceCode --spec false
 ng g component metamodel/Home --flat --spec false
 ng g component metamodel/ModuleGrid --flat --spec false
@@ -335,6 +336,9 @@ ng g component metamodel/SubparameterTypeEdit --flat --spec false
 ng g component metamodel/StatusChangeGridFragment --flat --spec false
 ng g component metamodel/StatusChangeDetail --flat --spec false
 ng g component metamodel/StatusChangeEdit --flat --spec false
+ng g component metamodel/StatusChangeDatatypeGridFragment --flat --spec false
+ng g component metamodel/StatusChangeDatatypeDetail --flat --spec false
+ng g component metamodel/StatusChangeDatatypeEdit --flat --spec false
 ng g component metamodel/SubserviceTypeGridFragment --flat --spec false
 ng g component metamodel/SubserviceTypeDetail --flat --spec false
 ng g component metamodel/SubserviceTypeEdit --flat --spec false

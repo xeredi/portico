@@ -51,9 +51,13 @@ import { DataTypeDetailComponent } from './data-type-detail.component';
 import { DataTypeEditComponent } from './data-type-edit.component';
 
 import { StatusChangeService } from './status-change.service';
+import { StatusChangeDatatypeService } from './status-change-datatype.service';
 import { StatusChangeGridFragmentComponent } from './status-change-grid-fragment.component';
 import { StatusChangeDetailComponent } from './status-change-detail.component';
 import { StatusChangeEditComponent } from './status-change-edit.component';
+import { StatusChangeDatatypeGridFragmentComponent } from './status-change-datatype-grid-fragment.component';
+import { StatusChangeDatatypeDetailComponent } from './status-change-datatype-detail.component';
+import { StatusChangeDatatypeEditComponent } from './status-change-datatype-edit.component';
 
 import { SubserviceTypeService } from './subservice-type.service';
 import { SubserviceTypeGridFragmentComponent } from './subservice-type-grid-fragment.component';
@@ -103,6 +107,9 @@ import { ReferenceCodeEditComponent } from './reference-code-edit.component';
         , DataTypeEditComponent
         , StatusChangeDetailComponent
         , StatusChangeEditComponent
+        , StatusChangeDatatypeGridFragmentComponent
+        , StatusChangeDatatypeDetailComponent
+        , StatusChangeDatatypeEditComponent
         , SubserviceTypeGridFragmentComponent
         , SubserviceTypeDetailComponent
         , SubserviceTypeEditComponent
@@ -122,8 +129,9 @@ import { ReferenceCodeEditComponent } from './reference-code-edit.component';
         , SpecialActionService
         , ModuleService
         , DataTypeService
-        , StatusChangeService
         , ReferenceCodeService
+        , StatusChangeService
+        , StatusChangeDatatypeService
     ]
     , schemas: [
     ]
