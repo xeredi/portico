@@ -1,3 +1,29 @@
-<p>
-  reference-code-edit works!
-</p>
+<div *ngIf="model">
+    <form role="form" (ngSubmit)="save()">
+        <fieldset class="form-group">
+            <div class="row">
+                <div class="col-lg-3 col-xl-2 form-group-sm">
+                    <label [translate]="'cdrf_valor'"></label>
+                    <p *ngIf="action == 'edit'" class="form-control-static form-control-sm" [innerHTML]="model.valor"></p>
+                    <input *ngIf="action != 'edit'" type="text" [(ngModel)]="model.valor" name="model.valor"
+                        class="form-control form-control-sm" />
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'cdrf_orden'"></label> <input type="text" [(ngModel)]="model.orden"
+                        name="model.orden" class="form-control form-control-sm" />
+                </div>
+            </div>
+
+            <app-i18n-info-edit [(i18nMap)]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-edit>
+        </fieldset>
+
+        <div class="btn-group">
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-check"></i> Save
+            </button>
+            <button type="button" (click)="cancel()" class="btn btn-secondary">
+                <i class="fa fa-close"></i> Cancel
+            </button>
+        </div>
+    </form>
+</div>

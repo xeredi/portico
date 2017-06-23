@@ -1,3 +1,81 @@
-<p>
-  entity-datatype-edit works!
-</p>
+<div *ngIf="model">
+    <form role="form" (ngSubmit)="save()">
+        <fieldset class="form-group">
+            <div class="row">
+                <div class="col-lg-4 col-xl-3 form-group-sm">
+                    <label [translate]="'tpdt'"></label>
+                    <p *ngIf="action == 'edit'" class="form-control-static form-control-sm"
+                        [innerHTML]="model.tpdt.nombre"></p>
+                    <select *ngIf="action != 'edit'" [ngModel]="model.tpdt?.id"
+                        (ngModelChange)="model.tpdt = {id: $event}" name="model.tpdt.id"
+                        class="form-control form-control-sm">
+                        <option></option>
+                        <option *ngFor="let item of dttyList" [value]="item.value" [innerHTML]="item.label"></option>
+                    </select>
+                </div>
+            </div>
+
+            <app-i18n-info-edit [(i18nMap)]="i18nMap" [availableLanguages]="availableLanguages"></app-i18n-info-edit>
+
+            <div class="row">
+                <div class="col-lg-4 col-xl-3 form-group-sm">
+                    <label [translate]="'entd_valorDefecto'"></label> <input type="text"
+                        [(ngModel)]="model.valorDefecto" name="model.valorDefecto" class="form-control form-control-sm" />
+                </div>
+                <div class="col-lg-6 col-xl-5 form-group-sm">
+                    <label [translate]="'entd_validacion'"></label> <input type="text" [(ngModel)]="model.validacion"
+                        name="model.validacion" class="form-control form-control-sm" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'entd_grupo'"></label> <input type="text" [(ngModel)]="model.grupo"
+                        name="model.grupo" class="form-control form-control-sm number" />
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'entd_fila'"></label> <input type="text" [(ngModel)]="model.fila"
+                        name="model.fila" class="form-control form-control-sm number" />
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'entd_orden'"></label> <input type="text" [(ngModel)]="model.orden"
+                        name="model.orden" class="form-control form-control-sm number" />
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'entd_span'"></label> <input type="text" [(ngModel)]="model.span"
+                        name="model.span" class="form-control form-control-sm number" />
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'entd_obligatorio'"></label> <select [(ngModel)]="model.obligatorio"
+                        name="model.obligatorio" class="form-control form-control-sm">
+                        <option></option>
+                        <option *ngFor="let item of [true, false]" [value]="item" [translate]="'format_' + item"></option>
+                    </select>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'entd_gridable'"></label> <select [(ngModel)]="model.gridable"
+                        name="model.gridable" class="form-control form-control-sm">
+                        <option></option>
+                        <option *ngFor="let item of [true, false]" [value]="item" [translate]="'format_' + item"></option>
+                    </select>
+                </div>
+                <div class="col-lg-2 col-xl-1 form-group-sm">
+                    <label [translate]="'entd_filtrable'"></label> <select [(ngModel)]="model.filtrable"
+                        name="model.filtrable" class="form-control form-control-sm">
+                        <option></option>
+                        <option *ngFor="let item of [true, false]" [value]="item" [translate]="'format_' + item"></option>
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="btn-group">
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-check"></i> Save
+            </button>
+            <button type="button" (click)="cancel()" class="btn btn-secondary">
+                <i class="fa fa-close"></i> Cancel
+            </button>
+        </div>
+    </form>
+</div>
