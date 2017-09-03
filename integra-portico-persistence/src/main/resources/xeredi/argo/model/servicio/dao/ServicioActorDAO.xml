@@ -31,6 +31,35 @@
         ]]>
     </insert>
 
+    <insert id="insertAll">
+        <![CDATA[
+        INSERT INTO tbl_servicio_actor_srac (srac_srvc_pk, srac_actr_pk)
+
+		SELECT srdt_srvc_pk, srdt_prmt_pk
+		FROM tbl_servicio_dato_srdt
+		WHERE EXISTS (
+		    SELECT 1 FROM tbl_parametro_prmt
+		    WHERE prmt_pk = srdt_prmt_pk
+		        AND prmt_tppr_pk = portico.getEntidad('ORGANIZACION')
+
+		)
+
+		UNION
+
+		SELECT ssrv_srvc_pk, ssdt_prmt_pk
+		FROM tbl_subservicio_dato_ssdt
+		        INNER JOIN tbl_subservicio_ssrv ON
+		            ssrv_pk = ssdt_ssrv_pk
+		WHERE EXISTS (
+		    SELECT 1 FROM tbl_parametro_prmt
+		    WHERE prmt_pk = ssdt_prmt_pk
+		        AND prmt_tppr_pk = portico.getEntidad('ORGANIZACION')
+
+		)
+        ]]>
+    </insert>
+
+
     <delete id="deleteList" parameterType="Long">
         <![CDATA[
         DELETE FROM tbl_servicio_actor_srac

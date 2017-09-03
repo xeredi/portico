@@ -1,7 +1,13 @@
 -- // 0 0 2 Facturacion Funciones
 -- Migration SQL that makes the change goes here.
 
-create or replace FUNCTION acumuladoTeus(consignatario VARCHAR, fini VARCHAR, ffin DATE) RETURN integer  RESULT_CACHE RELIES_ON (tbl_valoracion_det_vlrd) IS
+-- EJECUTAR COMO SYS
+-- BEGIN
+--    dbms_result_cache.ByPass(False);
+-- END;
+-- /
+
+create or replace FUNCTION acumuladoTeus(consignatario VARCHAR, fini VARCHAR, ffin DATE) RETURN integer  RESULT_CACHE IS
 	resultValue integer;
 BEGIN
 SELECT
@@ -135,7 +141,7 @@ GRANT EXECUTE ON acumuladoTeus TO portico\
 
 
 
-create or replace FUNCTION acumuladoToneladas(consignatario VARCHAR, fini VARCHAR, ffin DATE) RETURN integer IS
+create or replace FUNCTION acumuladoToneladas(consignatario VARCHAR, fini VARCHAR, ffin DATE) RETURN integer  RESULT_CACHE IS
 	resultValue integer;
 BEGIN
     SELECT SUM(ssdt_nentero) / 1000 INTO resultValue
@@ -207,7 +213,7 @@ GRANT EXECUTE ON acumuladoToneladas TO portico\
 
 
 
-create or replace FUNCTION valorServicio(tipoServTraf VARCHAR, servTraf VARCHAR, srvcId INTEGER) RETURN VARCHAR IS
+create or replace FUNCTION valorServicio(tipoServTraf VARCHAR, servTraf VARCHAR, srvcId INTEGER) RETURN VARCHAR  RESULT_CACHE IS
 	resultValue VARCHAR(100);
 BEGIN
 	SELECT (
@@ -273,7 +279,7 @@ GRANT EXECUTE ON valorServicio TO portico\
 
 
 
-CREATE OR REPLACE FUNCTION generaBOEscala(srvcId INTEGER) RETURN INTEGER IS
+CREATE OR REPLACE FUNCTION generaBOEscala(srvcId INTEGER) RETURN INTEGER  RESULT_CACHE IS
 	resultValue INTEGER;
 BEGIN
     WITH sql AS (
@@ -387,7 +393,7 @@ GRANT EXECUTE ON generaBOEscala TO portico\
 
 
 
-CREATE OR REPLACE FUNCTION unidadesGtsEscala(srvcId INTEGER) RETURN INTEGER IS
+CREATE OR REPLACE FUNCTION unidadesGtsEscala(srvcId INTEGER) RETURN INTEGER  RESULT_CACHE IS
 	resultValue INTEGER;
 BEGIN
 	WITH sql AS (
@@ -448,7 +454,7 @@ GRANT EXECUTE ON unidadesGtsEscala TO portico\
 
 
 
-CREATE OR REPLACE FUNCTION unidadesGtsAtraque(ssrvId INTEGER) RETURN DOUBLE PRECISION IS
+CREATE OR REPLACE FUNCTION unidadesGtsAtraque(ssrvId INTEGER) RETURN DOUBLE PRECISION  RESULT_CACHE IS
 	resultValue DOUBLE PRECISION;
 BEGIN
     WITH sql AS (
@@ -523,7 +529,7 @@ GRANT EXECUTE ON unidadesGtsAtraque TO portico\
 
 
 
-CREATE OR REPLACE FUNCTION fechaUltimaTR(srvcId INTEGER) RETURN TIMESTAMP IS
+CREATE OR REPLACE FUNCTION fechaUltimaTR(srvcId INTEGER) RETURN TIMESTAMP  RESULT_CACHE IS
 	resultValue TIMESTAMP;
 BEGIN
     SELECT MAX(vlrl_ffin) INTO resultValue
@@ -583,7 +589,7 @@ GRANT EXECUTE ON fechaUltimaTR TO portico\
 
 
 
-CREATE OR REPLACE FUNCTION esPrimerAtraque(ssrvId INTEGER) RETURN INTEGER IS
+CREATE OR REPLACE FUNCTION esPrimerAtraque(ssrvId INTEGER) RETURN INTEGER  RESULT_CACHE IS
 	resultValue INTEGER;
 BEGIN
     SELECT
@@ -622,7 +628,7 @@ GRANT EXECUTE ON esPrimerAtraque TO portico\
 
 
 
-CREATE OR REPLACE FUNCTION periodosFacturablesAtraque(ssrvId INTEGER) RETURN INTEGER IS
+CREATE OR REPLACE FUNCTION periodosFacturablesAtraque(ssrvId INTEGER) RETURN INTEGER  RESULT_CACHE IS
 	resultValue INTEGER;
 BEGIN
     WITH sql AS (
@@ -671,7 +677,7 @@ GRANT EXECUTE ON periodosFacturablesAtraque TO portico\
 
 
 
-CREATE OR REPLACE FUNCTION esAvituallamientoEscala(srvcId INTEGER) RETURN INTEGER IS
+CREATE OR REPLACE FUNCTION esAvituallamientoEscala(srvcId INTEGER) RETURN INTEGER  RESULT_CACHE IS
 	resultValue INTEGER;
 BEGIN
     SELECT (
@@ -768,7 +774,7 @@ GRANT EXECUTE ON esAvituallamientoEscala TO portico\
 
 
 
-CREATE OR REPLACE FUNCTION esBaseEnPuertoEscala(srvcId INTEGER) RETURN INTEGER IS
+CREATE OR REPLACE FUNCTION esBaseEnPuertoEscala(srvcId INTEGER) RETURN INTEGER  RESULT_CACHE IS
 	resultValue INTEGER;
 BEGIN
     SELECT (
@@ -827,7 +833,7 @@ GRANT EXECUTE ON esBaseEnPuertoEscala TO portico\
 
 
 
-CREATE OR REPLACE FUNCTION contadorEscala2(srvcId INTEGER, tipoContador VARCHAR2) RETURN INTEGER IS
+CREATE OR REPLACE FUNCTION contadorEscala2(srvcId INTEGER, tipoContador VARCHAR2) RETURN INTEGER  RESULT_CACHE IS
 	resultValue INTEGER;
 BEGIN
 	SELECT
@@ -870,7 +876,7 @@ GRANT EXECUTE ON contadorEscala2 TO portico\
 
 
 
-CREATE OR REPLACE FUNCTION contadorEscala(srvcId INTEGER, tipoContador VARCHAR2) RETURN INTEGER IS
+CREATE OR REPLACE FUNCTION contadorEscala(srvcId INTEGER, tipoContador VARCHAR2) RETURN INTEGER  RESULT_CACHE IS
 	resultValue INTEGER;
 BEGIN
 	WITH sql AS (
@@ -933,7 +939,7 @@ GRANT EXECUTE ON contadorEscala TO portico\
 
 
 
-CREATE OR REPLACE FUNCTION tieneConvenioEscala(srvcId INTEGER, convenio VARCHAR2) RETURN INTEGER IS
+CREATE OR REPLACE FUNCTION tieneConvenioEscala(srvcId INTEGER, convenio VARCHAR2) RETURN INTEGER  RESULT_CACHE IS
 	resultValue INTEGER;
 BEGIN
     SELECT

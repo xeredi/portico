@@ -1,81 +1,96 @@
 <div *ngIf="resultList">
-    <div class="btn-toolbar" role="toolbar">
-        <div class="btn-group mr-2" role="group">
-            <ngb-pagination [collectionSize]="resultList.count" [(page)]="page" [pageSize]="pageSize" [maxSize]="1"
-                [size]="sm" [boundaryLinks]="false" [ellipses]="false" (pageChange)="pageChange()"></ngb-pagination>
-        </div>
-        <div class="btn-group mr-2" role="group">
-            <button class="btn btn-secondary" (click)="editFilter(filter)">
-                <i class="fa fa-filter"></i> Filter
-            </button>
-            <a class="btn btn-secondary" [routerLink]="['/billing/aspect/edit', 'create']"><i
-                class="fa fa-file-o"></i> New</a>
-        </div>
-    </div>
+	<div class="btn-toolbar" role="toolbar">
+		<div class="btn-group mr-2" role="group">
+			<ngb-pagination [collectionSize]="resultList.count" [(page)]="page"
+				[pageSize]="pageSize" [maxSize]="1" [size]="sm"
+				[boundaryLinks]="false" [ellipses]="false"
+				(pageChange)="pageChange()"></ngb-pagination>
+		</div>
+		<div class="btn-group mr-2" role="group">
+			<button class="btn btn-secondary" (click)="editFilter(filter)">
+				<i class="fa fa-filter"></i> Filter
+			</button>
+			<a class="btn btn-secondary"
+				[routerLink]="['/billing/aspect/edit', 'create']"><i
+				class="fa fa-file-o"></i> New</a>
+		</div>
+	</div>
 
-    <span [translate]="'grid_count'" [translateParams]="{count: resultList.count}"></span>
+	<span [translate]="'grid_count'"
+		[translateParams]="{count: resultList.count}"></span>
 
-    <div class="table-responsive">
-        <table class="table table-sm table-bordered table-hover table-condensed table-nonfluid">
-            <thead class="thead-inverse">
-                <tr>
-                    <th></th>
-                    <th [translate]="'aspc_codigo'"></th>
-                    <th [translate]="'aspc_descripcion'"></th>
-                    <th [translate]="'tpsr'"></th>
-                    <th [translate]="'fini'"></th>
-                    <th [translate]="'ffin'"></th>
-                    <th [translate]="'aspc_prioridad'"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of resultList.list; trackBy:trackByFn">
-                    <td><a [routerLink]="['/billing/aspect/detail', item.id, item.fref]"><i
-                            class="fa fa-search"></i></a></td>
-                    <td nowrap="nowrap" [innerHTML]="item.codigo"></td>
-                    <td nowrap="nowrap" [innerHTML]="item.version.descripcion"></td>
-                    <td nowrap="nowrap" [translate]="'enti_' + item.tpsr.id"></td>
-                    <td nowrap="nowrap" [innerHTML]="item.version.fini | date: 'dd/MM/yyyy'"></td>
-                    <td nowrap="nowrap" [innerHTML]="item.version.ffin | date: 'dd/MM/yyyy'"></td>
-                    <td nowrap="nowrap" [innerHTML]="item.version.prioridad" class="number"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+	<div class="table-responsive">
+		<table
+			class="table table-sm table-bordered table-hover table-condensed table-nonfluid">
+			<thead class="thead-inverse">
+				<tr>
+					<th></th>
+					<th [translate]="'aspc_codigo'"></th>
+					<th [translate]="'aspc_descripcion'"></th>
+					<th [translate]="'tpsr'"></th>
+					<th [translate]="'fini'"></th>
+					<th [translate]="'ffin'"></th>
+					<th [translate]="'aspc_prioridad'"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let item of resultList.list; trackBy:trackByFn">
+					<td><a
+						[routerLink]="['/billing/aspect/detail', item.id, item.fref]"><i
+							class="fa fa-search"></i></a></td>
+					<td nowrap="nowrap" [innerHTML]="item.codigo"></td>
+					<td nowrap="nowrap" [innerHTML]="item.version.descripcion"></td>
+					<td nowrap="nowrap" [translate]="'enti_' + item.tpsr.id"></td>
+					<td nowrap="nowrap"
+						[innerHTML]="item.version.fini | date: 'dd/MM/yyyy'"></td>
+					<td nowrap="nowrap"
+						[innerHTML]="item.version.ffin | date: 'dd/MM/yyyy'"></td>
+					<td nowrap="nowrap" [innerHTML]="item.version.prioridad"
+						class="number"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 
-    <ng-template #filter let-c="close" let-d="dismiss">
-    <div class="modal-header">
-        <h4 class="modal-title">Search Filter</h4>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <fieldset class="form-group">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-1 form-group-sm">
-                        <label [translate]="'aspc_codigo'"></label> <input type="text" [(ngModel)]="model.codigo"
-                            name="model.codigo" class="form-control form-control-sm" />
-                    </div>
-                    <div class="col-lg-3 col-xl-2 form-group-sm">
-                        <label [translate]="'tpsr'"></label> <select [(ngModel)]="model.tpsrId" name="model.tpsrId"
-                            class="form-control form-control-sm">
-                            <option></option>
-                            <option *ngFor="let item of srtpList" [value]="item.value"
-                                [translate]="'enti_' + item.value"></option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
-    </div>
-    <div class="modal-footer">
-        <div class="btn-group">
-            <button type="button" class="btn btn-primary" (click)="saveFilter();c()">Search</button>
-            <button type="button" class="btn btn-secondary" (click)="resetFilter()">Reset</button>
-            <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
-        </div>
-    </div>
-    </ng-template>
+	<ng-template #filter data-let-c="close" data-let-d="dismiss">
+	<div class="modal-header">
+		<h4 class="modal-title">Search Filter</h4>
+		<button type="button" class="close" aria-label="Close"
+			(click)="d('Cross click')">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		<fieldset class="form-group">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-1 form-group-sm">
+						<label [translate]="'aspc_codigo'"></label> <input type="text"
+							[(ngModel)]="model.codigo" name="model.codigo"
+							class="form-control form-control-sm" />
+					</div>
+					<div class="col-lg-3 col-xl-2 form-group-sm">
+						<label [translate]="'tpsr'"></label> <select
+							[(ngModel)]="model.tpsrId" name="model.tpsrId"
+							class="form-control form-control-sm">
+							<option></option>
+							<option *ngFor="let item of srtpList" [value]="item.value"
+								[translate]="'enti_' + item.value"></option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+	</div>
+	<div class="modal-footer">
+		<div class="btn-group">
+			<button type="button" class="btn btn-primary"
+				(click)="saveFilter();c()">Search</button>
+			<button type="button" class="btn btn-secondary"
+				(click)="resetFilter()">Reset</button>
+			<button type="button" class="btn btn-secondary"
+				(click)="c('Close click')">Close</button>
+		</div>
+	</div>
+	</ng-template>
 </div>

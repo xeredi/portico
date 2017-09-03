@@ -37,7 +37,7 @@ public final class ServicioValorador {
 	public static void main(final String[] args) {
 		final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		final Long usroId = 1000L;
-		final Long entiId = Entidad.ESCALA.getId();
+		final Long entiId = Entidad.MANIFIESTO.getId();
 		final Date fliq = Calendar.getInstance().getTime();
 
 		final TipoServicioDetailVO tpsrDetail = TipoServicioProxy.select(entiId);

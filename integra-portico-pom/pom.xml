@@ -31,6 +31,8 @@
 		<doxia-module-docbook-simple.version>1.7</doxia-module-docbook-simple.version>
 		<taglist-maven-plugin.version>2.4</taglist-maven-plugin.version>
 
+		<maven-surefire-plugin.skipTests>true</maven-surefire-plugin.skipTests>
+
 		<antlr4-maven-plugin.version>4.7</antlr4-maven-plugin.version>
 		<migrations-maven-plugin.version>1.1.2</migrations-maven-plugin.version>
 		<maven-schemaspy-plugin.version>1.0.3</maven-schemaspy-plugin.version>

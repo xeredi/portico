@@ -34,6 +34,9 @@
 -- use the migrations and the changelog for all future
 -- database change management.
 
+alter session set "_ORACLE_SCRIPT"=true; /* ORACLE 12c */
+
+
 CREATE USER porticoadm IDENTIFIED BY portico;
 CREATE USER portico IDENTIFIED BY portico;
 

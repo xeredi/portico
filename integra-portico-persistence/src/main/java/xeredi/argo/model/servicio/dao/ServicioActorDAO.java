@@ -22,4 +22,6 @@ public interface ServicioActorDAO {
      *            Identificador de servicio.
      */
     void insert(final Long srvcId);
+
+    void insertAll();
 }
