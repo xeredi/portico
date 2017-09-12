@@ -17,7 +17,7 @@ import { Component, OnInit } from '@angular/core';
     <div class="card">
       <div class="card-block">
         <h3 class="card-title">
-            <a [routerLink]="['/billing']">Billing</a>
+            <a [routerLink]="['/billing']">Billing...</a>
         </h3>
       </div>
     </div>
